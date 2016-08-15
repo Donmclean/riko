@@ -27,6 +27,7 @@ module.exports = () => {
     vars.gulp           = require('gulp');
     vars.$              = require('gulp-load-plugins')({lazy: true, DEBUG: false, scope: ['devDependencies']});
     vars.beep           = require('beeper');
+    vars.pngquant       = require('imagemin-pngquant');
     vars.args           = require('yargs').argv;
     vars.browserSync    = require('browser-sync').create('riko');
 

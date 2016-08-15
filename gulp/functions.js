@@ -12,6 +12,7 @@ module.exports = (gulp, $, config) => {
     funcs.isSeleniumTest = false;
     funcs.unitTestPassed = false;
     funcs.seleniumTestPassed = false;
+    funcs.minifyImages = false;
 
     funcs.runServer = false;
 
@@ -23,8 +24,8 @@ module.exports = (gulp, $, config) => {
 
     funcs.test = () => {
 
-        // config.vars.logi.log("in functions", 'test?');
-        // return 'working';
+        config.vars.logi.log("in functions", 'test?');
+        return 'working';
     };
 
     funcs.processGulpArgs = args => {
@@ -45,6 +46,11 @@ module.exports = (gulp, $, config) => {
                     funcs.customBuild.minifyJS = true;
                     break;
                 }
+                case '--mi': {
+                    config.vars.logi.warning('build will now minify images...');
+                    funcs.minifyImages = true;
+                    break;
+                }
                 case '--s': {
 
                     config.vars.logi.warning('build will now serve files on port', config.EXPRESS_PORT);
@@ -54,11 +60,6 @@ module.exports = (gulp, $, config) => {
                 case '--sm': {
                     config.vars.logi.warning('build will now add sourcemaps to files...');
                     funcs.customBuild.sourcemaps = true;
-                    break;
-                }
-                case '--t': {
-                    config.vars.logi.warning('build will now cache templates via (template cache)...');
-                    funcs.customBuild.templateCache = true;
                     break;
                 }
             }
