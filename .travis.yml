@@ -8,4 +8,4 @@ before_script:
   - npm install -g "gulpjs/gulp-cli"
 install:
   - npm install
-script: npm start
+script: npm test
