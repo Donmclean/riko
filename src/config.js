@@ -202,6 +202,7 @@ module.exports = () => {
         config.baseDir+'/bin/polyfills/bind-polyfill.js'
     ];
     config.tests.selenium           = config.baseDir+'/tests/selenium/**/*.js';
+    config.tests.nightWatchConfig   = config.baseDir+'/nightwatch.json';
 
 
     return config;

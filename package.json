@@ -41,6 +41,7 @@
     "gulp-jade": "^1.1.0",
     "gulp-jscs": "^4.0.0",
     "gulp-load-plugins": "^1.2.4",
+    "gulp-nightwatch": "^0.3.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-rev": "^7.1.2",
