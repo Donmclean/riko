@@ -1,0 +1,14 @@
+{
+  "esnext": true,
+  "moz": true,
+  "eqeqeq": true,
+  "undef": true,
+  "node": true,
+  "jquery": true,
+  "globals": {
+    "s": false,
+    "angular": false,
+    "_": false,
+    "$": false
+  }
+}

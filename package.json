@@ -1,0 +1,36 @@
+{
+  "name": "riko",
+  "version": "1.0.0",
+  "description": "Gulp 4.0.x Asynchronous Build System for React JS Projects",
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "gulp build-prod",
+    "dev": "gulp build-dev",
+    "prod": "gulp build-prod",
+    "server": "node server/server",
+    "prepare": "sudo npm install gulpjs/gulp-cli -g"
+  },
+  "author": "Don Mclean",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "beeper": "^1.1.0",
+    "browser-sync": "^2.14.0",
+    "eslint": "^3.3.0",
+    "express": "^4.14.0",
+    "fs-extra": "^0.30.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-bump": "^2.4.0",
+    "gulp-debug": "^2.1.2",
+    "gulp-eslint": "^3.0.1",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-util": "^3.0.7",
+    "jshint-stylish": "^2.2.1",
+    "lodash": "^4.15.0",
+    "logi": "git+https://github.com/Donmclean/logi.git",
+    "morgan": "^1.7.0",
+    "q": "^1.4.1",
+    "q-io": "^1.13.2",
+    "yargs": "^4.8.1"
+  }
+}

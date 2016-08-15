@@ -1,0 +1,20 @@
+{
+  "disallowSpaceBeforeSemicolon": true,
+  "requireSemicolons": true,
+  "disallowEmptyBlocks": true,
+  "disallowMultiLineTernary": true,
+  "disallowMultipleLineStrings": true,
+  "requireSpacesInForStatement": true,
+  "disallowTrailingComma": true,
+  "requireCurlyBraces": [
+    "if",
+    "else",
+    "for",
+    "while",
+    "do",
+    "try",
+    "catch",
+    "case",
+    "default"
+  ]
+}
