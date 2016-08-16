@@ -53,6 +53,8 @@ module.exports = () => {
     config.js.deps.destDir          = config.baseDir+'/app/assets/js';
     config.js.deps.src              = [
 
+        config.baseDir+'/node_modules/react/dist/react.js',
+        config.baseDir+'/node_modules/react-dom/dist/react-dom.js',
         config.baseDir+'/node_modules/lodash/lodash.js'
 
     ];
@@ -69,7 +71,7 @@ module.exports = () => {
     config.js.src.changed           = [];
     config.js.src.src               = [
 
-        config.baseDir+'/src/js/**/*.js'
+        config.baseDir+'/src/js/**/*.{js,jsx}'
 
     ];
 

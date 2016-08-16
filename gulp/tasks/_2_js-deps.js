@@ -18,7 +18,7 @@ module.exports = (gulp, $, config, funcs) => {
                 .pipe($.if(!!funcs.isCustom && !funcs.customBuild.minifyJS, gulp.dest(config.js.deps.destDir)))
                 .pipe($.size({showFiles:true}))
                 .pipe($.if(!!funcs.customBuild.minifyJS || !!funcs.isProd, $.rename({suffix: '.min'})))
-                .pipe($.if(!!funcs.customBuild.minifyJS || !!funcs.isProd, $.uglify()))
+                // .pipe($.if(!!funcs.customBuild.minifyJS || !!funcs.isProd, $.uglify()))
                 .pipe($.if(!!funcs.customBuild.minifyJS && !!funcs.customBuild.sourcemaps || !!funcs.isProd, $.sourcemaps.write()))
                 .pipe($.if(!!funcs.customBuild.minifyJS || !!funcs.isProd, $.size({showFiles:true})))
                 .pipe(gulp.dest(config.js.deps.destDir));

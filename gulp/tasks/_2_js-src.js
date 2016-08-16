@@ -11,6 +11,7 @@ module.exports = (gulp, $, config, funcs) => {
                 .pipe($.plumber({errorHandler: funcs.gulpGlobalErrorHandler}))
                 .pipe($.if(!!funcs.customBuild.sourcemaps || funcs.isProd, $.sourcemaps.init()))
                 .pipe($.babel({presets: ['babel-preset-react']}))
+                .pipe($.include())
                 .pipe($.debug({title: 'copying and minifying js srcs:'}))
 
                 .pipe($.concat(config.js.src.mainFileName))
@@ -19,7 +20,7 @@ module.exports = (gulp, $, config, funcs) => {
                 .pipe($.if(!!funcs.isCustom && !funcs.customBuild.minifyJS, gulp.dest(config.js.src.destDir)))
                 .pipe($.size({showFiles: true}))
                 .pipe($.if(!!funcs.customBuild.minifyJS || !!funcs.isProd, $.rename({suffix: '.min'})))
-                .pipe($.if(!!funcs.customBuild.minifyJS || !!funcs.isProd, $.uglify()))
+                // .pipe($.if(!!funcs.customBuild.minifyJS || !!funcs.isProd, $.uglify()))
                 .pipe($.if(!!funcs.customBuild.minifyJS || !!funcs.isProd, $.size({showFiles:true})))
                 .pipe($.if(!!funcs.customBuild.minifyJS && !!funcs.customBuild.sourcemaps || !!funcs.isProd, $.sourcemaps.write()))
                 .pipe(gulp.dest(config.js.src.destDir));

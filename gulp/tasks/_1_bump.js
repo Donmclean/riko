@@ -1,5 +1,5 @@
 "use strict";
-module.exports = (gulp, $, config) => {
+module.exports = (gulp, $, config, funcs) => {
     gulp.task('bump', (done) => {
 
         let options = {
@@ -24,7 +24,7 @@ module.exports = (gulp, $, config) => {
             if(config.vars._.includes(options.type, str)) {
                 $.util.log(str);
                 gulp.src(config.packageJsonFile)
-                    .pipe($.plumber())
+                    .pipe($.plumber({errorHandler: funcs.gulpGlobalErrorHandler}))
                     .pipe($.bump({type: str}))
                     .pipe(gulp.dest(config.baseDir));
             } else {

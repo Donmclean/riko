@@ -89,15 +89,16 @@ module.exports = (gulp, $, config) => {
 
     };
 
-    funcs.gulpGlobalErrorHandler = err => {
-        if(!!err) {
-            funcs.errors.push(err);
+    funcs.gulpGlobalErrorHandler = error => {
+        if(!!error) {
+            funcs.errors.push(error);
             funcs.errorExitCode = 1;
         }
 
         config.vars.logi.info('funcs.errorExitCode:',funcs.errorExitCode);
 
         if(funcs.exitOnGulpGlobalErrors) {
+            $.util.log($.util.colors.red('Error Stack: ',error));
             config.vars.exec(process.exit(funcs.errorExitCode));
         }
 

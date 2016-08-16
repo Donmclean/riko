@@ -17,6 +17,7 @@ module.exports = (gulp, $, config, funcs) => {
             deferred.resolve();
         } else {
             return gulp.src(funcs.isWatching ? changedJSFiles : config.js.src.src)
+                .pipe($.plumber({errorHandler: funcs.gulpGlobalErrorHandler}))
                 .pipe($.eslint({configFile: config.eslintConfig}))
                 .pipe($.eslint.format(funcs.eslintErrorHandler))
                 .pipe($.eslint.failAfterError())

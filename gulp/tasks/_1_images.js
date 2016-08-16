@@ -3,6 +3,7 @@ module.exports = (gulp, $, config, funcs) => {
     gulp.task('images', () => {
 
         return gulp.src(config.media.images.src)
+            .pipe($.plumber({errorHandler: funcs.gulpGlobalErrorHandler}))
             .pipe($.if(!!funcs.minifyImages, $.debug({title: 'copying & minifying images:'}), $.debug({title: 'copying images:'})))
             .pipe($.if(!!funcs.minifyImages, $.imagemin({
                 progressive: true,

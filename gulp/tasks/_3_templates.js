@@ -65,6 +65,7 @@ module.exports = (gulp, $, config, funcs) => {
         if(funcs.isWatching && !funcs.isCustom && indexFileChanged === false) {
             changedTemplateFile = changedTemplateFile[0];
             return gulp.src(changedTemplateFile)
+                .pipe($.plumber({errorHandler: funcs.gulpGlobalErrorHandler}))
 
                 //Parse changed file based on template type
                 .pipe($.if(config.vars.path.extname(changedTemplateFile) === '.jade',$.jade()))
@@ -74,6 +75,7 @@ module.exports = (gulp, $, config, funcs) => {
                 .pipe($.if(!funcs.isDev || !!funcs.isCustom, gulp.dest(config.templates.destDir+changedTemplateFile.split(config.templates.srcDir)[1].split(config.vars.path.basename(changedTemplateFile))[0])));
         } else {
             return gulp.src(config.templates.src)
+                .pipe($.plumber({errorHandler: funcs.gulpGlobalErrorHandler}))
 
                 //Parse & copy all templates *(Minus The Top Level Index File)*
                 .pipe($.jade())

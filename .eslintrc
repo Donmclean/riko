@@ -1,7 +1,7 @@
 {
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "script",
+    "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
     }
@@ -53,6 +53,7 @@
     "no-undef-init": 2,
     "no-underscore-dangle": 2,
     "no-unused-expressions": 2,
+    "no-unused-vars": 0,
     "no-use-before-define": 2,
     "no-with": 2,
     "camelcase": 2,

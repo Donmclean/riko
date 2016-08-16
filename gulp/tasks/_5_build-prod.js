@@ -9,11 +9,10 @@ module.exports = (gulp, $, config, funcs) => {
                 cb();
             },
             gulp.parallel('lint-gulp','lint-js-src','lint-js-tests','clean','clean-temp'),
-            gulp.parallel('media','sass','css-deps','js-src','js-deps'),
-            //'express',
-            'templates',
+            gulp.series('media','sass','css-deps','js-src','js-deps'),
+            'templates'
             // 'run-unit-tests',
-            'run-selenium-tests'
+            // 'run-selenium-tests'
         )
     );
 };
