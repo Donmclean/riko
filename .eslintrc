@@ -11,6 +11,7 @@
   },
   "globals": {
     "module": false,
+    "require": false,
     "React": false,
     "ReactDOM": false,
     "_": false,

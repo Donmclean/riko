@@ -3,6 +3,8 @@ jdk:
  - oraclejdk8
 node_js:
   - "6.3.1"
+before_script:
+  - npm install webpack -g
 install:
   - npm install
 script: npm test
