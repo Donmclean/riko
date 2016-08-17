@@ -3,11 +3,11 @@ const custom_config     = require('./webpack/config');
 const
     config      = custom_config || {},
     indexJSFile = require('./webpack/index')(config);
-    _v          = config.vars = require('./webpack/variables')();
+    _v          = config.vars;
 
 
 config.context  = config.baseDir;
-config.devtool  = _v.NODE_ENV === "development" ? "inline-sourcemap" : null;
+config.devtool  = _v.NODE_ENV === "development" ? "inline-sourcemap" : null; //TODO: move this
 config.entry    = config.js_main_entry;
 
 config.output = {
@@ -58,17 +58,33 @@ let plugins = [
     new _v.HtmlWebpackPlugin(indexJSFile)
 ];
 
-if(_v.NODE_ENV === "production") {
-    plugins = plugins.concat([
-        new _v.webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
-            }
-        }),
-        new _v.webpack.optimize.DedupePlugin(),
-        new _v.webpack.optimize.OccurenceOrderPlugin(),
-        new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false, compress: {warnings: false} })
-    ]);
+switch (_v.NODE_ENV) {
+    case "production": {
+        plugins = plugins.concat([
+            new _v.webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify('production')
+                }
+            }),
+            new _v.webpack.optimize.DedupePlugin(),
+            new _v.webpack.optimize.OccurenceOrderPlugin(),
+            new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false, compress: {warnings: false} })
+        ]);
+        break;
+    }
+    case "development": {
+        plugins = plugins.concat([
+            new _v.BrowserSyncPlugin({
+                host: 'localhost',
+                port: 3000,
+                server: { baseDir: ['app'] }
+            })
+        ]);
+        break;
+    }
+    default: {
+        break;
+    }
 }
 
 config.plugins = plugins;

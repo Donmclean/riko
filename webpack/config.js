@@ -4,6 +4,8 @@ const config = {};
 //*******************************CORE***********************************
 //**********************************************************************
 
+config.vars                     = require('../webpack/variables')();
+
 config.moduleName               = 'riko';
 config.mainIndexName            = 'index.html';
 config.mainIndexName            = 'index.html';
@@ -15,6 +17,7 @@ config.jscsConfig               = config.baseDir+'/.jscsrc';
 config.eslintConfig             = config.baseDir+'/.eslintrc';
 
 config.EXPRESS_PORT             = 3000;
+config.EXPRESS_ROOT             = config.destDir || config.baseDir + '/app';
 
 
 //**********************************************************************
