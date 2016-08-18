@@ -1,8 +1,8 @@
 {
   "name": "riko",
   "version": "1.0.0",
-  "description": "Gulp 4.0.x Asynchronous Build System for React JS Projects",
-  "main": "gulpfile.js",
+  "description": "Webpack Build System for React JS Projects",
+  "main": "riko.js",
   "scripts": {
     "start": "export NODE_ENV=production && webpack",
     "dev": "export NODE_ENV=development && webpack -w --display-error-details",

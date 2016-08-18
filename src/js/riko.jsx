@@ -18,7 +18,6 @@ class Root extends React.Component {
                 <Menu/>
                 <Sample/>
             </div>
-
         );
     }
 }
