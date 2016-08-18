@@ -25,7 +25,9 @@ config.EXPRESS_ROOT             = config.destDir || config.baseDir + '/app';
 //**********************************************************************
 config.js                       = {};
 
-config.js_main_entry            = config.baseDir+'/src/js/riko.jsx';
+config.js_main_entry            = [
+    config.baseDir+'/src/js/riko.jsx'
+];
 config.js_main_name             = 'riko.js';
 config.js.mainFileName          = config.moduleName+'.jsx';
 
@@ -35,12 +37,13 @@ config.js.webSrcs               = [];
 //**********************************************************************
 //********************************SASS**********************************
 //**********************************************************************
-config.sass                     = {};
+config.sass_main                = config.baseDir+'/src/sass';
 
 //**********************************************************************
 //********************************CSS***********************************
 //**********************************************************************
 config.css                      = {};
+config.css_main                 = config.baseDir+'/src/css/custom-css.css';
 
 //**********************************************************************
 //******************************TEMPLATE********************************
@@ -64,6 +67,7 @@ config.tests.extras             = [
 
     config.baseDir+'/bin/polyfills/bind-polyfill.js'
 ];
+config.karmaConfigFile          = config.baseDir+'/karma.conf.js';
 config.tests.selenium           = config.baseDir+'/tests/selenium/**/*.js';
 config.tests.nightWatchConfig   = config.baseDir+'/nightwatch.json';
 

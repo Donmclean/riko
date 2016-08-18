@@ -1,18 +1,27 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Menu from './components/Menu';
+import Sample from './components/Sample';
 
-const React = require('react');
-const ReactDOM = require('react-dom');
+// Stylesheets
+import stylesheetSASS from '../sass/styles.scss';
+import stylesheetCSS from '../css/custom-css.css';
 
 class Root extends React.Component {
     render() {
         return (
-            <h1>Hello World!</h1>
+            <div>
+                <h1>Hello World!</h1>
+                <p>from: RIKO</p>
+                <h3>from: RIKO</h3>
+                <div className="test-autoprefixer"></div>
+                <Menu/>
+                <Sample/>
+            </div>
+
         );
     }
 }
-
-// console.log("?");
 
 const root = document.getElementById('root');
 ReactDOM.render(<Root />, root);

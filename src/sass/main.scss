@@ -1,8 +1,18 @@
 body {
-  color: red;
+  color: blue;
   background-color: black;
+}
+
+p {
+  color: white;
+  border-radius: 5px;
+
+  &:hover {
+    color: orange;
+  }
 }
 
 .test-autoprefixer {
   display: flex;
+  transition: 1s;
 }
