@@ -8,7 +8,6 @@ config.vars                     = require('../webpack/variables')();
 
 config.moduleName               = 'riko';
 config.mainIndexName            = 'index.html';
-config.mainIndexName            = 'index.html';
 config.nodePath                 = process.env.NODE_PATH;
 config.sitePrefix               = '';
 config.baseDir                  = process.cwd();
