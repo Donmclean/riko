@@ -89,6 +89,6 @@
   "dependencies": {
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
-    "react-routing": "0.0.7"
+    "react-router": "^2.6.1"
   }
 }
