@@ -13,7 +13,7 @@ module.exports = function (config) {
         files: [
             './node_modules/phantomjs-polyfill/bind-polyfill.js',
             // 'src/**/*.jsx',
-            './tests/**/*-spec.js'
+            'src/tests/**/*-spec.js'
         ],
 
         preprocessors: {
@@ -45,11 +45,11 @@ module.exports = function (config) {
 
         webpack: {
             entry: [
-                './src/js/riko.jsx'
+                './src/js/app.js'
             ],
             output: {
-                path: __dirname+"/app",
-                filename: 'riko.js',
+                path: __dirname,
+                filename: 'app.js',
                 publicPath: ''
             },
             resolve: {
@@ -60,7 +60,7 @@ module.exports = function (config) {
             module: {
                 loaders: [
                     {
-                        test: /\.jsx?$/,
+                        test: /\.js$/,
                         loaders: ['babel'],
                         include: path.join(__dirname, 'src')
                     }

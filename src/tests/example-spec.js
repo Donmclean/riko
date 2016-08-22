@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils';
 import chai from 'chai';
-import Menu from '../src/js/components/Menu';
+import Menu from '../js/components/Menu';
 
 const renderer = ReactTestUtils.createRenderer();
 
@@ -53,7 +53,7 @@ describe('Menu', function () {
     });
     it('should render div component with class equals to veryFirstDiv', function() {
         assert.equal(result.type, 'ul');
-        assert.equal(result.props.className, 'mainMenu');
+        assert.equal(result.props.className, 'mainMenu test-autoprefixer');
     });
 });
 

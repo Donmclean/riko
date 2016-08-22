@@ -1,9 +1,8 @@
-import custom_config from './webpack/config';
-
 const
-    config      = custom_config || {},
-    indexJSFile = require('./webpack/index')(config),
-    _v          = config.vars;
+    custom_config = require('./webpack/config'),
+    config        = custom_config || {},
+    indexJSFile   = require('./webpack/index')(config),
+    _v            = config.vars;
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
@@ -104,7 +103,11 @@ config.module = {
       loader: 'url'
     }
 
-  ]
+  ],
+  postLoaders: [ { //delays coverage til after tests are run, fixing transpiled source coverage error
+    test: /\.js$/,
+    exclude: /(tests|node_modules|bower_components)\//,
+    loader: 'istanbul-instrumenter' } ]
 };
 
 config.postcss = [  _v.postcssImport, _v.autoprefixer() ];
