@@ -4,23 +4,21 @@ const
     indexJSFile   = require('./webpack/index')(config),
     _v            = config.vars;
 
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
-
 config.devtool = null;
 
 config.entry = [
-  'webpack-hot-middleware/client',
+  // 'webpack-hot-middleware/client',
   './src/js/app.js'
 ];
 
 config.output = {
-  path: __dirname,
+  path: __dirname + "/app",
   filename: 'bundle.js',
-  publicPath: '/'
+  publicPath: ''
 };
 
 config.resolve = {
-  extensions: ['', '.js'],
+  extensions: ['', '.js', '.jsx'],
   alias: {
     request: 'browser-request'
   }
@@ -32,8 +30,8 @@ config.module = {
     // Javascript
     {
       test: /\.js$/,
-      loader: 'babel',
       include: _v.path.join(__dirname, 'src'),
+      loader: 'babel',
       query: {
         "env": {
           "development": {
@@ -49,6 +47,7 @@ config.module = {
             ]
           }
         },
+        presets: ['es2015'],
       }
     },
     {
@@ -70,7 +69,9 @@ config.module = {
             ]
           }
         },
-      }
+      },
+      presets: ['react', 'es2015', 'stage-0'],
+      plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy','add-module-exports']
     },
 
       //TEMPLATE (PUG)
@@ -83,18 +84,19 @@ config.module = {
     // SASS
     {
       test: /\.scss$/,
-      loaders: ["react-hot", "style", "css?sourceMap", "postcss", "sass?sourceMap"]
+      loaders: ["style", "css?sourceMap", "postcss", "sass?sourceMap"]
     },
 
     // CSS
     {
       test: /\.css$/,
       include: _v.path.join(__dirname, 'src'),
-      loader: 'style-loader!css-loader?' + _v.qs.stringify({
-        modules: true,
-        importLoaders: 1,
-        localIdentName: '[path][name]-[local]'
-      })
+      loaders: ["style", "css?sourceMap", "postcss"],
+      // loader: 'style-loader!css-loader?' + _v.qs.stringify({
+      //   modules: true,
+      //   importLoaders: 1,
+      //   localIdentName: '[path][name]-[local]'
+      // })
     },
 
       //FILES
@@ -151,6 +153,9 @@ switch (_v.NODE_ENV) {
     break;
   }
   case "development": {
+    //update entry
+    config.entry.unshift('webpack-hot-middleware/client');
+
     // config.devtool  = "inline-sourcemap";
     config.devtool = '#eval-source-map';
 

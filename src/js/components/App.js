@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../css/App.css';
+import styles from '../../css/style.css';
 import Menu from './Menu';
 
 class App extends React.Component {
@@ -11,7 +11,7 @@ class App extends React.Component {
           </h2>
         <Menu/>
         <button
-          className={styles.increment}
+          className="increment box"
         >
           +1
         </button>
