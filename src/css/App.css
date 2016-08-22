@@ -1,0 +1,8 @@
+.increment {
+    composes: box from "./layout.css";
+    color: yellow;
+    cursor: pointer;
+    border: 1px solid green;
+    border-radius: 3px;
+    background-color: black;
+}

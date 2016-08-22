@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils';
 import chai from 'chai';
-import Menu from '../js/components/Menu';
+import Menu from '../src/js/components/Menu';
 
 const renderer = ReactTestUtils.createRenderer();
 

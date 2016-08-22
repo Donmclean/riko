@@ -4,7 +4,7 @@ const config = {};
 //*******************************CORE***********************************
 //**********************************************************************
 
-config.vars                     = require('../webpack/variables')();
+config.vars                     = require('./variables')();
 
 config.moduleName               = 'riko';
 config.mainIndexName            = 'index.html';

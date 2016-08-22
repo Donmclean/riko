@@ -1,12 +1,10 @@
 import React from 'react';
-import Sample from './Sample';
 
 const Menu = () => (
-    <ul className="mainMenu">
+    <ul className="mainMenu test-autoprefixer">
         <li><a href="#">File</a></li>
         <li><a href="#">Edit</a></li>
         <li><a href="#">Help</a></li>
-        <Sample/>
     </ul>
 );
 

@@ -1,6 +1,8 @@
 body {
-  color: blue;
+  color: red;
   background-color: black;
+  margin: auto;
+  text-align: center;
 }
 
 p {
@@ -8,11 +10,47 @@ p {
   border-radius: 5px;
 
   &:hover {
-    color: grey;
+    color: orange;
   }
 }
 
 .test-autoprefixer {
   display: flex;
   transition: 1s;
+}
+
+.hello-world {
+  margin: 100px 0;
+  font-size: 40px;
+  text-align: center;
+}
+
+.hello-world__i {
+  display: inline-block;
+  -webkit-animation: rotate 4000ms infinite linear;
+  animation: rotate 4000ms infinite linear;
+}
+
+@keyframes rotate {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
