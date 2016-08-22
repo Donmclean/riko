@@ -13,7 +13,7 @@ module.exports = function (config) {
         files: [
             './node_modules/phantomjs-polyfill/bind-polyfill.js',
             // 'src/**/*.jsx',
-            'src/tests/**/*-spec.js'
+            'src-x/tests/**/*-spec.js'
         ],
 
         preprocessors: {

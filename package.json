@@ -10,7 +10,8 @@
     "test": "node_modules/.bin/karma start --single-run --no-auto-watch",
     "test-watch": "node_modules/.bin/karma start --auto-watch --no-single-run",
     "server": "node server/server.js",
-    "prepare": "sudo npm install -g webpack"
+    "prepare": "sudo npm install -g webpack",
+    "new":"export NODE_ENV=development && node app"
   },
   "author": "Don Mclean",
   "license": "MIT",
@@ -84,7 +85,9 @@
     "stylelint-webpack-plugin": "^0.3.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.12.2"
   },
   "dependencies": {
     "react": "^15.3.0",
