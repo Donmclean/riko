@@ -13,7 +13,7 @@ config.entry = [
 
 config.output = {
   path: __dirname + "/app",
-  filename: 'bundle.js',
+  filename: 'riko.js',
   publicPath: ''
 };
 
@@ -26,6 +26,13 @@ config.resolve = {
 
 config.module = {
 
+  preLoaders: [
+    {
+      test: /\.js$/,
+      loaders: [ 'babel', 'eslint' ],
+      exclude: /(node_modules|vendor|bower_components)/
+    }
+  ],
   loaders: [
     // Javascript
     {
