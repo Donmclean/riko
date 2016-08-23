@@ -3,6 +3,16 @@ const
     $ = require('gulp-load-plugins')(),
     config = require('./webpack/config');
 
+gulp.task('sass', function() {
+
+    return gulp.src(['src/sass/styles.scss'])
+        .pipe($.sass())
+        .pipe($.addSrc.append(['src/css/**/*.css']))
+        .pipe($.concat('styles.min.css'))
+        .pipe($.cleanCss())
+        .pipe(gulp.dest('./app'));
+});
+
 gulp.task('pug', function() {
 
     return gulp.src(['src/templates/**/*.pug'])

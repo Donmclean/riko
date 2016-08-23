@@ -5,8 +5,6 @@ module.exports = () => {
 
     vars.http                   = require('http');
     vars.path                   = require('path');
-    vars.qs                     = require('querystring');
-    vars.chokidar               = require('chokidar');
 
     vars.webpack                = require('webpack');
     vars.chalk                  = require('chalk');
@@ -16,6 +14,8 @@ module.exports = () => {
     vars.HtmlWebpackPlugin      = require('html-webpack-plugin');
     vars.BrowserSyncPlugin      = require('browser-sync-webpack-plugin');
     vars.StyleLintPlugin        = require('stylelint-webpack-plugin');
+    vars.ExtractTextPlugin      = require("extract-text-webpack-plugin");
+    vars.Visualizer             = require('webpack-visualizer-plugin');
     vars.webpackDevMiddleware   = require('webpack-dev-middleware');
     vars.webpackHotMiddleware   = require('webpack-hot-middleware');
 

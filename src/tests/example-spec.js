@@ -10,6 +10,7 @@ const
     expect = chai.expect,
     assert = chai.assert;
 
+//TODO: fix style errors in testing
 
 // TEST 1
 function sum(a, b) {

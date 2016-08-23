@@ -27,7 +27,7 @@ config.js                       = {};
 config.js_main_entry            = [
     config.baseDir+'/src/js/riko.jsx'
 ];
-config.js_main_name             = 'riko.js';
+config.js_main_name             = config.moduleName+'.js';
 config.js.mainFileName          = config.moduleName+'.jsx';
 
 config.js.webSrcs               = [];

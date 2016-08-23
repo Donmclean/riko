@@ -7,8 +7,8 @@ const
 config.devtool = null;
 
 config.entry = [
-  // 'webpack-hot-middleware/client',
-  './src/js/app.js'
+  // 'webpack-hot-middleware/client', //handled in NODE_ENV switch statement below
+  './src/js/app.js',
 ];
 
 config.output = {
@@ -81,24 +81,6 @@ config.module = {
       loader: "pug-loader"
     },
 
-    // SASS
-    {
-      test: /\.scss$/,
-      loaders: ["style", "css?sourceMap", "postcss", "sass?sourceMap"]
-    },
-
-    // CSS
-    {
-      test: /\.css$/,
-      include: _v.path.join(__dirname, 'src'),
-      loaders: ["style", "css?sourceMap", "postcss"],
-      // loader: 'style-loader!css-loader?' + _v.qs.stringify({
-      //   modules: true,
-      //   importLoaders: 1,
-      //   localIdentName: '[path][name]-[local]'
-      // })
-    },
-
       //FILES
     {
       test: /\.(jpg|jpeg|png|gif|tif|svg|woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -112,7 +94,12 @@ config.module = {
     loader: 'istanbul-instrumenter' } ]
 };
 
-config.postcss = [  _v.postcssImport, _v.autoprefixer() ];
+//TODO: fix auto prefixing
+// config.postcss = function () {
+//   return [  _v.postcssImport, _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
+// };
+
+config.postcss = [  _v.postcssImport, _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
 
 //*****************************************************************
 //*****************************PLUGINS*****************************
@@ -127,10 +114,8 @@ let plugins = [
     clear: true
   }),
   new _v.HtmlWebpackPlugin(indexJSFile),
-  new _v.StyleLintPlugin({
-      configFile: '.stylelintrc.yaml',
-      files: ['**/*.s?(a|c)ss','!node_modules/'],
-      failOnError: false,
+  new _v.Visualizer({
+    filename: './stats.html'
   })
 ];
 
@@ -140,6 +125,24 @@ switch (_v.NODE_ENV) {
   case "production": {
     config.devtool  = null;
 
+    config.entry = {
+      riko: './src/js/app.js',
+    };
+
+    config.module.loaders.push({
+          test: /\.scss$/,
+          loader: _v.ExtractTextPlugin.extract(
+              "style",
+              "css!sass","postcss"),
+        },
+        // CSS
+        {
+          test: /\.css$/,
+          include: _v.path.join(__dirname, 'src'),
+          loader: _v.ExtractTextPlugin.extract("style", "css", "postcss")
+        }
+    );
+
     plugins = plugins.concat([
       new _v.webpack.DefinePlugin({
         'process.env': {
@@ -148,7 +151,9 @@ switch (_v.NODE_ENV) {
       }),
       new _v.webpack.optimize.DedupePlugin(),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
-      new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false, compress: {warnings: false} })
+      new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false, compress: {warnings: false} }),
+      new _v.webpack.optimize.CommonsChunkPlugin(config.moduleName, config.js_main_name),
+      new _v.ExtractTextPlugin("styles.min.css", {allChunks: true})
     ]);
     break;
   }
@@ -156,10 +161,24 @@ switch (_v.NODE_ENV) {
     //update entry
     config.entry.unshift('webpack-hot-middleware/client');
 
-    // config.devtool  = "inline-sourcemap";
     config.devtool = '#eval-source-map';
 
     config.debug = true;
+
+    config.module.loaders.push(
+        // SASS
+        {
+          test: /\.scss$/,
+          loaders: ["style", "css?sourceMap", "sass?sourceMap"]
+        },
+
+        // CSS
+        {
+          test: /\.css$/,
+          include: _v.path.join(__dirname, 'src'),
+          loaders: ["style", "css?sourceMap", "postcss"],
+
+        });
 
     plugins = plugins.concat([
       new _v.webpack.optimize.OccurenceOrderPlugin(),
@@ -171,7 +190,12 @@ switch (_v.NODE_ENV) {
           },
           {
             reload: false //Allows hot module reloading to take care of this. (preserves state)
-          })
+          }),
+      new _v.StyleLintPlugin({
+        configFile: '.stylelintrc.yaml',
+        files: ['**/*.s?(a|c)ss','!node_modules/'],
+        failOnError: false,
+      })
     ]);
     break;
   }
