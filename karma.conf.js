@@ -60,7 +60,7 @@ module.exports = function (config) {
             module: {
                 loaders: [
                     {
-                        test: /\.js$/,
+                        test: /\.jsx$|\.js$/,
                         loaders: ['babel'],
                         include: path.join(__dirname, 'src')
                     }
