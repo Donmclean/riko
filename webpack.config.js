@@ -28,40 +28,18 @@ config.module = {
 
   preLoaders: [
     {
-      test: /\.js$/,
+      test: /\.jsx$|\.js$/,
       loaders: [ 'eslint' ],
+      include: _v.path.join(__dirname, 'src'),
       exclude: /(node_modules|vendor|bower_components)/
     }
   ],
   loaders: [
     // Javascript
     {
-      test: /\.js$/,
+      test: /\.jsx$|\.js$/,
       include: _v.path.join(__dirname, 'src'),
       loaders: ['react-hot','babel'],
-    },
-    {
-      test: /\.jsx?$/,
-      loader: 'babel',
-      include: _v.path.join(__dirname, 'src'),
-      query: {
-        "env": {
-          "development": {
-            "presets": ["react-hmre"],
-            "plugins": [
-              ["react-transform", {
-                "transforms": [{
-                  "transform": "react-transform-hmr",
-                  "imports": ["react"],
-                  "locals": ["module"]
-                }]
-              }]
-            ]
-          }
-        },
-      },
-      presets: ['react', 'es2015', 'stage-0'],
-      plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy','add-module-exports']
     },
 
       //TEMPLATE (PUG)
@@ -127,7 +105,7 @@ switch (_v.NODE_ENV) {
         {
           test: /\.css$/,
           include: _v.path.join(__dirname, 'src'),
-          loader: _v.ExtractTextPlugin.extract("style", "css", "postcss")
+          loader: _v.ExtractTextPlugin.extract("style", "css!postcss")
         }
     );
 
@@ -174,14 +152,13 @@ switch (_v.NODE_ENV) {
         {
           test: /\.css$/,
           include: _v.path.join(__dirname, 'src'),
-          loaders: ["style", "css?sourceMap", "postcss"],
+          loaders: ["style", "css?sourceMap!postcss"],
 
         });
 
     plugins = plugins.concat([
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.HotModuleReplacementPlugin(),
-      new _v.webpack.NoErrorsPlugin(),
       new _v.BrowserSyncPlugin(
           {
             proxy: 'http://localhost:' + config.EXPRESS_PORT,
