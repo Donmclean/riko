@@ -51,7 +51,7 @@ config.module = {
 
       //FILES
     {
-      test: /\.(jpg|jpeg|png|gif|tif|svg|woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: /\.(jpg|jpeg|png|gif|tif|svg|woff|woff2|eot|ttf)$/,
       loader: 'url'
     }
 
