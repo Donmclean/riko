@@ -38,24 +38,7 @@ config.module = {
     {
       test: /\.js$/,
       include: _v.path.join(__dirname, 'src'),
-      loader: 'babel',
-      query: {
-        "env": {
-          "development": {
-            "presets": ["react-hmre"],
-            "plugins": [
-              ["react-transform", {
-                "transforms": [{
-                  "transform": "react-transform-hmr",
-                  "imports": ["react"],
-                  "locals": ["module"]
-                }]
-              }]
-            ]
-          }
-        },
-        presets: ['es2015'],
-      }
+      loaders: ['react-hot','babel'],
     },
     {
       test: /\.jsx?$/,
@@ -134,14 +117,6 @@ switch (_v.NODE_ENV) {
       riko: './src/js/app.js',
     };
 
-    config.module.preLoaders = [
-      {
-        test: /\.js$/,
-        loaders: [ 'babel', 'eslint' ],
-        exclude: /(node_modules|vendor|bower_components)/
-      }
-    ];
-
     config.module.loaders.push({
           test: /\.scss$/,
           loader: _v.ExtractTextPlugin.extract(
@@ -176,9 +151,10 @@ switch (_v.NODE_ENV) {
 
     config.devtool = '#eval-source-map';
 
-    // config.eslint = {
-    //   failOnError: false
-    // };
+    config.eslint = {
+      failOnError: false,
+      failOnWarning: false
+    };
 
     config.debug = true;
 
