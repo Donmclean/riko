@@ -13,8 +13,8 @@ config.entry = [
 
 config.output = {
   path: __dirname + "/app",
-  filename: 'riko.js',
-  publicPath: ''
+  filename: 'bundle.js',
+  publicPath: '/'
 };
 
 config.resolve = {
@@ -29,7 +29,7 @@ config.module = {
   preLoaders: [
     {
       test: /\.js$/,
-      loaders: [ 'babel', 'eslint' ],
+      loaders: [ 'eslint' ],
       exclude: /(node_modules|vendor|bower_components)/
     }
   ],
@@ -95,18 +95,16 @@ config.module = {
     }
 
   ],
-  postLoaders: [ { //delays coverage til after tests are run, fixing transpiled source coverage error
-    test: /\.js$/,
-    exclude: /(tests|node_modules|bower_components)\//,
-    loader: 'istanbul-instrumenter' } ]
+  postLoaders: [
+      { //delays coverage til after tests are run, fixing transpiled source coverage error
+        test: /\.js$/,
+        exclude: /(tests|node_modules|bower_components)\//,
+        loader: 'istanbul-instrumenter'
+      }
+  ]
 };
 
-//TODO: fix auto prefixing
-// config.postcss = function () {
-//   return [  _v.postcssImport, _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
-// };
-
-config.postcss = [  _v.postcssImport, _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
+config.postcss = [ _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
 
 //*****************************************************************
 //*****************************PLUGINS*****************************
@@ -136,11 +134,19 @@ switch (_v.NODE_ENV) {
       riko: './src/js/app.js',
     };
 
+    config.module.preLoaders = [
+      {
+        test: /\.js$/,
+        loaders: [ 'babel', 'eslint' ],
+        exclude: /(node_modules|vendor|bower_components)/
+      }
+    ];
+
     config.module.loaders.push({
           test: /\.scss$/,
           loader: _v.ExtractTextPlugin.extract(
               "style",
-              "css!sass","postcss"),
+              "css!postcss!sass"),
         },
         // CSS
         {
@@ -170,13 +176,22 @@ switch (_v.NODE_ENV) {
 
     config.devtool = '#eval-source-map';
 
+    // config.eslint = {
+    //   failOnError: false
+    // };
+
     config.debug = true;
 
     config.module.loaders.push(
         // SASS
         {
           test: /\.scss$/,
-          loaders: ["style", "css?sourceMap", "sass?sourceMap"]
+          loaders: [
+            'style',
+            'css-loader?sourceMap',
+            "postcss",
+            "sass?sourceMap",
+          ],
         },
 
         // CSS

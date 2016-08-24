@@ -5,7 +5,7 @@ module.exports = () => {
 
     vars.http                   = require('http');
     vars.path                   = require('path');
-    vars.chokidar               = require('chokidar');
+    // vars.chokidar               = require('chokidar');
 
     vars.webpack                = require('webpack');
     vars.chalk                  = require('chalk');

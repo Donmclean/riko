@@ -13,16 +13,16 @@ _v.app.use(_v.webpackDevMiddleware(compiler, {
 _v.app.use(_v.webpackHotMiddleware(compiler));
 
 // Do "hot-reloading" + throw away cached modules and re-require next time
-const watcher = _v.chokidar.watch('./server');
-
-watcher.on('ready', function() {
-  watcher.on('all', function() {
-    console.log("Clearing /server/ module cache from server");
-    Object.keys(require.cache).forEach(function(id) {
-      if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
-    });
-  });
-});
+// const watcher = _v.chokidar.watch('./server');
+//
+// watcher.on('ready', function() {
+//   watcher.on('all', function() {
+//     console.log("Clearing /server/ module cache from server");
+//     Object.keys(require.cache).forEach(function(id) {
+//       if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
+//     });
+//   });
+// });
 
 // Do "hot-reloading" of react stuff on the server
 // Throw away the cached client modules and let them be re-required next time
