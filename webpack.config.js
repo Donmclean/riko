@@ -97,9 +97,7 @@ switch (_v.NODE_ENV) {
 
     config.module.loaders.push({
           test: /\.scss$/,
-          loader: _v.ExtractTextPlugin.extract(
-              "style",
-              "css!postcss!sass"),
+          loader: _v.ExtractTextPlugin.extract("style", "css!postcss!sass"),
         },
         // CSS
         {
@@ -140,12 +138,7 @@ switch (_v.NODE_ENV) {
         // SASS
         {
           test: /\.scss$/,
-          loaders: [
-            'style',
-            'css-loader?sourceMap',
-            "postcss",
-            "sass?sourceMap",
-          ],
+          loaders: ['style', 'css-loader?sourceMap', "postcss", "sass?sourceMap",],
         },
 
         // CSS
