@@ -1,6 +1,5 @@
 import React from 'react';
-import styles from '../../css/style.css';
-import Menu from './Menu';
+import Menu from './Menu.jsx';
 
 export default class App extends React.Component {
     constructor () {
@@ -29,7 +28,5 @@ export default class App extends React.Component {
                 <button onClick={this.log.bind(this)} className="increment box">RIKO</button>
             </div>
         );
-      }
+    }
 }
-
-export default App;
