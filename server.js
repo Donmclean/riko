@@ -1,43 +1,16 @@
 import config from './webpack.config';
 
-const
-    _v = config.vars,
-    compiler = _v.webpack(config);
+const _v = config.vars;
 
-_v.cssModulesRequireHook({generateScopedName: '[path][name]-[local]'});
+config.entry.unshift('webpack/hot/only-dev-server');
+config.entry.unshift('webpack-dev-server/client?http://localhost:'+config.EXPRESS_PORT);
 
-// Serve hot-reloading bundle to client
-_v.app.use(_v.webpackDevMiddleware(compiler, {
-  noInfo: true, publicPath: config.output.publicPath
-}));
-_v.app.use(_v.webpackHotMiddleware(compiler));
-
-// Do "hot-reloading" + throw away cached modules and re-require next time
-// const watcher = _v.chokidar.watch('./server');
-//
-// watcher.on('ready', function() {
-//   watcher.on('all', function() {
-//     console.log("Clearing /server/ module cache from server");
-//     Object.keys(require.cache).forEach(function(id) {
-//       if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
-//     });
-//   });
-// });
-
-// Do "hot-reloading" of react stuff on the server
-// Throw away the cached client modules and let them be re-required next time
-compiler.plugin('done', function() {
-  console.log("Clearing /src/ module cache from server");
-  Object.keys(require.cache).forEach(function(id) {
-    if (/[\/\\]src[\/\\]/.test(id)) delete require.cache[id];
-  });
-});
-
-const server = _v.http.createServer(_v.app);
-server.listen(config.EXPRESS_PORT, 'localhost', function(err) {
-  if (err) throw err;
-
-  const addr = server.address();
-
-  console.log('Listening at http://%s:%d', addr.address, addr.port);
+new _v.WebpackDevServer(_v.webpack(config), {
+    contentBase: config.output.path,
+    publicPath: config.output.publicPath,
+    historyApiFallback: true,
+    hot: true
+}).listen(config.EXPRESS_PORT, 'localhost', function (err, result) {
+    if (err) { console.log(err) }
+    console.log('Listening at localhost:'+config.EXPRESS_PORT);
 });

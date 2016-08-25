@@ -6,3 +6,4 @@ rules:
  "declaration-colon-space-after": always
  "max-empty-lines": 2
  "no-eol-whitespace": null
+ "no-missing-end-of-source-newline": null

@@ -7,18 +7,25 @@
     "start": "export NODE_ENV=production && webpack",
     "dev": "export NODE_ENV=development && babel-node server.js",
     "prod": "export NODE_ENV=production && webpack",
-    "test": "node_modules/.bin/karma start --single-run --no-auto-watch",
+    "test": "export NODE_ENV=development && karma start --single-run --no-auto-watch",
     "test-watch": "node_modules/.bin/karma start --auto-watch --no-single-run",
+    "test-jest": "jest",
     "server": "node server/server.js",
     "prepare": "sudo npm install -g webpack"
   },
   "author": "Don Mclean",
   "license": "MIT",
+  "jest": {
+    "collectCoverage": true,
+    "rootDir": "./",
+    "scriptPreprocessor": "__tests__utils/jest.preprocessor.js"
+  },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.13.2",
     "babel-eslint": "^6.1.2",
+    "babel-jest": "^14.1.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-react-html-attrs": "^2.0.0",
@@ -60,6 +67,7 @@
     "html-webpack-plugin": "^2.22.0",
     "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine-core": "^2.4.1",
+    "jest-cli": "^14.1.0",
     "karma": "^1.2.0",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chai": "^0.1.0",
@@ -93,6 +101,7 @@
     "react-addons-test-utils": "^15.3.0",
     "react-hot-loader": "^1.3.0",
     "react-redux": "^4.4.5",
+    "react-tools": "^0.13.3",
     "react-transform-hmr": "^1.0.4",
     "redux": "^3.5.2",
     "requirejs": "^2.2.0",
@@ -102,9 +111,7 @@
     "stylelint-webpack-plugin": "^0.3.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
-    "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-hot-middleware": "^2.12.2",
     "webpack-visualizer-plugin": "^0.1.5"
   },
   "dependencies": {

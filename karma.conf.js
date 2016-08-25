@@ -1,6 +1,7 @@
 const
     webpack = require('karma-webpack'),
     webpackConfig = require('./webpack.config'),
+    _v = webpackConfig.vars,
     path = require('path');
 
 module.exports = function (config) {
@@ -13,14 +14,13 @@ module.exports = function (config) {
         files: [
             './node_modules/phantomjs-polyfill/bind-polyfill.js',
             // 'src/**/*.jsx',
-            'src/tests/**/*-spec.js'
+            'src/tests/**/*-spec.js',
+            // 'src/js/**/*.{js,jsx}'
         ],
 
         preprocessors: {
             'src/tests/**/*-spec.js': ['webpack','sourcemap','coverage'],
-            'src/js/**/*.jsx': ['webpack','sourcemap','coverage'],
-            // 'src/tests/**/*spec.js': ['webpack', 'sourcemap', 'babel', 'coverage']
-            // 'src/tests/**/*spec.js': ['babel']
+            'src/js/**/*.{js,jsx}': ['webpack','sourcemap','coverage'],
         },
 
         plugins: [
@@ -44,28 +44,8 @@ module.exports = function (config) {
         },
 
         webpack: {
-            entry: [
-                './src/js/app.js'
-            ],
-            output: {
-                path: __dirname,
-                filename: 'app.js',
-                publicPath: ''
-            },
-            resolve: {
-                extensions: ['', '.js', '.jsx'],
-                root: path.resolve(path.join(__dirname, 'src')),
-            },
-            devtool: 'eval-source-map',
-            module: {
-                loaders: [
-                    {
-                        test: /\.jsx$|\.js$/,
-                        loaders: ['babel'],
-                        include: path.join(__dirname, 'src')
-                    }
-                ]
-            }
+            resolve: webpackConfig.resolve,
+            module: {loaders: webpackConfig.module.loaders}
         },
 
         logLevel: config.LOG_INFO,

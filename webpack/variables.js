@@ -5,7 +5,6 @@ module.exports = () => {
 
     vars.http                   = require('http');
     vars.path                   = require('path');
-    // vars.chokidar               = require('chokidar');
 
     vars.webpack                = require('webpack');
     vars.chalk                  = require('chalk');
@@ -17,8 +16,7 @@ module.exports = () => {
     vars.StyleLintPlugin        = require('stylelint-webpack-plugin');
     vars.ExtractTextPlugin      = require("extract-text-webpack-plugin");
     vars.Visualizer             = require('webpack-visualizer-plugin');
-    vars.webpackDevMiddleware   = require('webpack-dev-middleware');
-    vars.webpackHotMiddleware   = require('webpack-hot-middleware');
+    vars.WebpackDevServer       = require('webpack-dev-server');
 
     vars.precss                 = require('precss');
     vars.autoprefixer           = require('autoprefixer');

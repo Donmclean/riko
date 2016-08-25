@@ -52,7 +52,7 @@ describe('Menu', function () {
     it('renders without problems', function () {
         expect(result).to.exist;
     });
-    it('should render div component with class equals to veryFirstDiv', function() {
+    it('should render ul component with class: mainMenu test-autoprefixer', function() {
         assert.equal(result.type, 'ul');
         assert.equal(result.props.className, 'mainMenu test-autoprefixer');
     });

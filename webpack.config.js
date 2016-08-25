@@ -7,7 +7,6 @@ const
 config.devtool = null;
 
 config.entry = [
-  // 'webpack-hot-middleware/client', //handled in NODE_ENV switch statement below
   './src/js/app.js',
 ];
 
@@ -46,7 +45,7 @@ config.module = {
     {
       test: /\.pug$/,
       exclude: /(node_modules|bower_components)/,
-      loader: "pug-loader"
+      loader: "pug"
     },
 
       //FILES
@@ -56,16 +55,21 @@ config.module = {
     }
 
   ],
-  postLoaders: [
-      { //delays coverage til after tests are run, fixing transpiled source coverage error
-        test: /\.js$/,
-        exclude: /(tests|node_modules|bower_components)\//,
-        loader: 'istanbul-instrumenter'
-      }
-  ]
+  // postLoaders: [
+  //     { //delays coverage til after tests are run, fixing transpiled source coverage error
+  //       test: /\.jsx$|\.js$/,
+  //       exclude: /(tests|node_modules|bower_components)\//,
+  //       loader: 'istanbul-instrumenter'
+  //     }
+  // ]
 };
 
 config.postcss = [ _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
+
+// config.eslint = {
+//     failOnError: _v.NODE_ENV === "production",
+//     failOnWarning: false
+// };
 
 //*****************************************************************
 //*****************************PLUGINS*****************************
@@ -80,9 +84,7 @@ let plugins = [
     clear: true
   }),
   new _v.HtmlWebpackPlugin(indexJSFile),
-  new _v.Visualizer({
-    filename: './stats.html'
-  })
+  new _v.Visualizer({filename: './stats.html'})
 ];
 
 console.log('_v.NODE_ENV: ', _v.NODE_ENV);
@@ -122,10 +124,10 @@ switch (_v.NODE_ENV) {
     break;
   }
   case "development": {
-    //update entry
-    config.entry.unshift('webpack-hot-middleware/client');
 
-    config.devtool = '#eval-source-map';
+    config.devtool = '#inline-source-map';
+
+    config.debug = true;
 
     config.eslint = {
       failOnError: false,
@@ -138,7 +140,7 @@ switch (_v.NODE_ENV) {
         // SASS
         {
           test: /\.scss$/,
-          loaders: ['style', 'css-loader?sourceMap', "postcss", "sass?sourceMap",],
+          loaders: ['style', 'css-loader?sourceMap', "postcss", "sass?sourceMap"],
         },
 
         // CSS

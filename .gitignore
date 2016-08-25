@@ -5,6 +5,7 @@
 app
 node_modules
 test-coverage
+coverage
 selenium-debug.log
 npm-debug.log
 .DS_Store

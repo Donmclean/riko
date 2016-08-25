@@ -14,6 +14,12 @@ p {
   }
 }
 
+.mainMenu {
+  li {
+    margin: auto;
+  }
+}
+
 .test-autoprefixer {
   display: flex;
   transition: 1s;
@@ -25,7 +31,7 @@ p {
   text-align: center;
 }
 
-.hello-world__i {
+.hello-world__rotate {
   display: inline-block;
   -webkit-animation: rotate 4000ms infinite linear;
   animation: rotate 4000ms infinite linear;

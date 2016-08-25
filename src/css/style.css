@@ -5,8 +5,9 @@
 .increment {
     color: gray;
     cursor: pointer;
-    border: 1px solid green;
+    border: 1px solid red;
     border-radius: 3px;
     background-color: black;
-    display: flex;
+    transition: ease 2s;
+    outline: none;
 }
