@@ -51,6 +51,6 @@ describe('Menu', function () {
     });
     it('should render ul component with class: mainMenu test-autoprefixer', function() {
         expect(result.type).toEqual('ul');
-        // expect(result.props.className).toEqual('mainMenu test-autoprefixer');
+        expect(result.props.className).toEqual('mainMenu test-autoprefixer');
     });
 });
