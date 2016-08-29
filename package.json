@@ -10,7 +10,7 @@
     "test": "export NODE_ENV=development && karma start --single-run --no-auto-watch && jest",
     "test-watch": "node_modules/.bin/karma start --auto-watch --no-single-run",
     "test-jest": "jest",
-    "server": "node server/server.js",
+    "server": "babel-node server.js",
     "prepare": "sudo npm install -g webpack"
   },
   "author": "Don Mclean",
@@ -62,6 +62,7 @@
     "eslint": "^3.3.0",
     "eslint-loader": "^1.5.0",
     "express": "^4.14.0",
+    "express-history-api-fallback": "^2.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "fs-extra": "^0.30.0",

@@ -1,10 +1,10 @@
 const
     webpack = require('karma-webpack'),
     webpackConfig = require('./webpack.config'),
-    _v = webpackConfig.vars,
-    path = require('path');
+    customConfig = require('./webpack/config');
 
-module.exports = function (config) {
+module.exports = (config) => {
+
     config.set({
         browsers: [ 'PhantomJS' ], //run in PhantomJS
 
@@ -13,9 +13,7 @@ module.exports = function (config) {
 
         files: [
             './node_modules/phantomjs-polyfill/bind-polyfill.js',
-            // 'src/**/*.jsx',
-            'src/tests/**/*-spec.js',
-            // 'src/js/**/*.{js,jsx}'
+            customConfig.baseDir+'/src/tests/**/*-spec.js'
         ],
 
         preprocessors: {

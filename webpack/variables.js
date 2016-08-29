@@ -17,6 +17,7 @@ module.exports = () => {
     vars.ExtractTextPlugin      = require("extract-text-webpack-plugin");
     vars.Visualizer             = require('webpack-visualizer-plugin');
     vars.WebpackDevServer       = require('webpack-dev-server');
+    vars.fallback               = require('express-history-api-fallback');
 
     vars.precss                 = require('precss');
     vars.autoprefixer           = require('autoprefixer');

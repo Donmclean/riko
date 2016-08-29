@@ -3,6 +3,8 @@ const
     $ = require('gulp-load-plugins')(),
     config = require('./webpack/config');
 
+//TODO: create a delete app folder task
+
 gulp.task('sass', function() {
 
     return gulp.src(['src/sass/styles.scss'])

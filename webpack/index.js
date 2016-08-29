@@ -2,7 +2,7 @@
 module.exports = (config) => {
     const indexConfig = {};
 
-    indexConfig.template    = './src/templates/index.pug';
+    indexConfig.template    = config.template_src_path;
     indexConfig.inject      = "body";
     indexConfig.hash        = true;
     indexConfig.cache       = true; //default

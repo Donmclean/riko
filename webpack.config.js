@@ -7,13 +7,13 @@ const
 config.devtool = null;
 
 config.entry = [
-  './src/js/app.js',
+    config.js_main_entry_path
 ];
 
 config.output = {
-  path: __dirname + "/app",
-  filename: 'bundle.js',
-  publicPath: '/'
+  path: config.destDir,
+  filename: config.js_main_file_name,
+  publicPath: ''
 };
 
 config.resolve = {
@@ -84,7 +84,7 @@ let plugins = [
     clear: true
   }),
   new _v.HtmlWebpackPlugin(indexJSFile),
-  new _v.Visualizer({filename: './stats.html'})
+  new _v.Visualizer({filename: config.template_stats_file_name})
 ];
 
 console.log('_v.NODE_ENV: ', _v.NODE_ENV);
@@ -94,7 +94,7 @@ switch (_v.NODE_ENV) {
     config.devtool  = null;
 
     config.entry = {
-      riko: './src/js/app.js',
+      riko: config.js_main_entry_path,
     };
 
     config.module.loaders.push({
@@ -118,8 +118,8 @@ switch (_v.NODE_ENV) {
       new _v.webpack.optimize.DedupePlugin(),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false, compress: {warnings: false} }),
-      new _v.webpack.optimize.CommonsChunkPlugin(config.moduleName, config.js_main_name),
-      new _v.ExtractTextPlugin("styles.min.css", {allChunks: true})
+      new _v.webpack.optimize.CommonsChunkPlugin(config.moduleName, config.js_main_file_name),
+      new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true})
     ]);
     break;
   }
@@ -162,7 +162,7 @@ switch (_v.NODE_ENV) {
             reload: false //Allows hot module reloading to take care of this. (preserves state)
           }),
       new _v.StyleLintPlugin({
-        configFile: '.stylelintrc.yaml',
+        configFile: config.stylelintConfig,
         files: ['**/*.s?(a|c)ss','!node_modules/'],
         failOnError: false,
       })
