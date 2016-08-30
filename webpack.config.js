@@ -84,11 +84,6 @@ config.module = {
 
 config.postcss = [ _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
 
-// config.eslint = {
-//     failOnError: _v.NODE_ENV === "production",
-//     failOnWarning: false
-// };
-
 //*****************************************************************
 //*****************************PLUGINS*****************************
 //*****************************************************************
@@ -112,6 +107,13 @@ switch (_v.NODE_ENV) {
   case "production": {
 
     config.devtool  = null;
+
+    config.eslint = {
+      failOnError: true,
+      failOnWarning: false
+    };
+
+    config.bail = true;
 
     config.entry[config.moduleName] = config.js_main_entry_path;
 
