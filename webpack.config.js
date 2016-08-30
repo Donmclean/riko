@@ -29,7 +29,7 @@ config.module = {
     {
       test: /\.jsx$|\.js$/,
       loaders: [ 'eslint' ],
-      include: _v.path.join(__dirname, 'src'),
+      include: config.srcDir,
       exclude: /(node_modules|vendor|bower_components)/
     }
   ],
@@ -37,7 +37,7 @@ config.module = {
     // Javascript
     {
       test: /\.jsx$|\.js$/,
-      include: _v.path.join(__dirname, 'src'),
+      include: config.srcDir,
       loaders: ['react-hot','babel'],
     },
       //TEMPLATE (PUG)
@@ -124,7 +124,7 @@ switch (_v.NODE_ENV) {
         // CSS
         {
           test: /\.css$/,
-          include: _v.path.join(__dirname, 'src'),
+          include: config.srcDir,
           loader: _v.ExtractTextPlugin.extract("style", "css!postcss")
         }
     );
@@ -166,7 +166,7 @@ switch (_v.NODE_ENV) {
         // CSS
         {
           test: /\.css$/,
-          include: _v.path.join(__dirname, 'src'),
+          include: config.srcDir,
           loaders: ["style", "css?sourceMap!postcss"],
         }
     );

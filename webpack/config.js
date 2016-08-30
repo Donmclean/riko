@@ -11,6 +11,7 @@ config.nodePath                 = process.env.NODE_PATH;
 config.sitePrefix               = '';
 config.baseDir                  = process.cwd();
 config.destDir                  = config.baseDir+"/app";
+config.srcDir                   = config.baseDir+"/src";
 
 config.EXPRESS_PORT             = 3000;
 config.EXPRESS_ROOT             = config.destDir || config.baseDir + '/app';
