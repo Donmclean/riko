@@ -6,6 +6,15 @@ body {
   text-align: center;
 }
 
+img {
+  max-width: 10%;
+}
+
+video {
+  display: block;
+  margin: auto;
+}
+
 p {
   color: white;
   border-radius: 5px;

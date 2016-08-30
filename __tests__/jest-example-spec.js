@@ -1,7 +1,6 @@
 "use strict";
 
 jest.unmock('../src/js/components/Menu.jsx');
-jest.unmock('../src/js/components/App.js');
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
@@ -9,7 +8,6 @@ import ReactTestUtils from 'react-addons-test-utils';
 const renderer = ReactTestUtils.createRenderer();
 
 import Menu from '../src/js/components/Menu.jsx';
-import App from '../src/js/components/App.js';
 
 // TEST 1
 function sum(a, b) {

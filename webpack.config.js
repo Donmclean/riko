@@ -40,18 +40,36 @@ config.module = {
       include: _v.path.join(__dirname, 'src'),
       loaders: ['react-hot','babel'],
     },
-
       //TEMPLATE (PUG)
     {
       test: /\.pug$/,
       exclude: /(node_modules|bower_components)/,
       loader: "pug"
     },
-
-      //FILES
+    //FONTS
     {
-      test: /\.(jpg|jpeg|png|gif|tif|svg|woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url'
+      test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: `file?name=${config.media_fonts_output_path}/[name].[ext]`
+    },
+    //IMAGES
+    {
+      test: /\.(jpg|jpeg|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: `file?name=${config.media_images_output_path}/[name].[ext]`
+    },
+    //VIDEOS
+    {
+      test: /\.(mpeg|mpg|MPG|mp4|MP4|avi|AVI|wmv|WMV|flv|FLV)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: `file?name=${config.media_video_output_path}/[name].[ext]`
+    },
+    //AUDIO
+    {
+      test: /\.(wav|WAV|mp3|MP3|aiff|AIFF|flac|FLAC|mp4a|MP4A|wma|WMA|aac|AAC|au|AU|rm|RAM)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: `file?name=${config.media_audio_output_path}/[name].[ext]`
+    },
+    //FILES
+    {
+      test: /\.(doc|DOC|docx|DOCX|pdf|PDF|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: `file?name=${config.media_files_output_path}/[name].[ext]`
     }
 
   ],
@@ -90,7 +108,9 @@ let plugins = [
 console.log('_v.NODE_ENV: ', _v.NODE_ENV);
 
 switch (_v.NODE_ENV) {
+
   case "production": {
+
     config.devtool  = null;
 
     config.entry = {
@@ -118,8 +138,8 @@ switch (_v.NODE_ENV) {
       new _v.webpack.optimize.DedupePlugin(),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false, compress: {warnings: false} }),
-      new _v.webpack.optimize.CommonsChunkPlugin(config.moduleName, config.js_main_file_name),
-      new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true})
+      new _v.webpack.optimize.CommonsChunkPlugin(config.moduleName, config.js_output_path+'/'+config.js_main_file_name),
+      new _v.ExtractTextPlugin(config.styles_output_path+'/'+config.styles_main_file_name, {allChunks: true})
     ]);
     break;
   }
@@ -148,8 +168,8 @@ switch (_v.NODE_ENV) {
           test: /\.css$/,
           include: _v.path.join(__dirname, 'src'),
           loaders: ["style", "css?sourceMap!postcss"],
-
-        });
+        }
+    );
 
     plugins = plugins.concat([
       new _v.webpack.optimize.OccurenceOrderPlugin(),
