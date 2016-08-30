@@ -113,9 +113,7 @@ switch (_v.NODE_ENV) {
 
     config.devtool  = null;
 
-    config.entry = {
-      riko: config.js_main_entry_path,
-    };
+    config.entry[config.moduleName] = config.js_main_entry_path;
 
     config.module.loaders.push({
           test: /\.scss$/,
