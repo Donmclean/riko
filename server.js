@@ -1,4 +1,5 @@
 import config from './webpack.config';
+import browserSync from 'browser-sync';
 
 const _v = config.vars;
 
@@ -33,6 +34,10 @@ switch (_v.NODE_ENV) {
         _v.app.use((err, req, res, next) => {
             console.error("ERROR --> : ", err.stack);
             next(err);
+        });
+
+        browserSync.init({
+            proxy: 'localhost:'+config.EXPRESS_PORT
         });
 
         break;

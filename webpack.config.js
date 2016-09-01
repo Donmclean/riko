@@ -12,8 +12,7 @@ config.entry = [
 
 config.output = {
   path: config.destDir,
-  filename: config.js_main_file_name,
-  publicPath: ''
+  filename: config.js_main_file_name
 };
 
 config.resolve = {
@@ -82,7 +81,8 @@ config.module = {
   // ]
 };
 
-config.postcss = [ _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
+config.postcss = [ _v.autoprefixer({ browsers: ['> 0%'] }) ]; //all
+// config.postcss = [ _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
 
 //*****************************************************************
 //*****************************PLUGINS*****************************
@@ -105,6 +105,8 @@ console.log('_v.NODE_ENV: ', _v.NODE_ENV);
 switch (_v.NODE_ENV) {
 
   case "production": {
+
+    config.output.publicPath = '';
 
     config.devtool  = null;
 
@@ -139,11 +141,13 @@ switch (_v.NODE_ENV) {
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false, compress: {warnings: false} }),
       new _v.webpack.optimize.CommonsChunkPlugin(config.moduleName, config.js_output_path+'/'+config.js_main_file_name),
-      new _v.ExtractTextPlugin(config.styles_output_path+'/'+config.styles_main_file_name, {allChunks: true})
+      new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true})
     ]);
     break;
   }
   case "development": {
+
+    config.output.publicPath = '/';
 
     config.devtool = '#inline-source-map';
 
