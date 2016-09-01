@@ -13,7 +13,8 @@ switch (_v.NODE_ENV) {
             contentBase: config.output.path,
             publicPath: config.output.publicPath,
             historyApiFallback: true,
-            hot: true
+            hot: true,
+            headers: { 'Access-Control-Allow-Origin': '*' }
         }).listen(config.EXPRESS_PORT, 'localhost', function (err, result) {
             if (err) { console.log(err) }
             console.log('Listening at localhost:'+config.EXPRESS_PORT);

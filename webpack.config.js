@@ -12,7 +12,8 @@ config.entry = [
 
 config.output = {
   path: config.destDir,
-  filename: config.js_main_file_name
+  filename: config.js_main_file_name,
+  publicPath: '/'
 };
 
 config.resolve = {
@@ -33,7 +34,7 @@ config.module = {
     }
   ],
   loaders: [
-    // Javascript
+    // JAVASCRIPT
     {
       test: /\.jsx$|\.js$/,
       include: config.srcDir,
@@ -44,11 +45,6 @@ config.module = {
       test: /\.pug$/,
       exclude: /(node_modules|bower_components)/,
       loader: "pug"
-    },
-    //FONTS
-    {
-      test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: `file?name=${config.media_fonts_output_path}/[name].[ext]`
     },
     //IMAGES
     {
@@ -81,8 +77,7 @@ config.module = {
   // ]
 };
 
-config.postcss = [ _v.autoprefixer({ browsers: ['> 0%'] }) ]; //all
-// config.postcss = [ _v.autoprefixer({ browsers: ['last 2 versions'] }) ];
+config.postcss = [ _v.autoprefixer(config.autoprefixerOptions) ];
 
 //*****************************************************************
 //*****************************PLUGINS*****************************
@@ -100,15 +95,13 @@ let plugins = [
   new _v.Visualizer({filename: config.template_stats_file_name})
 ];
 
+config.devtool = '#inline-source-map';
+
 console.log('_v.NODE_ENV: ', _v.NODE_ENV);
 
 switch (_v.NODE_ENV) {
 
   case "production": {
-
-    config.output.publicPath = '';
-
-    config.devtool  = null;
 
     config.eslint = {
       failOnError: true,
@@ -119,15 +112,22 @@ switch (_v.NODE_ENV) {
 
     config.entry[config.moduleName] = config.js_main_entry_path;
 
-    config.module.loaders.push({
+    config.module.loaders.push(
+        // SASS
+        {
           test: /\.scss$/,
-          loader: _v.ExtractTextPlugin.extract("style", "css!postcss!sass"),
+          loader: _v.ExtractTextPlugin.extract("style", "css?sourceMap!postcss!sass?sourceMap")
         },
         // CSS
         {
           test: /\.css$/,
           include: config.srcDir,
-          loader: _v.ExtractTextPlugin.extract("style", "css!postcss")
+          loader: _v.ExtractTextPlugin.extract("style", "css?sourceMap", "postcss")
+        },
+        //FONTS
+        {
+          test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+          loader: `file?name=${config.media_fonts_output_path}/[name].[ext]`
         }
     );
 
@@ -139,17 +139,13 @@ switch (_v.NODE_ENV) {
       }),
       new _v.webpack.optimize.DedupePlugin(),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
-      new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false, compress: {warnings: false} }),
+      new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: true, compress: {warnings: false} }),
       new _v.webpack.optimize.CommonsChunkPlugin(config.moduleName, config.js_output_path+'/'+config.js_main_file_name),
       new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true})
     ]);
     break;
   }
   case "development": {
-
-    config.output.publicPath = '/';
-
-    config.devtool = '#inline-source-map';
 
     config.debug = true;
 
@@ -158,20 +154,26 @@ switch (_v.NODE_ENV) {
       failOnWarning: false
     };
 
-    config.debug = true;
-
     config.module.loaders.push(
         // SASS
         {
           test: /\.scss$/,
-          loaders: ['style', 'css-loader?sourceMap', "postcss", "sass?sourceMap"],
+          loaders: ['style', 'css-loader?sourceMap', "postcss", "sass?sourceMap"]
         },
-
         // CSS
         {
           test: /\.css$/,
           include: config.srcDir,
-          loaders: ["style", "css?sourceMap!postcss"],
+          loaders: ["style", "css?sourceMap!postcss"]
+        },
+        //FONTS
+        {
+          test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+          loader: "url?mimetype=application/font-woff"
+        },
+        {
+          test: /\.(eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+          loader: 'file'
         }
     );
 

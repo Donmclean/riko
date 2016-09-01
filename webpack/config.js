@@ -14,7 +14,7 @@ config.destDir                  = config.baseDir+"/app";
 config.srcDir                   = config.baseDir+"/src";
 
 config.EXPRESS_PORT             = 3000;
-config.EXPRESS_ROOT             = config.destDir || config.baseDir + '/app';
+config.EXPRESS_ROOT             = config.destDir;
 
 config.jscsConfig               = config.baseDir+'/.jscsrc';
 config.eslintConfig             = config.baseDir+'/.eslintrc';
@@ -31,12 +31,10 @@ config.js_main_file_name        = config.moduleName+'.js';
 config.js_main_entry_path       = config.baseDir+'/src/js/'+config.js_main_file_name;
 config.js_output_path           = 'assets/js';
 
-
 //**********************************************************************
 //*******************************STYLES*********************************
 //**********************************************************************
 config.styles_main_file_name    = 'styles.min.css';
-config.styles_output_path       = 'assets/css';
 
 //**********************************************************************
 //******************************TEMPLATE********************************
@@ -63,5 +61,11 @@ config.media_video_output_path  = 'assets/video';
 //**********************************************************************
 
 // See karma.conf.js file
+
+//**********************************************************************
+//*******************************EXTRAS*********************************
+//**********************************************************************
+
+config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
 
 module.exports = config;
