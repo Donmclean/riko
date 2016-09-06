@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Menu = () => (
-
-    <ul className="mainMenu test-autoprefixer">
-        <li><a href="#">RIKO</a></li>
-    </ul>
-);
-
-export default Menu;
+export default class Menu extends React.Component {
+    render() {
+        return (
+            <ul className="mainMenu test-autoprefixer">
+                <li><a href="#">RIKO</a></li>
+            </ul>
+        );
+    }
+}
