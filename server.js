@@ -37,6 +37,8 @@ switch (_v.NODE_ENV) {
             next(err);
         });
 
+        console.log('Launching Browser Sync proxy of port:'+config.EXPRESS_PORT);
+
         browserSync.init({
             proxy: 'localhost:'+config.EXPRESS_PORT
         });

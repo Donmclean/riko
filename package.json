@@ -6,11 +6,12 @@
   "scripts": {
     "start": "export NODE_ENV=production && webpack",
     "dev": "export NODE_ENV=development && babel-node server.js",
-    "prod": "export NODE_ENV=production && webpack",
+    "prod": "gulp clean && export NODE_ENV=production && webpack",
     "test": "export NODE_ENV=development && karma start --single-run --no-auto-watch && jest",
     "test-watch": "karma start --auto-watch --no-single-run",
     "test-jest": "jest",
-    "server": "babel-node server.js"
+    "clean": "gulp clean",
+    "server": "export NODE_ENV=production && babel-node server.js"
   },
   "author": "Don Mclean",
   "license": "MIT",

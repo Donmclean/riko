@@ -1,28 +1,28 @@
 const
     gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
-    config = require('./webpack/config');
+    config = require('./webpack/config'),
+    _v = config.vars;
 
-//TODO: create a delete app folder task
+gulp.task('clean', function(done) {
+    const dir = _v.path.basename(config.destDir);
 
-gulp.task('sass', function() {
-
-    return gulp.src(['src/sass/styles.scss'])
-        .pipe($.sass())
-        .pipe($.addSrc.append(['src/css/**/*.css']))
-        .pipe($.concat('styles.min.css'))
-        .pipe($.cleanCss())
-        .pipe(gulp.dest('./app'));
-});
-
-gulp.task('pug', function() {
-
-    return gulp.src(['src/templates/**/*.pug'])
-        .pipe($.pug())
-        .pipe($.injectString.before('</body>',`<script src="bundle.js" type="text/javascript"></script>`))
-        .pipe(gulp.dest('./app'));
-});
-
-gulp.task('watch-pug', function () {
-   return gulp.watch(['src/templates/**/*.pug'], gulp.parallel('pug'));
+    _v.qfs.removeTree(config.destDir)
+        .then(() => {
+            console.log(`'${_v.chalk.blue(dir)}' directory removed ${_v.chalk.green('successfully')}!`);
+            done();
+        })
+        .catch(err => {
+            switch (err.code) {
+                case 'ENOENT': {
+                    console.error(`the directory '${_v.chalk.red(dir)}' does not exist!`);
+                    break;
+                }
+                default: {
+                    console.error('error: ', err);
+                    break;
+                }
+            }
+            done();
+        });
 });

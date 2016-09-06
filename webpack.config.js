@@ -120,8 +120,6 @@ switch (_v.NODE_ENV) {
 
     config.bail = true;
 
-    config.entry[config.moduleName] = config.js_main_entry_path;
-
     config.module.loaders.push(
         // SASS
         {
@@ -150,7 +148,7 @@ switch (_v.NODE_ENV) {
       new _v.webpack.optimize.DedupePlugin(),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: true, compress: {warnings: false} }),
-      new _v.webpack.optimize.CommonsChunkPlugin(config.moduleName, config.js_output_path+'/'+config.js_main_file_name),
+      new _v.webpack.optimize.CommonsChunkPlugin('main', config.js_output_path+'/'+config.js_main_file_name),
       new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true})
     ]);
     break;

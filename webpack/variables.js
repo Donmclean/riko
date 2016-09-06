@@ -9,6 +9,7 @@ module.exports = () => {
     vars.webpack                = require('webpack');
     vars.chalk                  = require('chalk');
     vars._                      = require('lodash');
+    vars.qfs                    = require('q-io/fs');
 
     vars.ProgressBarPlugin      = require('progress-bar-webpack-plugin');
     vars.HtmlWebpackPlugin      = require('html-webpack-plugin');
