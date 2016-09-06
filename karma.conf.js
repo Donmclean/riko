@@ -13,12 +13,13 @@ module.exports = (config) => {
 
         files: [
             './node_modules/phantomjs-polyfill/bind-polyfill.js',
-            customConfig.baseDir+'/src/tests/**/*-spec.js'
+            customConfig.baseDir+'/src/tests/**/*.spec.js'
+
         ],
 
         preprocessors: {
-            'src/tests/**/*-spec.js': ['webpack','sourcemap','coverage'],
-            'src/js/**/*.{js,jsx}': ['webpack','sourcemap','coverage'],
+            'src/tests/**/*.spec.js': ['webpack','sourcemap','coverage'],
+            'src/js/**/*.{js,jsx}': ['webpack','sourcemap','coverage']
         },
 
         plugins: [

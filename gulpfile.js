@@ -1,8 +1,8 @@
 const
-    gulp = require('gulp'),
-    $ = require('gulp-load-plugins')(),
-    config = require('./webpack/config'),
-    _v = config.vars;
+    gulp    = require('gulp'),
+    $       = require('gulp-load-plugins')(),
+    config  = require('./webpack/config'),
+    _v      = config.vars;
 
 gulp.task('clean', function(done) {
     const dir = _v.path.basename(config.destDir);

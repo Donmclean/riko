@@ -1,13 +1,11 @@
 "use strict";
 
-jest.unmock('../src/js/components/App.js');
-
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 
 const renderer = ReactTestUtils.createRenderer();
 
-import App from '../src/js/components/App.js';
+import App from '../../src/js/components/App.js';
 
 // TEST 1
 function sum(a, b) {

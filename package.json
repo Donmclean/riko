@@ -28,6 +28,14 @@
       "js",
       "json",
       "es6"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(css|less|sass|scss)$": "<rootDir>/src/__tests__utils/styleMock.js",
+      "^.+\\.(jpe?g|png|gif|tif|svg|bmp|woff|woff2|eot|ttf|mp4|doc|docx|pdf|xls|xlsx|csv|txt)$": "<rootDir>/src/__tests__utils/fileMock.js"
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/__tests__utils/"
     ]
   },
   "devDependencies": {
