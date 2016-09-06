@@ -48,22 +48,28 @@ config.module = {
     },
     //IMAGES
     {
-      test: /\.(jpg|jpeg|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: `file?name=${config.media_images_output_path}/[name].[ext]`
+      test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+      loaders: _v.NODE_ENV === 'production' ? [
+        `file?name=${config.media_images_output_path}/[name].[ext]`,
+        'image-webpack'
+      ] :
+          [
+              `file?name=${config.media_images_output_path}/[name].[ext]`
+          ]
     },
     //VIDEOS
     {
-      test: /\.(mpeg|mpg|MPG|mp4|MP4|avi|AVI|wmv|WMV|flv|FLV)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
       loader: `file?name=${config.media_video_output_path}/[name].[ext]`
     },
     //AUDIO
     {
-      test: /\.(wav|WAV|mp3|MP3|aiff|AIFF|flac|FLAC|mp4a|MP4A|wma|WMA|aac|AAC|au|AU|rm|RAM)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: /\.(wav|WAV|mp3|aiff|flac|mp4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
       loader: `file?name=${config.media_audio_output_path}/[name].[ext]`
     },
     //FILES
     {
-      test: /\.(doc|DOC|docx|DOCX|pdf|PDF|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
       loader: `file?name=${config.media_files_output_path}/[name].[ext]`
     }
 
@@ -76,6 +82,10 @@ config.module = {
   //     }
   // ]
 };
+
+//Image optimization options | image-webpack-loader
+//https://github.com/tcoopman/image-webpack-loader
+config.imageWebpackLoader = config.imageminConfig;
 
 config.postcss = [ _v.autoprefixer(config.autoprefixerOptions) ];
 

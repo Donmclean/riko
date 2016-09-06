@@ -56,6 +56,25 @@ config.media_fonts_output_path  = 'assets/fonts';
 config.media_images_output_path = 'assets/images';
 config.media_video_output_path  = 'assets/video';
 
+//Image optimization options
+config.imageminConfig = {
+    // progressive: true,
+    pngquant:{
+        quality: '65-90',
+        speed: 4
+    },
+    svgo:{
+        plugins: [
+            {
+                removeViewBox: false
+            },
+            {
+                removeEmptyAttrs: false
+            }
+        ]
+    }
+};
+
 //**********************************************************************
 //*******************************TESTS**********************************
 //**********************************************************************

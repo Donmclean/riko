@@ -1,7 +1,12 @@
 import React from 'react';
 import Menu from './Menu.jsx';
+
+//Assets
 import image from '../../media/images/iko.jpg';
+import imagePNG from '../../media/images/test.png';
+import imageSVG from '../../media/images/arrow-tip.svg';
 import video from '../../media/videos/test-vid.mp4';
+import file from '../../media/files/test.pdf';
 
 export default class App extends React.Component {
     constructor () {
