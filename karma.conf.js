@@ -19,7 +19,7 @@ module.exports = (config) => {
 
         preprocessors: {
             'src/tests/**/*.spec.js': ['webpack','sourcemap','coverage'],
-            'src/js/**/*.{js,jsx}': ['webpack','sourcemap','coverage']
+            // 'src/js/**/*.{js,jsx}': ['webpack','sourcemap','coverage']
         },
 
         plugins: [
@@ -44,7 +44,16 @@ module.exports = (config) => {
 
         webpack: {
             resolve: webpackConfig.resolve,
-            module: {loaders: webpackConfig.module.loaders}
+            module: {
+                loaders: webpackConfig.module.loaders,
+                postLoaders: [
+                    { //delays coverage til after tests are run, fixing transpiled source coverage error
+                        test: /\.jsx$|\.js$/,
+                        exclude: /(__tests__|tests|node_modules|bower_components)\//,
+                        loader: 'istanbul-instrumenter'
+                    }
+                ]
+            }
         },
 
         logLevel: config.LOG_INFO,
