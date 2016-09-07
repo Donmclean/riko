@@ -18,6 +18,8 @@ module.exports = () => {
     vars.ExtractTextPlugin      = require("extract-text-webpack-plugin");
     vars.Visualizer             = require('webpack-visualizer-plugin');
     vars.WebpackDevServer       = require('webpack-dev-server');
+    vars.WebpackDevMiddleware   = require("webpack-dev-middleware");
+    vars.WebpackHotMiddleware   = require("webpack-hot-middleware");
     vars.fallback               = require('express-history-api-fallback');
 
     vars.precss                 = require('precss');

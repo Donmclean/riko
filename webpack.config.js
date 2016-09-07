@@ -165,7 +165,8 @@ switch (_v.NODE_ENV) {
 
     config.eslint = {
       failOnError: false,
-      failOnWarning: false
+      failOnWarning: false,
+      emitError: true
     };
 
     config.module.loaders.push(

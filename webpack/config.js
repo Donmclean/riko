@@ -96,4 +96,11 @@ config.externalModules = {
 
 config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
 
+config.hotReloadingOptions     = {
+    overlay: true,
+    reload: true,
+    noInfo: false,
+    quiet: false
+};
+
 module.exports = config;
