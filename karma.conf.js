@@ -18,7 +18,7 @@ module.exports = (config) => {
         ],
 
         preprocessors: {
-            'src/tests/**/*.spec.js': ['webpack','sourcemap','coverage'],
+            'src/tests/**/*.spec.{js,jsx}': ['webpack','sourcemap','coverage'],
             // 'src/js/**/*.{js,jsx}': ['webpack','sourcemap','coverage']
         },
 
