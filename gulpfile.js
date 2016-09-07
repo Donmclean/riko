@@ -26,3 +26,77 @@ gulp.task('clean', function(done) {
             done();
         });
 });
+
+gulp.task('run-selenium-tests', () => {
+
+    return gulp.src(config.nightWatchConfig)
+        .pipe($.plumber({errorHandler: (err) => {
+            if(err) {
+                console.error('GULP PLUMBER > run-selenium-tests ERROR:', err);
+            }
+        }}))
+        .pipe($.debug({title: 'running selenium tests:'}))
+        // .pipe($.nightwatch({
+        //     configFile: config.tests.nightWatchConfig,
+        //     cliArgs: {
+        //         env: 'chrome',
+        //         verbose: true
+        //     }
+        // }))
+        // .pipe($.nightwatch({
+        //     configFile: config.nightWatchConfig,
+        //     cliArgs: {
+        //         env: 'firefox',
+        //         verbose: true
+        //     }
+        // }))
+        // .pipe($.nightwatch({
+        //     configFile: config.nightWatchConfig,
+        //     cliArgs: {
+        //         env: 'safari',
+        //         verbose: true
+        //     }
+        // }))
+        .pipe($.nightwatch({
+            configFile: config.nightWatchConfig,
+            cliArgs: {
+                env: 'browserstack-chrome',
+                verbose: true
+            }
+        }));
+    // .pipe($.nightwatch({
+    //     configFile: config.nightWatchConfig,
+    //     cliArgs: {
+    //         env: 'browserstack-firefox',
+    //         verbose: true
+    //     }
+    // }))
+    // .pipe($.nightwatch({
+    //     configFile: config.nightWatchConfig,
+    //     cliArgs: {
+    //         env: 'browserstack-safari',
+    //         verbose: true
+    //     }
+    // }))
+    // .pipe($.nightwatch({
+    //     configFile: config.nightWatchConfig,
+    //     cliArgs: {
+    //         env: 'browserstack-ie10',
+    //         verbose: true
+    //     }
+    // }))
+    // .pipe($.nightwatch({
+    //     configFile: config.nightWatchConfig,
+    //     cliArgs: {
+    //         env: 'browserstack-ie11',
+    //         verbose: true
+    //     }
+    // }))
+    // .pipe($.nightwatch({
+    //     configFile: config.nightWatchConfig,
+    //     cliArgs: {
+    //         env: 'browserstack-ipad2',
+    //         verbose: true
+    //     }
+    // }));
+});
