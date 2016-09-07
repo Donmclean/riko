@@ -18,8 +18,10 @@
   "author": "Don Mclean",
   "license": "MIT",
   "jest": {
+    "verbose": true,
     "automock": false,
     "collectCoverage": true,
+    "coverageDirectory": "test-coverage",
     "rootDir": "./",
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "testFileExtensions": [
