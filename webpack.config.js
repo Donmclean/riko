@@ -126,6 +126,11 @@ switch (_v.NODE_ENV) {
           test: /\.scss$/,
           loader: _v.ExtractTextPlugin.extract("style", "css?sourceMap!postcss!sass?sourceMap")
         },
+        // LESS
+        {
+          test: /\.less$/,
+          loader: _v.ExtractTextPlugin.extract("style", "css?sourceMap!postcss!less?sourceMap")
+        },
         // CSS
         {
           test: /\.css$/,
@@ -166,7 +171,12 @@ switch (_v.NODE_ENV) {
         // SASS
         {
           test: /\.scss$/,
-          loaders: ['style', 'css-loader?sourceMap', "postcss", "sass?sourceMap"]
+          loaders: ['style', 'css?sourceMap', "postcss", "sass?sourceMap"]
+        },
+        // LESS
+        {
+          test: /\.less$/,
+          loaders: ['style', 'css?sourceMap', 'postcss', 'less?sourceMap']
         },
         // CSS
         {

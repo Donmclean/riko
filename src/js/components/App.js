@@ -25,7 +25,6 @@ export default class App extends React.Component {
         } else {
             this.setState({ animation: 'hello-world__rotate', isAnimating: true });
         }
-        console.log('this.state', this.state);
     }
     render() {
         return (
@@ -36,6 +35,7 @@ export default class App extends React.Component {
                 <img src={image} />
                 <video width="320" height="240" controls autoPlay src={video} type="video/mp4" />
                 <Menu/>
+                <h5>LESS</h5>
                 <button onClick={this.log.bind(this)} className="increment box">RIKO</button>
             </div>
         );

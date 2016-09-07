@@ -59,16 +59,6 @@ module.exports = (config) => {
         logLevel: config.LOG_INFO,
 
         captureConsole: true,
-        colors: true,
-
-        webpackMiddleware: {
-            // webpack-dev-middleware configuration
-            // i. e.
-            stats: 'errors-only'
-        },
-
-        webpackServer: {
-            noInfo: true //please don't spam the console when running in karma!
-        }
+        colors: true
     });
 };
