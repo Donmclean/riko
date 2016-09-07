@@ -154,6 +154,7 @@ switch (_v.NODE_ENV) {
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: true, compress: {warnings: false} }),
       new _v.webpack.optimize.CommonsChunkPlugin('main', config.js_output_path+'/'+config.js_main_file_name),
+      new _v.webpack.ProvidePlugin(config.externalModules),
       new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true})
     ]);
     break;
@@ -209,7 +210,8 @@ switch (_v.NODE_ENV) {
         configFile: config.stylelintConfig,
         files: ['**/*.s?(a|c)ss','!node_modules/'],
         failOnError: false,
-      })
+      }),
+      new _v.webpack.ProvidePlugin(config.externalModules)
     ]);
     break;
   }
