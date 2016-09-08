@@ -2,7 +2,8 @@ const
     custom_config = require('./webpack/config'),
     config        = custom_config || {},
     indexJSFile   = require('./webpack/index')(config),
-    _v            = config.vars;
+    _v            = config.vars,
+    funcs         = require('./webpack/functions')(_v);
 
 config.devtool = null;
 
@@ -49,13 +50,7 @@ config.module = {
     //IMAGES
     {
       test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-      loaders: _v.NODE_ENV === 'production' ? [
-        `file?name=${config.media_images_output_path}/[name].[ext]`,
-        'image-webpack'
-      ] :
-          [
-              `file?name=${config.media_images_output_path}/[name].[ext]`
-          ]
+      loader: `file?name=${config.media_images_output_path}/[name].[ext]`
     },
     //VIDEOS
     {
@@ -83,10 +78,6 @@ config.module = {
   // ]
 };
 
-//Image optimization options | image-webpack-loader
-//https://github.com/tcoopman/image-webpack-loader
-config.imageWebpackLoader = config.imageminConfig;
-
 config.postcss = [ _v.autoprefixer(config.autoprefixerOptions) ];
 
 //*****************************************************************
@@ -102,7 +93,9 @@ let plugins = [
     clear: true
   }),
   new _v.HtmlWebpackPlugin(indexJSFile),
-  new _v.Visualizer({filename: config.template_stats_file_name})
+  new _v.Visualizer({
+    filename: funcs.insertGitVersionIntoFilename(config.template_stats_file_name, _v.GIT_VERSION)
+  })
 ];
 
 config.devtool = '#inline-source-map';
@@ -155,7 +148,11 @@ switch (_v.NODE_ENV) {
       new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: true, compress: {warnings: false} }),
       new _v.webpack.optimize.CommonsChunkPlugin('main', config.js_output_path+'/'+config.js_main_file_name),
       new _v.webpack.ProvidePlugin(config.externalModules),
-      new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true})
+      new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true}),
+
+      //Image optimization options | imagemin-webpack-plugin
+      //https://github.com/Klathmon/imagemin-webpack-plugin
+      new _v.ImageminPlugin(config.imageminConfig)
     ]);
     break;
   }

@@ -40,7 +40,7 @@ config.styles_main_file_name    = 'styles.min.css';
 //******************************TEMPLATE********************************
 //**********************************************************************
 config.template_main_file_name  = 'index.html';
-config.template_stats_file_name = 'stats.html';
+config.template_stats_file_name = '';
 config.template_src_path        = config.baseDir+'/src/templates/index.pug';
 
 //**********************************************************************

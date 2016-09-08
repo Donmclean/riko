@@ -10,6 +10,8 @@ module.exports = () => {
     vars.chalk                  = require('chalk');
     vars._                      = require('lodash');
     vars.qfs                    = require('q-io/fs');
+    vars.fs                     = require('fs-extra');
+    vars.GIT_VERSION            = require('child_process').execSync('git rev-parse HEAD').toString().trim();
 
     vars.ProgressBarPlugin      = require('progress-bar-webpack-plugin');
     vars.HtmlWebpackPlugin      = require('html-webpack-plugin');
@@ -21,6 +23,7 @@ module.exports = () => {
     vars.WebpackDevMiddleware   = require("webpack-dev-middleware");
     vars.WebpackHotMiddleware   = require("webpack-hot-middleware");
     vars.fallback               = require('express-history-api-fallback');
+    vars.ImageminPlugin         = require('imagemin-webpack-plugin').default;
 
     vars.precss                 = require('precss');
     vars.autoprefixer           = require('autoprefixer');
