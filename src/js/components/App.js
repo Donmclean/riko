@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from './Menu.jsx';
+const logit = require('./../../vendor/logit');
 
 //TODO: figure out how to test with assets!
 //Assets
@@ -27,6 +28,7 @@ export default class App extends React.Component {
         }
     }
     render() {
+        logit();
         return (
             <div>
                 <h2 className="hello-world">
