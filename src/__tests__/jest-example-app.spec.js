@@ -2,10 +2,9 @@
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
+import App from '../../src/js/components/App.js';
 
 const renderer = ReactTestUtils.createRenderer();
-
-import App from '../../src/js/components/App.js';
 
 // TEST 1
 function sum(a, b) {
@@ -36,8 +35,10 @@ describe('App', function () {
 
     renderer.render(<App />);
     let result;
+    let app;
 
     beforeEach(function() {
+        app = new App;
         renderer.render(<App />);
         result = renderer.getRenderOutput();
     });
@@ -48,4 +49,12 @@ describe('App', function () {
     it('should render a div component', function() {
         expect(result.type).toEqual('div');
     });
+
+    describe('log()', function () {
+        it('should return a string', function() {
+            let result = app.log();
+            expect(typeof '').toBe(typeof result);
+        });
+    });
+
 });

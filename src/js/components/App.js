@@ -26,6 +26,7 @@ export default class App extends React.Component {
         } else {
             this.setState({ animation: 'hello-world__rotate', isAnimating: true });
         }
+        return 'return from log function located in App Component!';
     }
     render() {
         logit();
