@@ -47,11 +47,6 @@ config.module = {
       exclude: /(node_modules|bower_components)/,
       loader: "pug"
     },
-    //IMAGES
-    {
-      test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-      loader: `file?name=${config.media_images_output_path}/[name].[ext]`
-    },
     //VIDEOS
     {
       test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
@@ -134,6 +129,11 @@ switch (_v.NODE_ENV) {
         {
           test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
           loader: `file?name=${config.media_fonts_output_path}/[name].[ext]`
+        },
+        //IMAGES
+        {
+          test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+          loader: `file?name=${config.media_images_output_path}/[name].[ext]`
         }
     );
 
@@ -191,6 +191,11 @@ switch (_v.NODE_ENV) {
         {
           test: /\.(eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
           loader: 'file'
+        },
+        //IMAGES
+        {
+          test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+          loader: 'url'
         }
     );
 
