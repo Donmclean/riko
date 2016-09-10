@@ -66,7 +66,7 @@ config.media_images_output_path = 'assets/images';
 config.media_video_output_path  = 'assets/video';
 
 // IMPORTANT!!! Use absolute path here.
-config.media_favicon_path       = config.baseDir+'/src/media/images/iko.jpg';
+config.media_favicon_path       = config.baseDir+'/src/media/images/riko-favicon.png';
 
 //Image optimization options
 config.imageminConfig = {

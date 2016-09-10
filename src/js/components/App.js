@@ -4,7 +4,7 @@ const logit = require('./../../vendor/logit');
 
 //TODO: figure out how to test with assets!
 //Assets
-import image from '../../media/images/iko.jpg';
+import image from '../../media/images/riko-logo.png';
 import imagePNG from '../../media/images/test.png';
 import imageSVG from '../../media/images/arrow-tip.svg';
 import video from '../../media/videos/test-vid.mp4';
