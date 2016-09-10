@@ -7,8 +7,6 @@ const config = {};
 config.vars                     = require('./variables')();
 
 config.moduleName               = 'riko';
-config.nodePath                 = process.env.NODE_PATH;
-config.sitePrefix               = '';
 config.baseDir                  = process.cwd();
 config.destDir                  = config.baseDir+"/app";
 config.srcDir                   = config.baseDir+"/src";
@@ -21,6 +19,7 @@ config.eslintConfig             = config.baseDir+'/.eslintrc';
 config.stylelintConfig          = config.baseDir+'/.stylelintrc.yaml';
 config.karmaConfig              = config.baseDir+'/karma.conf.js';
 config.nightWatchConfig         = config.baseDir+'/nightwatch.json';
+config.packageJson              = config.baseDir+'/package.json';
 
 
 //**********************************************************************
@@ -109,9 +108,11 @@ config.hotReloadingOptions     = {
     quiet: false
 };
 
-// IMPORTANT! must be and array or string
-config.onBuildStartShellCommands = '';
+// IMPORTANT! must be and array
+config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
-config.onBuildExitShellCommands = [''];
+config.onBuildExitShellCommands = [];
+
+config.failOnProdBuildError = true;
 
 module.exports = config;

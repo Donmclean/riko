@@ -107,11 +107,11 @@ switch (_v.NODE_ENV) {
   case "production": {
 
     config.eslint = {
-      failOnError: true,
+      failOnError: config.failOnProdBuildError,
       failOnWarning: false
     };
 
-    config.bail = true;
+    config.bail = config.failOnProdBuildError;
 
     config.module.loaders.push(
         // SASS
