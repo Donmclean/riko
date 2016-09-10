@@ -43,6 +43,12 @@ config.template_main_file_name  = 'index.html';
 config.template_stats_file_name = '';
 config.template_src_path        = config.baseDir+'/src/templates/index.pug';
 
+//if you're using a custom template engine 'OTHER THAN' pug or html
+//add as string below.
+//https://www.npmjs.com/package/template-html-loader
+//https://github.com/tj/consolidate.js
+config.template_engine          = ''; //eg: hbs, handlebars, ejs, mustache
+
 //**********************************************************************
 //********************************MEDIA*********************************
 //**********************************************************************
@@ -102,5 +108,10 @@ config.hotReloadingOptions     = {
     noInfo: false,
     quiet: false
 };
+
+// IMPORTANT! must be and array or string
+config.onBuildStartShellCommands = '';
+config.onBuildEndShellCommands = [];
+config.onBuildExitShellCommands = [''];
 
 module.exports = config;

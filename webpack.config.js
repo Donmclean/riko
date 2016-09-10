@@ -41,11 +41,16 @@ config.module = {
       include: config.srcDir,
       loaders: ['react-hot','babel'],
     },
-      //TEMPLATE (PUG)
+      //TEMPLATES (PUG)
     {
       test: /\.pug$/,
       exclude: /(node_modules|bower_components)/,
       loader: "pug"
+    },
+      //TEMPLATES (OTHER)
+    {
+      test: /\.(ejs|mustache|hbs|handlebars)$/,
+      loader: "template-html-loader"+ !_v._.isEmpty(config.template_engine) ? '?engine='+config.template_engine : ''
     },
     //VIDEOS
     {
@@ -152,7 +157,12 @@ switch (_v.NODE_ENV) {
 
       //Image optimization options | imagemin-webpack-plugin
       //https://github.com/Klathmon/imagemin-webpack-plugin
-      new _v.ImageminPlugin(config.imageminConfig)
+      new _v.ImageminPlugin(config.imageminConfig),
+      new _v.WebpackShellPlugin({
+        onBuildStart: config.onBuildStartShellCommands,
+        onBuildEnd: config.onBuildEndShellCommands,
+        onBuildExit: config.onBuildExitShellCommands,
+      })
     ]);
     break;
   }

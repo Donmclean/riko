@@ -133,11 +133,13 @@
     "style-loader": "^0.13.1",
     "stylelint-config-standard": "^12.0.0",
     "stylelint-webpack-plugin": "^0.3.1",
+    "template-html-loader": "0.0.3",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.12.2",
+    "webpack-shell-plugin": "^0.4.3",
     "webpack-visualizer-plugin": "^0.1.5"
   },
   "dependencies": {
