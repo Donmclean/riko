@@ -21,6 +21,10 @@ config.karmaConfig              = config.baseDir+'/karma.conf.js';
 config.nightWatchConfig         = config.baseDir+'/nightwatch.json';
 config.packageJson              = config.baseDir+'/package.json';
 
+config.buildFiles               = [
+    config.baseDir+'/webpack/**/*.js',
+    config.baseDir+'/test-riko/**/*.js'
+];
 
 //**********************************************************************
 //********************************JS************************************
@@ -60,6 +64,9 @@ config.media_files_output_path  = 'assets/files'; //pdfs, docs, etc
 config.media_fonts_output_path  = 'assets/fonts';
 config.media_images_output_path = 'assets/images';
 config.media_video_output_path  = 'assets/video';
+
+// IMPORTANT!!! Use absolute path here.
+config.media_favicon_path       = config.baseDir+'/src/media/images/iko.jpg';
 
 //Image optimization options
 config.imageminConfig = {

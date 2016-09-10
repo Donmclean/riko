@@ -27,6 +27,19 @@ gulp.task('clean', function(done) {
         });
 });
 
+gulp.task('lint', function() {
+    return gulp.src(config.buildFiles)
+        .pipe($.plumber({errorHandler: (err) => {
+            if(err) {
+                console.error('GULP PLUMBER > lint ERROR:', err);
+            }
+        }}))
+        .pipe($.eslint({configFile: './test-riko/.eslintrc'}))
+        .pipe($.eslint.format())
+        .pipe($.eslint.failAfterError());
+
+});
+
 gulp.task('run-selenium-tests', () => {
 
     return gulp.src(config.nightWatchConfig)

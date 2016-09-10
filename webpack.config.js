@@ -162,7 +162,8 @@ switch (_v.NODE_ENV) {
         onBuildStart: config.onBuildStartShellCommands,
         onBuildEnd: config.onBuildEndShellCommands,
         onBuildExit: config.onBuildExitShellCommands,
-      })
+      }),
+      new _v.CleanWebpackPlugin([config.destDir], {root: config.baseDir, verbose: true, dry: false})
     ]);
     break;
   }

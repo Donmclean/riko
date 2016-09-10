@@ -6,21 +6,15 @@ const
     custom_config = require('../webpack.config'),
     mock_config = require('./mock-config')();
 
-const
-    expect = chai.expect,
-    assert = chai.assert;
+const assert = chai.assert;
 
 const
     REQUIRED_KEYS       = _.keys(mock_config.config),
     VARIABLES           = custom_config.vars,
 
     configKeys          = _.keys(custom_config),
-    configValues        = _.values(custom_config),
     mockConfig          = mock_config.config,
-    mockPackageJson     = mock_config.packageJson,
-    mockdevDependencies = mock_config.packageJson.devDependencies,
-    mockKeys            = _.keys(mock_config),
-    mockValues          = _.values(mock_config);
+    mockdevDependencies = mock_config.packageJson.devDependencies;
 
 describe('Config', function() {
     describe('REQUIRED_KEYS', function() {
