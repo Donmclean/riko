@@ -40,7 +40,9 @@
       "^.+\\.(css|less|sass|scss)$": "<rootDir>/src/__tests__utils/styleMock.js",
       "^.+\\.(jpe?g|png|gif|tif|svg|bmp|woff|woff2|eot|ttf|mp4|doc|docx|pdf|xls|xlsx|csv|txt)$": "<rootDir>/src/__tests__utils/fileMock.js"
     },
-    "testPathDirs": ["<rootDir>/src/"],
+    "testPathDirs": [
+      "<rootDir>/src/"
+    ],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/__tests__utils/"
@@ -54,6 +56,7 @@
     "babel-jest": "^14.1.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-istanbul": "^2.0.1",
     "babel-plugin-react-html-attrs": "^2.0.0",
     "babel-plugin-react-transform": "^2.0.2",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
