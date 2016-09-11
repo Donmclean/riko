@@ -119,6 +119,7 @@ config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];
 
-config.failOnProdBuildError = true;
+config.failOnProdBuildJsError = true;
+config.failOnProdBuildStyleError = false;
 
 module.exports = config;
