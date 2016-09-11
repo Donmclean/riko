@@ -176,6 +176,8 @@ switch (_v.NODE_ENV) {
     ]);
     break;
   }
+
+  case "test":
   case "development": {
 
     config.debug = true;
