@@ -13,8 +13,10 @@
     "test-jest": "jest",
     "test-selenium": "gulp run-selenium-tests",
     "test-build": "gulp lint && export NODE_ENV=production && mocha test-riko/riko.spec.js",
-    "clean": "gulp clean",
-    "server": "export NODE_ENV=production && babel-node server.js"
+    "test-complete": "npm run setup-demo && npm test",
+    "server": "export NODE_ENV=production && babel-node server.js",
+    "setup": "babel-node bin/_setup/setup.js --setup",
+    "setup-demo": "babel-node bin/_setup/setup.js --demo"
   },
   "author": "Don Mclean",
   "license": "MIT",

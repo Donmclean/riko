@@ -2,9 +2,7 @@ language: node_js
 jdk:
  - oraclejdk8
 node_js:
-  - "6.3.1"
-before_script:
-  - npm install webpack -g
+  - "6.5.0"
 install:
   - npm install
 script: npm test
