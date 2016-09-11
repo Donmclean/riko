@@ -39,7 +39,7 @@ config.module = {
     {
       test: /\.jsx$|\.js$/,
       include: config.srcDir,
-      loaders: ['react-hot','babel'],
+      loaders: ['react-hot','babel']
     },
       //TEMPLATES (PUG)
     {
@@ -102,7 +102,8 @@ let plugins = [
         'src/**/*.s?(a|c)ss','src/**/*.less','src/**/*.css','!node_modules/'
     ],
     failOnError: config.failOnProdBuildStyleError
-  })
+  }),
+  new _v.WebpackNotifierPlugin({contentImage: config.baseDir+'/test-riko/riko-favicon.png'}),
 ];
 
 config.devtool = 'inline-source-map';

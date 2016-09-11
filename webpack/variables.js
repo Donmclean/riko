@@ -26,6 +26,7 @@ module.exports = () => {
     vars.ImageminPlugin         = require('imagemin-webpack-plugin').default;
     vars.WebpackShellPlugin     = require('webpack-shell-plugin');
     vars.CleanWebpackPlugin     = require('clean-webpack-plugin');
+    vars.WebpackNotifierPlugin  = require('webpack-notifier');
 
     vars.precss                 = require('precss');
     vars.autoprefixer           = require('autoprefixer');
