@@ -55,6 +55,9 @@ module.exports = (config) => {
                 ]
             }
         },
+        webpackMiddleware: {
+            stats: 'errors-only'
+        },
 
         logLevel: config.LOG_INFO,
 

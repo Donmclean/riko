@@ -10,6 +10,12 @@ switch (_v.NODE_ENV) {
         //HOT RELOADING WITH EXPRESS SERVER + WEBPACK HOT & DEV MIDDLEWARES
         //*******************************************************************
 
+        const stats = {
+            colors: true, hash: true, version: true, timings: true, assets: false,
+            chunks: false, modules: false, reasons: false, children: false, source: false,
+            errors: true, errorDetails: true, warnings: true, publicPath: false
+        };
+
         const compiler = _v.webpack(config);
 
         if(config.hotReloadingOptions && !_v._.isEmpty(config.hotReloadingOptions)) {
@@ -24,7 +30,8 @@ switch (_v.NODE_ENV) {
             publicPath: config.output.publicPath,
             historyApiFallback: true,
             hot: true,
-            headers: { 'Access-Control-Allow-Origin': '*' }
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            stats: stats
         }));
 
         _v.app.use(_v.WebpackHotMiddleware(compiler));
@@ -48,7 +55,8 @@ switch (_v.NODE_ENV) {
         //     historyApiFallback: true,
         //     hot: true,
         //     inline: true,
-        //     headers: { 'Access-Control-Allow-Origin': '*' }
+        //     headers: { 'Access-Control-Allow-Origin': '*' },
+        //     stats: stats
         // }).listen(config.EXPRESS_PORT, 'localhost', function (err, result) {
         //     if (err) { console.log(err) }
         //     console.log('Listening at localhost:'+config.EXPRESS_PORT);
