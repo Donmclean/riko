@@ -1,6 +1,5 @@
 "use strict";
 const
-    fs      = require('fs-extra'),
     qfs     = require('q-io/fs'),
     _       = require('lodash'),
     chalk   = require('chalk'),
@@ -36,7 +35,7 @@ qfs.list(baseDir)
         console.log(`creating ${chalk.blue('src/')} folder and sub directories`);
         return qfs.copyTree(baseDir+`/bin/_setup/${srcToCopy}`, srcDir);
     })
-    .then(result => {
+    .then(() => {
         console.log(`${chalk.blue('src/')} folder created ${chalk.green('successfully')}`);
     })
     .catch(err => {

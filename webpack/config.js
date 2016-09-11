@@ -22,6 +22,7 @@ config.srcDir                   = config.baseDir+"/src";
 
 config.buildFiles               = [
     config.baseDir+'/webpack/**/*.js',
+    config.baseDir+'/bin/_setup/setup.js',
     config.baseDir+'/test-riko/**/*.js'
 ];
 
