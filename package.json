@@ -13,7 +13,7 @@
     "test-jest": "jest",
     "test-selenium": "gulp run-selenium-tests",
     "test-build": "gulp lint && NODE_ENV=production mocha test-riko/riko.spec.js",
-    "test-complete": "npm run setup-demo && npm test && npm run prod",
+    "test-complete": "npm run setup-demo && npm run prod && npm test",
     "server": "NODE_ENV=production babel-node server.js",
     "setup": "babel-node bin/_setup/setup.js --setup",
     "setup-demo": "babel-node bin/_setup/setup.js --demo"
