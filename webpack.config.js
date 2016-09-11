@@ -39,7 +39,7 @@ config.module = {
     {
       test: /\.jsx$|\.js$/,
       include: config.srcDir,
-      loaders: ['react-hot','babel']
+      loaders: _v.NODE_ENV === 'test' ? ['babel'] : ['react-hot','babel']
     },
       //TEMPLATES (PUG)
     {
