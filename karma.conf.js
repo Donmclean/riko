@@ -1,6 +1,6 @@
 const
-    webpack = require('karma-webpack'),
-    webpackConfig = require('./webpack.config');
+    webpackConfig = require('./webpack.config'),
+    _v = webpackConfig.vars;
 
 module.exports = (config) => {
 
@@ -23,7 +23,7 @@ module.exports = (config) => {
 
         plugins: [
             //others
-            webpack,'karma-sourcemap-loader', 'karma-spec-reporter',
+            'karma-webpack','karma-sourcemap-loader', 'karma-spec-reporter',
             'karma-babel-preprocessor', 'karma-coverage','karma-mocha-reporter',
 
             //Browser Launchers
@@ -54,6 +54,7 @@ module.exports = (config) => {
                 ]
             }
         },
+
         webpackMiddleware: {
             stats: 'errors-only'
         },
