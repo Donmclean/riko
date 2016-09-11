@@ -23,7 +23,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <h2 className="hello-world">
-                    <span className={this.state.animation}>Hello Worldd!</span>
+                    <span className={this.state.animation}>Hello World!</span>
                 </h2>
                 <img src={image} />
                 <button onClick={this.action.bind(this)} className="button">RIKO</button>

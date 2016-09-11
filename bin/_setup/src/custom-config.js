@@ -19,9 +19,8 @@ config.destDir                  = baseDir+"/app";
 config.EXPRESS_PORT             = 3000;
 config.EXPRESS_ROOT             = config.destDir;
 
-config.jscsConfig               = baseDir+'/.jscsrc';
-config.eslintConfig             = baseDir+'/.eslintrc';
-config.stylelintConfig          = baseDir+'/.stylelintrc.yaml';
+config.eslintConfig             = baseDir+'/src/__linters/.eslintrc';
+config.stylelintConfig          = baseDir+'/src/__linters/.stylelintrc.yaml';
 config.karmaConfig              = baseDir+'/karma.conf.js';
 config.nightWatchConfig         = baseDir+'/nightwatch.json';
 config.packageJson              = baseDir+'/package.json';
@@ -120,6 +119,7 @@ config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];
 
-config.failOnProdBuildError = true;
+config.failOnProdBuildJsError = true;
+config.failOnProdBuildStyleError = false;
 
 module.exports = config;

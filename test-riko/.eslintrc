@@ -6,6 +6,9 @@
       "jsx": true
     }
   },
+  "env": {
+    "node": true
+  },
   "globals": {
     "describe": false,
     "it": false,

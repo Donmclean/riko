@@ -2,14 +2,14 @@
 //Ensure src/custom-config.js file exists
 //**********************************************************************
 try {
-    require('../bin/_setup/src/custom-config')
+    require('../src/custom-config')
 } catch (err) {
     if(err) {
         throw new Error('ERROR: no custom-config.js file found in src/ directory', err);
     }
 }
 
-const config = require('../bin/_setup/src/custom-config') || {};
+const config = require('../src/custom-config') || {};
 
 //**********************************************************************
 //*******************************CORE***********************************

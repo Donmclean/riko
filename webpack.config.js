@@ -95,6 +95,13 @@ let plugins = [
   new _v.HtmlWebpackPlugin(indexJSFile),
   new _v.Visualizer({
     filename: funcs.insertGitVersionIntoFilename(config.template_stats_file_name, _v.GIT_VERSION)
+  }),
+  new _v.StyleLintPlugin({
+    configFile: config.stylelintConfig,
+    files: [
+        'src/**/*.s?(a|c)ss','src/**/*.less','src/**/*.css','!node_modules/'
+    ],
+    failOnError: config.failOnProdBuildStyleError
   })
 ];
 
@@ -107,11 +114,12 @@ switch (_v.NODE_ENV) {
   case "production": {
 
     config.eslint = {
-      failOnError: config.failOnProdBuildError,
-      failOnWarning: false
+      failOnError: config.failOnProdBuildJsError,
+      failOnWarning: false,
+      configFile: config.eslintConfig
     };
 
-    config.bail = config.failOnProdBuildError;
+    config.bail = config.failOnProdBuildJsError;
 
     config.module.loaders.push(
         // SASS
@@ -174,7 +182,8 @@ switch (_v.NODE_ENV) {
     config.eslint = {
       failOnError: false,
       failOnWarning: false,
-      emitError: true
+      emitError: true,
+      configFile: config.eslintConfig
     };
 
     config.module.loaders.push(
@@ -220,11 +229,6 @@ switch (_v.NODE_ENV) {
           {
             reload: false //Allows hot module reloading to take care of this. (preserves state)
           }),
-      new _v.StyleLintPlugin({
-        configFile: config.stylelintConfig,
-        files: ['**/*.s?(a|c)ss','!node_modules/'],
-        failOnError: false,
-      }),
       new _v.webpack.ProvidePlugin(config.externalModules)
     ]);
     break;
