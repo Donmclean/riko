@@ -105,7 +105,7 @@ let plugins = [
   })
 ];
 
-config.devtool = '#inline-source-map';
+config.devtool = 'inline-source-map';
 
 console.log('_v.NODE_ENV: ', _v.NODE_ENV);
 
@@ -153,7 +153,7 @@ switch (_v.NODE_ENV) {
     plugins = plugins.concat([
       new _v.webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify('production')
+          'NODE_ENV': JSON.stringify(_v.NODE_ENV)
         }
       }),
       new _v.webpack.optimize.DedupePlugin(),
@@ -220,6 +220,11 @@ switch (_v.NODE_ENV) {
     );
 
     plugins = plugins.concat([
+      new _v.webpack.DefinePlugin({
+        'process.env': {
+          'NODE_ENV': JSON.stringify(_v.NODE_ENV)
+        }
+      }),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.HotModuleReplacementPlugin(),
       new _v.BrowserSyncPlugin(
