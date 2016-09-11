@@ -5,7 +5,7 @@ import ReactTestUtils from 'react-addons-test-utils';
 
 const renderer = ReactTestUtils.createRenderer();
 
-import Menu from '../../src/js/components/Menu.jsx';
+import Menu from '../js/components/Menu.jsx';
 
 // TEST 3
 describe('Menu', function () {

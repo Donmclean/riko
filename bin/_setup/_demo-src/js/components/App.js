@@ -1,6 +1,6 @@
 import React from 'react';
 import Menu from './Menu.jsx';
-const logit = require('./../../vendor/logit');
+const logit = require('../../vendor/logit');
 
 //TODO: figure out how to test with assets!
 //Assets
