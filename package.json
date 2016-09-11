@@ -2,7 +2,7 @@
   "name": "riko",
   "version": "1.0.0",
   "description": "Webpack Build System for React JS Projects",
-  "main": "riko.js",
+  "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development babel-node server.js",
@@ -18,6 +18,19 @@
     "setup": "babel-node bin/_setup/setup.js --setup",
     "setup-demo": "babel-node bin/_setup/setup.js --demo"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Donmclean/riko.git"
+  },
+  "homepage":"https://github.com/Donmclean/riko",
+  "keywords": [
+    "javascript",
+    "react",
+    "webpack",
+    "karma",
+    "test",
+    "coverage"
+  ],
   "author": "Don Mclean",
   "license": "MIT",
   "jest": {
