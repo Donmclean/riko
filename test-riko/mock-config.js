@@ -92,6 +92,7 @@ module.exports = () => {
         'gulp-load-plugins': '^1.2.4',
         'gulp-nightwatch': '^0.3.1',
         'gulp-plumber': '^1.1.0',
+        "gulp-util": "^3.0.7",
         'html-webpack-plugin': '^2.22.0',
         'imagemin-webpack-plugin': '^1.1.0',
         'istanbul-instrumenter-loader': '^0.2.0',

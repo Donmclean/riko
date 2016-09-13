@@ -2,14 +2,14 @@
 const
     gulp    = require('gulp'),
     $       = require('gulp-load-plugins')();
-//TODO: add gulp-util for all logs!.
 
 const handleMissingConfigFile = () => {
     try {
         require('./webpack/config');
     } catch (err) {
-        console.error('ERROR: must have a valid custom-config.js file in src/ folder.' +
-            chalk.yellow('try running "npm run setup" to get started.'));
+        $.util.log($.util.colors.red('ERROR:') + $.util.colors.yellow(' must have a valid custom-config.js file in ' +
+            $.util.colors.red('src/') + ' folder. ') +
+            $.util.colors.cyan('Try running '+ $.util.colors.blue('"npm run setup"')+' to get started.'));
         process.exit(0);
     }
 };
@@ -24,17 +24,17 @@ gulp.task('clean', function(done) {
 
     _v.qfs.removeTree(config.destDir)
         .then(() => {
-            console.log(`'${_v.chalk.blue(dir)}' directory removed ${_v.chalk.green('successfully')}!`);
+            $.util.log(`'${$.util.colors.blue(dir)}' directory removed ${$.util.colors.green('successfully')}!`);
             done();
         })
         .catch(err => {
             switch (err.code) {
                 case 'ENOENT': {
-                    console.error(`the directory '${_v.chalk.red(dir)}' does not exist!`);
+                    $.util.log(`the directory '${$.util.colors.red(dir)}' does not exist!`);
                     break;
                 }
                 default: {
-                    console.error('error: ', err);
+                    $.util.log('error: ', err);
                     break;
                 }
             }
@@ -46,7 +46,6 @@ gulp.task('setup', function (done) {
     const
         qfs     = require('q-io/fs'),
         _       = require('lodash'),
-        chalk   = require('chalk'),
         baseDir = process.cwd(),
         srcDir  = baseDir+'/src',
         args    = process.argv;
@@ -63,28 +62,28 @@ gulp.task('setup', function (done) {
             break;
         }
         default: {
-            console.log(`${chalk.red('invalid arg terminating...')}`);
+            $.util.log(`${$.util.colors.red('invalid arg terminating...')}`);
             process.exit(0);
         }
     }
 
-    console.log(`checking for existing ${chalk.blue('src/')} folder...`);
+    $.util.log($.util.colors.yellow(`checking for existing ${$.util.colors.blue('src/')} folder...`));
 
     qfs.list(baseDir)
         .then(files => {
             if(_.includes(files, 'src')) {
-                console.log(`${chalk.blue('src/')} folder must not exist during setup. ${chalk.red('terminating...')}`);
+                $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder must not exist during setup. ${$.util.colors.red('terminating...')}`));
                 process.exit(0);
             }
-            console.log(`creating ${chalk.blue('src/')} folder and sub directories`);
+            $.util.log($.util.colors.yellow(`creating ${$.util.colors.blue('src/')} folder and sub directories`));
             return qfs.copyTree(baseDir+`/bin/_setup/${srcToCopy}`, srcDir);
         })
         .then(() => {
-            console.log(`${chalk.blue('src/')} folder created ${chalk.green('successfully')}`);
+            $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder created ${$.util.colors.green('successfully')}`));
             done();
         })
         .catch(err => {
-            console.error(`${chalk.red('ERROR: setting up src/ folder', err)}`);
+            $.util.log(`${$.util.colors.red('ERROR: setting up src/ folder', err)}`);
             done();
         });
 });
@@ -93,13 +92,12 @@ gulp.task('lint', function() {
     handleMissingConfigFile();
 
     const
-        config  = require('./webpack/config'),
-        _v      = config.vars;
+        config  = require('./webpack/config');
 
     return gulp.src(config.buildFiles)
         .pipe($.plumber({errorHandler: (err) => {
             if(err) {
-                console.error('GULP PLUMBER > lint ERROR:', err);
+                $.util.log('GULP PLUMBER > lint ERROR:', err);
             }
         }}))
         .pipe($.eslint({configFile: './test-riko/.eslintrc'}))
@@ -113,7 +111,7 @@ gulp.task('run-selenium-tests', () => {
     return gulp.src(config.nightWatchConfig)
         .pipe($.plumber({errorHandler: (err) => {
             if(err) {
-                console.error('GULP PLUMBER > run-selenium-tests ERROR:', err);
+                $.util.log('GULP PLUMBER > run-selenium-tests ERROR:', err);
             }
         }}))
         .pipe($.debug({title: 'running selenium tests:'}))
