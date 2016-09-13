@@ -107,6 +107,10 @@ gulp.task('lint', function() {
 });
 
 gulp.task('run-selenium-tests', () => {
+    handleMissingConfigFile();
+
+    const
+        config  = require('./webpack/config');
 
     return gulp.src(config.nightWatchConfig)
         .pipe($.plumber({errorHandler: (err) => {
