@@ -10,8 +10,6 @@ const
     expect = chai.expect,
     assert = chai.assert;
 
-//TODO: fix style errors in testing
-
 // TEST 1
 function sum(a, b) {
     return a + b;
@@ -25,7 +23,6 @@ describe('sum()', function() {
     });
 });
 
-// // TEST 2
 describe('DOM Essentials', function () {
     it('window is available', function () {
         expect(window).to.exist;

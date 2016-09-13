@@ -6,7 +6,6 @@ import App from '../js/components/App.js';
 
 const renderer = ReactTestUtils.createRenderer();
 
-// TEST 1
 function sum(a, b) {
     return a + b;
 }
@@ -17,7 +16,6 @@ describe('sum()2', function() {
     });
 });
 
-// TEST 2
 describe('DOM Essentials', function () {
     it('window is available', function () {
         expect(window).toBeTruthy();
@@ -30,7 +28,6 @@ describe('DOM Essentials', function () {
     });
 });
 
-// TEST 3
 describe('App', function () {
 
     renderer.render(<App />);

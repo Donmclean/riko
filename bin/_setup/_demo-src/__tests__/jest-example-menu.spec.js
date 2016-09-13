@@ -7,7 +7,6 @@ const renderer = ReactTestUtils.createRenderer();
 
 import Menu from '../js/components/Menu.jsx';
 
-// TEST 3
 describe('Menu', function () {
 
     renderer.render(<Menu />);

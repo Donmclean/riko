@@ -2,7 +2,6 @@ import React from 'react';
 import Menu from './Menu.jsx';
 const logit = require('../../vendor/logit');
 
-//TODO: figure out how to test with assets!
 //Assets
 import image from '../../media/images/riko-logo.png';
 import imagePNG from '../../media/images/test.png';
@@ -19,7 +18,6 @@ export default class App extends React.Component {
         };
     }
 
-    //TODO: test class methods
     log() {
         if(this.state.isAnimating) {
             this.setState({ animation: '', isAnimating: false });
