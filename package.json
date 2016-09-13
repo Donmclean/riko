@@ -16,7 +16,8 @@
     "test-complete": "npm run setup-demo && npm run prod && npm test",
     "server": "NODE_ENV=production babel-node server.js",
     "setup": "gulp setup --src",
-    "setup-demo": "gulp setup --demo"
+    "setup-demo": "gulp setup --demo",
+    "coveralls": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha test-riko/riko.spec.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -93,6 +94,7 @@
     "chokidar": "^1.6.0",
     "classnames": "^2.2.5",
     "clean-webpack-plugin": "^0.1.10",
+    "coveralls": "^2.11.12",
     "css-loader": "^0.23.1",
     "css-modules-require-hook": "^4.0.2",
     "eslint": "^3.3.0",
@@ -111,6 +113,7 @@
     "gulp-util": "^3.0.7",
     "html-webpack-plugin": "^2.22.0",
     "imagemin-webpack-plugin": "^1.1.0",
+    "istanbul": "^0.4.5",
     "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine-core": "^2.4.1",
     "jest": "^14.1.0",
@@ -134,6 +137,7 @@
     "less-loader": "^2.2.3",
     "lodash": "^4.15.0",
     "mocha": "^3.0.2",
+    "mocha-lcov-reporter": "^1.2.0",
     "morgan": "^1.7.0",
     "node-sass": "^3.8.0",
     "phantomjs-polyfill": "0.0.2",
