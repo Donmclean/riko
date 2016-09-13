@@ -1,11 +1,26 @@
+"use strict";
 const
     gulp    = require('gulp'),
-    $       = require('gulp-load-plugins')(),
-    config  = require('./webpack/config'),
-    _v      = config.vars;
+    $       = require('gulp-load-plugins')();
+//TODO: add gulp-util for all logs!.
+
+const handleMissingConfigFile = () => {
+    try {
+        require('./webpack/config');
+    } catch (err) {
+        console.error('ERROR: must have a valid custom-config.js file in src/ folder.' +
+            chalk.yellow('try running "npm run setup" to get started.'));
+        process.exit(0);
+    }
+};
 
 gulp.task('clean', function(done) {
-    const dir = _v.path.basename(config.destDir);
+    handleMissingConfigFile();
+
+    const
+        config  = require('./webpack/config'),
+        _v      = config.vars,
+        dir = _v.path.basename(config.destDir);
 
     _v.qfs.removeTree(config.destDir)
         .then(() => {
@@ -27,7 +42,60 @@ gulp.task('clean', function(done) {
         });
 });
 
+gulp.task('setup', function (done) {
+    const
+        qfs     = require('q-io/fs'),
+        _       = require('lodash'),
+        chalk   = require('chalk'),
+        baseDir = process.cwd(),
+        srcDir  = baseDir+'/src',
+        args    = process.argv;
+
+    let srcToCopy = '';
+
+    switch (args[3]) {
+        case '--demo': {
+            srcToCopy = '_demo-src';
+            break;
+        }
+        case '--src': {
+            srcToCopy = 'src';
+            break;
+        }
+        default: {
+            console.log(`${chalk.red('invalid arg terminating...')}`);
+            process.exit(0);
+        }
+    }
+
+    console.log(`checking for existing ${chalk.blue('src/')} folder...`);
+
+    qfs.list(baseDir)
+        .then(files => {
+            if(_.includes(files, 'src')) {
+                console.log(`${chalk.blue('src/')} folder must not exist during setup. ${chalk.red('terminating...')}`);
+                process.exit(0);
+            }
+            console.log(`creating ${chalk.blue('src/')} folder and sub directories`);
+            return qfs.copyTree(baseDir+`/bin/_setup/${srcToCopy}`, srcDir);
+        })
+        .then(() => {
+            console.log(`${chalk.blue('src/')} folder created ${chalk.green('successfully')}`);
+            done();
+        })
+        .catch(err => {
+            console.error(`${chalk.red('ERROR: setting up src/ folder', err)}`);
+            done();
+        });
+});
+
 gulp.task('lint', function() {
+    handleMissingConfigFile();
+
+    const
+        config  = require('./webpack/config'),
+        _v      = config.vars;
+
     return gulp.src(config.buildFiles)
         .pipe($.plumber({errorHandler: (err) => {
             if(err) {
