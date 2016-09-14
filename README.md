@@ -9,10 +9,15 @@ Webpack Build System for React JS
 
 ######- Development Mode: `npm run dev`
 
-- hot module replacement from stylesheets and js sources
-- sass & js linting
-- [browsersync](https://www.browsersync.io/) functionality
-- [Jest](https://facebook.github.io/jest/) Unit Testing
+- Supports compilation of _js_ & _jsx_ source files
+- Supports compilation of _sass_, _less_, and _css_ stylesheets.
+- Source mapping for stylesheets and js sources
+- Javascript (_js_,_jsx_) linting via [**eslint**](http://eslint.org/)
+- Stylesheet (_sass_, _less_, _css_) linting via [**stylelint**](https://github.com/stylelint/stylelint)
+- [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets(_sass,css,less_) and js(_js,jsx_) sources
+- [**Browsersync**](https://www.browsersync.io/) functionality by default
+- [**Jest**](https://facebook.github.io/jest/), [**Mocha**](https://mochajs.org/), or any unit testing framework supported by [**Karma JS Test Runner**](https://karma-runner.github.io/1.0/index.html)
+- 
 
 #CAVEATS
 
