@@ -19,7 +19,9 @@ Webpack Build System for React JS
 - [**Nightwatch JS Selenium Testing**](http://nightwatchjs.org/): run selenium tests in numerous browsers & environments. 
 Also supports browserstack for running multiple test suites. 
 - [**Bundle Visualizer**](https://chrisbateman.github.io/webpack-visualizer/): see the build product of your js sources & dependencies via current git SHA as url 
-(eg: _localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html_). 
+    - eg: `_localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html_`. 
+- [**Source File Hashing**](#): hashes build sources to control caching. 
+    - eg: `index.html?405kjdjsd7ed89a68ac` `styles.min.css?405eccffee7ed89a68ac` `bundle.js?405eccffee7ed89a68ac`
 
 ######- Development Mode: `npm run dev`
 
@@ -28,8 +30,8 @@ Also supports browserstack for running multiple test suites.
 
 ######- Production Mode: `npm run prod`
 
-- [**Asset Copying**](): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_) 
-- [**Source Minification**](): Optimize/Minify stylesheets and js files.
+- [**Asset Copying**](#): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_) 
+- [**Source Minification**](#): Optimize/Minify stylesheets and js files.
 - [**Image Minification**](https://github.com/tcoopman/image-webpack-loader): Optimize/Minify png, jpg, gif and svg images
 - [**Shell Script Integration**](https://www.npmjs.com/package/webpack-shell-plugin): run shell scripts on build start, end and/or exit
 
@@ -42,14 +44,14 @@ Also supports browserstack for running multiple test suites.
 
 #USAGE
 
-- run `npm run dev` to run source code in "development" mode
-
-
-######- Production mode supports the following features
-- lints and compiles js & sass sources to minified `dist/` directory
-- hashes build sources to control caching. 
-    - eg: `index.html?405kjdjsd7ed89a68ac` `styles.min.css?405eccffee7ed89a68ac` `bundle.js?405eccffee7ed89a68ac`
-    
+- After installation you can run either of the following two options: 
+    - `npm run setup` to setup the most basic content to jump start your application.
+    - `npm run setup-demo` to setup demo content to get a better sense of how testing, asset loading etc works within the build system. 
+ 
+> It's recommended that you run a `npm run setup-demo` first and get a good feel for working with the build system. 
+> Then run a `npm run setup` when you're ready to start your application.
+ 
+- After running one of the setup commands notice there is a new `src/` folder in the directory. 
 
 ######- Other features
 - run `npm run server` after a `npm run prod` to test out a "production" build. `localhost:8080` in browser
