@@ -15,7 +15,9 @@ Webpack Build System for React JS
 - Stylesheet (_sass_, _less_, _css_) linting via [**stylelint**](https://github.com/stylelint/stylelint)
 - [**Autoprefixing**](https://github.com/postcss/autoprefixer) for stylesheets
 - [**Browsersync**](https://www.browsersync.io/) functionality by default
-- [**Jest**](https://facebook.github.io/jest/), [**Mocha**](https://mochajs.org/), or any unit testing framework supported by [**Karma JS Test Runner**](https://karma-runner.github.io/1.0/index.html)
+- [**Jest**](https://facebook.github.io/jest/), [**Mocha**](https://mochajs.org/), [**Chai**](http://chaijs.com/) or any unit testing framework supported by [**Karma JS Test Runner**](https://karma-runner.github.io/1.0/index.html)
+- [**Nightwatch JS Selenium Testing**](http://nightwatchjs.org/): run selenium tests in numerous browsers & environments. 
+Also supports browserstack for running multiple test suites. 
 - [**Bundle Visualizer**](https://chrisbateman.github.io/webpack-visualizer/): see the build product of your js sources & dependencies via current git SHA as url 
 (eg: _localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html_). 
 
@@ -26,11 +28,10 @@ Webpack Build System for React JS
 
 ######- Production Mode: `npm run prod`
 
-- [**Assets Loading**](): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_) 
+- [**Asset Copying**](): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_) 
+- [**Source Minification**](): Optimize/Minify stylesheets and js files.
 - [**Image Minification**](https://github.com/tcoopman/image-webpack-loader): Optimize/Minify png, jpg, gif and svg images
 - [**Shell Script Integration**](https://www.npmjs.com/package/webpack-shell-plugin): run shell scripts on build start, end and/or exit
-
-#CAVEATS
 
 #INSTALL
 
