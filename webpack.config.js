@@ -67,15 +67,7 @@ config.module = {
       test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
       loader: `file?name=${config.media_files_output_path}/[name].[ext]`
     }
-
   ]
-  // postLoaders: [
-  //     { //delays coverage til after tests are run, fixing transpiled source coverage error
-  //       test: /\.jsx$|\.js$/,
-  //       exclude: /(__tests__|tests|node_modules|bower_components)\//,
-  //       loader: 'istanbul-instrumenter'
-  //     }
-  // ]
 };
 
 config.postcss = [ _v.autoprefixer(config.autoprefixerOptions) ];
