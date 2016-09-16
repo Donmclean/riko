@@ -63,6 +63,7 @@ config.template_src_path        = baseDir+'/src/templates/index.pug';
 config.template_engine          = ''; //eg: hbs, handlebars, ejs, mustache
 
 //Google Analytics
+config.gaEnable                 = true;
 config.gaTrackingId             = 'UA-XXXXX-Y';
 config.gaPageViewOnLoad         = true;
 

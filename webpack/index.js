@@ -11,6 +11,7 @@ module.exports = (config) => {
     indexConfig.scripts     = config.js_external_scripts;
     indexConfig.stylesheets = config.styles_external_stylesheets;
 
+    indexConfig.googleAnalyticsEnabled          = config.gaEnable;
     indexConfig.googleAnalyticsTrackingId       = config.gaTrackingId;
     indexConfig.googleAnalyticsPageViewOnLoad   = config.gaPageViewOnLoad;
 
