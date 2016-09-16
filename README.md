@@ -20,7 +20,7 @@ Webpack Build System for React JS
 Also supports browserstack for running multiple test suites
 - [**Bundle Visualizer**](https://chrisbateman.github.io/webpack-visualizer/): see the build product of your js sources & dependencies via current git SHA as url 
     - eg: `_localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html_`
-- [**Source File Hashing**](#): hashes build sources to control caching 
+- [**Source File Hashing**](#_): hashes build sources to control caching 
     - eg: `index.html?405kjdjsd7ed89a68ac` `styles.min.css?405eccffee7ed89a68ac` `bundle.js?405eccffee7ed89a68ac`
 
 ######- Development Mode: `npm run dev`
@@ -31,8 +31,8 @@ Also supports browserstack for running multiple test suites
 
 ######- Production Mode: `npm run prod`
 
-- [**Asset Copying**](#): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_) 
-- [**Source Minification**](#): Optimize/Minify stylesheets and js files
+- [**Asset Copying**](#_): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_) 
+- [**Source Minification**](#_): Optimize/Minify stylesheets and js files
 - [**Image Minification**](https://github.com/tcoopman/image-webpack-loader): Optimize/Minify png, jpg, gif and svg images
 - [**Shell Script Integration**](https://www.npmjs.com/package/webpack-shell-plugin): run shell scripts on build start, end and/or exit
 
