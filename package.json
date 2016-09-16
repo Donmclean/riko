@@ -17,6 +17,7 @@
     "server": "NODE_ENV=production babel-node server.js",
     "setup": "gulp setup --src",
     "setup-demo": "gulp setup --demo",
+    "vorlon": "PORT=1337 vorlon",
     "coveralls": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha test-riko/riko.spec.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "repository": {
@@ -113,6 +114,7 @@
     "gulp-util": "^3.0.7",
     "html-webpack-plugin": "^2.22.0",
     "imagemin-webpack-plugin": "^1.1.0",
+    "ip": "^1.1.3",
     "istanbul": "^0.4.5",
     "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine-core": "^2.4.1",
@@ -165,6 +167,7 @@
     "stylelint-webpack-plugin": "^0.3.1",
     "template-html-loader": "0.0.3",
     "url-loader": "^0.5.7",
+    "vorlon": "^0.3.0",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1",

@@ -4,6 +4,7 @@ module.exports = () => {
     const vars = {};
 
     vars.http                   = require('http');
+    vars.ipAddress              = require('ip').address();
     vars.path                   = require('path');
 
     vars.webpack                = require('webpack');
@@ -11,6 +12,7 @@ module.exports = () => {
     vars._                      = require('lodash');
     vars.qfs                    = require('q-io/fs');
     vars.fs                     = require('fs-extra');
+    vars.exec                   = require('child_process').exec;
     vars.GIT_VERSION            = require('child_process').execSync('git rev-parse HEAD').toString().trim();
 
     vars.ProgressBarPlugin      = require('progress-bar-webpack-plugin');

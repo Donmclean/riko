@@ -8,6 +8,8 @@ module.exports = (config) => {
     indexConfig.hash        = true;
     indexConfig.cache       = true; //default
     indexConfig.showErrors  = true; //default
+    indexConfig.scripts     = config.js_external_scripts;
+    indexConfig.stylesheets = config.styles_external_stylesheets;
 
     return indexConfig;
 

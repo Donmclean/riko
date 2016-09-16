@@ -33,10 +33,32 @@ config.js_main_file_name        = config.moduleName+'.js';
 config.js_main_entry_path       = baseDir+'/src/js/'+config.js_main_file_name;
 config.js_output_path           = 'assets/js';
 
+config.js_external_scripts      = [
+    {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
+        async: false,
+        defer: false
+    },
+    {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js',
+        async: false,
+        defer: false
+    },
+    {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.js',
+        async: true,
+        defer: false
+    }
+];
+
 //**********************************************************************
 //*******************************STYLES*********************************
 //**********************************************************************
 config.styles_main_file_name    = 'styles.min.css';
+
+config.styles_external_stylesheets  = [
+    'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
+];
 
 //**********************************************************************
 //******************************TEMPLATE********************************
@@ -113,6 +135,8 @@ config.hotReloadingOptions     = {
     noInfo: false,
     quiet: false
 };
+
+config.enableRemoteDebugging   = true;
 
 // IMPORTANT! must be and array
 config.onBuildStartShellCommands = [];

@@ -5,8 +5,17 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0")
         meta(http-equiv="x-ua-compatible" content="ie=edge")
+
+        - var stylesheets = htmlWebpackPlugin.options.stylesheets;
+        - for (var i = 0; i < stylesheets.length; i++)
+          link(href=stylesheets[i] type="text/css" rel="stylesheet")
+
     body
         #root
+
+        - var scripts = htmlWebpackPlugin.options.scripts;
+        - for (var i = 0; i < scripts.length; i++)
+          script(src=scripts[i].src type="text/javascript" async=scripts[i].async defer=scripts[i].defer)
 
         // Google Analytics
         script.

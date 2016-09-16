@@ -33,10 +33,21 @@ config.js_main_file_name        = config.moduleName+'.js';
 config.js_main_entry_path       = baseDir+'/src/js/'+config.js_main_file_name;
 config.js_output_path           = 'assets/js';
 
+config.js_external_scripts      = [
+    // example
+    // {
+    //     src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
+    //     async: false,
+    //     defer: false
+    // }
+];
+
 //**********************************************************************
 //*******************************STYLES*********************************
 //**********************************************************************
-config.styles_main_file_name    = 'styles.min.css';
+config.styles_main_file_name        = 'styles.min.css';
+
+config.styles_external_stylesheets  = [];
 
 //**********************************************************************
 //******************************TEMPLATE********************************
@@ -113,6 +124,8 @@ config.hotReloadingOptions     = {
     noInfo: false,
     quiet: false
 };
+
+config.enableRemoteDebugging   = true;
 
 // IMPORTANT! must be and array
 config.onBuildStartShellCommands = [];
