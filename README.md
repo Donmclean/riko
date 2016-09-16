@@ -19,7 +19,7 @@ Webpack Build System for React JS
 - [**Nightwatch JS Selenium Testing**](http://nightwatchjs.org/): run selenium tests in numerous browsers & environments.
 Also supports browserstack for running multiple test suites
 - [**Bundle Visualizer**](https://chrisbateman.github.io/webpack-visualizer/): see the build product of your js sources & dependencies via current git SHA as url 
-    - eg: `_localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html_`
+    - eg: `localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html`
 - [**Source File Hashing**](#_): hashes build sources to control caching 
     - eg: `index.html?405kjdjsd7ed89a68ac` `styles.min.css?405eccffee7ed89a68ac` `bundle.js?405eccffee7ed89a68ac`
 
