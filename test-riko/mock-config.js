@@ -25,6 +25,8 @@ module.exports = () => {
         template_stats_file_name:  'string',
         template_src_path:  'string',
         template_engine:  'string',
+        gaTrackingId: 'string',
+        gaPageViewOnLoad: 'boolean',
         media_audio_output_path:  'string',
         media_files_output_path:  'string',
         media_fonts_output_path:  'string',

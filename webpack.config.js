@@ -233,8 +233,9 @@ switch (_v.NODE_ENV) {
       new _v.webpack.ProvidePlugin(config.externalModules)
     ]);
 
+    //handle remote debugging
     if(config.enableRemoteDebugging && _v.NODE_ENV === "development") {
-      const child = _v.exec('npm run vorlon', (error, stdout, stderr) => {
+      _v.exec('npm run vorlon', (error, stdout, stderr) => {
         if (error) {
           console.error(`exec error > enableRemoteDebugging: ${error}`);
           return;
@@ -242,8 +243,6 @@ switch (_v.NODE_ENV) {
         console.log(`stdout: ${stdout}`);
         console.log(`stderr: ${stderr}`);
       });
-      child.stdout.pipe(process.stdout);
-      child.stderr.pipe(process.stderr);
       config.js_external_scripts.push({src: `http://${_v.ipAddress}:1337/vorlon.js`});
     }
 

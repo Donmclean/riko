@@ -38,7 +38,7 @@ Also supports browserstack for running multiple test suites
 
 #INSTALL
 
-- run `git clone https://github.com/Donmclean/riko.git`
+- run `git clone https://github.com/donmclean/riko.git`
 - cd into the cloned directory by running `cd riko`
 - run `npm install`
 - grab ~~coffee~~ a redbull

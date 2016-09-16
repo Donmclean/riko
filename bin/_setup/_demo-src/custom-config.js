@@ -73,6 +73,10 @@ config.template_src_path        = baseDir+'/src/templates/index.pug';
 //https://github.com/tj/consolidate.js
 config.template_engine          = ''; //eg: hbs, handlebars, ejs, mustache
 
+//Google Analytics
+config.gaTrackingId             = 'UA-XXXXX-Y';
+config.gaPageViewOnLoad         = true;
+
 //**********************************************************************
 //********************************MEDIA*********************************
 //**********************************************************************
