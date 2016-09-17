@@ -38,6 +38,7 @@ module.exports = () => {
         externalModules:  'object',
         sourcemapDev: 'boolean',
         sourcemapProd: 'boolean',
+        sourcemapType: 'string',
         autoprefixerOptions:  'object',
         hotReloadingOptions:  'object',
         enableRemoteDebugging: 'boolean',

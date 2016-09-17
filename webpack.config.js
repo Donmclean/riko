@@ -103,7 +103,9 @@ switch (_v.NODE_ENV) {
 
   case "production": {
 
-    config.devtool = config.sourcemapProd ? 'inline-source-map' : null;
+    config.output.sourceMapFilename = '[name].map';
+
+    config.devtool = config.sourcemapProd ? config.sourcemapType : null;
 
     config.eslint = {
       failOnError: config.failOnProdBuildJsError,
@@ -173,7 +175,7 @@ switch (_v.NODE_ENV) {
 
     config.debug = true;
 
-    config.devtool = config.sourcemapDev ? 'inline-source-map' : null;
+    config.devtool = config.sourcemapDev ? config.sourcemapType : null;
 
     config.eslint = {
       failOnError: false,

@@ -132,9 +132,13 @@ config.externalModules = {
 //*******************************EXTRAS*********************************
 //**********************************************************************
 
+//https://webpack.github.io/docs/configuration.html#devtool
+config.sourcemapType = 'inline-source-map';
+
 //Enable of disable sourcemaps
 config.sourcemapDev = true;
 config.sourcemapProd = true;
+
 
 config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
 
