@@ -103,7 +103,7 @@ switch (_v.NODE_ENV) {
 
   case "production": {
 
-    config.output.sourceMapFilename = '[name].map';
+    config.output.sourceMapFilename = '[file].[hash].map';
 
     config.devtool = config.sourcemapProd ? config.sourcemapType : null;
 
