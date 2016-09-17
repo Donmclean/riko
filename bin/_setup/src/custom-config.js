@@ -121,6 +121,10 @@ config.externalModules = {
 //*******************************EXTRAS*********************************
 //**********************************************************************
 
+//Enable of disable sourcemaps
+config.sourcemapDev = true;
+config.sourcemapProd = true;
+
 config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
 
 config.hotReloadingOptions     = {

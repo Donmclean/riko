@@ -36,6 +36,8 @@ module.exports = () => {
         media_favicon_path: 'string',
         imageminConfig:  'object',
         externalModules:  'object',
+        sourcemapDev: 'boolean',
+        sourcemapProd: 'boolean',
         autoprefixerOptions:  'object',
         hotReloadingOptions:  'object',
         enableRemoteDebugging: 'boolean',

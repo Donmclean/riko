@@ -6,8 +6,6 @@ const
     _v            = config.vars,
     funcs         = require('./webpack/functions')(_v);
 
-config.devtool = null;
-
 config.entry = [
     config.js_main_entry_path
 ];
@@ -99,13 +97,13 @@ let plugins = [
   new _v.WebpackNotifierPlugin({contentImage: config.baseDir+'/test-riko/riko-favicon.png'}),
 ];
 
-config.devtool = 'inline-source-map';
-
 console.log('_v.NODE_ENV: ', _v.NODE_ENV);
 
 switch (_v.NODE_ENV) {
 
   case "production": {
+
+    config.devtool = config.sourcemapProd ? 'inline-source-map' : null;
 
     config.eslint = {
       failOnError: config.failOnProdBuildJsError,
@@ -119,18 +117,18 @@ switch (_v.NODE_ENV) {
         // SASS
         {
           test: /\.scss$/,
-          loader: _v.ExtractTextPlugin.extract("style", "css?sourceMap!postcss!sass?sourceMap")
+          loader: _v.ExtractTextPlugin.extract("style", `css${config.sourcemapProd ? '?sourceMap' : ''}!postcss!sass${config.sourcemapProd ? '?sourceMap' : ''}`)
         },
         // LESS
         {
           test: /\.less$/,
-          loader: _v.ExtractTextPlugin.extract("style", "css?sourceMap!postcss!less?sourceMap")
+          loader: _v.ExtractTextPlugin.extract("style", `css${config.sourcemapProd ? '?sourceMap' : ''}!postcss!less${config.sourcemapProd ? '?sourceMap' : ''}`)
         },
         // CSS
         {
           test: /\.css$/,
           include: config.srcDir,
-          loader: _v.ExtractTextPlugin.extract("style", "css?sourceMap", "postcss")
+          loader: _v.ExtractTextPlugin.extract("style", `css${config.sourcemapProd ? '?sourceMap' : ''}!postcss`)
         },
         //FONTS
         {
@@ -152,7 +150,7 @@ switch (_v.NODE_ENV) {
       }),
       new _v.webpack.optimize.DedupePlugin(),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
-      new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: true, compress: {warnings: false} }),
+      new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: config.sourcemapProd, compress: {warnings: false} }),
       new _v.webpack.optimize.CommonsChunkPlugin('main', config.js_output_path+'/'+config.js_main_file_name),
       new _v.webpack.ProvidePlugin(config.externalModules),
       new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true}),
@@ -175,6 +173,8 @@ switch (_v.NODE_ENV) {
 
     config.debug = true;
 
+    config.devtool = config.sourcemapDev ? 'inline-source-map' : null;
+
     config.eslint = {
       failOnError: false,
       failOnWarning: false,
@@ -186,18 +186,32 @@ switch (_v.NODE_ENV) {
         // SASS
         {
           test: /\.scss$/,
-          loaders: ['style', 'css?sourceMap', "postcss", "sass?sourceMap"]
+          loaders: [
+            'style',
+            `css${config.sourcemapDev ? '?sourceMap' : ''}`,
+            'postcss',
+            `sass${config.sourcemapDev ? '?sourceMap' : ''}`,
+          ]
         },
         // LESS
         {
           test: /\.less$/,
-          loaders: ['style', 'css?sourceMap', 'postcss', 'less?sourceMap']
+          loaders: [
+            'style',
+            `css${config.sourcemapDev ? '?sourceMap' : ''}`,
+            'postcss',
+            `less${config.sourcemapDev ? '?sourceMap' : ''}`
+          ]
         },
         // CSS
         {
           test: /\.css$/,
           include: config.srcDir,
-          loaders: ["style", "css?sourceMap!postcss"]
+          loaders: [
+            'style',
+            `css${config.sourcemapDev ? '?sourceMap' : ''}`,
+            'postcss'
+          ]
         },
         //FONTS
         {
