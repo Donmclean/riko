@@ -139,6 +139,9 @@ config.sourcemapType = 'inline-source-map';
 config.sourcemapDev = true;
 config.sourcemapProd = true;
 
+//WARNING: js sourcemap info will not be able in browser console if enabled in dev mode
+config.enableRemoteDebugging   = true;
+
 
 config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
 
@@ -148,8 +151,6 @@ config.hotReloadingOptions     = {
     noInfo: false,
     quiet: false
 };
-
-config.enableRemoteDebugging   = true;
 
 // IMPORTANT! must be and array
 config.onBuildStartShellCommands = [];
