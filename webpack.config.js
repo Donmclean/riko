@@ -58,7 +58,7 @@ config.module = {
     },
     //AUDIO
     {
-      test: /\.(wav|WAV|mp3|aiff|flac|mp4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+      test: /\.(wav|WAV|mp3|aiff|flac|mp4a|m4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
       loader: `file?name=${config.media_audio_output_path}/[name].[ext]`
     },
     //FILES
