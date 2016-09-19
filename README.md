@@ -53,8 +53,3 @@ Also supports browserstack for running multiple test suites
 > Then run a `npm run setup` when you're ready to start your application.
  
 - After running one of the setup commands notice there is a new `src/` folder in the directory. 
-
-######- Other features
-- run `npm run server` after a `npm run prod` to test out a "production" build. `localhost:8080` in browser
-
-- run `npm test` to execute unit tests
