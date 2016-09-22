@@ -50,6 +50,7 @@ module.exports = (config) => {
                 postLoaders: [
                     { //delays coverage til after tests are run, fixing transpiled source coverage error
                         test: /\.jsx$|\.js$/,
+                        // include: _v.path.resolve('src/js/'),
                         exclude: /(__tests__|tests|node_modules|bower_components)\//,
                         loader: 'istanbul-instrumenter'
                     }
