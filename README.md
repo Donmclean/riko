@@ -55,7 +55,7 @@ Also supports browserstack for running multiple test suites
 - After running one of the setup commands notice there is a new `src/` folder in the directory. 
 - here is where all of your source code will live. From js source/test scripts to stylesheets to custom eslinters etc.
 
-###### **_The custom_config.js file_**
+#### **THE 'custom_config.js' FILE**
 
 - This is where all your setting live. The build system has been createdso you rarely have to enter the webpack.config.js file.
 - Here's the run down:
@@ -77,7 +77,7 @@ That is your base/root directory and is needed to keep the paths below relative.
 config.moduleName               = 'riko';
 
 //output location for all of your src files after a production build
-config.destDir                  = baseDir+"/app"; 
+config.destDir                  = baseDir+"/dist"; 
 
 //port your wish to serve your files on in dev mode
 config.EXPRESS_PORT             = 3000;
@@ -91,4 +91,39 @@ config.stylelintConfig          = baseDir+'/src/__linters/.stylelintrc.yaml';
 config.karmaConfig              = baseDir+'/karma.conf.js';
 config.nightWatchConfig         = baseDir+'/nightwatch.json';
 config.packageJson              = baseDir+'/package.json';
+```
+
+##### JS OPTIONS
+
+```
+//The name that you want your output bundle js file to be
+config.js_main_file_name        = 'bundle.js';
+
+//Entry file for your web app. see: https://webpack.github.io/docs/configuration.html#entry
+config.js_main_entry_path       = baseDir+'/src/js/'+config.js_main_file_name;
+
+//Relative path for your js bundle after prod build 
+config.js_output_path           = 'assets/js';
+
+//Any external scripts you'd like to load via cdn should be inserted here.
+//Notice the 'async' & 'defer' options. 
+//See: http://www.growingwiththeweb.com/2014/02/async-vs-defer-attributes.html
+//Also if you don't want to load any scripts. Just leave the array empty.
+config.js_external_scripts      = [
+    {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
+        async: false,
+        defer: false
+    },
+    {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js',
+        async: false,
+        defer: false
+    },
+    {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.js',
+        async: true,
+        defer: false
+    }
+];
 ```
