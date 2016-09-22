@@ -30,11 +30,7 @@ module.exports = () => {
     vars.CleanWebpackPlugin     = require('clean-webpack-plugin');
     vars.WebpackNotifierPlugin  = require('webpack-notifier');
 
-    vars.precss                 = require('precss');
     vars.autoprefixer           = require('autoprefixer');
-    vars.cssModulesRequireHook  = require('css-modules-require-hook');
-
-    // vars.postcssImport          = require('postcss-import')({addDependencyTo: vars.webpack});
 
     vars.express                = require('express');
     vars.app                    = require('express')();
