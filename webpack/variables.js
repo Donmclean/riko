@@ -34,7 +34,7 @@ module.exports = () => {
     vars.autoprefixer           = require('autoprefixer');
     vars.cssModulesRequireHook  = require('css-modules-require-hook');
 
-    vars.postcssImport          = require('postcss-import')({addDependencyTo: vars.webpack});
+    // vars.postcssImport          = require('postcss-import')({addDependencyTo: vars.webpack});
 
     vars.express                = require('express');
     vars.app                    = require('express')();
