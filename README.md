@@ -228,7 +228,7 @@ config.sourcemapProd = true;
 //Simply visit localhost:1337 or browsersync's [externalIp]:1337 in dev mode (npm run dev)
 //See: http://vorlonjs.com/
 //WARNING: js sourcemap info will not be able in browser console if enabled in dev mode
-//IMPORTANT! this is only recommend if you're debugging a specific device or not using sourcemaps.
+//IMPORTANT! this is only recommended if you're debugging a specific device or not using sourcemaps.
 config.enableRemoteDebugging   = true;
 
 
@@ -255,3 +255,18 @@ config.onBuildExitShellCommands = [];
 config.failOnProdBuildJsError = true;
 config.failOnProdBuildStyleError = false;
 ```
+
+#USAGE - CONTINUED
+
+- After configuring everything in the `custom_config.js` file to your liking, you should now run the following commands: 
+    - `npm run test-build`
+        - This runs a test on the riko build to ensure that the build in still in working order.
+        - You should also run this command regularly after making alterations to any of the config files.
+    
+    - `npm run prod`
+        - This will execute a production build on your current src/ folder.
+        - If this passes you should be in good shape to test it out.
+    - `npm run server`
+        - This will fire up a browsersync server for you to test out your new prod build.
+        - Remember to check for the visualizer file based on your git version to really see the build details.
+        - Also if you have remote debugging enabled you can visit on port 1337 via localhost or browsersync's external IP.
