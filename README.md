@@ -266,7 +266,27 @@ config.failOnProdBuildStyleError = false;
     - `npm run prod`
         - This will execute a production build on your current src/ folder.
         - If this passes you should be in good shape to test it out.
+        
     - `npm run server`
         - This will fire up a browsersync server for you to test out your new prod build.
         - Remember to check for the visualizer file based on your git version to really see the build details.
         - Also if you have remote debugging enabled you can visit on port 1337 via localhost or browsersync's external IP.
+        
+    - `npm run dev`
+        - This will fire up a browsersync server for you with your specified hot reloading options.
+        - It will watch all files attached down the tree of your specified entry file and "hot replace or reload" on change
+    
+    - `npm run test-jest`
+        - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the package.json if you wish.
+        
+    - `npm run test-karma`
+        - Execute any karma tests. The default karma test directory is: `src/tests`. You can change this via the karma.conf.js if you wish.
+    
+    - `npm run test-selenium`
+        - Execute any selenium tests. The default selenium test directory is: `src/__tests_selenium`. You can change this via the nightwatch.json if you wish.
+    
+    - `npm test` or `npm run test` 
+        - Runs full test suite. (all test commands)
+        - All test coverage information will be located in: '[root]/test-coverage'
+        
+#### Happy Coding :)
