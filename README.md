@@ -36,6 +36,13 @@ Also supports browserstack for running multiple test suites
 - [**Image Minification**](https://github.com/tcoopman/image-webpack-loader): Optimize/Minify png, jpg, gif and svg images
 - [**Shell Script Integration**](https://www.npmjs.com/package/webpack-shell-plugin): run shell scripts on build start, end and/or exit
 
+#CAVEATS
+
+- FOUC (Flash of Unstyled Content)
+
+    - To make the hot reloading of CSS work, we are not extracting CSS in development. Ideally, during server rendering, we will be extracting CSS, and we will get a .css file, and we can use it in the html template. That's what we are doing in production. 
+    - In development, after all scripts get loaded, react loads the CSS as BLOBs. That's why there is a second of FOUC in development.
+
 #INSTALL
 
 - run `git clone https://github.com/donmclean/riko.git`
