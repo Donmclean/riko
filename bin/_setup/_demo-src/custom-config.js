@@ -95,6 +95,7 @@ config.media_video_output_path  = 'assets/video';
 config.media_favicon_path       = baseDir+'/src/media/images/riko-favicon.png';
 
 //Image optimization options
+//See: https://github.com/Klathmon/imagemin-webpack-plugin
 config.imageminConfig = {
     // progressive: true,
     pngquant:{
@@ -139,7 +140,11 @@ config.sourcemapType = 'inline-source-map';
 config.sourcemapDev = true;
 config.sourcemapProd = true;
 
+//Enable remote debugging via vorlon.js very useful for debugging on mobile devices.
+//Simply visit localhost:1337 or browsersync's [externalIp]:1337 in dev mode (npm run dev)
+//See: http://vorlonjs.com/
 //WARNING: js sourcemap info will not be able in browser console if enabled in dev mode
+//IMPORTANT! this is only recommend if you're debugging a specific device or not using sourcemaps.
 config.enableRemoteDebugging   = true;
 
 

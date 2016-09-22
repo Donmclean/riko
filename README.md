@@ -67,6 +67,7 @@ const baseDir = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
 
 That is your base/root directory and is needed to keep the paths below relative. it's highly recommended that you keep this as is.
 
+##### CUSTOM OPTIONS
 
 ```javascript
 //IMPORTANT! All paths/directories should be relative to 'baseDir' unless specified otherwise. 
@@ -126,4 +127,131 @@ config.js_external_scripts      = [
         defer: false
     }
 ];
+```
+
+##### STYLE OPTIONS
+```
+//The name that you want your output stylesheet bundle to be
+config.styles_main_file_name    = 'styles.min.css';
+
+//Any external stylesheets you'd like to load via cdn should be inserted here.
+config.styles_external_stylesheets  = [
+    'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
+];
+```
+
+##### TEMPLATE OPTIONS
+```
+//The name that you want your main output html file to be
+config.template_main_file_name  = 'index.html';
+
+//An html file with visual stats of the build will be added to each incremental build.
+//specify the name for it here. The name will then be follow by a '-' the your current Git version
+//eg: [name]-4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html
+//See: https://chrisbateman.github.io/webpack-visualizer/
+config.template_stats_file_name = '';
+
+//Absolute path for your main source template.
+config.template_src_path        = baseDir+'/src/templates/index.pug';
+
+//if you're using a custom template engine 'OTHER THAN' pug or html
+//add as string below.
+//https://www.npmjs.com/package/template-html-loader
+//https://github.com/tj/consolidate.js
+config.template_engine          = ''; //eg: hbs, handlebars, ejs, mustache
+
+//Google Analytics is automatically setup in your setup src/templates/index.pug file.
+//Simply apply options. 
+//If you do not wish to use GA comment-out/remove the functionality src/templates/in index.pug
+config.gaEnable                 = true;
+config.gaTrackingId             = 'UA-XXXXX-Y';
+config.gaPageViewOnLoad         = true;
+```
+
+##### MEDIA OPTIONS
+```
+// IMPORTANT!!! (THESE ARE ALREADY RELATIVE TO OUTPUT OR DESTINATION)
+// ALSO DO NOT ADD TRAILING SLASH '/' eg: assets/audio/
+
+config.media_audio_output_path  = 'assets/audio';
+config.media_files_output_path  = 'assets/files'; //pdfs, docs, etc
+config.media_fonts_output_path  = 'assets/fonts';
+config.media_images_output_path = 'assets/images';
+config.media_video_output_path  = 'assets/video';
+
+// IMPORTANT!!! Use absolute path here. Leave empty string if you don't want to use. 
+config.media_favicon_path       = baseDir+'/src/media/images/riko-favicon.png';
+
+//Image optimization options. NOTE: only valid on prod build. Leave empty if you don't want to use.
+//See: https://github.com/Klathmon/imagemin-webpack-plugin
+config.imageminConfig = {
+    // progressive: true,
+    pngquant:{
+        quality: '65-90',
+        speed: 4
+    },
+    svgo:{
+        plugins: [
+            {
+                removeViewBox: false
+            },
+            {
+                removeEmptyAttrs: false
+            }
+        ]
+    }
+};
+```
+
+##### VENDOR OPTIONS
+```
+//Add vendor dependencies here. Makes the modules available throught your source files.
+//Be sure to add it as a global variable to your eslint config to void any linting errors.
+config.externalModules = {
+    //eg: $ : 'jquery'
+    //eg: _ : 'lodash'
+};
+
+```
+
+##### EXTRA OPTIONS
+```
+//Define which sourcemap type here.
+//https://webpack.github.io/docs/configuration.html#devtool
+config.sourcemapType = 'inline-source-map';
+
+//Enable of disable sourcemaps based on environment.
+config.sourcemapDev = true;
+config.sourcemapProd = true;
+
+//Enable remote debugging via vorlon.js very useful for debugging on mobile devices.
+//Simply visit localhost:1337 or browsersync's [externalIp]:1337 in dev mode (npm run dev)
+//See: http://vorlonjs.com/
+//WARNING: js sourcemap info will not be able in browser console if enabled in dev mode
+//IMPORTANT! this is only recommend if you're debugging a specific device or not using sourcemaps.
+config.enableRemoteDebugging   = true;
+
+
+//Set autoprefixing options here.
+//See: https://github.com/postcss/autoprefixer#webpack
+config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
+
+//Set webpack middleware options for dev mode
+//See: https://github.com/glenjamin/webpack-hot-middleware#config
+config.hotReloadingOptions     = {
+    overlay: true,
+    reload: true,
+    noInfo: false,
+    quiet: false
+};
+
+//Add any shell command to execute around the production build lifecycle (npm run prod).
+//IMPORTANT! must be and array
+config.onBuildStartShellCommands = [];
+config.onBuildEndShellCommands = [];
+config.onBuildExitShellCommands = [];
+
+// Important linting options for prod build.
+config.failOnProdBuildJsError = true;
+config.failOnProdBuildStyleError = false;
 ```
