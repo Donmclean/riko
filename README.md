@@ -96,7 +96,7 @@ config.packageJson              = baseDir+'/package.json';
 
 ##### JS OPTIONS
 
-```
+```javascript
 //The name that you want your output bundle js file to be
 config.js_main_file_name        = 'bundle.js';
 
@@ -130,7 +130,7 @@ config.js_external_scripts      = [
 ```
 
 ##### STYLE OPTIONS
-```
+```javascript
 //The name that you want your output stylesheet bundle to be
 config.styles_main_file_name    = 'styles.min.css';
 
@@ -141,7 +141,7 @@ config.styles_external_stylesheets  = [
 ```
 
 ##### TEMPLATE OPTIONS
-```
+```javascript
 //The name that you want your main output html file to be
 config.template_main_file_name  = 'index.html';
 
@@ -169,7 +169,7 @@ config.gaPageViewOnLoad         = true;
 ```
 
 ##### MEDIA OPTIONS
-```
+```javascript
 // IMPORTANT!!! (THESE ARE ALREADY RELATIVE TO OUTPUT OR DESTINATION)
 // ALSO DO NOT ADD TRAILING SLASH '/' eg: assets/audio/
 
@@ -204,7 +204,7 @@ config.imageminConfig = {
 ```
 
 ##### VENDOR OPTIONS
-```
+```javascript
 //Add vendor dependencies here. Makes the modules available throught your source files.
 //Be sure to add it as a global variable to your eslint config to void any linting errors.
 config.externalModules = {
@@ -215,7 +215,7 @@ config.externalModules = {
 ```
 
 ##### EXTRA OPTIONS
-```
+```javascript
 //Define which sourcemap type here.
 //https://webpack.github.io/docs/configuration.html#devtool
 config.sourcemapType = 'inline-source-map';
