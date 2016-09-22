@@ -53,3 +53,42 @@ Also supports browserstack for running multiple test suites
 > Then run a `npm run setup` when you're ready to start your application.
  
 - After running one of the setup commands notice there is a new `src/` folder in the directory. 
+- here is where all of your source code will live. From js source/test scripts to stylesheets to custom eslinters etc.
+
+###### **_The custom_config.js file_**
+
+- This is where all your setting live. The build system has been createdso you rarely have to enter the webpack.config.js file.
+- Here's the run down:
+
+```javascript
+//Root Directory
+const baseDir = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
+```
+
+That is your base/root directory and is needed to keep the paths below relative. it's highly recommended that you keep this as is.
+
+
+```javascript
+//IMPORTANT! All paths/directories should be relative to 'baseDir' unless specified otherwise. 
+//Also all values are required to exist and be same file type as in the following examples.
+// eg: baseDir+'/path'
+
+//alias for your web application
+config.moduleName               = 'riko';
+
+//output location for all of your src files after a production build
+config.destDir                  = baseDir+"/app"; 
+
+//port your wish to serve your files on in dev mode
+config.EXPRESS_PORT             = 3000;
+
+//location of which to server production built files. (should* be same as destDir)
+config.EXPRESS_ROOT             = config.destDir; 
+
+//absolute paths to the configs/json files
+config.eslintConfig             = baseDir+'/src/__linters/.eslintrc';
+config.stylelintConfig          = baseDir+'/src/__linters/.stylelintrc.yaml';
+config.karmaConfig              = baseDir+'/karma.conf.js';
+config.nightWatchConfig         = baseDir+'/nightwatch.json';
+config.packageJson              = baseDir+'/package.json';
+```

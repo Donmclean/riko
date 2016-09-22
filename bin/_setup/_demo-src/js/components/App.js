@@ -3,7 +3,7 @@ import Menu from './Menu.jsx';
 const logit = require('../../vendor/logit');
 
 //Assets
-import image from '../../media/images/riko-logo.png';
+import image from '../../media/images/riko-favicon.png';
 import imagePNG from '../../media/images/test.png';
 import imageSVG from '../../media/images/arrow-tip.svg';
 import video from '../../media/videos/test-vid.mp4';
