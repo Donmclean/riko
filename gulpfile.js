@@ -14,34 +14,6 @@ const handleMissingConfigFile = () => {
     }
 };
 
-gulp.task('clean', function(done) {
-    handleMissingConfigFile();
-
-    const
-        config  = require('./webpack/config'),
-        _v      = config.vars,
-        dir = _v.path.basename(config.destDir);
-
-    _v.qfs.removeTree(config.destDir)
-        .then(() => {
-            $.util.log(`'${$.util.colors.blue(dir)}' directory removed ${$.util.colors.green('successfully')}!`);
-            done();
-        })
-        .catch(err => {
-            switch (err.code) {
-                case 'ENOENT': {
-                    $.util.log(`the directory '${$.util.colors.red(dir)}' does not exist!`);
-                    break;
-                }
-                default: {
-                    $.util.log('error: ', err);
-                    break;
-                }
-            }
-            done();
-        });
-});
-
 gulp.task('setup', function (done) {
     const
         qfs     = require('q-io/fs'),
@@ -120,7 +92,7 @@ gulp.task('run-selenium-tests', () => {
         }}))
         .pipe($.debug({title: 'running selenium tests:'}))
         // .pipe($.nightwatch({
-        //     configFile: config.tests.nightWatchConfig,
+        //     configFile: config.nightWatchConfig,
         //     cliArgs: {
         //         env: 'chrome',
         //         verbose: true
