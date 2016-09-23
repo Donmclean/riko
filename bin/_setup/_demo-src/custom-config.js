@@ -14,7 +14,7 @@ const baseDir                  = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
 // eg: baseDir+'/path'
 
 config.moduleName               = 'riko';
-config.destDir                  = baseDir+"/app";
+config.destDir                  = baseDir+"/dist";
 config.srcDir                   = baseDir+"/src";
 
 config.EXPRESS_PORT             = 3000;

@@ -85,7 +85,7 @@ let plugins = [
   }),
   new _v.HtmlWebpackPlugin(indexJSFile),
   new _v.Visualizer({
-    filename: funcs.insertGitVersionIntoFilename(config.template_stats_file_name, _v.GIT_VERSION)
+    filename: funcs.insertGitSHAIntoFilename(config.template_stats_file_name, _v.GIT_VERSION)
   }),
   new _v.StyleLintPlugin({
     configFile: config.stylelintConfig,

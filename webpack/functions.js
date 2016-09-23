@@ -2,7 +2,7 @@
 module.exports = (_v) => {
     const functions = {};
 
-    functions.insertGitVersionIntoFilename = (filename, GitVersion) => {
+    functions.insertGitSHAIntoFilename = (filename, GitVersion) => {
         if(filename && !_v._.isEmpty(filename)) {
             let arr = filename.split('.');
             arr[0] = arr[0].concat('-');
