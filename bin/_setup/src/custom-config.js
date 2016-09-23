@@ -15,12 +15,14 @@ const baseDir                  = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
 
 config.moduleName               = 'riko';
 config.destDir                  = baseDir+"/app";
+config.srcDir                   = baseDir+"/src";
+
 
 config.EXPRESS_PORT             = 3000;
 config.EXPRESS_ROOT             = config.destDir;
 
-config.eslintConfig             = baseDir+'/src/__linters/.eslintrc';
-config.stylelintConfig          = baseDir+'/src/__linters/.stylelintrc.yaml';
+config.eslintConfig             = config.srcDir+'/__linters/.eslintrc';
+config.stylelintConfig          = config.srcDir+'/__linters/.stylelintrc.yaml';
 config.karmaConfig              = baseDir+'/karma.conf.js';
 config.nightWatchConfig         = baseDir+'/nightwatch.json';
 config.packageJson              = baseDir+'/package.json';
@@ -30,7 +32,7 @@ config.packageJson              = baseDir+'/package.json';
 //**********************************************************************
 
 config.js_main_file_name        = config.moduleName+'.js';
-config.js_main_entry_path       = baseDir+'/src/js/'+config.js_main_file_name;
+config.js_main_entry_path       = config.srcDir+'/js/'+config.js_main_file_name;
 config.js_output_path           = 'assets/js';
 
 config.js_external_scripts      = [
@@ -54,7 +56,7 @@ config.styles_external_stylesheets  = [];
 //**********************************************************************
 config.template_main_file_name  = 'index.html';
 config.template_stats_file_name = '';
-config.template_src_path        = baseDir+'/src/templates/index.pug';
+config.template_src_path        = config.srcDir+'/templates/index.pug';
 
 //if you're using a custom template engine 'OTHER THAN' pug or html
 //add as string below.
@@ -81,7 +83,7 @@ config.media_images_output_path = 'assets/images';
 config.media_video_output_path  = 'assets/video';
 
 // IMPORTANT!!! Use absolute path here.
-config.media_favicon_path       = baseDir+'/src/media/images/riko-favicon.png';
+config.media_favicon_path       = config.srcDir+'/media/images/riko-favicon.png';
 
 //Image optimization options
 //See: https://github.com/Klathmon/imagemin-webpack-plugin
