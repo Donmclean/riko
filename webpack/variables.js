@@ -13,7 +13,13 @@ module.exports = () => {
     vars.qfs                    = require('q-io/fs');
     vars.fs                     = require('fs-extra');
     vars.exec                   = require('child_process').exec;
-    vars.GIT_VERSION            = require('child_process').execSync('git rev-parse HEAD').toString().trim();
+
+    try {
+        vars.GIT_VERSION        = require('child_process').execSync('git rev-parse HEAD').toString().trim();
+    } catch (err) {
+        console.log("git is not initialized...", vars.chalk.red(err.cmd) + " FAILED!");
+        vars.GIT_VERSION        = 'buildDetails';
+    }
 
     vars.ProgressBarPlugin      = require('progress-bar-webpack-plugin');
     vars.HtmlWebpackPlugin      = require('html-webpack-plugin');
