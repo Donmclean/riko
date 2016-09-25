@@ -148,6 +148,9 @@ config.hotReloadingOptions     = {
     quiet: false
 };
 
+//Override hot module replacement and simply have the page refresh on file change
+config.BrowserSyncReloadOnChange = false;
+
 // IMPORTANT! must be and array
 config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];

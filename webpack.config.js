@@ -244,7 +244,7 @@ switch (_v.NODE_ENV) {
             proxy: 'http://localhost:' + config.EXPRESS_PORT,
           },
           {
-            reload: false //Allows hot module reloading to take care of this. (preserves state)
+            reload: config.BrowserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)
           }),
       new _v.webpack.ProvidePlugin(config.externalModules)
     ]);
