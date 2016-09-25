@@ -252,6 +252,9 @@ config.hotReloadingOptions     = {
     quiet: false
 };
 
+//Override hot module replacement and simply have the page refresh on file change
+config.BrowserSyncReloadOnChange = true;
+
 //Add any shell command to execute around the production build lifecycle (npm run prod).
 //IMPORTANT! must be and array
 config.onBuildStartShellCommands = [];
