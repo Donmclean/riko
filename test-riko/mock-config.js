@@ -41,6 +41,7 @@ module.exports = () => {
         sourcemapType: 'string',
         autoprefixerOptions:  'object',
         hotReloadingOptions:  'object',
+        BrowserSyncReloadOnChange: 'boolean',
         enableRemoteDebugging: 'boolean',
         onBuildStartShellCommands:  'array',
         onBuildEndShellCommands:  'array',
