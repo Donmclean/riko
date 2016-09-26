@@ -64,7 +64,7 @@ Also supports browserstack for running multiple test suites
 
 #### **THE 'custom_config.js' FILE**
 
-- This is where all your setting live. The build system has been createdso you rarely have to enter the webpack.config.js file.
+- This is where all your settings live. The build system has been created so you rarely have to enter the webpack.config.js file.
 - Here's the run down:
 
 ```javascript
