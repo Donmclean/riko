@@ -94,7 +94,7 @@ let plugins = [
     ],
     failOnError: config.failOnProdBuildStyleError
   }),
-  new _v.WebpackNotifierPlugin({contentImage: config.baseDir+'/test-riko/riko-favicon.png'}),
+  new _v.WebpackNotifierPlugin({contentImage: config.baseDir+'/test-riko/riko-favicon.png'})
 ];
 
 console.log('_v.NODE_ENV: ', _v.NODE_ENV);
@@ -163,7 +163,7 @@ switch (_v.NODE_ENV) {
       new _v.WebpackShellPlugin({
         onBuildStart: config.onBuildStartShellCommands,
         onBuildEnd: config.onBuildEndShellCommands,
-        onBuildExit: config.onBuildExitShellCommands,
+        onBuildExit: config.onBuildExitShellCommands
       }),
       new _v.CleanWebpackPlugin([config.destDir], {root: config.baseDir, verbose: true, dry: false})
     ]);
@@ -192,7 +192,7 @@ switch (_v.NODE_ENV) {
             'style',
             `css${config.sourcemapDev ? '?sourceMap' : ''}`,
             'postcss',
-            `sass${config.sourcemapDev ? '?sourceMap' : ''}`,
+            `sass${config.sourcemapDev ? '?sourceMap' : ''}`
           ]
         },
         // LESS
@@ -241,7 +241,7 @@ switch (_v.NODE_ENV) {
       new _v.webpack.HotModuleReplacementPlugin(),
       new _v.BrowserSyncPlugin(
           {
-            proxy: 'http://localhost:' + config.EXPRESS_PORT,
+            proxy: 'http://localhost:' + config.EXPRESS_PORT
           },
           {
             reload: config.BrowserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)
