@@ -135,7 +135,7 @@ config.externalModules = {
 //**********************************************************************
 
 //https://webpack.github.io/docs/configuration.html#devtool
-config.sourcemapType = 'inline-source-map';
+config.sourcemapType = 'source-map';
 
 //Enable of disable sourcemaps
 config.sourcemapDev = true;
@@ -146,7 +146,7 @@ config.sourcemapProd = true;
 //See: http://vorlonjs.com/
 //WARNING: js sourcemap info will not be able in browser console if enabled in dev mode
 //IMPORTANT! this is only recommend if you're debugging a specific device or not using sourcemaps.
-config.enableRemoteDebugging   = true;
+config.enableRemoteDebugging   = false;
 
 
 config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
