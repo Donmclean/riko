@@ -22,7 +22,7 @@ gulp.task('setup', function (done) {
         srcDir  = baseDir+'/src',
         args    = process.argv;
 
-    let srcToCopy = '';
+    let srcToCopy;
 
     switch (args[3]) {
         case '--demo': {
