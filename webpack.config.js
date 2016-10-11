@@ -90,7 +90,7 @@ let plugins = [
   new _v.StyleLintPlugin({
     configFile: config.stylelintConfig,
     files: [
-        'src/**/*.s?(a|c)ss','src/**/*.less','src/**/*.css','!node_modules/'
+        'src/**/*.s?(a|c)ss','src/**/*.less','src/!(vendor)**/*.css'
     ],
     failOnError: config.failOnProdBuildStyleError
   }),
