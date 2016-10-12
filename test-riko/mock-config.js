@@ -84,7 +84,6 @@ module.exports = () => {
         chai: '^3.5.0',
         chalk: '^1.1.3',
         chokidar: '^1.6.0',
-        chromedriver: "^2.24.1",
         classnames: '^2.2.5',
         "clean-webpack-plugin": "^0.1.10",
         "connect-history-api-fallback": "^1.3.0",
