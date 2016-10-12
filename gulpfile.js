@@ -60,98 +60,30 @@ gulp.task('setup', function (done) {
         });
 });
 
-gulp.task('lint', function() {
-    handleMissingConfigFile();
+const lint = (isLintBuild) => {
 
     const
         config  = require('./webpack/config');
 
-    return gulp.src(config.buildFiles)
+    return gulp.src(isLintBuild ? config.buildFiles : config.srcFiles)
         .pipe($.plumber({errorHandler: (err) => {
             if(err) {
                 $.util.log('GULP PLUMBER > lint ERROR:', err);
             }
         }}))
-        .pipe($.eslint({configFile: './test-riko/.eslintrc'}))
+        .pipe($.eslint({configFile: isLintBuild ? './test-riko/.eslintrc' : './src/__linters/.eslintrc'}))
         .pipe($.eslint.format())
-        .pipe($.eslint.failAfterError());
+        .pipe($.eslint.failAfterError())
+        .pipe($.debug({title: 'linting js build files:'}));
+};
+
+gulp.task('lint-build', function() {
+    handleMissingConfigFile();
+    return lint(true);
 
 });
 
-gulp.task('run-selenium-tests', () => {
+gulp.task('lint-src', function() {
     handleMissingConfigFile();
-
-    const
-        config  = require('./webpack/config');
-
-    return gulp.src(config.nightWatchConfig)
-        .pipe($.plumber({errorHandler: (err) => {
-            if(err) {
-                $.util.log('GULP PLUMBER > run-selenium-tests ERROR:', err);
-            }
-        }}))
-        .pipe($.debug({title: 'running selenium tests:'}))
-        // .pipe($.nightwatch({
-        //     configFile: config.nightWatchConfig,
-        //     cliArgs: {
-        //         env: 'chrome',
-        //         verbose: true
-        //     }
-        // }))
-        // .pipe($.nightwatch({
-        //     configFile: config.nightWatchConfig,
-        //     cliArgs: {
-        //         env: 'firefox',
-        //         verbose: true
-        //     }
-        // }))
-        // .pipe($.nightwatch({
-        //     configFile: config.nightWatchConfig,
-        //     cliArgs: {
-        //         env: 'safari',
-        //         verbose: true
-        //     }
-        // }))
-        .pipe($.nightwatch({
-            configFile: config.nightWatchConfig,
-            cliArgs: {
-                env: 'browserstack-chrome',
-                verbose: true
-            }
-        }));
-    // .pipe($.nightwatch({
-    //     configFile: config.nightWatchConfig,
-    //     cliArgs: {
-    //         env: 'browserstack-firefox',
-    //         verbose: true
-    //     }
-    // }))
-    // .pipe($.nightwatch({
-    //     configFile: config.nightWatchConfig,
-    //     cliArgs: {
-    //         env: 'browserstack-safari',
-    //         verbose: true
-    //     }
-    // }))
-    // .pipe($.nightwatch({
-    //     configFile: config.nightWatchConfig,
-    //     cliArgs: {
-    //         env: 'browserstack-ie10',
-    //         verbose: true
-    //     }
-    // }))
-    // .pipe($.nightwatch({
-    //     configFile: config.nightWatchConfig,
-    //     cliArgs: {
-    //         env: 'browserstack-ie11',
-    //         verbose: true
-    //     }
-    // }))
-    // .pipe($.nightwatch({
-    //     configFile: config.nightWatchConfig,
-    //     cliArgs: {
-    //         env: 'browserstack-ipad2',
-    //         verbose: true
-    //     }
-    // }));
+    return lint(false);
 });

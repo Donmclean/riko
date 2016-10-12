@@ -25,10 +25,13 @@ switch (_v.NODE_ENV) {
             config.entry.unshift(`webpack-hot-middleware/client?overlay=true&reload=true&noInfo=false&quiet=false`);
         }
 
+        _v.app.use(_v.historyApiFallback({
+            verbose: false
+        }));
+
         _v.app.use(_v.WebpackDevMiddleware(compiler, {
             contentBase: config.output.path,
             publicPath: config.output.publicPath,
-            historyApiFallback: true,
             hot: true,
             headers: { 'Access-Control-Allow-Origin': '*' },
             stats: stats

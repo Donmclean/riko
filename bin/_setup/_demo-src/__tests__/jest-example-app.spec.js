@@ -12,7 +12,7 @@ function sum(a, b) {
 
 describe('sum()2', function() {
     it('should save add two numbers', function() {
-        expect(sum(1,3)).toBe(4);
+        expect(sum(1, 3)).toBe(4);
     });
 });
 
@@ -35,7 +35,7 @@ describe('App', function () {
     let app;
 
     beforeEach(function() {
-        app = new App;
+        app = new App();
         renderer.render(<App />);
         result = renderer.getRenderOutput();
     });
@@ -49,7 +49,7 @@ describe('App', function () {
 
     describe('log()', function () {
         it('should return a string', function() {
-            let result = app.log();
+            result = app.log();
             expect(typeof '').toBe(typeof result);
         });
     });

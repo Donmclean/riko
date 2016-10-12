@@ -22,9 +22,9 @@ config.EXPRESS_ROOT             = config.destDir;
 
 config.eslintConfig             = config.srcDir+'/__linters/.eslintrc';
 config.stylelintConfig          = config.srcDir+'/__linters/.stylelintrc.yaml';
-config.karmaConfig              = baseDir+'/karma.conf.js';
-config.nightWatchConfig         = baseDir+'/nightwatch.json';
 config.packageJson              = baseDir+'/package.json';
+
+config.srcFiles                 = [ config.srcDir+'/**/*.js', '!'+config.srcDir+'/custom-config.js' ];
 
 //**********************************************************************
 //********************************JS************************************
@@ -128,7 +128,7 @@ config.externalModules = {
 //*******************************TESTS**********************************
 //**********************************************************************
 
-// See karma.conf.js file
+// See Readme
 
 //**********************************************************************
 //*******************************EXTRAS*********************************

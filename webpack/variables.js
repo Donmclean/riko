@@ -31,6 +31,7 @@ module.exports = () => {
     vars.WebpackDevMiddleware   = require("webpack-dev-middleware");
     vars.WebpackHotMiddleware   = require("webpack-hot-middleware");
     vars.fallback               = require('express-history-api-fallback');
+    vars.historyApiFallback     = require('connect-history-api-fallback');
     vars.ImageminPlugin         = require('imagemin-webpack-plugin').default;
     vars.WebpackShellPlugin     = require('webpack-shell-plugin');
     vars.CleanWebpackPlugin     = require('clean-webpack-plugin');
@@ -41,8 +42,6 @@ module.exports = () => {
     vars.express                = require('express');
     vars.app                    = require('express')();
     vars.morgan                 = require('morgan');
-    vars.karma                  = require('karma');
-    vars.karmaServer            = vars.karma.Server;
     vars.NODE_ENV               = process.env.NODE_ENV;
 
     return vars;
