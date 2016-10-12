@@ -168,5 +168,6 @@ config.onBuildExitShellCommands = [];
 
 config.failOnProdBuildJsError = true;
 config.failOnProdBuildStyleError = false;
+config.eslintQuietMode = true; //set false to display warnings based on your eslint config
 
 module.exports = config;

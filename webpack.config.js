@@ -110,6 +110,7 @@ switch (_v.NODE_ENV) {
     config.eslint = {
       failOnError: config.failOnProdBuildJsError,
       failOnWarning: false,
+      quiet: config.eslintQuietMode,
       configFile: config.eslintConfig
     };
 
@@ -181,6 +182,7 @@ switch (_v.NODE_ENV) {
       failOnError: false,
       failOnWarning: false,
       emitError: true,
+      quiet: config.eslintQuietMode,
       configFile: config.eslintConfig
     };
 

@@ -47,6 +47,7 @@ module.exports = () => {
         onBuildExitShellCommands:  'array',
         failOnProdBuildJsError:  'boolean',
         failOnProdBuildStyleError:  'boolean',
+        eslintQuietMode: 'boolean',
         devtool:  'string',
         entry:  'array',
         output:  'object',
