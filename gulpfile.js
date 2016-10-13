@@ -74,7 +74,7 @@ const lint = (isLintBuild) => {
         .pipe($.eslint({configFile: isLintBuild ? './test-riko/.eslintrc' : './src/__linters/.eslintrc'}))
         .pipe($.eslint.format())
         .pipe($.eslint.failAfterError())
-        .pipe($.debug({title: 'linting js build files:'}));
+        .pipe($.debug({title: 'linting js files:'}));
 };
 
 gulp.task('lint-build', function() {

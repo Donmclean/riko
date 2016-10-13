@@ -24,7 +24,11 @@ config.eslintConfig             = config.srcDir+'/__linters/.eslintrc';
 config.stylelintConfig          = config.srcDir+'/__linters/.stylelintrc.yaml';
 config.packageJson              = baseDir+'/package.json';
 
-config.srcFiles                 = [ config.srcDir+'/**/*.js', '!'+config.srcDir+'/custom-config.js' ];
+config.srcFiles                 = [
+    config.srcDir+'/**/*.js',
+    '!'+config.srcDir+'/custom-config.js',
+    '!'+config.srcDir+'/vendor/**/*.js'
+];
 
 //**********************************************************************
 //********************************JS************************************
