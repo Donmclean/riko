@@ -4,7 +4,7 @@
   "description": "Webpack Build System for React JS Projects",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=production webpack",
+    "start": "export NODE_ENV=production && npm run prod && npm run prod-server",
     "dev": "NODE_ENV=development babel-node server.js",
     "prod": "NODE_ENV=production webpack",
     "test": "npm run test-build && gulp lint-src && NODE_ENV=test jest",
@@ -12,6 +12,7 @@
     "test-build": "gulp lint-build && NODE_ENV=production mocha test-riko/riko.spec.js",
     "test-complete": "npm run setup-demo && npm run prod && npm test",
     "server": "NODE_ENV=production babel-node server.js",
+    "prod-server": "NODE_ENV=production LIVE=true babel-node server.js",
     "setup": "gulp setup --src",
     "setup-demo": "gulp setup --demo",
     "vorlon": "PORT=1337 vorlon",

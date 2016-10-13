@@ -82,11 +82,23 @@ switch (_v.NODE_ENV) {
             next(err);
         });
 
-        console.log('Launching Browser Sync proxy of port:'+config.EXPRESS_PORT);
+        let isLiveServer;
 
-        browserSync.init({
-            proxy: 'localhost:'+config.EXPRESS_PORT
-        });
+        try {
+            isLiveServer = JSON.parse(process.env.LIVE);
+        } catch (err) {
+            isLiveServer = false;
+        }
+
+        if(!isLiveServer) {
+            console.log('Launching Browser Sync proxy of port: '+config.EXPRESS_PORT);
+
+            browserSync.init({
+                proxy: 'localhost:'+config.EXPRESS_PORT
+            });
+        } else {
+            console.log('Listening on port: '+config.EXPRESS_PORT);
+        }
 
         break;
     }
