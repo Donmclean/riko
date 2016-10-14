@@ -26,9 +26,10 @@ config.stylelintConfig          = config.srcDir+'/__linters/.stylelintrc.yaml';
 config.packageJson              = baseDir+'/package.json';
 
 config.srcFiles                 = [
-    config.srcDir+'/**/*.js',
+    config.srcDir+'/**/*.js?(x)',
     '!'+config.srcDir+'/custom-config.js',
-    '!'+config.srcDir+'/vendor/**/*.js'
+    '!'+config.srcDir+'/vendor/**/*.js',
+    '!'+config.srcDir+'/__tests__utils/**/*.js'
 ];
 
 //**********************************************************************
@@ -162,6 +163,6 @@ config.onBuildExitShellCommands = [];
 
 config.failOnProdBuildJsError = true;
 config.failOnProdBuildStyleError = false;
-config.eslintQuietMode = true; //set false to display warnings based on your eslint config
+config.eslintQuietMode = false; //set false to display warnings based on your eslint config
 
 module.exports = config;
