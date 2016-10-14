@@ -42,7 +42,8 @@
     "testRegex": "(src/__tests__/.*|\\.(test|spec))\\.(es6|js|jsx)$",
     "moduleFileExtensions": [
       "js",
-      "jsx"
+      "jsx",
+      "json"
     ],
     "moduleNameMapper": {
       "^.+\\.(css|less|sass|scss)$": "<rootDir>/src/__tests__utils/styleMock.js",
