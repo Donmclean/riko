@@ -18,6 +18,7 @@ module.exports = () => {
         js_main_entry_path:  'string',
         js_output_path:  'string',
         js_external_scripts: 'array',
+        js_runtime_configs: 'array',
         styles_main_file_name:  'string',
         styles_external_stylesheets: 'array',
         template_main_file_name:  'string',

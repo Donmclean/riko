@@ -99,6 +99,13 @@ let plugins = [
 
 console.log('_v.NODE_ENV: ', _v.NODE_ENV);
 
+//handles mapping of runtime configs defined in custom_config.js
+const runtimeConfigs = _v._
+    .chain(config.js_runtime_configs)
+    .keyBy((config) => config.key)
+    .mapValues((config) => config.value)
+    .value();
+
 switch (_v.NODE_ENV) {
 
   case "production": {
@@ -146,11 +153,7 @@ switch (_v.NODE_ENV) {
     );
 
     plugins = plugins.concat([
-      new _v.webpack.DefinePlugin({
-        'process.env': {
-          'NODE_ENV': JSON.stringify(_v.NODE_ENV)
-        }
-      }),
+      new _v.webpack.DefinePlugin(runtimeConfigs),
       new _v.webpack.optimize.DedupePlugin(),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: config.sourcemapProd, compress: {warnings: false} }),
@@ -234,11 +237,7 @@ switch (_v.NODE_ENV) {
     );
 
     plugins = plugins.concat([
-      new _v.webpack.DefinePlugin({
-        'process.env': {
-          'NODE_ENV': JSON.stringify(_v.NODE_ENV)
-        }
-      }),
+      new _v.webpack.DefinePlugin(runtimeConfigs),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.HotModuleReplacementPlugin(),
       new _v.BrowserSyncPlugin(

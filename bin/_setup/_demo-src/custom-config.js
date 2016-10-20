@@ -57,6 +57,16 @@ config.js_external_scripts      = [
     }
 ];
 
+//IMPORTANT!!! ALL VALUES OF THE FOLLOWING 'value' key *MUST BE JSON STRINGIFIED*
+config.js_runtime_configs      = [
+    {
+        key: 'process.env',
+        value: {
+            'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        }
+    }
+];
+
 //**********************************************************************
 //*******************************STYLES*********************************
 //**********************************************************************
