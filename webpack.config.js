@@ -54,17 +54,17 @@ config.module = {
     //VIDEOS
     {
       test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-      loader: `file?name=${config.media_video_output_path}/[name].[ext]`
+      loader: `file?name=${config.media_video_output_path}/[name].[ext]?[hash]`
     },
     //AUDIO
     {
       test: /\.(wav|WAV|mp3|aiff|flac|mp4a|m4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-      loader: `file?name=${config.media_audio_output_path}/[name].[ext]`
+      loader: `file?name=${config.media_audio_output_path}/[name].[ext]?[hash]`
     },
     //FILES
     {
       test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-      loader: `file?name=${config.media_files_output_path}/[name].[ext]`
+      loader: `file?name=${config.media_files_output_path}/[name].[ext]?[hash]`
     }
   ]
 };
@@ -110,7 +110,7 @@ switch (_v.NODE_ENV) {
 
   case "production": {
 
-    config.output.sourceMapFilename = '[file].[hash].map';
+    config.output.sourceMapFilename = '[file].map?[hash]';
 
     config.devtool = config.sourcemapProd ? config.sourcemapType : null;
 
@@ -143,12 +143,12 @@ switch (_v.NODE_ENV) {
         //FONTS
         {
           test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: `file?name=${config.media_fonts_output_path}/[name].[ext]`
+          loader: `file?name=${config.media_fonts_output_path}/[name].[ext]?[hash]`
         },
         //IMAGES
         {
           test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-          loader: `file?name=${config.media_images_output_path}/[name].[ext]`
+          loader: `file?name=${config.media_images_output_path}/[name].[ext]?[hash]`
         }
     );
 
@@ -157,9 +157,9 @@ switch (_v.NODE_ENV) {
       new _v.webpack.optimize.DedupePlugin(),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: config.sourcemapProd, compress: {warnings: false} }),
-      new _v.webpack.optimize.CommonsChunkPlugin('main', config.js_output_path+'/'+config.js_main_file_name),
+      new _v.webpack.optimize.CommonsChunkPlugin('main', config.js_output_path + '/' + config.js_main_file_name + '?[hash]'),
       new _v.webpack.ProvidePlugin(config.externalModules),
-      new _v.ExtractTextPlugin(config.styles_main_file_name, {allChunks: true}),
+      new _v.ExtractTextPlugin(config.styles_main_file_name + '?[hash]', {allChunks: true}),
 
       //Image optimization options | imagemin-webpack-plugin
       //https://github.com/Klathmon/imagemin-webpack-plugin
