@@ -1,7 +1,12 @@
 "use strict";
 const
     gulp    = require('gulp'),
-    $       = require('gulp-load-plugins')();
+    $       = require('gulp-load-plugins')(),
+    qfs     = require('q-io/fs'),
+    _       = require('lodash'),
+    baseDir = process.cwd(),
+    srcDir  = baseDir+'/src',
+    args    = process.argv;
 
 const handleMissingConfigFile = () => {
     try {
@@ -15,12 +20,6 @@ const handleMissingConfigFile = () => {
 };
 
 gulp.task('setup', function (done) {
-    const
-        qfs     = require('q-io/fs'),
-        _       = require('lodash'),
-        baseDir = process.cwd(),
-        srcDir  = baseDir+'/src',
-        args    = process.argv;
 
     let srcToCopy;
 
@@ -62,8 +61,7 @@ gulp.task('setup', function (done) {
 
 const lint = (isLintBuild) => {
 
-    const
-        config  = require('./webpack/config');
+    const config  = require('./webpack/config');
 
     return gulp.src(isLintBuild ? config.buildFiles : config.srcFiles)
         .pipe($.plumber({errorHandler: (err) => {

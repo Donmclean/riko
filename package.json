@@ -16,7 +16,7 @@
     "setup": "gulp setup --src",
     "setup-demo": "gulp setup --demo",
     "vorlon": "PORT=1337 vorlon",
-    "coveralls": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha test-riko/riko.spec.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coveralls": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha test-riko/riko.spec.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && codeclimate-test-reporter < ./coverage/lcov.info && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
