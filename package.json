@@ -6,6 +6,7 @@
   "scripts": {
     "start": "export NODE_ENV=production && npm run prod && npm run prod-server",
     "dev": "NODE_ENV=development babel-node server.js",
+    "electron": "electron ./src/index.js",
     "prod": "NODE_ENV=production webpack",
     "test": "npm run test-build && gulp lint-src && NODE_ENV=test jest",
     "test-jest": "jest",
@@ -15,6 +16,7 @@
     "prod-server": "NODE_ENV=production LIVE=true babel-node server.js",
     "setup": "gulp setup --src",
     "setup-demo": "gulp setup --demo",
+    "setup-electron": "gulp setup --electron",
     "vorlon": "PORT=1337 vorlon",
     "test-coverage": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha test-riko/riko.spec.js --report lcovonly -- -R spec && codeclimate-test-reporter < ./coverage/lcov.info && rm -rf ./coverage"
   },
@@ -90,6 +92,7 @@
     "clean-webpack-plugin": "^0.1.10",
     "connect-history-api-fallback": "^1.3.0",
     "css-loader": "^0.25.0",
+    "electron": "^1.4.5",
     "eslint": "^3.3.0",
     "eslint-loader": "1.5.0",
     "express": "^4.14.0",
