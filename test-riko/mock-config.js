@@ -88,7 +88,6 @@ module.exports = () => {
         "chalk": "^1.1.3",
         "clean-webpack-plugin": "^0.1.10",
         "connect-history-api-fallback": "^1.3.0",
-        "coveralls": "^2.11.12",
         "css-loader": "^0.25.0",
         "eslint": "^3.3.0",
         "eslint-loader": "^1.5.0",
