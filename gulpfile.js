@@ -10,7 +10,7 @@ const handleMissingConfigFile = () => {
         $.util.log($.util.colors.red('ERROR:') + $.util.colors.yellow(' must have a valid custom-config.js file in ' +
             $.util.colors.red('src/') + ' folder. ') +
             $.util.colors.cyan('Try running '+ $.util.colors.blue('"npm run setup"')+' to get started.'));
-        process.exit(0);
+        throw new Error('must have a valid custom-config.js');
     }
 };
 
@@ -35,7 +35,7 @@ gulp.task('setup', function (done) {
         }
         default: {
             $.util.log(`${$.util.colors.red('invalid arg terminating...')}`);
-            process.exit(0);
+            throw new Error('invalid arg terminating...');
         }
     }
 
@@ -45,7 +45,7 @@ gulp.task('setup', function (done) {
         .then(files => {
             if(_.includes(files, 'src')) {
                 $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder must not exist during setup. ${$.util.colors.red('terminating...')}`));
-                process.exit(0);
+                throw new Error('src/ folder must not exist during setup.');
             }
             $.util.log($.util.colors.yellow(`creating ${$.util.colors.blue('src/')} folder and sub directories`));
             return qfs.copyTree(baseDir+`/bin/_setup/${srcToCopy}`, srcDir);
