@@ -2,7 +2,7 @@
 
 Webpack Build System for React JS
 
-[![Build Status](https://travis-ci.org/Donmclean/riko.svg?branch=master)](https://travis-ci.org/Donmclean/riko) [![dependencies Status](https://david-dm.org/donmclean/riko/status.svg)](https://david-dm.org/donmclean/riko) [![devDependencies Status](https://david-dm.org/donmclean/riko/dev-status.svg)](https://david-dm.org/donmclean/riko?type=dev) [![Coverage Status](https://coveralls.io/repos/github/Donmclean/riko/badge.svg?branch=master)](https://coveralls.io/github/Donmclean/riko?branch=master) [![Code Climate](https://codeclimate.com/github/Donmclean/riko/badges/gpa.svg)](https://codeclimate.com/github/Donmclean/riko) [![DUB](https://img.shields.io/dub/l/vibe-d.svg?maxAge=2592000)](https://github.com/Donmclean/riko/blob/master/LICENSE) [![DUB](https://img.shields.io/badge/Author-Don%20Mclean-red.svg)](http://donsmclean.com)
+[![Build Status](https://travis-ci.org/Donmclean/riko.svg?branch=master)](https://travis-ci.org/Donmclean/riko) [![dependencies Status](https://david-dm.org/donmclean/riko/status.svg)](https://david-dm.org/donmclean/riko) [![devDependencies Status](https://david-dm.org/donmclean/riko/dev-status.svg)](https://david-dm.org/donmclean/riko?type=dev) [![Test Coverage](https://codeclimate.com/github/Donmclean/riko/badges/coverage.svg)](https://codeclimate.com/github/Donmclean/riko/coverage) [![Code Climate](https://codeclimate.com/github/Donmclean/riko/badges/gpa.svg)](https://codeclimate.com/github/Donmclean/riko) [![DUB](https://img.shields.io/dub/l/vibe-d.svg?maxAge=2592000)](https://github.com/Donmclean/riko/blob/master/LICENSE) [![DUB](https://img.shields.io/badge/Author-Don%20Mclean-red.svg)](http://donsmclean.com)
 
 
 #FEATURES
