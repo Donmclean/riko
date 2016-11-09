@@ -1,6 +1,8 @@
 const config = {};
 
-config.packager                 = require('electron-packager');
+if(process.env.ELECTRON) {
+    config.packager             = require('electron-packager');
+}
 
 //**********************************************************************
 //*******************************CORE***********************************
