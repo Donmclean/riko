@@ -1,4 +1,10 @@
+//TODO: Babel This file in prod build
 const electron = require('electron');
+// import electron from 'electron';
+let config;
+if(process.env.NODE_ENV === 'development') {
+  config = require('./custom-config');
+}
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -15,15 +21,29 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
+  const options = {};
+  switch (process.env.NODE_ENV) {
+    case 'development': {
+      options.host = 'localhost:' + config.EXPRESS_PORT;
+      options.protocol = 'http:';
+      options.slashes = true;
+      break;
+    }
+    default: {
+      options.pathname = path.join(__dirname, 'index.html');
+      options.protocol = 'file:';
+      options.slashes = true;
+      break;
+    }
+  }
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // and load the index.html of the app.
+  mainWindow.loadURL(url.format(options));
+
+  if(process.env.NODE_ENV === 'development') {
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools();
+  }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

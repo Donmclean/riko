@@ -16,6 +16,13 @@ config.output = {
   publicPath: '/'
 };
 
+//change public path if building electron
+if(process.env.ELECTRON) {
+  config.output.path = config.tempDir;
+  config.output.publicPath = '';
+  // require.include(config.srcDir+'/electron.js');
+}
+
 config.resolve = {
   extensions: ['', '.js', '.jsx'],
   alias: {
@@ -152,6 +159,15 @@ switch (_v.NODE_ENV) {
         }
     );
 
+    //COPY ADDITIONAL ELECTRON FILES TO TEMP DIR
+    if(process.env.ELECTRON) {
+      plugins = plugins.concat([new _v.CopyWebpackPlugin([
+        { from: config.srcDir+'/electron.js', to: config.tempDir },
+        { from: config.srcDir+'/package.json', to: config.tempDir },
+        { from: config.electronPackagingOptions.icon, to: config.tempDir },
+      ])]);
+    }
+
     plugins = plugins.concat([
       new _v.webpack.DefinePlugin(runtimeConfigs),
       new _v.webpack.optimize.DedupePlugin(),
@@ -240,15 +256,26 @@ switch (_v.NODE_ENV) {
       new _v.webpack.DefinePlugin(runtimeConfigs),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.HotModuleReplacementPlugin(),
-      new _v.BrowserSyncPlugin(
+      new _v.webpack.ProvidePlugin(config.externalModules)
+    ]);
+
+    //ELECTRON DEV MODE
+    if(process.env.ELECTRON) {
+      plugins = plugins.concat([new _v.WebpackShellPlugin({
+          onBuildEnd: ['npm run electron-dev']
+        })
+      ]);
+    } else {
+      //WEB DEV MODE
+      plugins = plugins.concat([new _v.BrowserSyncPlugin(
           {
             proxy: 'http://localhost:' + config.EXPRESS_PORT
           },
           {
             reload: config.BrowserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)
-          }),
-      new _v.webpack.ProvidePlugin(config.externalModules)
-    ]);
+          })
+      ]);
+    }
 
     //handle remote debugging
     if(config.enableRemoteDebugging && _v.NODE_ENV === "development") {
