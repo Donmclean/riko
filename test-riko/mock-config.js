@@ -2,7 +2,6 @@ module.exports = () => {
     const Mock = {};
 
     Mock.config = {
-        packager: 'function',
         vars:  'object',
         moduleName:  'string',
         baseDir:  'string',

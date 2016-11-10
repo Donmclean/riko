@@ -4,6 +4,7 @@ import browserSync from 'browser-sync';
 
 const _v = config.vars;
 const funcs = require('./webpack/functions')(_v);
+const packager = require('electron-packager');
 
 switch (_v.NODE_ENV) {
     case "development": {
@@ -74,7 +75,7 @@ switch (_v.NODE_ENV) {
         if(process.env.ELECTRON) {
             const compiler = _v.webpack(config, () => {
                 //Build The Electron Application
-                config.packager(config.electronPackagingOptions, function(err, appPaths) {
+                packager(config.electronPackagingOptions, function(err, appPaths) {
                     "use strict";
                     if(err) {
                         console.error('ERROR > in electron build', err);
