@@ -43,7 +43,7 @@
     "collectCoverage": true,
     "coverageDirectory": "test-coverage",
     "rootDir": "./",
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "transform": {".*": "<rootDir>/node_modules/babel-jest"},
     "testRegex": "(src/__tests__/.*|\\.(test|spec))\\.(es6|js|jsx)$",
     "moduleFileExtensions": [
       "js",
