@@ -9,5 +9,4 @@ npm run prod &&
 npm test &&
 rm -rf ./src &&
 npm run setup-electron &&
-npm run electron-prod &&
 npm test
