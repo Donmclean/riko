@@ -35,7 +35,7 @@ config.srcFiles                 = [
 //**********************************************************************
 //*******************************PACKAGER*******************************
 //**********************************************************************
-
+//for Electron Applications Only
 config.electronPackagingOptions             = {};
 
 //Source directory for your electron source code
