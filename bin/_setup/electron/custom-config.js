@@ -7,6 +7,9 @@ const config = {};
 //Root Directory
 const baseDir                   = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
 
+//Source Directory
+config.srcDir                   = baseDir+"/src"; //IMPORTANT! DO NOT OVERRIDE!
+
 //**********************************************************************
 //******************************CUSTOM**********************************
 //**********************************************************************
@@ -15,7 +18,6 @@ const baseDir                   = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
 
 config.moduleName               = 'riko';
 config.destDir                  = baseDir+"/dist";
-config.srcDir                   = baseDir+"/src";
 config.tempDir                  = baseDir+"/temp";
 
 config.EXPRESS_PORT             = 3000;
@@ -55,7 +57,7 @@ config.electronPackagingOptions.name        = 'Riko';
 config.electronPackagingOptions.platform    = ['darwin','win32'];
 
 //disable pruning
-config.electronPackagingOptions.prune       = false; //THIS MUST BE FALSE!!!
+config.electronPackagingOptions.prune       = false; //THIS MUST BE FALSE!!! BREAKS IF TRUE.
 
 //Enable or disable asar archiving
 config.electronPackagingOptions.asar        = true;
@@ -208,7 +210,7 @@ config.hotReloadingOptions     = {
 //Override hot module replacement and simply have the page refresh on file change
 config.BrowserSyncReloadOnChange = false;
 
-// IMPORTANT! must be and array
+// IMPORTANT! must be and array. eg: [ echo 'hello world' ];
 config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];
