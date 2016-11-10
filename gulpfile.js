@@ -32,6 +32,10 @@ gulp.task('setup', function (done) {
             srcToCopy = 'src';
             break;
         }
+        case '--electron': {
+            srcToCopy = 'electron';
+            break;
+        }
         default: {
             $.util.log(`${$.util.colors.red('invalid arg terminating...')}`);
             throw new Error('invalid arg terminating...');

@@ -1,7 +1,10 @@
+"use strict";
 import config from './webpack.config';
 import browserSync from 'browser-sync';
 
 const _v = config.vars;
+const funcs = require('./webpack/functions')(_v);
+const packager = require('electron-packager');
 
 switch (_v.NODE_ENV) {
     case "development": {
@@ -68,6 +71,24 @@ switch (_v.NODE_ENV) {
         break;
     }
     default: {
+
+        if(process.env.ELECTRON) {
+            const compiler = _v.webpack(config, () => {
+                //Build The Electron Application
+                packager(config.electronPackagingOptions, function(err, appPaths) {
+                    "use strict";
+                    if(err) {
+                        console.error('ERROR > in electron build', err);
+                        throw err;
+                    }
+
+                    funcs.removeDir(config.tempDir).then(() => {
+                        console.log(config.electronPackagingOptions.name + " build successfully!");
+                    });
+                });
+            });
+            break;
+        }
 
         _v.app.use(_v.morgan('dev'));
 

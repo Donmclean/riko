@@ -38,6 +38,31 @@ config.srcFiles                 = [
 //for Electron Applications Only
 config.electronPackagingOptions             = {};
 
+//Source directory for your electron source code
+config.electronPackagingOptions.dir         = config.tempDir;
+
+//target system architecture(s)
+config.electronPackagingOptions.arch        = 'x64';
+
+//applications icon  //OS X: .icns  //Windows: .ico
+//get free conversions herehttps://iconverticons.com/online/
+config.electronPackagingOptions.icon        = config.srcDir+'/riko-logo.icns';
+
+//The application name
+config.electronPackagingOptions.name        = 'Riko';
+
+//target platform(s) to build for
+config.electronPackagingOptions.platform    = ['darwin','win32'];
+
+//disable pruning
+config.electronPackagingOptions.prune       = false; //THIS MUST BE FALSE!!!
+
+//Enable or disable asar archiving
+config.electronPackagingOptions.asar        = true;
+
+//directory where the finished package(s) are created
+config.electronPackagingOptions.out         = config.destDir;
+
 //**********************************************************************
 //********************************JS************************************
 //**********************************************************************

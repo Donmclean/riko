@@ -10,6 +10,7 @@ module.exports = () => {
     vars.webpack                = require('webpack');
     vars.chalk                  = require('chalk');
     vars._                      = require('lodash');
+    vars.Q                      = require('q');
     vars.qfs                    = require('q-io/fs');
     vars.fs                     = require('fs-extra');
     vars.exec                   = require('child_process').exec;
@@ -36,6 +37,7 @@ module.exports = () => {
     vars.WebpackShellPlugin     = require('webpack-shell-plugin');
     vars.CleanWebpackPlugin     = require('clean-webpack-plugin');
     vars.WebpackNotifierPlugin  = require('webpack-notifier');
+    vars.CopyWebpackPlugin      = require('copy-webpack-plugin');
 
     vars.autoprefixer           = require('autoprefixer');
 

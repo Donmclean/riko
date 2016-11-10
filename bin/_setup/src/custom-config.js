@@ -5,7 +5,7 @@ const config = {};
 //**********************************************************************
 
 //Root Directory
-const baseDir                  = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
+const baseDir                   = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
 
 //**********************************************************************
 //******************************CUSTOM**********************************
@@ -16,7 +16,7 @@ const baseDir                  = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
 config.moduleName               = 'riko';
 config.destDir                  = baseDir+"/dist";
 config.srcDir                   = baseDir+"/src";
-
+config.tempDir                  = baseDir+'/temp';
 
 config.EXPRESS_PORT             = 3000;
 config.EXPRESS_ROOT             = config.destDir;
@@ -31,6 +31,12 @@ config.srcFiles                 = [
     '!'+config.srcDir+'/vendor/**/*.js',
     '!'+config.srcDir+'/__tests__utils/**/*.js'
 ];
+
+//**********************************************************************
+//*******************************PACKAGER*******************************
+//**********************************************************************
+//for Electron Applications Only
+config.electronPackagingOptions             = {};
 
 //**********************************************************************
 //********************************JS************************************
