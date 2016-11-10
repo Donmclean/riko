@@ -45,6 +45,7 @@ config.electronPackagingOptions.dir         = config.tempDir;
 config.electronPackagingOptions.arch        = 'x64';
 
 //applications icon  //OS X: .icns  //Windows: .ico
+//get free conversions herehttps://iconverticons.com/online/
 config.electronPackagingOptions.icon        = config.srcDir+'/riko-logo.icns';
 
 //The application name
