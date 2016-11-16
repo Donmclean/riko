@@ -17,7 +17,7 @@ const config = require('../src/custom-config') || {};
 
 config.vars                     = require('./variables')();
 
-config.baseDir                  = process.cwd();
+config.baseDir                  = config.vars.path.resolve(__dirname, '../');
 config.srcDir                   = config.baseDir+"/src";
 
 config.buildFiles               = [

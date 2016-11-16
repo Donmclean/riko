@@ -4,7 +4,8 @@ const
     $       = require('gulp-load-plugins')(),
     qfs     = require('q-io/fs'),
     _       = require('lodash'),
-    baseDir = process.cwd(),
+    path    = require('path'),
+    baseDir = path.resolve(__dirname),
     srcDir  = baseDir+'/src',
     args    = process.argv;
 
