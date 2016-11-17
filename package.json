@@ -43,7 +43,9 @@
     "collectCoverage": true,
     "coverageDirectory": "test-coverage",
     "rootDir": "./",
-    "transform": {".*": "<rootDir>/node_modules/babel-jest"},
+    "transform": {
+      ".*": "<rootDir>/node_modules/babel-jest"
+    },
     "testRegex": "(src/__tests__/.*|\\.(test|spec))\\.(es6|js|jsx)$",
     "moduleFileExtensions": [
       "js",
@@ -74,7 +76,7 @@
     "babel-jest": "^17.0.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-istanbul": "^2.0.1",
+    "babel-plugin-istanbul": "^3.0.0",
     "babel-plugin-react-html-attrs": "^2.0.0",
     "babel-plugin-react-transform": "^2.0.2",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",

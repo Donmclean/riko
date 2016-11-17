@@ -76,7 +76,7 @@ Webpack Build System for React JS (Web & Electron Apps)
 
 ```javascript
 //Root Directory
-const baseDir                   = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
+const baseDir                   = path.resolve(__dirname, '../'); //IMPORTANT! DO NOT OVERRIDE!
 
 //Source Directory
 config.srcDir                   = baseDir+"/src"; //IMPORTANT! DO NOT OVERRIDE!
