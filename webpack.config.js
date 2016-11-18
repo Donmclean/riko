@@ -24,10 +24,7 @@ if(process.env.ELECTRON) {
 }
 
 config.resolve = {
-  extensions: ['', '.js', '.jsx'],
-  alias: {
-    request: 'browser-request'
-  }
+    extensions: ['', '.js', '.jsx']
 };
 
 config.module = {
