@@ -134,8 +134,18 @@ config.imageminConfig = {
 //*******************************VENDOR*********************************
 //**********************************************************************
 
-// add vendor dependencies here
+// add vendor dependencies that you wish to expose internally here
 config.externalModules = {
+    //eg: $ : 'jquery'
+};
+
+// add vendor dependencies that you wish to expose globally here
+// For example: in a browser; It will be attached to the window object.
+config.externalModulesToExposeInDev = {
+    //eg: $ : 'jquery'
+};
+
+config.externalModulesToExposeInProd = {
     //eg: $ : 'jquery'
 };
 

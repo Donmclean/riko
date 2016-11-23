@@ -259,6 +259,18 @@ config.externalModules = {
     //eg: _ : 'lodash'
 };
 
+// add vendor dependencies that you wish to expose globally here
+// For example: in a browser; It will be attached to the window object. 
+config.externalModulesToExposeInDev = {
+    //eg: $ : 'jquery'
+    //eg: _ : 'lodash'
+};
+
+config.externalModulesToExposeInProd = {
+    //eg: $ : 'jquery'
+    //eg: _ : 'lodash'
+};
+
 ```
 
 ##### EXTRA OPTIONS

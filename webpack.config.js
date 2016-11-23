@@ -184,6 +184,9 @@ switch (_v.NODE_ENV) {
       }),
       new _v.CleanWebpackPlugin([config.destDir], {root: config.baseDir, verbose: true, dry: false})
     ]);
+
+    //add globally exposed modules
+    config.module.loaders = funcs.combineWithExternalModules(config.module.loaders, config.externalModulesToExposeInProd);
     break;
   }
 
@@ -255,6 +258,9 @@ switch (_v.NODE_ENV) {
       new _v.webpack.HotModuleReplacementPlugin(),
       new _v.webpack.ProvidePlugin(config.externalModules)
     ]);
+
+    //add globally exposed modules
+    config.module.loaders = funcs.combineWithExternalModules(config.module.loaders, config.externalModulesToExposeInDev);
 
     //ELECTRON DEV MODE
     if(process.env.ELECTRON) {

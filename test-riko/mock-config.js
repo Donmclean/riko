@@ -38,6 +38,8 @@ module.exports = () => {
         media_favicon_path: 'string',
         imageminConfig:  'object',
         externalModules:  'object',
+        externalModulesToExposeInDev: 'object',
+        externalModulesToExposeInProd: 'object',
         sourcemapDev: 'boolean',
         sourcemapProd: 'boolean',
         sourcemapType: 'string',
