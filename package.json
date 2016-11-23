@@ -154,7 +154,8 @@
     "webpack-hot-middleware": "^2.12.2",
     "webpack-notifier": "^1.4.1",
     "webpack-shell-plugin": "^0.4.3",
-    "webpack-visualizer-plugin": "^0.1.5"
+    "webpack-visualizer-plugin": "^0.1.5",
+    "worker-loader": "^0.7.1"
   },
   "dependencies": {
     "react": "^15.3.0",
