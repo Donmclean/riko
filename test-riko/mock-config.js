@@ -37,6 +37,7 @@ module.exports = () => {
         media_video_output_path:  'string',
         media_favicon_path: 'string',
         imageminConfig:  'object',
+        externalModulePaths: 'object',
         externalModules:  'object',
         sourcemapDev: 'boolean',
         sourcemapProd: 'boolean',
