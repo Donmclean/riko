@@ -354,12 +354,13 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
         
     - `npm run dev`
         - This will fire up a browsersync server for you with your specified hot reloading options.
-        - It will watch all files attached down the tree of your specified entry file and "hot replace or reload" on change
+        - It will watch all files attached down the tree of your specified entry file and "hot replace or reload" on change.
     
     - `npm run electron`
         - This will fire up a browsersync server for you with your specified hot reloading options in a native Mac/Windows/Linux window.
         - It will watch all files attached down the tree of your specified entry file and "hot replace or reload" on change
-    
+        - Get the right formatted logo `.icns` or `.ico` for your electron app [here](https://iconverticons.com/online/).
+        
     - `npm run test-jest`
         - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the package.json if you wish.
 
