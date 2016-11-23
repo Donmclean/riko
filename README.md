@@ -48,6 +48,7 @@ Webpack Build System for React JS (Web & Electron Apps)
     - To make the hot reloading of CSS work, we are not extracting CSS in development. Ideally, during server rendering, we will be extracting CSS, and we will get a .css file, and we can use it in the html template. That's what we are doing in production. 
     - In development, after all scripts get loaded, react loads the CSS as BLOBs. That's why there is a second of FOUC in development.
 - Windows Development
+
     - This is not tested for Windows development and 
     currently does not support any Windows OS.
 
