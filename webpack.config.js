@@ -24,7 +24,8 @@ if(process.env.ELECTRON) {
 }
 
 config.resolve = {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    alias: config.externalModulePaths
 };
 
 config.module = {
@@ -38,11 +39,16 @@ config.module = {
     }
   ],
   loaders: [
-    // JAVASCRIPT
+      // JAVASCRIPT
     {
       test: /\.jsx$|\.js$/,
       include: config.srcDir,
       loaders: _v.NODE_ENV === 'test' ? ['babel'] : ['react-hot-loader/webpack','babel']
+    },
+      //JSON
+    {
+      test: /\.json$/i,
+      loader: 'json'
     },
       //TEMPLATES (PUG)
     {
@@ -55,17 +61,17 @@ config.module = {
       test: /\.(ejs|mustache|hbs|handlebars)$/,
       loader: "template-html-loader"+ !_v._.isEmpty(config.template_engine) ? '?engine='+config.template_engine : ''
     },
-    //VIDEOS
+      //VIDEOS
     {
       test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
       loader: `file?name=${config.media_video_output_path}/[name].[ext]?[hash]`
     },
-    //AUDIO
+      //AUDIO
     {
       test: /\.(wav|WAV|mp3|aiff|flac|mp4a|m4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
       loader: `file?name=${config.media_audio_output_path}/[name].[ext]?[hash]`
     },
-    //FILES
+      //FILES
     {
       test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
       loader: `file?name=${config.media_files_output_path}/[name].[ext]?[hash]`
@@ -185,8 +191,6 @@ switch (_v.NODE_ENV) {
       new _v.CleanWebpackPlugin([config.destDir], {root: config.baseDir, verbose: true, dry: false})
     ]);
 
-    //add globally exposed modules
-    config.module.loaders = funcs.combineWithExternalModules(config.module.loaders, config.externalModulesToExposeInProd);
     break;
   }
 
@@ -258,9 +262,6 @@ switch (_v.NODE_ENV) {
       new _v.webpack.HotModuleReplacementPlugin(),
       new _v.webpack.ProvidePlugin(config.externalModules)
     ]);
-
-    //add globally exposed modules
-    config.module.loaders = funcs.combineWithExternalModules(config.module.loaders, config.externalModulesToExposeInDev);
 
     //ELECTRON DEV MODE
     if(process.env.ELECTRON) {

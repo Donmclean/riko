@@ -44,20 +44,6 @@ module.exports = (_v) => {
         return deferred.promise;
     };
 
-    functions.combineWithExternalModules = (loaders, externalModulesToExpose) => {
-        const externallyExposedModules = [];
-
-        if (_v._.isEmpty(externalModulesToExpose)) {
-            return loaders;
-        } else {
-            _v._.forEach(externalModulesToExpose, (moduleValue, moduleKey) => {
-                externallyExposedModules.push({test: require.resolve(moduleValue), loader: 'expose?' + moduleKey});
-            });
-
-            return _v._.concat(loaders, externallyExposedModules);
-        }
-    };
-
     return functions;
 
 };

@@ -170,20 +170,33 @@ config.imageminConfig = {
 //*******************************VENDOR*********************************
 //**********************************************************************
 
-// add vendor dependencies that you wish to expose internally here
+//IMPORTANT!!! all module dependencies that are NOT npm installed modules
+// -  eg: require('src/vendor/jquery.min.js')
+// must be specified with it's valid ABSOLUTE path here
+config.externalModulePaths = {
+    //eg: $ : 'src/vendor/jquery.min.js'
+};
+
+// add vendor dependencies that you wish to expose globally but not expose
+// to global/window object here.
+//
+// If using an npm module. Use the same way as you would in a require statement.
+// eg: _ : 'lodash'
+//
+// But if using a vendor dependency. Use the MATCHING KEY from config.externalModulePaths
+// IMPORTANT!!! DO NOT USE AN ABSOLUTE PATH.
+//
+// eg:  config.externalModulePaths  = {$ : 'src/vendor/jquery.min.js'};
+//      config.externalModules      = {$: '$'};
+// Notice how the '$' value of externalModules matches the key $ of externalModulePaths
 config.externalModules = {
     //eg: $ : 'jquery'
+    //or: $ : '$' //if you're not using the npm module. Make sure path is mapped in config.externalModulePaths
 };
 
-// add vendor dependencies that you wish to expose globally here
-// For example: in a browser; It will be attached to the window object.
-config.externalModulesToExposeInDev = {
-    //eg: $ : 'jquery'
-};
-
-config.externalModulesToExposeInProd = {
-    //eg: $ : 'jquery'
-};
+// To add vendor dependencies and expose them to global/window object simply use the expose-loader
+// eg: require("expose-loader?_!lodash");
+// see: https://github.com/webpack/expose-loader
 
 //**********************************************************************
 //*******************************TESTS**********************************
