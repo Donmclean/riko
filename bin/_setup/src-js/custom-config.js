@@ -42,38 +42,13 @@ config.srcFiles                 = [
 //for Electron Applications Only
 config.electronPackagingOptions             = {};
 
-//Source directory for your electron source code
-config.electronPackagingOptions.dir         = config.tempDir;
-
-//target system architecture(s)
-config.electronPackagingOptions.arch        = 'x64';
-
-//applications icon  //OS X: .icns  //Windows: .ico
-//get free conversions herehttps://iconverticons.com/online/
-config.electronPackagingOptions.icon        = config.srcDir+'/riko-logo.icns';
-
-//The application name
-config.electronPackagingOptions.name        = 'Riko';
-
-//target platform(s) to build for
-config.electronPackagingOptions.platform    = ['darwin','win32'];
-
-//disable pruning
-config.electronPackagingOptions.prune       = false; //THIS MUST BE FALSE!!! BREAKS IF TRUE.
-
-//Enable or disable asar archiving
-config.electronPackagingOptions.asar        = true;
-
-//directory where the finished package(s) are created
-config.electronPackagingOptions.out         = config.destDir;
-
 //**********************************************************************
 //********************************JS************************************
 //**********************************************************************
 
 config.js_main_file_name        = config.moduleName+'.js';
 config.js_main_entry_path       = config.srcDir+'/js/'+config.js_main_file_name;
-config.js_output_path           = 'assets/js';
+config.js_output_path           = '';
 
 config.js_external_scripts      = [
     {
@@ -117,7 +92,7 @@ config.styles_external_stylesheets  = [
 //**********************************************************************
 //IMPORTANT!!! this should only be enabled if building an html web app
 //disable this if creating a non-html based project
-config.requiresTemplate         = true;
+config.requiresTemplate         = false;
 
 config.template_main_file_name  = 'index.html';
 config.template_stats_file_name = '';

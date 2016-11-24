@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-npm run setup-demo &&
+npm run setup-js &&
 npm run prod &&
 npm test &&
 rm -rf ./src &&

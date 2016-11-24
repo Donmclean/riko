@@ -79,6 +79,10 @@ config.styles_external_stylesheets  = [];
 //**********************************************************************
 //******************************TEMPLATE********************************
 //**********************************************************************
+//IMPORTANT!!! this should only be enabled if building an html web app
+//disable this if creating a non-html based project
+config.requiresTemplate         = true;
+
 config.template_main_file_name  = 'index.html';
 config.template_stats_file_name = '';
 config.template_src_path        = config.srcDir+'/templates/index.pug';
@@ -199,7 +203,7 @@ config.hotReloadingOptions     = {
 //Override hot module replacement and simply have the page refresh on file change
 config.BrowserSyncReloadOnChange = false;
 
-// IMPORTANT! must be and array
+// IMPORTANT! must be and array. eg: [ echo 'hello world' ];
 config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];
@@ -207,5 +211,8 @@ config.onBuildExitShellCommands = [];
 config.failOnProdBuildJsError = true;
 config.failOnProdBuildStyleError = false;
 config.eslintQuietMode = false; //set false to display warnings based on your eslint config
+
+//enable webpack visualizer which allows you to see the build product of your js sources & dependencies via current git SHA as url
+config.enableWebpackVisualizer = true;
 
 module.exports = config;

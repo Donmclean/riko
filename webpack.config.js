@@ -20,7 +20,6 @@ config.output = {
 if(process.env.ELECTRON) {
   config.output.path = config.tempDir;
   config.output.publicPath = '';
-  // require.include(config.srcDir+'/electron.js');
 }
 
 config.resolve = {
@@ -93,19 +92,27 @@ let plugins = [
     format: 'webpack [:bar] ' + _v.chalk.green.bold(':percent') + ' (:elapsed seconds)',
     clear: true
   }),
-  new _v.HtmlWebpackPlugin(indexJSFile),
-  new _v.Visualizer({
-    filename: funcs.insertGitSHAIntoFilename(config.template_stats_file_name, _v.GIT_VERSION)
-  }),
-  new _v.StyleLintPlugin({
-    configFile: config.stylelintConfig,
-    files: [
-        'src/**/*.s?(a|c)ss','src/**/*.less','src/!(vendor)**/*.css'
-    ],
-    failOnError: config.failOnProdBuildStyleError
-  }),
   new _v.WebpackNotifierPlugin({contentImage: config.baseDir+'/test-riko/riko-favicon.png'})
 ];
+
+if(config.requiresTemplate){
+    plugins.push(
+        new _v.HtmlWebpackPlugin(indexJSFile),
+        new _v.StyleLintPlugin({
+            configFile: config.stylelintConfig,
+            files: [
+                'src/**/*.s?(a|c)ss','src/**/*.less','src/!(vendor)**/*.css'
+            ],
+            failOnError: config.failOnProdBuildStyleError
+        })
+    );
+}
+
+if(config.enableWebpackVisualizer) {
+    plugins.push(new _v.Visualizer({
+        filename: funcs.insertGitSHAIntoFilename(config.template_stats_file_name, _v.GIT_VERSION)
+    }))
+}
 
 console.log('_v.NODE_ENV: ', _v.NODE_ENV);
 
@@ -269,7 +276,7 @@ switch (_v.NODE_ENV) {
           onBuildEnd: ['npm run electron-dev']
         })
       ]);
-    } else {
+    } else if(config.requiresTemplate) {
       //WEB DEV MODE
       plugins = plugins.concat([new _v.BrowserSyncPlugin(
           {

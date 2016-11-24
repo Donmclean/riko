@@ -25,8 +25,8 @@ gulp.task('setup', function (done) {
     let srcToCopy;
 
     switch (args[3]) {
-        case '--demo': {
-            srcToCopy = '_demo-src';
+        case '--js': {
+            srcToCopy = 'src-js';
             break;
         }
         case '--src': {
