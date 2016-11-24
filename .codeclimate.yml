@@ -3,7 +3,6 @@ engines:
     enabled: true
     config:
         config: test-riko/.eslintrc
-    channel: "eslint-2"
     checks:
       global-require:
         enabled: false
@@ -12,10 +11,10 @@ engines:
       - javascript
 ratings:
   paths:
-    - "**.js"
-    - "**.jsx"
+  - "**.js"
+  - "**.jsx"
 exclude_paths:
-  - node_modules/
-  - test-coverage/
-  - dist/
-  - vendor/
+- node_modules/
+- test-coverage/
+- dist/
+- vendor/
