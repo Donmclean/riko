@@ -10,9 +10,9 @@ module.exports = (_v) => {
 
             arr.splice(1, 0, GitVersion);
             return arr.join('');
-        } else {
-            return GitVersion + '.html'
         }
+
+        return GitVersion + '.html';
     };
 
     functions.removeDir = (dir) => {

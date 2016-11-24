@@ -1,8 +1,8 @@
 "use strict";
 
 const
-    chai = require('chai'),
     _ = require('lodash'),
+    chai = require('chai'),
     custom_config = require('../webpack.config'),
     mock_config = require('./mock-config')();
 
