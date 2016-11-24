@@ -75,6 +75,7 @@ describe('Config', function() {
 
         it('insertGitSHAIntoFilename should return a string', function() {
             assert.isString(functions.insertGitSHAIntoFilename('', 'GitVersion'));
+            assert.isString(functions.insertGitSHAIntoFilename('testDir', 'GitVersion'));
         });
 
         it('removeDir should exist and a be a function', function() {
