@@ -1,8 +1,6 @@
 engines:
   eslint:
     enabled: true
-    config:
-        config: test-riko/.eslintrc
     checks:
       global-require:
         enabled: false
