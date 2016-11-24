@@ -45,7 +45,7 @@ module.exports = (_v) => {
     };
 
     functions.handleElectronEnvironmentOptions = (config, plugins) => {
-        let newPlugins;
+        let newPlugins = [];
 
         //GLOBAL OPTIONS
 
