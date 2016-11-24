@@ -1,0 +1,10 @@
+
+engines:
+  # ... CONFIG CONTENT ...
+  eslint:
+    enabled: true
+    # ... CONFIG CONTENT ...
+    checks:
+      global-require:
+        enabled: false
+# ... CONFIG CONTENT ...

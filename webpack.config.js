@@ -174,7 +174,7 @@ switch (_v.NODE_ENV) {
       plugins = plugins.concat([new _v.CopyWebpackPlugin([
         { from: config.srcDir+'/electron.js', to: config.tempDir },
         { from: config.srcDir+'/package.json', to: config.tempDir },
-        { from: config.electronPackagingOptions.icon, to: config.tempDir },
+        { from: config.electronPackagingOptions.icon, to: config.tempDir }
       ])]);
     }
 
