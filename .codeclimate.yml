@@ -7,12 +7,15 @@ engines:
     checks:
       global-require:
         enabled: false
+    config:
+      languages:
+      - javascript
 ratings:
   paths:
-  - "**.js"
-  - "**.jsx"
+    - "**.js"
+    - "**.jsx"
 exclude_paths:
-- node_modules/
-- test-coverage/
-- dist/
-- vendor/
+  - node_modules/
+  - test-coverage/
+  - dist/
+  - vendor/
