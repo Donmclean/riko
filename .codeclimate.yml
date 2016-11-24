@@ -1,9 +1,17 @@
 engines:
-  # ... CONFIG CONTENT ...
   eslint:
     enabled: true
-    # ... CONFIG CONTENT ...
     checks:
       global-require:
         enabled: false
-# ... CONFIG CONTENT ...
+  ratings:
+    paths:
+    - src/**
+    - "**.js"
+    - "**.jsx"
+  exclude_paths:
+  - node_modules/**/*
+  - test-coverage/**/*
+  - dist/**/*
+  - bin/**/*
+  - "**/vendor/**/*"
