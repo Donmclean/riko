@@ -7,10 +7,6 @@ engines:
     config:
       languages:
       - javascript
-ratings:
-  paths:
-  - "**.js"
-  - "**.jsx"
 exclude_paths:
 - node_modules/
 - test-coverage/
