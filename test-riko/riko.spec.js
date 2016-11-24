@@ -61,4 +61,28 @@ describe('Config', function() {
             });
         });
     });
+
+    describe('functions', function() {
+        const functions = require('../webpack/functions')(custom_config.vars);
+
+        it('should exist and be truthy', function() {
+            assert.isOk(functions);
+        });
+
+        it('insertGitSHAIntoFilename should exist and a be a function', function() {
+            assert.isFunction(functions.insertGitSHAIntoFilename);
+        });
+
+        it('insertGitSHAIntoFilename should return a string', function() {
+            assert.isString(functions.insertGitSHAIntoFilename('', 'GitVersion'));
+        });
+
+        it('removeDir should exist and a be a function', function() {
+            assert.isFunction(functions.removeDir);
+        });
+
+        it('removeDir should exist and a be a function', function() {
+            assert.isOk(functions.removeDir(''));
+        });
+    });
 });
