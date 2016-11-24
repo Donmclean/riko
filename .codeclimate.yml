@@ -1,6 +1,8 @@
 engines:
   eslint:
     enabled: true
+    config:
+        config: test-riko/.eslintrc
     channel: "eslint-2"
     checks:
       global-require:
