@@ -158,7 +158,7 @@
     "space-before-function-paren": 0, // require a space after function names (off by default)
     "keyword-spacing": 0,      // require a space after certain keywords (off by default)
     "space-before-blocks": 2,       // require or disallow space before blocks (off by default)
-    "object-curly-spacing": 2,         // require or disallow spaces inside brackets (off by default)
+    "object-curly-spacing": 0,         // require or disallow spaces inside brackets (off by default)
     "space-in-parens": 2,           // require or disallow spaces inside parentheses (off by default)
     "space-infix-ops": 2,           // require spaces around operators
     "space-unary-ops": 2,           // Require or disallow spaces before/after unary operators (words on by default, nonwords off by default)

@@ -82,8 +82,21 @@ describe('Config', function() {
             assert.isFunction(functions.removeDir);
         });
 
-        it('removeDir should exist and a be a function', function() {
+        it('removeDir executes successfully', function() {
             assert.isOk(functions.removeDir(''));
+        });
+
+        it('handleElectronEnvironmentOptions should exist and be a function', function() {
+            assert.isOk(functions.handleElectronEnvironmentOptions);
+            assert.isFunction(functions.handleElectronEnvironmentOptions);
+        });
+
+        it('handleElectronEnvironmentOptions should execute successfully & return an Array', function() {
+            const plugins = [];
+            custom_config.vars.NODE_ENV = 'production';
+            assert.isArray(functions.handleElectronEnvironmentOptions(custom_config, plugins, custom_config.vars));
+            custom_config.vars.NODE_ENV = 'development';
+            assert.isArray(functions.handleElectronEnvironmentOptions(custom_config, plugins, custom_config.vars));
         });
     });
 });

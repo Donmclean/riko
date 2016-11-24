@@ -44,6 +44,41 @@ module.exports = (_v) => {
         return deferred.promise;
     };
 
+    functions.handleElectronEnvironmentOptions = (config, plugins) => {
+        let newPlugins;
+
+        //GLOBAL OPTIONS
+
+        //change public path if building electron
+        config.output.path = config.tempDir;
+        config.output.publicPath = '';
+
+        switch (_v.NODE_ENV) {
+            case 'production': {
+                //COPY ADDITIONAL ELECTRON FILES TO TEMP DIR
+                newPlugins = plugins.concat([new _v.CopyWebpackPlugin([
+                    { from: config.srcDir + '/electron.js', to: config.tempDir },
+                    { from: config.srcDir + '/package.json', to: config.tempDir },
+                    { from: config.electronPackagingOptions.icon, to: config.tempDir }
+                ])]);
+                break;
+            }
+            case 'test':
+            case 'development': {
+                //ELECTRON DEV MODE
+                newPlugins = plugins.concat([new _v.WebpackShellPlugin({
+                    onBuildEnd: ['npm run electron-dev']
+                })]);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
+        return newPlugins;
+    };
+
     return functions;
 
 };

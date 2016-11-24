@@ -16,12 +16,6 @@ config.output = {
   publicPath: '/'
 };
 
-//change public path if building electron
-if(process.env.ELECTRON) {
-  config.output.path = config.tempDir;
-  config.output.publicPath = '';
-}
-
 config.resolve = {
     extensions: ['', '.js', '.jsx'],
     alias: config.externalModulePaths
@@ -114,7 +108,7 @@ if(config.enableWebpackVisualizer) {
     }))
 }
 
-console.log('_v.NODE_ENV: ', _v.NODE_ENV);
+console.log('NODE_ENV: ', _v.NODE_ENV);
 
 //handles mapping of runtime configs defined in custom_config.js
 const runtimeConfigs = _v._
@@ -168,15 +162,6 @@ switch (_v.NODE_ENV) {
           loader: `file?name=${config.media_images_output_path}/[name].[ext]?[hash]`
         }
     );
-
-    //COPY ADDITIONAL ELECTRON FILES TO TEMP DIR
-    if(process.env.ELECTRON) {
-      plugins = plugins.concat([new _v.CopyWebpackPlugin([
-        { from: config.srcDir+'/electron.js', to: config.tempDir },
-        { from: config.srcDir+'/package.json', to: config.tempDir },
-        { from: config.electronPackagingOptions.icon, to: config.tempDir }
-      ])]);
-    }
 
     plugins = plugins.concat([
       new _v.webpack.DefinePlugin(runtimeConfigs),
@@ -270,13 +255,7 @@ switch (_v.NODE_ENV) {
       new _v.webpack.ProvidePlugin(config.externalModules)
     ]);
 
-    //ELECTRON DEV MODE
-    if(process.env.ELECTRON) {
-      plugins = plugins.concat([new _v.WebpackShellPlugin({
-          onBuildEnd: ['npm run electron-dev']
-        })
-      ]);
-    } else if(config.requiresTemplate) {
+    if(config.requiresTemplate && !process.env.ELECTRON) {
       //WEB DEV MODE
       plugins = plugins.concat([new _v.BrowserSyncPlugin(
           {
@@ -306,6 +285,11 @@ switch (_v.NODE_ENV) {
   default: {
     break;
   }
+}
+
+//HANDLE ELECTRON SPECIFIC OPTIONS
+if(process.env.ELECTRON) {
+    plugins = funcs.handleElectronEnvironmentOptions(config, plugins, _v);
 }
 
 config.plugins = plugins;
