@@ -100,5 +100,13 @@ describe('Config', function() {
             custom_config.vars.NODE_ENV = '';
             assert.isArray(functions.handleElectronEnvironmentOptions(custom_config, plugins, custom_config.vars));
         });
+
+        it('executeJestTests should exist and a be a function', function() {
+            assert.isFunction(functions.executeJestTests);
+        });
+
+        it('executeJestTests should execute successfully', function() {
+            assert.isOk(functions.executeJestTests());
+        });
     });
 });
