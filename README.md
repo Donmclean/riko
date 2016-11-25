@@ -63,7 +63,7 @@ Webpack Build System for React JS (Web & Electron Apps)
 
 - After installation you can run either of the following two options: 
     - `npm run setup` to setup the most basic content to jump start your application.
-    - `npm run setup-demo` to setup demo content to get a better sense of how testing, asset loading etc works within the build system.
+    - `npm run setup-js` to setup a non html templated project. For example a js module or library project.
     - `npm run setup-electron` to setup sample content of an electron application.<br/><br/>
         **NOTE: _WHEN SETTING UP AN ELECTRON APP ON MAC_**<br/>
         - You must have [xcode](https://developer.apple.com/xcode) installed.<br/>
@@ -71,8 +71,8 @@ Webpack Build System for React JS (Web & Electron Apps)
         - If this fails you should complete the following instructions:<br/>
         [Install Wine on Mac](https://www.davidbaumgold.com/tutorials/wine-mac/) to package a windows version of your app.
  
-> It's recommended that you run a `npm run setup-demo` first and get a good feel for working with the build system. 
-> Then run a `npm run setup` when you're ready to start your application.
+> Run `npm run setup-js` to start create a js module/library project. 
+> Or run a `npm run setup` when you're ready to start a web application.
 > Or run a `npm run setup-electron` if you're building an electron application.
  
 - After running one of the setup commands notice there is a new `src/` folder in the directory. 
