@@ -203,7 +203,7 @@ config.hotReloadingOptions     = {
 //Override hot module replacement and simply have the page refresh on file change
 config.BrowserSyncReloadOnChange = false;
 
-// IMPORTANT! must be and array. eg: [ echo 'hello world' ];
+// IMPORTANT! must be and array. eg: [ 'echo hello world' ];
 config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];

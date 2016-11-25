@@ -317,7 +317,7 @@ config.hotReloadingOptions     = {
 config.BrowserSyncReloadOnChange = true;
 
 //Add any shell command to execute around the production build lifecycle (npm run prod).
-//IMPORTANT! must be and array. eg: [ echo 'hello world' ];
+// IMPORTANT! must be and array. eg: [ 'echo hello world' ];
 config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];
