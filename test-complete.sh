@@ -41,34 +41,34 @@ removeSrcDir(){
     echoGreen "src directory removed successfully!"
 }
 
-echoBlue "setting up js project tests..." &&
-npm run setup-js &&
+echoBlue "setting up js project tests..."
+npm run setup-js
 
-echoBlue "running prod build for js project..." &&
-npm run prod &&
+echoBlue "running prod build for js project..."
+npm run prod
 
-echoBlue "running tests for js project build..." &&
-npm test &&
+echoBlue "running tests for js project build..."
+npm test
 
-removeSrcDir &&
-
-
-echoBlue "setting up web project tests..." &&
-npm run setup &&
-
-echoBlue "running prod build for web project..." &&
-npm run prod &&
-
-echoBlue "running tests for web project build..." &&
-npm test &&
-
-removeSrcDir &&
+removeSrcDir
 
 
-echoBlue "setting up electron project tests..." &&
-npm run setup-electron &&
+echoBlue "setting up web project tests..."
+npm run setup
 
-echoBlue "running tests for electron project build..." &&
-npm test &&
+echoBlue "running prod build for web project..."
+npm run prod
+
+echoBlue "running tests for web project build..."
+npm test
+
+removeSrcDir
+
+
+echoBlue "setting up electron project tests..."
+npm run setup-electron
+
+echoBlue "running tests for electron project build..."
+npm test
 
 echoGreen "All test successfully completed!"

@@ -55,6 +55,7 @@ module.exports = () => {
         failOnProdBuildStyleError:  'boolean',
         eslintQuietMode: 'boolean',
         enableWebpackVisualizer: 'boolean',
+        debug:  'boolean',
         devtool:  'string',
         entry:  'array',
         output:  'object',

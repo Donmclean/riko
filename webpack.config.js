@@ -121,6 +121,8 @@ switch (_v.NODE_ENV) {
 
   case "production": {
 
+    config.debug = false;
+
     config.output.sourceMapFilename = '[file].map?[hash]';
 
     config.devtool = config.sourcemapProd ? config.sourcemapType : null;
@@ -200,6 +202,8 @@ switch (_v.NODE_ENV) {
       quiet: config.eslintQuietMode,
       configFile: config.eslintConfig
     };
+
+    config.bail = false;
 
     config.module.loaders.push(
         // SASS

@@ -1,5 +1,7 @@
 "use strict";
-
+process.env.NODE_ENV = 'test';
+require('../webpack.config');
+process.env.NODE_ENV = 'production';
 const
     _ = require('lodash'),
     chai = require('chai'),
@@ -10,9 +12,9 @@ const assert = chai.assert;
 
 const
     REQUIRED_KEYS       = _.keys(mock_config.config),
-    VARIABLES           = custom_config.vars,
-
     configKeys          = _.keys(custom_config),
+
+    VARIABLES           = custom_config.vars,
     mockConfig          = mock_config.config,
     mockdevDependencies = mock_config.packageJson.devDependencies;
 

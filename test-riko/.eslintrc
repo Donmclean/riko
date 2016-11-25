@@ -154,7 +154,7 @@
     "quote-props": 0,               // require quotes around object literal property names (off by default)
     "quotes": 0,                    // specify whether double or single quotes should be used
     "semi": 2,                      // require or disallow use of semicolons instead of ASI
-    "sort-vars": 2,                 // sort variables within the same declaration block (off by default)
+    "sort-vars": 0,                 // sort variables within the same declaration block (off by default)
     "space-before-function-paren": 0, // require a space after function names (off by default)
     "keyword-spacing": 0,      // require a space after certain keywords (off by default)
     "space-before-blocks": 2,       // require or disallow space before blocks (off by default)

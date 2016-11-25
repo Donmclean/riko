@@ -5,7 +5,6 @@ const
     qfs     = require('q-io/fs'),
     _       = require('lodash'),
     path    = require('path'),
-    exec    = require('child_process').exec,
     spawn    = require('child_process').spawn,
     baseDir = path.resolve(__dirname),
     srcDir  = baseDir+'/src',
