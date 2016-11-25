@@ -1,7 +1,4 @@
 "use strict";
-process.env.NODE_ENV = 'test';
-require('../webpack.config');
-process.env.NODE_ENV = 'production';
 const
     _ = require('lodash'),
     chai = require('chai'),
@@ -109,6 +106,14 @@ describe('Config', function() {
 
         it('executeJestTests should execute successfully', function() {
             assert.isOk(functions.executeJestTests());
+        });
+    });
+
+    describe('Compile DEV mode', () => {
+        it('should compile successfully when NODE_ENV = development or test', () => {
+            VARIABLES.NODE_ENV = 'test';
+            const dev_config = require('../webpack.config');
+            VARIABLES.webpack(dev_config);
         });
     });
 });
