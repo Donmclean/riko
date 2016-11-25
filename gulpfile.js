@@ -5,6 +5,8 @@ const
     qfs     = require('q-io/fs'),
     _       = require('lodash'),
     path    = require('path'),
+    exec    = require('child_process').exec,
+    spawn    = require('child_process').spawn,
     baseDir = path.resolve(__dirname),
     srcDir  = baseDir+'/src',
     args    = process.argv;
@@ -80,13 +82,28 @@ const lint = (isLintBuild) => {
         .pipe($.debug({title: 'linting js files:'}));
 };
 
-gulp.task('lint-build', function() {
+gulp.task('lint-build', () => {
     handleMissingConfigFile();
     return lint(true);
 
 });
 
-gulp.task('lint-src', function() {
+gulp.task('lint-src', () => {
     handleMissingConfigFile();
     return lint(false);
+});
+
+gulp.task('test-jest', (cb) => {
+
+    const cmd = spawn('jest', {stdio: 'inherit'});
+
+    cmd.on('close', (code) => {
+        if(code > 0) {
+            $.util.log(`${$.util.colors.red('ERROR: JEST TEST FAILED!')}`);
+        } else {
+            $.util.log(`${$.util.colors.green('JEST TEST PASSED!')}`);
+        }
+        cb();
+    });
+
 });

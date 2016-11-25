@@ -14,6 +14,8 @@ module.exports = () => {
     vars.qfs                    = require('q-io/fs');
     vars.fs                     = require('fs-extra');
     vars.exec                   = require('child_process').exec;
+    vars.spawn                  = require('child_process').spawn;
+    vars.chokidar               = require('chokidar');
 
     try {
         vars.GIT_VERSION        = require('child_process').execSync('git rev-parse HEAD').toString().trim();

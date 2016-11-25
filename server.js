@@ -32,19 +32,37 @@ switch (_v.NODE_ENV) {
             verbose: false
         }));
 
-        _v.app.use(_v.WebpackDevMiddleware(compiler, {
+        const WebpackDevMiddlewareInstance = _v.WebpackDevMiddleware(compiler, {
             contentBase: config.output.path,
             publicPath: config.output.publicPath,
             hot: true,
             headers: { 'Access-Control-Allow-Origin': '*' },
             stats: stats
-        }));
+        });
+
+        _v.app.use(WebpackDevMiddlewareInstance);
+
+        //Initial (Runs once) end of valid build callback
+        WebpackDevMiddlewareInstance.waitUntilValid(() => {
+            console.log('Updating Source File Watcher executing initial tests...');
+
+            const watcher = _v.chokidar.watch(config.srcFiles, {ignored: /[\/\\]\./});
+
+            watcher.on('change', (event, path) => {
+                config.hotExecuteTests ? funcs.executeJestTests() : null;
+            });
+
+            funcs.executeJestTests();
+        });
+
+        //Repeating end of valid/invalid build callback
+        // compiler.plugin('done', () => { ... });
 
         _v.app.use(_v.WebpackHotMiddleware(compiler));
 
-        _v.app.listen(config.EXPRESS_PORT, 'localhost', function (err, result) {
+        _v.app.listen(config.EXPRESS_PORT, 'localhost', (err, result) => {
             if (err) { console.log(err) }
-            console.log('Listening at localhost:'+config.EXPRESS_PORT);
+            console.log('Listening at localhost:' + config.EXPRESS_PORT);
         });
 
 

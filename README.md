@@ -316,6 +316,9 @@ config.hotReloadingOptions     = {
 //Override hot module replacement and simply have the page refresh on file change
 config.BrowserSyncReloadOnChange = true;
 
+//Enable this to have tests execute on every webpack rebuild.
+config.hotExecuteTests = false;
+
 //Add any shell command to execute around the production build lifecycle (npm run prod).
 // IMPORTANT! must be and array. eg: [ 'echo hello world' ];
 config.onBuildStartShellCommands = [];

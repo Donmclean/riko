@@ -79,6 +79,10 @@ module.exports = (_v) => {
         return newPlugins;
     };
 
+    functions.executeJestTests = () => {
+        return _v.spawn('gulp', ['test-jest'], {stdio: 'inherit'});
+    };
+
     return functions;
 
 };
