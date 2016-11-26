@@ -83,11 +83,12 @@ Webpack Build System for React JS (Web & Electron Apps)
 - This is where all your settings live. The build system has been created so you rarely have to enter the webpack.config.js file.
 - Here's the run down:
 
+Root Directory. **IMPORTANT! DO NOT OVERRIDE!**
 ```javascript
-//Root Directory
 const baseDir                   = path.resolve(__dirname, '../'); //IMPORTANT! DO NOT OVERRIDE!
-
-//Source Directory
+```
+Source Directory.
+```javascript
 config.srcDir                   = baseDir+"/src"; //IMPORTANT! DO NOT OVERRIDE!
 ```
 
@@ -95,36 +96,36 @@ That is your base/root & source directories; They're needed to keep the paths be
 
 ##### CUSTOM OPTIONS
 
-IMPORTANT! All paths/directories should be relative to 'baseDir' unless specified otherwise. 
+**IMPORTANT!** All paths/directories should be relative to 'baseDir' unless specified otherwise. 
 Also all values are required to exist and be same file type as in the following examples.
 eg: `baseDir+'/path'`
 
-alias for your web application
+Alias for your web application
 ```javascript
 config.moduleName               = 'riko';
 ```
 
-output location for all of your src files after a production build
+Output location for all of your src files after a production build
 ```javascript
 config.destDir                  = baseDir+"/dist"; 
 ```
 
-location for all for temp files to be stored on production build (this will be automatically deleted)
+Location for all for temp files to be stored on production build (this will be automatically deleted)
 ```javascript
 config.tempDir                  = baseDir+"/temp";
 ```
 
-port your wish to serve your files on in dev mode
+Port your wish to serve your files on in dev mode
 ```javascript
 config.EXPRESS_PORT             = 3000;
 ```
 
-location of which to server production built files. (should* be same as destDir)
+Location of which to server production built files. (should* be same as destDir)
 ```javascript
 config.EXPRESS_ROOT             = config.destDir; 
 ```
 
-absolute paths to the configs/json files
+Absolute paths to the configs/json files
 ```javascript
 config.eslintConfig             = baseDir+'/src/__linters/.eslintrc';
 config.stylelintConfig          = baseDir+'/src/__linters/.stylelintrc.yaml';
@@ -133,15 +134,13 @@ config.packageJson              = baseDir+'/package.json';
 
 ##### ELECTRON OPTIONS
 For Electron Applications Only. Attach any option to the electronPackagingOptions object. 
-See [here](https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options)
+See [here](https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options).
 ```javascript
 config.electronPackagingOptions = {};
 ```
 
 ##### JS OPTIONS
-
-
-The name that you want your output bundle js file to be
+The name that you want your output bundle js file to be.
 ```javascript
 config.js_main_file_name        = 'bundle.js';
 ```
@@ -302,14 +301,14 @@ to global/window object here.
 If using an npm module. Use the same way as you would in a require statement.
 <br/>`eg: _ : 'lodash'`
 
-But if using a vendor dependency. Use the MATCHING KEY from `config.externalModulePaths`
-**IMPORTANT!!! DO NOT USE AN ABSOLUTE PATH.**
+But if using a vendor dependency. Use the MATCHING KEY from `config.externalModulePaths`.
+<br/>**IMPORTANT!!! DO NOT USE AN ABSOLUTE PATH.**
 ```javascript
 //eg:   config.externalModulePaths  = {$ : 'src/vendor/jquery.min.js'};
 //      config.externalModules      = {$: '$'};
 ```
 
-Notice how the '$' value of `externalModules` matches the key $ of `externalModulePaths`
+Notice how the '$' value of `externalModules` matches the key $ of `externalModulePaths`.
 ```javascript
 config.externalModules = {
     //eg: $ : 'jquery'
