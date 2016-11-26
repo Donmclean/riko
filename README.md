@@ -95,56 +95,72 @@ That is your base/root & source directories; They're needed to keep the paths be
 
 ##### CUSTOM OPTIONS
 
+IMPORTANT! All paths/directories should be relative to 'baseDir' unless specified otherwise. 
+Also all values are required to exist and be same file type as in the following examples.
+eg: `baseDir+'/path'`
+
+alias for your web application
 ```javascript
-//IMPORTANT! All paths/directories should be relative to 'baseDir' unless specified otherwise. 
-//Also all values are required to exist and be same file type as in the following examples.
-// eg: baseDir+'/path'
-
-//alias for your web application
 config.moduleName               = 'riko';
+```
 
-//output location for all of your src files after a production build
+output location for all of your src files after a production build
+```javascript
 config.destDir                  = baseDir+"/dist"; 
+```
 
-//location for all for temp files to be stored on production build (this will be automatically deleted)
+location for all for temp files to be stored on production build (this will be automatically deleted)
+```javascript
 config.tempDir                  = baseDir+"/temp";
+```
 
-//port your wish to serve your files on in dev mode
+port your wish to serve your files on in dev mode
+```javascript
 config.EXPRESS_PORT             = 3000;
+```
 
-//location of which to server production built files. (should* be same as destDir)
+location of which to server production built files. (should* be same as destDir)
+```javascript
 config.EXPRESS_ROOT             = config.destDir; 
+```
 
-//absolute paths to the configs/json files
+absolute paths to the configs/json files
+```javascript
 config.eslintConfig             = baseDir+'/src/__linters/.eslintrc';
 config.stylelintConfig          = baseDir+'/src/__linters/.stylelintrc.yaml';
 config.packageJson              = baseDir+'/package.json';
 ```
 
 ##### ELECTRON OPTIONS
+For Electron Applications Only. Attach any option to the electronPackagingOptions object. 
+See [here](https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options)
 ```javascript
-//for Electron Applications Only. Attach any option to the electronPackagingOptions object. 
-//See here: https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options 
-
 config.electronPackagingOptions = {};
 ```
 
 ##### JS OPTIONS
 
+
+The name that you want your output bundle js file to be
 ```javascript
-//The name that you want your output bundle js file to be
 config.js_main_file_name        = 'bundle.js';
+```
 
-//Entry file for your web app. see: https://webpack.github.io/docs/configuration.html#entry
+Entry file for your web app. See [here](https://webpack.github.io/docs/configuration.html#entry)
+```javascript
 config.js_main_entry_path       = baseDir+'/src/js/'+config.js_main_file_name;
+```
 
-//Relative path for your js bundle after prod build 
+Relative path for your js bundle after prod build 
+```javascript
 config.js_output_path           = 'assets/js';
+```
 
-//Any external scripts you'd like to load via cdn should be inserted here.
-//Notice the 'async' & 'defer' options. 
-//See: http://www.growingwiththeweb.com/2014/02/async-vs-defer-attributes.html
-//Also if you don't want to load any scripts. Just leave the array empty.
+Any external scripts you'd like to load via cdn should be inserted here.
+Notice the 'async' & 'defer' options. 
+See [here](http://www.growingwiththeweb.com/2014/02/async-vs-defer-attributes.html)
+Also if you don't want to load any scripts. Just leave the array empty.
+```javascript
 config.js_external_scripts      = [
     {
         src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
@@ -162,10 +178,13 @@ config.js_external_scripts      = [
         defer: false
     }
 ];
+```
 
-//Any configurations that you would like to be available in your application goes here.
-//These values will be availbe when your source code builds and is runs.
-//IMPORTANT!!! ALL VALUES OF THE FOLLOWING 'value' key *MUST BE JSON STRINGIFIED*
+Any configurations that you would like to be available in your application goes here.
+These values will be availbe when your source code builds and is runs.
+
+**IMPORTANT!!! ALL VALUES OF THE FOLLOWING** 'value' key **MUST BE JSON STRINGIFIED**
+```javascript
 config.js_runtime_configs      = [
     {
         key: 'process.env',
@@ -177,60 +196,77 @@ config.js_runtime_configs      = [
 ```
 
 ##### STYLE OPTIONS
+The name that you want your output stylesheet bundle to be
 ```javascript
-//The name that you want your output stylesheet bundle to be
 config.styles_main_file_name    = 'styles.min.css';
+```
 
-//Any external stylesheets you'd like to load via cdn should be inserted here.
+Any external stylesheets you'd like to load via cdn should be inserted here.
+```javascript
 config.styles_external_stylesheets  = [
     'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
 ];
 ```
 
 ##### TEMPLATE OPTIONS
+The name that you want your main output html file to be
 ```javascript
-//The name that you want your main output html file to be
 config.template_main_file_name  = 'index.html';
+```
 
-//An html file with visual stats of the build will be added to each incremental build.
-//specify the name for it here. The name will then be follow by a '-' the your current Git version
-//eg: [name]-4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html
-//See: https://chrisbateman.github.io/webpack-visualizer/
+An html file with visual stats of the build will be added to each incremental build.
+Specify the name for it here. The name will then be follow by a '-' the your current Git version
+eg: `[name]-4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html`
+See: [here](https://chrisbateman.github.io/webpack-visualizer)
+```javascript
 config.template_stats_file_name = '';
+```
 
-//Absolute path for your main source template.
+Absolute path for your main source template.
+```javascript
 config.template_src_path        = baseDir+'/src/templates/index.pug';
+```
 
-//if you're using a custom template engine 'OTHER THAN' pug or html
-//add as string below.
-//https://www.npmjs.com/package/template-html-loader
-//https://github.com/tj/consolidate.js
+If you're using a custom template engine 'OTHER THAN' pug or html
+add as string below.
+See [here](https://www.npmjs.com/package/template-html-loader) and
+[here](https://github.com/tj/consolidate.js)
+```javascript
 config.template_engine          = ''; //eg: hbs, handlebars, ejs, mustache
+```
 
-//Google Analytics is automatically setup in your setup src/templates/index.pug file.
-//Simply apply options. 
-//If you do not wish to use GA comment-out/remove the functionality src/templates/in index.pug
+Google Analytics is automatically setup in your setup `src/templates/index.pug` file.
+Simply apply options. 
+If you do not wish to use GA comment-out/remove the functionality `src/templates/in index.pug`
+```javascript
 config.gaEnable                 = true;
 config.gaTrackingId             = 'UA-XXXXX-Y';
 config.gaPageViewOnLoad         = true;
 ```
 
 ##### MEDIA OPTIONS
-```javascript
-// IMPORTANT!!! (THESE ARE ALREADY RELATIVE TO OUTPUT OR DESTINATION)
-// ALSO DO NOT ADD TRAILING SLASH '/' eg: assets/audio/
 
+**IMPORTANT!!! (THESE ARE ALREADY RELATIVE TO OUTPUT OR DESTINATION).
+ALSO DO NOT ADD TRAILING SLASH '/'** 
+<br/>eg: incorrect - `assets/audio/`
+<br/>eg: correct - `assets/audio`
+
+```javascript
 config.media_audio_output_path  = 'assets/audio';
 config.media_files_output_path  = 'assets/files'; //pdfs, docs, etc
 config.media_fonts_output_path  = 'assets/fonts';
 config.media_images_output_path = 'assets/images';
 config.media_video_output_path  = 'assets/video';
+```
 
-// IMPORTANT!!! Use absolute path here. Leave empty string if you don't want to use. 
+**IMPORTANT!!!** Use absolute path here. Leave empty string if you don't want to use. 
+```javascript
 config.media_favicon_path       = baseDir+'/src/media/images/riko-favicon.png';
+```
 
-//Image optimization options. NOTE: only valid on prod build. Leave empty if you don't want to use.
-//See: https://github.com/Klathmon/imagemin-webpack-plugin
+Image optimization options. NOTE: only valid on prod build. Leave empty if you don't want to use.
+See [here](https://github.com/Klathmon/imagemin-webpack-plugin).
+```javascript
 config.imageminConfig = {
     // progressive: true,
     pngquant:{
@@ -251,81 +287,99 @@ config.imageminConfig = {
 ```
 
 ##### VENDOR OPTIONS
+**IMPORTANT!!!** all module dependencies that are NOT npm installed modules
+<br/>eg: `require('src/vendor/jquery.min.js')`
+must be specified with it's valid ABSOLUTE path.
 ```javascript
-//IMPORTANT!!! all module dependencies that are NOT npm installed modules
-// -  eg: require('src/vendor/jquery.min.js')
-// must be specified with it's valid ABSOLUTE path here
 config.externalModulePaths = {
     //eg: $ : 'src/vendor/jquery.min.js'
 };
+```
 
-// add vendor dependencies that you wish to expose globally but not expose
-// to global/window object here.
-//
-// If using an npm module. Use the same way as you would in a require statement.
-// eg: _ : 'lodash'
-//
-// But if using a vendor dependency. Use the MATCHING KEY from config.externalModulePaths
-// IMPORTANT!!! DO NOT USE AN ABSOLUTE PATH.
-//
-// eg:  config.externalModulePaths  = {$ : 'src/vendor/jquery.min.js'};
+Add vendor dependencies that you wish to expose globally but not expose
+to global/window object here.
+
+If using an npm module. Use the same way as you would in a require statement.
+<br/>`eg: _ : 'lodash'`
+
+But if using a vendor dependency. Use the MATCHING KEY from `config.externalModulePaths`
+**IMPORTANT!!! DO NOT USE AN ABSOLUTE PATH.**
+```javascript
+//eg:   config.externalModulePaths  = {$ : 'src/vendor/jquery.min.js'};
 //      config.externalModules      = {$: '$'};
-// Notice how the '$' value of externalModules matches the key $ of externalModulePaths
+```
+
+Notice how the '$' value of `externalModules` matches the key $ of `externalModulePaths`
+```javascript
 config.externalModules = {
     //eg: $ : 'jquery'
     //or: $ : '$' //if you're not using the npm module. Make sure path is mapped in config.externalModulePaths
 };
-
-// To add vendor dependencies and expose them to global/window object simply use the expose-loader
-// eg: require("expose-loader?_!lodash");
-// see: https://github.com/webpack/expose-loader
-
 ```
 
-##### EXTRA OPTIONS
-```javascript
-//Define which sourcemap type here.
-//https://webpack.github.io/docs/configuration.html#devtool
-config.sourcemapType = 'inline-source-map';
+To add vendor dependencies and expose them to global/window object simply use the expose-loader
+`// eg: require("expose-loader?_!lodash");`
+<br/>See: [here](https://github.com/webpack/expose-loader).
 
-//Enable of disable sourcemaps based on environment.
+##### EXTRA OPTIONS
+
+Define which sourcemap type here.
+See [here](https://webpack.github.io/docs/configuration.html#devtool).
+```javascript
+config.sourcemapType = 'inline-source-map';
+```
+Enable of disable sourcemaps based on environment.
+```javascript
 config.sourcemapDev = true;
 config.sourcemapProd = true;
+```
 
-//Enable remote debugging via vorlon.js very useful for debugging on mobile devices.
-//Simply visit localhost:1337 or browsersync's [externalIp]:1337 in dev mode (npm run dev)
-//See: http://vorlonjs.com/
-//WARNING: js sourcemap info will not be able in browser console if enabled in dev mode
-//IMPORTANT! this is only recommended if you're debugging a specific device or not using sourcemaps.
+Enable remote debugging via vorlon.js very useful for debugging on mobile devices.
+Simply visit `localhost:1337` or browsersync's `[externalIp]:1337` in dev mode via `npm run dev`.
+<br/>See here: [vorlon js](http://vorlonjs.com)
+<br/>**WARNING**: js sourcemap info will not be able in browser console if enabled in dev mode.
+<br/>**IMPORTANT!** this is only recommended if you're debugging a specific device or not using sourcemaps.
+```javascript
 config.enableRemoteDebugging   = true;
+```
 
-
-//Set autoprefixing options here.
-//See: https://github.com/postcss/autoprefixer#webpack
+Set autoprefixing options here.
+See [here](https://github.com/postcss/autoprefixer#webpack).
+```javascript
 config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
+```
 
-//Set webpack middleware options for dev mode
-//See: https://github.com/glenjamin/webpack-hot-middleware#config
+Set webpack middleware options for dev mode.
+See [here](https://github.com/glenjamin/webpack-hot-middleware#config).
+```javascript
 config.hotReloadingOptions     = {
     overlay: true,
     reload: true,
     noInfo: false,
     quiet: false
 };
+```
 
-//Override hot module replacement and simply have the page refresh on file change
+Override hot module replacement and simply have the page refresh on file change.
+```javascript
 config.BrowserSyncReloadOnChange = true;
+```
 
-//Enable this to have tests execute on every webpack rebuild.
+Enable this to have tests execute on every webpack rebuild.
+```javascript
 config.hotExecuteTests = false;
+```
 
-//Add any shell command to execute around the production build lifecycle (npm run prod).
-// IMPORTANT! must be and array. eg: [ 'echo hello world' ];
+Add any shell command to execute around the production build lifecycle `npm run prod`.
+<br/>**IMPORTANT!** must be and array. eg: `[ 'echo hello world' ]`;
+```javascript
 config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];
+```
 
-// Important linting options for prod build.
+Important linting options for prod build.
+```javascript
 config.failOnProdBuildJsError = true;
 config.failOnProdBuildStyleError = false;
 config.eslintQuietMode = false; //set false to display warnings based on your eslint config
