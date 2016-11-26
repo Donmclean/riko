@@ -61,7 +61,9 @@ switch (_v.NODE_ENV) {
         _v.app.use(_v.WebpackHotMiddleware(compiler));
 
         _v.app.listen(config.EXPRESS_PORT, 'localhost', (err, result) => {
-            if (err) { console.log(err) }
+            if (err) {
+                console.log(err);
+            }
             console.log('Listening at localhost:' + config.EXPRESS_PORT);
         });
 
@@ -92,7 +94,7 @@ switch (_v.NODE_ENV) {
 
         if(process.env.ELECTRON) {
             const compiler = _v.webpack(config, () => {
-                //Build The Electron Application
+                //Compile The Electron Application
                 packager(config.electronPackagingOptions, function(err, appPaths) {
                     "use strict";
                     if(err) {

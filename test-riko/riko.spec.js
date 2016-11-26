@@ -108,12 +108,4 @@ describe('Config', function() {
             assert.isOk(functions.executeJestTests());
         });
     });
-
-    describe('Compile DEV mode', () => {
-        it('should compile successfully when NODE_ENV = development or test', () => {
-            VARIABLES.NODE_ENV = 'test';
-            const dev_config = require('../webpack.config');
-            VARIABLES.webpack(dev_config);
-        });
-    });
 });
