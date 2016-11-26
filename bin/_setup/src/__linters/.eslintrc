@@ -12,6 +12,7 @@
     "jest": true
   },
   "globals": {
+    "process": false,
     "module": false,
     "require": false,
     "React": false,
