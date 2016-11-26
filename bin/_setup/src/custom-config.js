@@ -204,7 +204,7 @@ config.hotReloadingOptions     = {
 config.BrowserSyncReloadOnChange = false;
 
 //Enable this to have tests execute on every webpack rebuild.
-config.hotExecuteTests = false;
+config.hotExecuteTests = true;
 
 // IMPORTANT! must be and array. eg: [ 'echo hello world' ];
 config.onBuildStartShellCommands = [];

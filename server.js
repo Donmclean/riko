@@ -60,13 +60,15 @@ switch (_v.NODE_ENV) {
 
         _v.app.use(_v.WebpackHotMiddleware(compiler));
 
-        _v.app.listen(config.EXPRESS_PORT, 'localhost', (err, result) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log('Listening at localhost:' + config.EXPRESS_PORT);
-        });
-
+        //Only run web server in template-based application. eg: web or electron.
+        if(config.requiresTemplate) {
+            _v.app.listen(config.EXPRESS_PORT, 'localhost', (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log('Listening at localhost:' + config.EXPRESS_PORT);
+            });
+        }
 
         //*******************************************************************
         //HOT RELOADING WITH WEBPACK DEV SERVER
