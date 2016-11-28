@@ -32,7 +32,7 @@ switch (_v.NODE_ENV) {
             verbose: false
         }));
 
-        const WebpackDevMiddlewareInstance = _v.WebpackDevMiddleware(compiler, {
+        const webpackDevMiddlewareInstance = _v.WebpackDevMiddleware(compiler, {
             contentBase: config.output.path,
             publicPath: config.output.publicPath,
             hot: true,
@@ -40,15 +40,15 @@ switch (_v.NODE_ENV) {
             stats: stats
         });
 
-        _v.app.use(WebpackDevMiddlewareInstance);
+        _v.app.use(webpackDevMiddlewareInstance);
 
         //Initial (Runs once) end of valid build callback
-        WebpackDevMiddlewareInstance.waitUntilValid(() => {
+        webpackDevMiddlewareInstance.waitUntilValid(() => {
             console.log('Updating Source File Watcher executing initial tests...');
 
             const watcher = _v.chokidar.watch(config.srcFiles, {ignored: /[\/\\]\./});
 
-            watcher.on('change', (event, path) => {
+            watcher.on('change', () => {
                 config.hotExecuteTests ? funcs.executeJestTests() : null;
             });
 
@@ -62,7 +62,7 @@ switch (_v.NODE_ENV) {
 
         //Only run web server in template-based application. eg: web or electron.
         if(config.requiresTemplate) {
-            _v.app.listen(config.EXPRESS_PORT, 'localhost', (err, result) => {
+            _v.app.listen(config.EXPRESS_PORT, 'localhost', (err) => {
                 if (err) {
                     console.log(err);
                 }
@@ -95,9 +95,9 @@ switch (_v.NODE_ENV) {
     default: {
 
         if(process.env.ELECTRON) {
-            const compiler = _v.webpack(config, () => {
+            _v.webpack(config, () => {
                 //Compile The Electron Application
-                packager(config.electronPackagingOptions, function(err, appPaths) {
+                packager(config.electronPackagingOptions, function(err) {
                     "use strict";
                     if(err) {
                         console.error('ERROR > in electron build', err);
@@ -134,13 +134,13 @@ switch (_v.NODE_ENV) {
         }
 
         if(!isLiveServer) {
-            console.log('Launching Browser Sync proxy of port: '+config.EXPRESS_PORT);
+            console.log('Launching Browser Sync proxy of port: ' + config.EXPRESS_PORT);
 
             browserSync.init({
-                proxy: 'localhost:'+config.EXPRESS_PORT
+                proxy: 'localhost:' + config.EXPRESS_PORT
             });
         } else {
-            console.log('Listening on port: '+config.EXPRESS_PORT);
+            console.log('Listening on port: ' + config.EXPRESS_PORT);
         }
 
         break;

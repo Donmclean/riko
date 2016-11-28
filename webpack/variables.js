@@ -15,6 +15,7 @@ module.exports = () => {
     vars.fs                     = require('fs-extra');
     vars.exec                   = require('child_process').exec;
     vars.spawn                  = require('child_process').spawn;
+    vars.spawnSync              = require('child_process').spawnSync;
     vars.chokidar               = require('chokidar');
 
     try {

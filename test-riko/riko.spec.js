@@ -102,10 +102,19 @@ describe('Config', function() {
 
         it('executeJestTests should exist and a be a function', function() {
             assert.isFunction(functions.executeJestTests);
+            assert.isFunction(functions.executeJestTestsSync);
         });
 
-        it('executeJestTests should execute successfully', function() {
-            assert.isOk(functions.executeJestTests());
+        it('executeJestTests should execute successfully', function(done) {
+            this.timeout(Infinity);
+            const silent = true;
+            const spawnSync = functions.executeJestTestsSync(silent);
+            assert.isOk(spawnSync);
+
+            const spawn = functions.executeJestTests(silent);
+            assert.isOk(spawn);
+
+            spawn.on('close', () => done());
         });
     });
 });

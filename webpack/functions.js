@@ -79,8 +79,12 @@ module.exports = (_v) => {
         return newPlugins;
     };
 
-    functions.executeJestTests = () => {
-        return _v.spawn('gulp', ['test-jest'], {stdio: 'inherit'});
+    functions.executeJestTests = (silent) => {
+        return _v.spawn('gulp', ['test-jest'], silent ? {} : {stdio: 'inherit'});
+    };
+
+    functions.executeJestTestsSync = (silent) => {
+        return _v.spawnSync('gulp', ['test-jest'], silent ? {} : {stdio: 'inherit'});
     };
 
     return functions;
