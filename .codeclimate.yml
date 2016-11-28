@@ -1,0 +1,24 @@
+engines:
+  eslint:
+    enabled: true
+    config:
+      config: test-riko/.eslintrc.json
+  duplication:
+  	enabled: true
+    config:
+      languages:
+        javascript:
+          mass_threshold: 30
+ratings:
+  paths:
+  - test-riko/**
+  - webpack/**
+  - server.js
+  - gulpfile.js
+  - webpack.config.js
+exclude_paths:
+- src
+- node_modules
+- dist
+- test-coveragev
+- bin
