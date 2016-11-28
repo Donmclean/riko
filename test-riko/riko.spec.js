@@ -64,8 +64,10 @@ describe('Config', function() {
     describe('functions', function() {
         const functions = require('../webpack/functions')(custom_config.vars);
 
-        it('should exist and be truthy', function() {
+        it('should exist, be truthy, be an object and be have values', function() {
             assert.isOk(functions);
+            assert.isObject(functions);
+            assert.isNotTrue(_.isEmpty(functions), 'should not be empty');
         });
 
         it('insertGitSHAIntoFilename should exist and a be a function', function() {
