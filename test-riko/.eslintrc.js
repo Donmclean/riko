@@ -80,7 +80,7 @@ module.exports = {
         // They either prescribe a better way of doing something or help you avoid footguns.
         //
         "block-scoped-var": 0, // treat var statements as if they were block scoped (off by default). 0: deep destructuring is not compatible https://github.com/eslint/eslint/issues/0863
-        "complexity": 0, // specify the maximum cyclomatic complexity allowed in a program (off by default)
+        "complexity": 10, // specify the maximum cyclomatic complexity allowed in a program (off by default)
         "consistent-return": 2, // require return statements to either always or never specify values
         "curly": 2, // specify curly brace conventions for all control statements
         "default-case": 2, // require default case in switch statements (off by default)
@@ -216,29 +216,10 @@ module.exports = {
         // the functionality is the same.
         //
         "max-depth": [2, 3], // specify the maximum depth that blocks can be nested (off by default)
-        "max-len": [2, 300, 2], // specify the maximum length of a line in your program (off by default)
+        "max-len": [2, 200, 2], // specify the maximum length of a line in your program (off by default)
         "max-params": [2, 5], // limits the number of parameters that can be used in the function declaration. (off by default)
         "max-statements": 0, // specify the maximum number of statement allowed in a function (off by default)
         "no-bitwise": 0, // disallow use of bitwise operators (off by default)
         "no-plusplus": 2, // disallow use of unary operators, ++ and -- (off by default)
-
-        //
-        // eslint-plugin-react
-        //
-        // React specific linting rules for ESLint
-        //
-        "react/display-name": 0, // Prevent missing displayName in a React component definition
-        "react/jsx-no-undef": 2, // Disallow undeclared variables in JSX
-        "react/jsx-sort-props": 0, // Enforce props alphabetical sorting
-        "react/jsx-uses-react": 2, // Prevent React to be incorrectly marked as unused
-        "react/jsx-uses-vars": 2, // Prevent variables used in JSX to be incorrectly marked as unused
-        "react/no-did-mount-set-state": 2, // Prevent usage of setState in componentDidMount
-        "react/no-did-update-set-state": 2, // Prevent usage of setState in componentDidUpdate
-        "react/no-multi-comp": 0, // Prevent multiple component definition per file
-        "react/no-unknown-property": 2, // Prevent usage of unknown DOM property
-        "react/prop-types": 2, // Prevent missing props validation in a React component definition
-        "react/react-in-jsx-scope": 2, // Prevent missing React when using JSX
-        "react/self-closing-comp": 2, // Prevent extra closing tags for components without children
-        "react/wrap-multilines": 2, // Prevent missing parentheses around multilines JSX
     }
 };
