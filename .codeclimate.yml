@@ -12,6 +12,7 @@ engines:
     enabled: true
 exclude_paths:
   - bin/**/*
+  - test-riko/**/*
 ratings:
   paths:
     - "**.js"
