@@ -103,6 +103,7 @@ module.exports = () => {
         "electron-packager": "^8.2.0",
         "eslint": "^3.3.0",
         "eslint-loader": "1.5.0",
+        "eslint-plugin-react": "^6.7.1",
         "expose-loader": "^0.7.1",
         "express": "^4.14.0",
         "express-history-api-fallback": "^2.0.0",

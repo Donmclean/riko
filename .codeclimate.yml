@@ -6,6 +6,9 @@ engines:
         - javascript
     enabled: true
   eslint:
+    channel: "eslint-3"
+    config:
+      config: test-riko/.eslintrc
     enabled: true
 exclude_paths:
   - bin/**/*
