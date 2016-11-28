@@ -1,4 +1,5 @@
 "use strict";
+/*eslint-disable*/
 module.exports = () => {
 
     const vars = {};

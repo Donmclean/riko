@@ -1,16 +1,16 @@
---- 
-engines: 
-  duplication: 
-    config: 
-      languages: 
+---
+engines:
+  duplication:
+    config:
+      languages:
         - javascript
     enabled: true
-  eslint: 
-    config: 
-      config: test-riko/.eslintrc.json
+  eslint:
+    config:
+      config: test-riko/.eslintrc.yml
     enabled: true
-exclude_paths: 
+exclude_paths:
   - bin/**/*
-ratings: 
-  paths: 
+ratings:
+  paths:
     - "**.js"
