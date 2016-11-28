@@ -133,7 +133,7 @@
     "func-names": 0,                // require function expressions to have a name (off by default)
     "func-style": 2,                // enforces use of function declarations or expressions (off by default)
     "key-spacing": 0,               // enforces spacing between keys and values in object literal properties
-    "max-nested-callbacks": { "max": 4 },      // specify the maximum depth callbacks can be nested (off by default)
+    "max-nested-callbacks": ["2", "4"],      // specify the maximum depth callbacks can be nested (off by default)
     "new-cap": 0,                   // require a capital letter for constructors
     "new-parens": 2,                // disallow the omission of parentheses when invoking a constructor with no arguments
     "no-array-constructor": 2,      // disallow use of the Array constructor
