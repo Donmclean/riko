@@ -75,7 +75,7 @@ const lint = (isLintBuild) => {
                 $.util.log('GULP PLUMBER > lint ERROR:', err);
             }
         }}))
-        .pipe($.eslint({configFile: isLintBuild ? './test-riko/.eslintrc' : './src/__linters/.eslintrc'}))
+        .pipe($.eslint({configFile: isLintBuild ? './test-riko/.eslintrc.js' : './src/__linters/.eslintrc'}))
         .pipe($.eslint.format())
         .pipe($.eslint.failAfterError())
         .pipe($.debug({title: 'linting js files:'}));

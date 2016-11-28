@@ -8,7 +8,7 @@ engines:
   eslint:
     channel: eslint-3
     config:
-      config: ./test-riko/.eslintrc.yaml
+      config: ./test-riko/.eslintrc.js
     enabled: true
 exclude_paths:
   - bin/**/*
