@@ -113,8 +113,8 @@ console.log('NODE_ENV: ', _v.NODE_ENV);
 //handles mapping of runtime configs defined in custom_config.js
 const runtimeConfigs = _v._
     .chain(config.js_runtime_configs)
-    .keyBy((config) => config.key)
-    .mapValues((config) => config.value)
+    .keyBy((item) => item.key)
+    .mapValues((item) => item.value)
     .value();
 
 switch (_v.NODE_ENV) {
