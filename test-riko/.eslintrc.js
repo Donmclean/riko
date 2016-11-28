@@ -80,7 +80,7 @@ module.exports = {
         // They either prescribe a better way of doing something or help you avoid footguns.
         //
         "block-scoped-var": 0, // treat var statements as if they were block scoped (off by default). 0: deep destructuring is not compatible https://github.com/eslint/eslint/issues/0863
-        "complexity": 10, // specify the maximum cyclomatic complexity allowed in a program (off by default)
+        "complexity": 2, // specify the maximum cyclomatic complexity allowed in a program (off by default)
         "consistent-return": 2, // require return statements to either always or never specify values
         "curly": 2, // specify curly brace conventions for all control statements
         "default-case": 2, // require default case in switch statements (off by default)
