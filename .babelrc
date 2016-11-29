@@ -1,7 +1,6 @@
 {
   "presets": ["react","es2015"],
   "plugins": [
-    "react",
     "transform-runtime",
     "syntax-object-rest-spread"
   ]
