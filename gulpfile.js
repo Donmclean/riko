@@ -5,7 +5,7 @@ const
     qfs     = require('q-io/fs'),
     _       = require('lodash'),
     path    = require('path'),
-    spawn    = require('child_process').spawn,
+    spawn   = require('child_process').spawn,
     baseDir = path.resolve(__dirname),
     srcDir  = baseDir+'/src',
     args    = process.argv;
@@ -19,6 +19,14 @@ const handleMissingConfigFile = () => {
             $.util.colors.cyan('Try running '+ $.util.colors.blue('"npm run setup"')+' to get started.'));
         throw new Error('must have a valid custom-config.js');
     }
+};
+
+const hasSrcFolder = (files) => {
+    return _.includes(files, 'src');
+};
+
+const isReactNative = (srcToCopy) => {
+    return srcToCopy === 'react-native';
 };
 
 gulp.task('setup', function (done) {
@@ -35,7 +43,7 @@ gulp.task('setup', function (done) {
             break;
         }
         case '--mobile': {
-            srcToCopy = 'src-mobile';
+            srcToCopy = 'react-native';
             break;
         }
         case '--electron': {
@@ -52,16 +60,24 @@ gulp.task('setup', function (done) {
 
     qfs.list(baseDir)
         .then(files => {
-            if(_.includes(files, 'src')) {
+            if(hasSrcFolder(files)) {
                 $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder must not exist during setup. ${$.util.colors.red('terminating...')}`));
                 throw new Error('src/ folder must not exist during setup.');
             }
-            $.util.log($.util.colors.yellow(`creating ${$.util.colors.blue('src/')} folder and sub directories`));
-            return qfs.copyTree(baseDir+`/bin/_setup/${srcToCopy}`, srcDir);
+            if(!isReactNative(srcToCopy)) {
+                $.util.log($.util.colors.yellow(`creating ${$.util.colors.blue('src/')} folder and sub directories`));
+                return qfs.copyTree(baseDir+`/bin/_setup/${srcToCopy}`, srcDir);
+            }
         })
         .then(() => {
-            $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder created ${$.util.colors.green('successfully')}`));
-            done();
+            if(isReactNative(srcToCopy)) {
+                //run react native shell script
+                const cmd = spawn('sh', ['./bin/_setup/src-mobile/react-native.sh'], {stdio: 'inherit'});
+                cmd.on('close', () => done());
+            } else {
+                $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder created ${$.util.colors.green('successfully')}`));
+                done();
+            }
         })
         .catch(err => {
             $.util.log(`${$.util.colors.red('ERROR: setting up src/ folder', err)}`);
