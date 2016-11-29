@@ -3,7 +3,8 @@ engines:
   duplication:
     config:
       languages:
-        - javascript
+        javascript:
+          mass_threshold: 55
     enabled: true
   eslint:
     channel: eslint-3
