@@ -30,8 +30,12 @@ gulp.task('setup', function (done) {
             srcToCopy = 'src-js';
             break;
         }
-        case '--src': {
-            srcToCopy = 'src';
+        case '--web': {
+            srcToCopy = 'src-web';
+            break;
+        }
+        case '--mobile': {
+            srcToCopy = 'src-mobile';
             break;
         }
         case '--electron': {

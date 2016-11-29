@@ -86,6 +86,7 @@ module.exports = () => {
         "babel-preset-es2015": "^6.14.0",
         "babel-preset-react": "^6.11.1",
         "babel-preset-react-hmre": "^1.1.1",
+        "babel-preset-react-native": "^1.9.0",
         "babel-preset-stage-0": "^6.5.0",
         "babel-register": "^6.11.6",
         "babel-runtime": "^6.11.6",
