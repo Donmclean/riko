@@ -78,10 +78,18 @@ config.postcss = [ _v.autoprefixer(config.autoprefixerOptions) ];
 //*****************************PLUGINS*****************************
 //*****************************************************************
 
+//handles mapping of runtime configs defined in custom_config.js
+const runtimeConfigs = _v._
+    .chain(config.js_runtime_configs)
+    .keyBy((item) => item.key)
+    .mapValues((item) => item.value)
+    .value();
+
 let plugins = [
   new _v.webpack.EnvironmentPlugin([
     "NODE_ENV"
   ]),
+  new _v.webpack.DefinePlugin(runtimeConfigs),
   new _v.ProgressBarPlugin({
     format: 'webpack [:bar] ' + _v.chalk.green.bold(':percent') + ' (:elapsed seconds)',
     clear: true
@@ -109,13 +117,6 @@ if(config.enableWebpackVisualizer) {
 }
 
 console.log('NODE_ENV: ', _v.NODE_ENV);
-
-//handles mapping of runtime configs defined in custom_config.js
-const runtimeConfigs = _v._
-    .chain(config.js_runtime_configs)
-    .keyBy((item) => item.key)
-    .mapValues((item) => item.value)
-    .value();
 
 switch (_v.NODE_ENV) {
 
@@ -166,7 +167,6 @@ switch (_v.NODE_ENV) {
     );
 
     plugins = plugins.concat([
-      new _v.webpack.DefinePlugin(runtimeConfigs),
       new _v.webpack.optimize.DedupePlugin(),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: config.sourcemapProd, compress: {warnings: false} }),
@@ -253,7 +253,6 @@ switch (_v.NODE_ENV) {
     );
 
     plugins = plugins.concat([
-      new _v.webpack.DefinePlugin(runtimeConfigs),
       new _v.webpack.optimize.OccurenceOrderPlugin(),
       new _v.webpack.HotModuleReplacementPlugin(),
       new _v.webpack.ProvidePlugin(config.externalModules)
