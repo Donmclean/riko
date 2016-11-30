@@ -24,7 +24,7 @@ module.exports = () => {
         vars.GIT_VERSION_SHORT  = require('child_process').execSync('git rev-parse --short HEAD').toString().trim();
     } catch (err) {
         console.log("git is not initialized...", vars.chalk.red(err.cmd) + " FAILED!");
-        vars.GIT_VERSION        = 'buildDetails';
+        vars.GIT_VERSION        = 'GIT_VERSION';
         vars.GIT_VERSION_SHORT  = 'UNKNOWN_GIT_VERSION_SHORT';
     }
     vars.BUILD_DATE             = new Date();
