@@ -1,44 +1,44 @@
 [![RIKO](./test-riko/riko-favicon.png)](https://github.com/Donmclean/riko)
 
-Webpack Build System for React JS (Web & Electron Apps)
+Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
 [![Build Status](https://travis-ci.org/Donmclean/riko.svg?branch=master)](https://travis-ci.org/Donmclean/riko) [![dependencies Status](https://david-dm.org/donmclean/riko/status.svg)](https://david-dm.org/donmclean/riko) [![devDependencies Status](https://david-dm.org/donmclean/riko/dev-status.svg)](https://david-dm.org/donmclean/riko?type=dev) [![Test Coverage](https://codeclimate.com/github/Donmclean/riko/badges/coverage.svg)](https://codeclimate.com/github/Donmclean/riko/coverage) [![Code Climate](https://codeclimate.com/github/Donmclean/riko/badges/gpa.svg)](https://codeclimate.com/github/Donmclean/riko) [![DUB](https://img.shields.io/dub/l/vibe-d.svg?maxAge=2592000)](https://github.com/Donmclean/riko/blob/master/LICENSE) [![DUB](https://img.shields.io/badge/Author-Don%20Mclean-red.svg)](http://donsmclean.com)
 
 #FEATURES
 
-- Supports the development of React [**Web**](https://facebook.github.io/react/) & [**Electron**](http://electron.atom.io/) Applications
-- Supports compilation of [**js**](https://www.javascript.com/) & [**jsx**](https://facebook.github.io/react/docs/jsx-in-depth.html) source files
-- Supports compilation of [**pug**](https://pugjs.org) template files to html
-- Supports compilation of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/), and [**css**](http://www.w3schools.com/css/) stylesheets
-- Supports generation of [**Source mapping**](https://www.npmjs.com/package/source-map) for stylesheets and js sources
-- Javascript (_js_,_jsx_) linting via [**eslint**](http://eslint.org/)
-- Stylesheet (_sass_, _less_, _css_) linting via [**stylelint**](https://github.com/stylelint/stylelint)
-- [**Autoprefixing**](https://github.com/postcss/autoprefixer) for stylesheets
-- [**Browsersync**](https://www.browsersync.io/) functionality by default
+- Supports the development of React [**Web**](https://facebook.github.io/react/), [**Mobile**](https://facebook.github.io/react-native/) & [**Electron**](http://electron.atom.io/) Applications.
+- Supports compilation of [**js**](https://www.javascript.com/) & [**jsx**](https://facebook.github.io/react/docs/jsx-in-depth.html) source files.
+- Supports compilation of [**pug**](https://pugjs.org) template files to html.
+- Supports compilation of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/), and [**css**](http://www.w3schools.com/css/) stylesheets.
+- Supports generation of [**Source mapping**](https://www.npmjs.com/package/source-map) for stylesheets and js sources.
+- Javascript (_js_,_jsx_) linting via [**eslint**](http://eslint.org/).
+- Stylesheet (_sass_, _less_, _css_) linting via [**stylelint**](https://github.com/stylelint/stylelint).
+- [**Autoprefixing**](https://github.com/postcss/autoprefixer) for stylesheets.
+- [**Browsersync**](https://www.browsersync.io/) functionality by default.
 - [**Jest**](https://facebook.github.io/jest/), [**Mocha**](https://mochajs.org/), [**Chai**](http://chaijs.com/) unit testing.
-- [**Bundle Visualizer**](https://chrisbateman.github.io/webpack-visualizer/): see the build product of your js sources & dependencies via current git SHA as url 
+- [**Bundle Visualizer**](https://chrisbateman.github.io/webpack-visualizer/): see the build product of your js sources & dependencies via current git SHA as url. 
     - eg: `localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html`
 - [**Source File Hashing**](#_): hashes build sources to control caching 
     - eg: `index.html?405kjdjsd7ed89a68ac` `styles.min.css?405eccffee7ed89a68ac` `bundle.js?405eccffee7ed89a68ac`
 
 ######- Development Mode: `npm run dev`
 
-- [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources
-- [**Error proofing**](https://github.com/webpack/webpack-dev-server/issues/522) (on error a helpful overlay pops up displaying the error)
+- [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources.
+- [**Error proofing**](https://github.com/webpack/webpack-dev-server/issues/522) (on error a helpful overlay pops up displaying the error).
 - [**Remote Debugging**](http://vorlonjs.com/): Debug your application on almost any device.
 
 ######- Production Mode: `npm run prod`
 
-- [**Asset Copying**](#_): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_) 
-- [**Source Minification**](#_): Optimize/Minify stylesheets and js files
-- [**Image Minification**](https://github.com/tcoopman/image-webpack-loader): Optimize/Minify png, jpg, gif and svg images
-- [**Shell Script Integration**](https://www.npmjs.com/package/webpack-shell-plugin): run shell scripts on build start, end and/or exit
+- [**Asset Copying**](#_): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_). 
+- [**Source Minification**](#_): Optimize/Minify stylesheets and js files.
+- [**Image Minification**](https://github.com/tcoopman/image-webpack-loader): Optimize/Minify png, jpg, gif and svg images.
+- [**Shell Script Integration**](https://www.npmjs.com/package/webpack-shell-plugin): run shell scripts on build start, end and/or exit.
 
 ######- Electron Mode: `npm run electron`
 
 - [**Electron Mode**](http://electron.atom.io/) has the same features as web just different commands.
-- [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources
-- [**Error proofing**](https://github.com/webpack/webpack-dev-server/issues/522) (on error a helpful overlay pops up displaying the error)
+- [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources.
+- [**Error proofing**](https://github.com/webpack/webpack-dev-server/issues/522) (on error a helpful overlay pops up displaying the error).
 - [**Remote Debugging**](http://vorlonjs.com/): Debug your application on almost any device.
 
 #CAVEATS
@@ -64,6 +64,10 @@ Webpack Build System for React JS (Web & Electron Apps)
 - After installation you can run either of the following two options: 
     - `npm run setup` to setup the most basic content to jump start your application.
     - `npm run setup-js` to setup a non html templated project. For example a js module or library project.
+    - `npm run setup-mobile` to setup sample content of a react native mobile application.<br/><br/>
+        **NOTE: _WHEN SETTING UP A MOBILE (REACT NATIVE) APP ON MAC_**<br/>
+        - You must have [xcode](https://developer.apple.com/xcode), a valid [iOS simulator](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/iOS_Simulator_Guide/Introduction/Introduction.html), [Android Studio](https://developer.android.com/studio/index.html), and [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) and [JRE](https://java.com/en/download/) installed.<br/>
+        - You must have [brew](http://brew.sh/) installed.<br/>
     - `npm run setup-electron` to setup sample content of an electron application.<br/><br/>
         **NOTE: _WHEN SETTING UP AN ELECTRON APP ON MAC_**<br/>
         - You must have [xcode](https://developer.apple.com/xcode) installed.<br/>
@@ -71,15 +75,17 @@ Webpack Build System for React JS (Web & Electron Apps)
         - If this fails you should complete the following instructions:<br/>
         [Install Wine on Mac](https://www.davidbaumgold.com/tutorials/wine-mac/) to package a windows version of your app.
  
-> Run `npm run setup-js` to start create a js module/library project. 
-> Or run a `npm run setup` when you're ready to start a web application.
+> Run `npm run setup-js` to start create a js module/library project.<br/> 
+> Or run a `npm run setup` when you're ready to start a web application.<br/> 
+> Or run a `npm run setup-mobile` when you're ready to start a mobile application.<br/> 
 > Or run a `npm run setup-electron` if you're building an electron application.
  
 - After running one of the setup commands notice there is a new `src/` folder in the directory. 
 - here is where all of your source code will live. From js source/test scripts to stylesheets to custom eslinters etc.
 
-#### **THE 'custom_config.js' FILE**
+#### **THE 'custom-config.js' FILE**
 
+- **NOTE**: This is **NOT** available if you ran `npm run setup-mobile`. The `custom-config.js` is only for **JS Module, WEB & Electron Applications.**
 - This is where all your settings live. The build system has been created so you rarely have to enter the webpack.config.js file.
 - Here's the run down:
 
@@ -386,7 +392,7 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
 
 #USAGE - CONTINUED
 
-- After configuring everything in the `custom_config.js` file to your liking, you should now run the following commands: 
+- After configuring everything in the `custom-config.js` file to your liking, you should now run the following commands: 
     - `npm run test-build`
         - This runs a test on the riko build to ensure that the build in still in working order.
         - You should also run this command regularly after making alterations to any of the config files.
@@ -416,9 +422,23 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
         - This will fire up a browsersync server for you with your specified hot reloading options in a native Mac/Windows/Linux window.
         - It will watch all files attached down the tree of your specified entry file and "hot replace or reload" on change
         - Get the right formatted logo `.icns` or `.ico` for your electron app [here](https://iconverticons.com/online/).
+            
+    - `npm run mobile-ios`
+        - This will fire up an ios emulator and debugger on `localhost:8081/debugger-ui`.
+        - It will watch all files attached down the tree of the specified entry file (`index.ios.js`) and you'll be able to enable or disable "hot replace or live reload" on change.
+        - **WARNING**: Do not run this while Docker or any other virtual machine is running. 
         
+    - `npm run mobile-android`
+        - This will fire up an android emulator and debugger on `localhost:8081/debugger-ui`.
+        - It will watch all files attached down the tree of the specified entry file (`index.android.js`) and you'll be able to enable or disable "hot replace or live reload" on change.
+        - If this fails try running again or see [here](https://facebook.github.io/react-native/releases/0.34/docs/getting-started.html).
+        - **WARNING**: Do not run this while Docker or any other virtual machine is running.
+     
+    - `npm run mobile-test`
+        - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the `src/package.json` if you wish.
+            
     - `npm run test-jest`
-        - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the package.json if you wish.
+        - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the `package.json` if you wish.
 
     - `npm test` or `npm run test` 
         - Runs full test suite. (all test commands)

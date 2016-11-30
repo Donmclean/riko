@@ -36,7 +36,13 @@ echoGreen() {
 }
 
 echoBlue "setting up a react-native project..."
+
+echoBlue "validating watchman..."
+brew install watchman
+
+echoBlue "initializing react-native application"
 react-native init src
+echoGreen "react-native initialized!"
 
 echoBlue "adding missing local.properties file to android project..."
 echo sdk.dir= $HOME/Library/Android/sdk > src/android/local.properties
