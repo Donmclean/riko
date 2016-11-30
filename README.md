@@ -6,7 +6,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
 #FEATURES
 
-- Supports the development of React [**Web**](https://facebook.github.io/react/), [**Mobile**](https://facebook.github.io/react-native/) & [**Electron**](http://electron.atom.io/) Applications.
+- Supports the development of JS Modules, React [**Web**](https://facebook.github.io/react/), [**Mobile**](https://facebook.github.io/react-native/) & [**Electron**](http://electron.atom.io/) Applications.
 - Supports compilation of [**js**](https://www.javascript.com/) & [**jsx**](https://facebook.github.io/react/docs/jsx-in-depth.html) source files.
 - Supports compilation of [**pug**](https://pugjs.org) template files to html.
 - Supports compilation of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/), and [**css**](http://www.w3schools.com/css/) stylesheets.
