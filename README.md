@@ -47,10 +47,10 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
     - To make the hot reloading of CSS work, we are not extracting CSS in development. Ideally, during server rendering, we will be extracting CSS, and we will get a .css file, and we can use it in the html template. That's what we are doing in production. 
     - In development, after all scripts get loaded, react loads the CSS as BLOBs. That's why there is a second of FOUC in development.
-- No Support for Windows Development
+- No Support for Windows/Linux/Ubuntu Development
 
-    - This is not tested for Windows development and 
-    currently does not support any Windows OS.
+    - This Build System is not tested for development on Windows, Linux, or Ubuntu and 
+    therefore does not support any those Operating Systems.
 
 #INSTALL
 
@@ -66,7 +66,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
     - `npm run setup-js` to setup a non html templated project. For example a js module or library project.
     - `npm run setup-mobile` to setup sample content of a react native mobile application.<br/><br/>
         **NOTE: _WHEN SETTING UP A MOBILE (REACT NATIVE) APP ON MAC_**<br/>
-        - You must have [xcode](https://developer.apple.com/xcode), a valid [iOS simulator](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/iOS_Simulator_Guide/Introduction/Introduction.html), [Android Studio](https://developer.android.com/studio/index.html), and [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) and [JRE](https://java.com/en/download/) installed.<br/>
+        - You must have [xcode](https://developer.apple.com/xcode), a valid [iOS simulator](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/iOS_Simulator_Guide/Introduction/Introduction.html), [Android Studio](https://developer.android.com/studio/index.html), [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) and [JRE](https://java.com/en/download/) installed.<br/>
         - You must have [brew](http://brew.sh/) installed.<br/>
     - `npm run setup-electron` to setup sample content of an electron application.<br/><br/>
         **NOTE: _WHEN SETTING UP AN ELECTRON APP ON MAC_**<br/>
