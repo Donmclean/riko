@@ -206,6 +206,15 @@ switch (_v.NODE_ENV) {
     config.bail = false;
 
     config.module.loaders.push(
+        // JAVASCRIPT
+        {
+            test: /\.jsx$|\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel',
+            query: {
+                presets: ['react-hmre']
+            }
+        },
         // SASS
         {
           test: /\.scss$/,
