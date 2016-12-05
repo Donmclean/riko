@@ -97,7 +97,6 @@ module.exports = () => {
         "clean-webpack-plugin": "^0.1.10",
         "connect-history-api-fallback": "^1.3.0",
         "copy-webpack-plugin": "^4.0.0",
-        "cross-env": "^3.1.3",
         "css-loader": "^0.25.0",
         "electron": "^1.4.5",
         "electron-packager": "^8.2.0",
