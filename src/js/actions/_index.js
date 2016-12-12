@@ -1,9 +1,9 @@
 import * as counterActionCreators from './counterActionCreators';
-import * as userActionCreators from './userActionCreators';
+import * as asyncActionCreators from './asyncActionCreators';
 
 const actionCreators = {
     counterActionCreators,
-    userActionCreators
+    asyncActionCreators
 };
 
 export default actionCreators;

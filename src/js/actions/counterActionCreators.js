@@ -1,7 +1,9 @@
+import * as types from '../../js/constants/actions/actionTypes';
+
 export const increment = () => ({
-    type: 'INCREMENT'
+    type: types.INCREMENT
 });
 
 export const decrement = () => ({
-    type: 'DECREMENT'
+    type: types.DECREMENT
 });

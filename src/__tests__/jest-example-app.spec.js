@@ -29,7 +29,6 @@ describe('DOM Essentials', function () {
 });
 
 // describe('App', function () {
-//
 //     renderer.render(<App />);
 //     let result;
 //     let app;
