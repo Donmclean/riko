@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as types from '../../../constants/actions/actionTypes';
+import Rx from 'rx';
+
 
 class HomePage extends Component {
     constructor(props) {
@@ -8,7 +10,41 @@ class HomePage extends Component {
         const { dispatch, state, actions } = this.props;
         this.actions = actions;
         console.log('this.props: ', this.props);
+        console.log('Rx: ', Rx);
 
+    }
+
+    componentDidMount() {
+        // const source = Rx.Observable.fromEvent(this.refs.c1, 'click').debounce(5000);
+        // console.log('source: ', source);
+        // console.log('this.refs: ', this.refs);
+        //
+        // const subscription = source.subscribe(
+        //     (event) => {
+        //         console.log('Next: Clicked!', event);
+        //     },
+        //     (err) => {
+        //         console.log('Error: %s', err);
+        //     },
+        //     () => {
+        //         console.log('Completed');
+        //     });
+
+        /* Using a disposable */
+        const source = Rx.Observable.fromEventPattern(this.handleCounterClick);
+
+        const subscription = source.subscribe(
+            (x) => {
+                console.log('Next: ' + x);
+            },
+            (err) => {
+                console.log('Error: ' + err);
+            },
+            () => {
+                console.log('Completed');
+            });
+
+        console.log('subscription: ', subscription);
     }
 
     handleCounterClick(type) {
@@ -47,8 +83,8 @@ class HomePage extends Component {
                     </h2>
                     <div>
                         <h4>Synchronous Actions</h4>
-                        <button onClick={this.handleCounterClick.bind(this, types.INCREMENT)}>INCREMENT</button>
-                        <button onClick={this.handleCounterClick.bind(this, types.DECREMENT)}>DECREMENT</button>
+                        <button ref="c1" onClick={this.handleCounterClick.bind(this, types.INCREMENT)}>INCREMENT</button>
+                        <button ref="c2" onClick={this.handleCounterClick.bind(this, types.DECREMENT)}>DECREMENT</button>
 
                         <h1>Counter Reducer State: {state.counterReducer}</h1>
                     </div>
@@ -58,7 +94,7 @@ class HomePage extends Component {
                         <div className="async-input">
                             <label>Select Post Number To Fetch</label>
                             <select onChange={this.handlePostNumberSelect.bind(this)} value={state.asyncReducer.postNumber}>
-                                <option disabled="true" selected="true">{0}</option>
+                                <option disabled="true" defaultValue={0}>{0}</option>
                                 {Array.from(new Array(100).keys()).map((number) => <option key={number + 1} value={number + 1}>{number + 1}</option>)}
                             </select>
                         </div>
