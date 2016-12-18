@@ -132,6 +132,12 @@ describe('Config', function() {
     });
 
     describe('gulpfile', function() {
+        const gulpfile = require('../gulpfile');
+
+        it('should exist and be truthy', function() {
+            assert.isOk(gulpfile);
+        });
+
         it('gulp lint-src executes', function(done) {
             this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['lint-src']);
@@ -164,6 +170,12 @@ describe('Config', function() {
     });
 
     describe('server', function() {
+        // require('babel-register');
+        // const server = require('../server');
+        // it('should exist and be truthy', function() {
+        //     assert.isOk(server);
+        // });
+
         it('prod build executes', function() {
             const spawn = VARIABLES.spawn('npm', ['run', 'prod']);
             assert.isOk(spawn);
