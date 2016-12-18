@@ -171,6 +171,7 @@ describe('Config', function() {
         it('gulp lint-build executes', function(done) {
             this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['lint-build']);
+            assert.isOk(gulpfile.gulp.tasks['lint-build'].fn());
             spawn.on('close', () => {
                 assert.isOk(spawn);
                 done();
