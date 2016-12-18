@@ -137,7 +137,7 @@ Port your wish to serve your files on in dev mode
 config.EXPRESS_PORT             = 3000;
 ```
 
-Location of which to server production built files. (should* be same as destDir)
+Location from which to serve production built files. (should* be same as destDir)
 ```javascript
 config.EXPRESS_ROOT             = config.destDir; 
 ```
