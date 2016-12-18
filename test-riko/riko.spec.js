@@ -123,7 +123,7 @@ describe('Config', function() {
             assert.isFunction(functions.runFlow);
         });
 
-        it('runFlow should exist and a be a function', function() {
+        it('runFlow should execute successfully', function() {
             this.timeout(Infinity);
             const silent = true;
             const spawnSync = functions.runFlow(silent);
@@ -132,37 +132,34 @@ describe('Config', function() {
     });
 
     describe('gulpfile', function() {
-        it('gulpfile should exist and a be truthy', function() {
-            const gulpfile = require('../gulpfile');
-            assert.isOk(gulpfile);
-        });
-
         it('gulp lint-src executes', function(done) {
             this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['lint-src']);
             assert.isOk(spawn);
-            spawn.on('close', () => done());
+            spawn.on('close', done);
         });
 
         it('gulp lint-build executes', function(done) {
             this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['lint-build']);
             assert.isOk(spawn);
-            spawn.on('close', () => done());
+            spawn.on('close', done);
         });
 
         it('gulp test-jest executes', function(done) {
             this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['test-jest']);
             assert.isOk(spawn);
-            spawn.on('close', () => done());
+            spawn.on('close', done);
         });
 
         it('gulp setup executes', function(done) {
             this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['setup']);
-            assert.isOk(spawn);
-            spawn.on('close', () => done());
+            spawn.on('close', () => {
+                assert.isOk(spawn);
+                done();
+            });
         });
     });
 
