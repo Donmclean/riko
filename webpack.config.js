@@ -32,11 +32,11 @@ config.module = {
     }
   ],
   loaders: [
-      // JAVASCRIPT
+      //JAVASCRIPT
     {
       test: /\.jsx$|\.js$/,
-      include: config.srcDir,
-      loaders: _v.NODE_ENV === 'test' ? ['babel'] : ['react-hot-loader/webpack','babel']
+      exclude: /(node_modules|vendor|bower_components)/,
+      loaders: _v.NODE_ENV === 'development' ? ['react-hot-loader/webpack','babel?presets[]=react-hmre'] : ['babel'],
     },
       //JSON
     {
@@ -206,15 +206,6 @@ switch (_v.NODE_ENV) {
     config.bail = false;
 
     config.module.loaders.push(
-        // JAVASCRIPT
-        {
-            test: /\.jsx$|\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel',
-            query: {
-                presets: ['react-hmre']
-            }
-        },
         // SASS
         {
           test: /\.scss$/,
