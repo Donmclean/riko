@@ -119,7 +119,7 @@ describe('Config', function() {
             spawn.on('close', () => done());
         });
 
-        it('runFlow should exist and a be a function', function() {
+        it('runFlow should exist and be a function', function() {
             assert.isFunction(functions.runFlow);
         });
 
@@ -136,6 +136,29 @@ describe('Config', function() {
 
         it('should exist and be truthy', function() {
             assert.isOk(gulpfile);
+            assert.isObject(gulpfile);
+        });
+
+        it('gulpfile.hasSrcFolder should exist, be a function and return a boolean', function() {
+            assert.isFunction(gulpfile.hasSrcFolder);
+            assert.isTrue(gulpfile.hasSrcFolder(['src']));
+            assert.isFalse(gulpfile.hasSrcFolder([]));
+        });
+
+        it('gulpfile.isReactNative should exist, be a function and return a boolean', function() {
+            assert.isFunction(gulpfile.isReactNative);
+            assert.isTrue(gulpfile.isReactNative('react-native'));
+            assert.isFalse(gulpfile.isReactNative(''));
+        });
+
+        it('gulpfile.handleMissingConfigFile should exist and be a function', function() {
+            assert.isFunction(gulpfile.handleMissingConfigFile);
+            assert.isUndefined(gulpfile.handleMissingConfigFile());
+        });
+
+        it('gulpfile.lint should exist, be a function and return a truthy value', function() {
+            assert.isFunction(gulpfile.lint);
+            assert.isOk(gulpfile.lint(true));
         });
 
         it('gulp lint-src executes', function(done) {
@@ -148,8 +171,10 @@ describe('Config', function() {
         it('gulp lint-build executes', function(done) {
             this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['lint-build']);
-            assert.isOk(spawn);
-            spawn.on('close', done);
+            spawn.on('close', () => {
+                assert.isOk(spawn);
+                done();
+            });
         });
 
         it('gulp test-jest executes', function(done) {
@@ -170,15 +195,13 @@ describe('Config', function() {
     });
 
     describe('server', function() {
-        // require('babel-register');
-        // const server = require('../server');
-        // it('should exist and be truthy', function() {
-        //     assert.isOk(server);
-        // });
-
-        it('prod build executes', function() {
+        this.timeout(Infinity);
+        it('prod build executes', function(done) {
             const spawn = VARIABLES.spawn('npm', ['run', 'prod']);
-            assert.isOk(spawn);
+            spawn.on('close', () => {
+                assert.isOk(spawn);
+                done();
+            });
         });
     });
 });

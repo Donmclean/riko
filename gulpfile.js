@@ -8,9 +8,10 @@ const
     spawn   = require('child_process').spawn,
     baseDir = path.resolve(__dirname),
     srcDir  = baseDir+'/src',
-    args    = process.argv;
+    args    = process.argv,
+    gulpfile    = this;
 
-const handleMissingConfigFile = () => {
+gulpfile.handleMissingConfigFile = () => {
     try {
         require('./webpack/config');
     } catch (err) {
@@ -21,11 +22,11 @@ const handleMissingConfigFile = () => {
     }
 };
 
-const hasSrcFolder = (files) => {
+gulpfile.hasSrcFolder = (files) => {
     return _.includes(files, 'src');
 };
 
-const isReactNative = (srcToCopy) => {
+gulpfile.isReactNative = (srcToCopy) => {
     return srcToCopy === 'react-native';
 };
 
@@ -60,10 +61,10 @@ gulp.task('setup', function (done) {
 
     qfs.list(baseDir)
         .then(files => {
-            if(hasSrcFolder(files)) {
+            if(gulpfile.hasSrcFolder(files)) {
                 $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder must not exist during setup. ${$.util.colors.red('terminating...')}`));
                 throw new Error('src/ folder must not exist during setup.');
-            } else if(isReactNative(srcToCopy)) {
+            } else if(gulpfile.isReactNative(srcToCopy)) {
                 //run react native shell script
                 const cmd = spawn('sh', ['./bin/_setup/src-mobile/react-native.sh'], {stdio: 'inherit'});
                 cmd.on('close', () => done());
@@ -81,7 +82,7 @@ gulp.task('setup', function (done) {
         });
 });
 
-const lint = (isLintBuild) => {
+gulpfile.lint = (isLintBuild) => {
 
     const config  = require('./webpack/config');
 
@@ -98,14 +99,14 @@ const lint = (isLintBuild) => {
 };
 
 gulp.task('lint-build', () => {
-    handleMissingConfigFile();
-    return lint(true);
+    gulpfile.handleMissingConfigFile();
+    return gulpfile.lint(true);
 
 });
 
 gulp.task('lint-src', () => {
-    handleMissingConfigFile();
-    return lint(false);
+    gulpfile.handleMissingConfigFile();
+    return gulpfile.lint(false);
 });
 
 gulp.task('test-jest', (cb) => {
@@ -122,3 +123,7 @@ gulp.task('test-jest', (cb) => {
     });
 
 });
+
+gulpfile.gulp = gulp;
+
+module.exports = gulpfile;
