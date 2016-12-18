@@ -137,24 +137,30 @@ describe('Config', function() {
             assert.isOk(gulpfile);
         });
 
-        it('gulp lint-src executes', function() {
+        it('gulp lint-src executes', function(done) {
+            this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['lint-src']);
             assert.isOk(spawn);
+            spawn.on('close', () => done());
         });
 
-        it('gulp lint-build executes', function() {
+        it('gulp lint-build executes', function(done) {
+            this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['lint-build']);
             assert.isOk(spawn);
+            spawn.on('close', () => done());
         });
 
-        it('gulp test-jest executes', function() {
+        it('gulp test-jest executes', function(done) {
             const spawn = VARIABLES.spawn('gulp', ['test-jest']);
             assert.isOk(spawn);
+            spawn.on('close', () => done());
         });
 
-        it('gulp setup executes', function() {
+        it('gulp setup executes', function(done) {
             const spawn = VARIABLES.spawn('gulp', ['setup']);
             assert.isOk(spawn);
+            spawn.on('close', () => done());
         });
     });
 
