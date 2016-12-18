@@ -87,6 +87,11 @@ module.exports = (_v) => {
         return _v.spawnSync('gulp', ['test-jest'], silent ? {} : {stdio: 'inherit'});
     };
 
+    functions.runFlow = (silent) => {
+        console.log('executing flow...');
+        return _v.spawnSync('flow', ['check'], silent ? {} : {stdio: 'inherit'});
+    };
+
     return functions;
 
 };

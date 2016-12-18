@@ -49,10 +49,15 @@ switch (_v.NODE_ENV) {
             const watcher = _v.chokidar.watch(config.srcFiles, {ignored: /[\/\\]\./});
 
             watcher.on('change', () => {
-                config.hotExecuteTests ? funcs.executeJestTests() : null;
+                const spawn = config.hotExecuteTests ? funcs.executeJestTests() : null;
+
+                if(spawn) {
+                    spawn.on('close', funcs.runFlow);
+                }
             });
 
-            funcs.executeJestTests();
+            const spawn = funcs.executeJestTests();
+            spawn.on('close', funcs.runFlow);
         });
 
         //Repeating end of valid/invalid build callback

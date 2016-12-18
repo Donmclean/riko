@@ -108,6 +108,7 @@ module.exports = () => {
         "express-history-api-fallback": "^2.0.0",
         "extract-text-webpack-plugin": "^1.0.1",
         "file-loader": "^0.9.0",
+        "flow-bin": "^0.37.0",
         "fs-extra": "^1.0.0",
         "gulp": "^3.9.1",
         "gulp-debug": "^3.0.0",

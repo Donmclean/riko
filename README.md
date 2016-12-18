@@ -11,6 +11,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 - Supports compilation of [**pug**](https://pugjs.org) template files to html.
 - Supports compilation of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/), and [**css**](http://www.w3schools.com/css/) stylesheets.
 - Supports generation of [**Source mapping**](https://www.npmjs.com/package/source-map) for stylesheets and js sources.
+- Supports [**Flow**](https://flowtype.org/) Static Type Checking out of the box.
 - Javascript (_js_,_jsx_) linting via [**eslint**](http://eslint.org/).
 - Stylesheet (_sass_, _less_, _css_) linting via [**stylelint**](https://github.com/stylelint/stylelint).
 - [**Autoprefixing**](https://github.com/postcss/autoprefixer) for stylesheets.
@@ -370,7 +371,7 @@ Override hot module replacement and simply have the page refresh on file change.
 config.BrowserSyncReloadOnChange = true;
 ```
 
-Enable this to have tests execute on every webpack rebuild.
+Enable this to have tests & flow static type checking execute on every webpack rebuild.
 ```javascript
 config.hotExecuteTests = false;
 ```
@@ -440,8 +441,17 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
     - `npm run test-jest`
         - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the `package.json` if you wish.
 
+    - `npm run flow`
+        - Executes flow to type check your js/jsx files.
+        - For advanced configuration feel free to edit the `.flowconfig` file. See [**here**](https://flowtype.org/docs/advanced-configuration.html)
+        - NOTE: js/jsx files must have the `@flow` comment at the very top of the file to be type checked. see more about flow [**here**](https://flowtype.org/docs/getting-started.html)
+
     - `npm test` or `npm run test` 
         - Runs full test suite. (all test commands)
         - All test coverage information will be located in: '[root]/test-coverage'
+    
+    - `npm start` 
+       - Executes a production build. Then fires up a production ready server on the `custom-config.js` specified express port.
+   
         
 #### Happy Coding :)
