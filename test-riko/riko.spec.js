@@ -131,6 +131,17 @@ describe('Config', function() {
         });
     });
 
+    describe('server', function() {
+        this.timeout(Infinity);
+        it('prod build executes', function(done) {
+            const spawn = VARIABLES.spawn('npm', ['run', 'prod']);
+            spawn.on('close', () => {
+                assert.isOk(spawn);
+                done();
+            });
+        });
+    });
+
     describe('gulpfile', function() {
         const gulpfile = require('../gulpfile');
 
@@ -168,10 +179,23 @@ describe('Config', function() {
             spawn.on('close', done);
         });
 
-        it('gulp lint-build executes', function(done) {
+        it('gulp setup executes', function(done) {
+            this.timeout(Infinity);
+            const spawn = VARIABLES.spawn('gulp', ['setup']);
+
+            process.argv[3] = '--js';
+            gulpfile.gulp.tasks.setup.fn();
+            spawn.on('close', () => {
+                assert.isOk(spawn);
+                done();
+            });
+        });
+
+        it('gulp lint-build & lint-src executes', function(done) {
             this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['lint-build']);
             assert.isOk(gulpfile.gulp.tasks['lint-build'].fn());
+            assert.isOk(gulpfile.gulp.tasks['lint-src'].fn());
             spawn.on('close', () => {
                 assert.isOk(spawn);
                 done();
@@ -181,27 +205,11 @@ describe('Config', function() {
         it('gulp test-jest executes', function(done) {
             this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['test-jest']);
-            assert.isOk(spawn);
-            spawn.on('close', done);
-        });
-
-        it('gulp setup executes', function(done) {
-            this.timeout(Infinity);
-            const spawn = VARIABLES.spawn('gulp', ['setup']);
             spawn.on('close', () => {
                 assert.isOk(spawn);
-                done();
-            });
-        });
-    });
-
-    describe('server', function() {
-        this.timeout(Infinity);
-        it('prod build executes', function(done) {
-            const spawn = VARIABLES.spawn('npm', ['run', 'prod']);
-            spawn.on('close', () => {
-                assert.isOk(spawn);
-                done();
+                gulpfile.gulp.tasks['test-jest'].fn(() => {
+                    done();
+                })
             });
         });
     });
