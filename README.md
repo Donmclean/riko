@@ -144,7 +144,7 @@ config.EXPRESS_ROOT             = config.destDir;
 
 Absolute paths to the configs/json files
 ```javascript
-config.eslintConfig             = baseDir+'/src/__linters/.eslintrc';
+config.eslintConfig             = baseDir+'/src/__linters/.eslintrc.js';
 config.stylelintConfig          = baseDir+'/src/__linters/.stylelintrc.yaml';
 config.packageJson              = baseDir+'/package.json';
 ```
