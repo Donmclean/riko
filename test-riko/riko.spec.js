@@ -118,5 +118,31 @@ describe('Config', function() {
 
             spawn.on('close', () => done());
         });
+
+        it('runFlow should exist and a be a function', function() {
+            assert.isFunction(functions.runFlow);
+        });
+
+        it('runFlow should exist and a be a function', function() {
+            this.timeout(Infinity);
+            const silent = true;
+            const spawnSync = functions.runFlow(silent);
+            assert.isOk(spawnSync);
+        });
+    });
+
+    describe('gulpfile', function() {
+        it('gulpfile should exist and a be truthy', function() {
+            const gulpfile = require('../gulpfile');
+            assert.isOk(gulpfile);
+        });
+    });
+
+    describe('server', function() {
+        it('server.js should exist and a be truthy', function() {
+            require("babel-register");
+            const server = require('../server');
+            assert.isOk(server);
+        });
     });
 });

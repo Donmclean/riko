@@ -79,16 +79,16 @@ module.exports = (_v) => {
         return newPlugins;
     };
 
-    functions.executeJestTests = (silent) => {
+    functions.executeJestTests = (silent = false) => {
         return _v.spawn('gulp', ['test-jest'], silent ? {} : {stdio: 'inherit'});
     };
 
-    functions.executeJestTestsSync = (silent) => {
+    functions.executeJestTestsSync = (silent = false) => {
         return _v.spawnSync('gulp', ['test-jest'], silent ? {} : {stdio: 'inherit'});
     };
 
-    functions.runFlow = (silent) => {
-        console.log('executing flow...');
+    functions.runFlow = (silent = false) => {
+        silent ? console.log('executing flow...') : null;
         return _v.spawnSync('flow', ['check'], silent ? {} : {stdio: 'inherit'});
     };
 
