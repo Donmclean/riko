@@ -152,12 +152,14 @@ describe('Config', function() {
         });
 
         it('gulp test-jest executes', function(done) {
+            this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['test-jest']);
             assert.isOk(spawn);
             spawn.on('close', () => done());
         });
 
         it('gulp setup executes', function(done) {
+            this.timeout(Infinity);
             const spawn = VARIABLES.spawn('gulp', ['setup']);
             assert.isOk(spawn);
             spawn.on('close', () => done());
