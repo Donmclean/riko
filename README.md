@@ -7,7 +7,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 #FEATURES
 
 - Supports the development of JS Modules, React [**Web**](https://facebook.github.io/react/), [**Mobile**](https://facebook.github.io/react-native/) & [**Electron**](http://electron.atom.io/) Applications.
-- Supports compilation of [**js**](https://www.javascript.com/) & [**jsx**](https://facebook.github.io/react/docs/jsx-in-depth.html) source files.
+- Supports compilation of [**es6 js**](http://es6-features.org/) & [**jsx**](https://facebook.github.io/react/docs/jsx-in-depth.html) source files.
 - Supports compilation of [**pug**](https://pugjs.org) template files to html.
 - Supports compilation of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/), and [**css**](http://www.w3schools.com/css/) stylesheets.
 - Supports generation of [**Source mapping**](https://www.npmjs.com/package/source-map) for stylesheets and js sources.
@@ -83,6 +83,16 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
  
 - After running one of the setup commands notice there is a new `src/` folder in the directory. 
 - here is where all of your source code will live. From js source/test scripts to stylesheets to custom eslinters etc.
+
+###### Eslint
+- If you wish to edit eslint rules or add plugins etc, simply edit the `src/__linters/eslintrc.js` file. See [**here**](http://eslint.org/docs/user-guide/configuring).
+- **IMPORTANT**: Do not edit the `.eslintrc.js` in the `test-riko/` directory. It's for the build only.
+
+###### Babel
+- If you wish to edit babel rules or add plugins etc, simply edit the top level `.babelrc` file. See [**here**](https://babeljs.io/docs/plugins/).
+
+###### Flow
+- If you wish to edit configuration for the flow static type checker, simply edit the top level `.flowconfig` file. See [**here**](https://flowtype.org/docs/advanced-configuration.html).
 
 #### **THE 'custom-config.js' FILE**
 
