@@ -136,13 +136,32 @@ describe('Config', function() {
             const gulpfile = require('../gulpfile');
             assert.isOk(gulpfile);
         });
+
+        it('gulp lint-src executes', function() {
+            const spawn = VARIABLES.spawn('gulp', ['lint-src']);
+            assert.isOk(spawn);
+        });
+
+        it('gulp lint-build executes', function() {
+            const spawn = VARIABLES.spawn('gulp', ['lint-build']);
+            assert.isOk(spawn);
+        });
+
+        it('gulp test-jest executes', function() {
+            const spawn = VARIABLES.spawn('gulp', ['test-jest']);
+            assert.isOk(spawn);
+        });
+
+        it('gulp setup executes', function() {
+            const spawn = VARIABLES.spawn('gulp', ['setup']);
+            assert.isOk(spawn);
+        });
     });
 
     describe('server', function() {
-        it('server.js should exist and a be truthy', function() {
-            require("babel-register");
-            const server = require('../server');
-            assert.isOk(server);
+        it('prod build executes', function() {
+            const spawn = VARIABLES.spawn('npm', ['run', 'prod']);
+            assert.isOk(spawn);
         });
     });
 });
