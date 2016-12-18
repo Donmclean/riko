@@ -63,20 +63,16 @@ gulp.task('setup', function (done) {
             if(hasSrcFolder(files)) {
                 $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder must not exist during setup. ${$.util.colors.red('terminating...')}`));
                 throw new Error('src/ folder must not exist during setup.');
-            }
-            if(!isReactNative(srcToCopy)) {
-                $.util.log($.util.colors.yellow(`creating ${$.util.colors.blue('src/')} folder and sub directories`));
-                return qfs.copyTree(baseDir+`/bin/_setup/${srcToCopy}`, srcDir);
-            }
-        })
-        .then(() => {
-            if(isReactNative(srcToCopy)) {
+            } else if(isReactNative(srcToCopy)) {
                 //run react native shell script
                 const cmd = spawn('sh', ['./bin/_setup/src-mobile/react-native.sh'], {stdio: 'inherit'});
                 cmd.on('close', () => done());
             } else {
-                $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder created ${$.util.colors.green('successfully')}`));
-                done();
+                $.util.log($.util.colors.yellow(`creating ${$.util.colors.blue('src/')} folder and sub directories`));
+                qfs.copyTree(baseDir+`/bin/_setup/${srcToCopy}`, srcDir).then(() => {
+                    $.util.log($.util.colors.yellow(`${$.util.colors.blue('src/')} folder created ${$.util.colors.green('successfully')}`));
+                    done();
+                });
             }
         })
         .catch(err => {
@@ -95,7 +91,7 @@ const lint = (isLintBuild) => {
                 $.util.log('GULP PLUMBER > lint ERROR:', err);
             }
         }}))
-        .pipe($.eslint({configFile: isLintBuild ? './test-riko/.eslintrc.js' : './src/__linters/.eslintrc'}))
+        .pipe($.eslint({configFile: isLintBuild ? './test-riko/.eslintrc.js' : './src/__linters/.eslintrc.js'}))
         .pipe($.eslint.format())
         .pipe($.eslint.failAfterError())
         .pipe($.debug({title: 'linting js files:'}));

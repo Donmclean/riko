@@ -25,7 +25,7 @@ config.tempDir                  = baseDir+'/temp';
 config.EXPRESS_PORT             = 3000;
 config.EXPRESS_ROOT             = config.destDir;
 
-config.eslintConfig             = config.srcDir+'/__linters/.eslintrc';
+config.eslintConfig             = config.srcDir+'/__linters/.eslintrc.js';
 config.stylelintConfig          = config.srcDir+'/__linters/.stylelintrc.yaml';
 config.packageJson              = baseDir+'/package.json';
 

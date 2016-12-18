@@ -32,10 +32,8 @@ describe('App', function () {
 
     renderer.render(<App />);
     let result;
-    let app;
 
     beforeEach(function() {
-        app = new App();
         renderer.render(<App />);
         result = renderer.getRenderOutput();
     });

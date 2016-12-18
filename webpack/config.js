@@ -23,7 +23,8 @@ config.srcDir                   = config.baseDir + "/src";
 config.buildFiles               = [
     config.baseDir + '/webpack/**/*.js',
     config.baseDir + '/test-riko/**/*.js',
-    config.baseDir + '/server.js'
+    config.baseDir + '/server.js',
+    config.baseDir + '/gulpfile.js'
 ];
 
 
