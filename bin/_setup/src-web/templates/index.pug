@@ -11,6 +11,10 @@ html(lang="en")
           link(href=stylesheets[i] type="text/css" rel="stylesheet")
 
     body
+        <!--[if lte IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
         #root
 
         - var scripts = htmlWebpackPlugin.options.scripts;
