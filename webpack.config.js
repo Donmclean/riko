@@ -36,7 +36,7 @@ config.module = {
     {
       test: /\.jsx$|\.js$/,
       exclude: /(node_modules|vendor|bower_components)/,
-      loaders: _v.NODE_ENV === 'development' ? ['react-hot-loader/webpack','babel?presets[]=react-hmre'] : ['babel'],
+      loaders: _v.NODE_ENV === 'development' ? ['react-hot-loader/webpack','babel?presets[]=react-hmre'] : ['babel']
     },
       //JSON
     {
