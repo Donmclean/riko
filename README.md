@@ -90,6 +90,17 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
 ###### Babel
 - If you wish to edit babel rules or add plugins etc, simply edit the top level `.babelrc` file. See [**here**](https://babeljs.io/docs/plugins/).
+- **IMPORTANT**: removing certain items might have unintended consequences.
+eg: removing the `react` preset will break flow typechecking etc.
+```json
+{
+  "presets": ["react","es2015"], //Required for flow type checking & developing in ECMAScript 6
+  "plugins": [
+    "transform-runtime" //Required for hot reloading
+  ]
+}
+```
+
 
 ###### Flow
 - If you wish to edit configuration for the flow static type checker, simply edit the top level `.flowconfig` file. See [**here**](https://flowtype.org/docs/advanced-configuration.html).
