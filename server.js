@@ -1,6 +1,6 @@
 "use strict";
-import config from './webpack.config';
-import browserSync from 'browser-sync';
+const config = require('./webpack.config');
+const browserSync = require('browser-sync');
 
 const _v = config.vars;
 const funcs = require('./webpack/functions')(_v);
