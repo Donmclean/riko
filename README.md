@@ -96,7 +96,7 @@ eg: removing the `react` preset will break flow typechecking etc.
 {
   "presets": ["react","es2015"], //Required for flow type checking & developing in ECMAScript 6
   "plugins": [
-    "transform-runtime" //Required for hot reloading
+    "transform-runtime" //Required polyfilling code without polluting globals
   ]
 }
 ```
