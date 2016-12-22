@@ -12,6 +12,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 - Supports compilation of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/), and [**css**](http://www.w3schools.com/css/) stylesheets.
 - Supports generation of [**Source mapping**](https://www.npmjs.com/package/source-map) for stylesheets and js sources.
 - Supports [**Flow**](https://flowtype.org/) Static Type Checking out of the box.
+- Supports [**Yarn**](https://yarnpkg.com/). The new fast, reliable, and secure dependency management.
 - Javascript (_js_,_jsx_) linting via [**eslint**](http://eslint.org/).
 - Stylesheet (_sass_, _less_, _css_) linting via [**stylelint**](https://github.com/stylelint/stylelint).
 - [**Autoprefixing**](https://github.com/postcss/autoprefixer) for stylesheets.
@@ -22,6 +23,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 - [**Source File Hashing**](#_): hashes build sources to control caching 
     - eg: `index.html?405kjdjsd7ed89a68ac` `styles.min.css?405eccffee7ed89a68ac` `bundle.js?405eccffee7ed89a68ac`
 
+> NOTE: All `npm` commands can be executed with `yarn`
 ######- Development Mode: `npm run dev`
 
 - [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources.
