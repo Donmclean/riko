@@ -1,10 +1,7 @@
 language: node_js
-jdk:
- - oraclejdk8
 node_js:
-  - "7.0.0"
-install:
-  - npm install
-  - npm install -g codeclimate-test-reporter
-script: npm run test-complete
-after_script: npm run test-coverage
+  - "7.3.0"
+script: yarn run test-complete
+after_script:
+  - yarn global add codeclimate-test-reporter
+  - yarn run test-coverage
