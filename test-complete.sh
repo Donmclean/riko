@@ -71,4 +71,7 @@ yarn run setup-electron
 echoBlue "running tests for electron project build..."
 yarn test
 
+echoBlue "running selenium tests..."
+npm run test-selenium
+
 echoGreen "All test successfully completed!"
