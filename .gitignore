@@ -8,4 +8,5 @@ test-coverage
 coverage
 selenium-debug.log
 npm-debug.log*
+yarn-error.log*
 .DS_Store
