@@ -30,6 +30,12 @@ gulpfile.isReactNative = (srcToCopy) => {
     return srcToCopy === 'react-native';
 };
 
+const errorHandler = (err) => {
+    if(err) {
+        $.util.log('GULP PLUMBER > lint ERROR:', err);
+    }
+};
+
 gulp.task('setup', function (done) {
 
     let srcToCopy;
@@ -122,6 +128,84 @@ gulp.task('test-jest', (cb) => {
         cb();
     });
 
+});
+
+gulp.task('run-selenium-tests', () => {
+    const nightWatchConfigPath = baseDir+'/nightwatch.json';
+    return gulp.src(nightWatchConfigPath)
+        .pipe($.plumber({errorHandler: errorHandler}))
+        .pipe($.debug({title: 'running selenium tests:'}))
+
+        //**********************
+        //LOCAL BROWSER CONFIGS
+        //**********************
+        // .pipe($.nightwatch({
+        //     configFile: nightWatchConfigPath,
+        //     cliArgs: {
+        //         env: 'chrome',
+        //         verbose: true
+        //     }
+        // }))
+        // .pipe($.nightwatch({
+        //     configFile: nightWatchConfigPath,
+        //     cliArgs: {
+        //         env: 'firefox',
+        //         verbose: true
+        //     }
+        // }))
+        // .pipe($.nightwatch({
+        //     configFile: nightWatchConfigPath,
+        //     cliArgs: {
+        //         env: 'safari',
+        //         verbose: true
+        //     }
+        // }))
+
+        //*********************
+        //BROWSERSTACK CONFIGS
+        //*********************
+        .pipe($.nightwatch({
+            configFile: nightWatchConfigPath,
+            cliArgs: {
+                env: 'browserstack-chrome',
+                verbose: true
+            }
+        }));
+    // .pipe($.nightwatch({
+    //     configFile: nightWatchConfigPath,
+    //     cliArgs: {
+    //         env: 'browserstack-firefox',
+    //         verbose: true
+    //     }
+    // }))
+    // .pipe($.nightwatch({
+    //     configFile: nightWatchConfigPath,
+    //     cliArgs: {
+    //         env: 'browserstack-safari',
+    //         verbose: true
+    //     }
+    // }))
+    // .pipe($.nightwatch({
+    //     configFile: nightWatchConfigPath,
+    //     cliArgs: {
+    //         env: 'browserstack-ie10',
+    //         verbose: true
+    //     }
+    // }))
+    // .pipe($.nightwatch({
+    //     configFile: nightWatchConfigPath,
+    //     cliArgs: {
+    //         env: 'browserstack-ie11',
+    //         verbose: true
+    //     }
+    // }))
+    // .pipe($.nightwatch({
+    //     configFile: nightWatchConfigPath,
+    //     cliArgs: {
+    //         env: 'browserstack-ipad2',
+    //         verbose: true
+    //     }
+    // }));
 });
 
 gulpfile.gulp = gulp;
