@@ -42,34 +42,34 @@ removeSrcDir(){
 }
 
 echoBlue "setting up js project tests..."
-npm run setup-js
+yarn run setup-js
 
 echoBlue "running prod build for js project..."
-npm run prod
+yarn run prod
 
 echoBlue "running tests for js project build..."
-npm test
+yarn test
 
 removeSrcDir
 
 
 echoBlue "setting up web project tests..."
-npm run setup
+yarn run setup
 
 echoBlue "running prod build for web project..."
-npm run prod
+yarn run prod
 
 echoBlue "running tests for web project build..."
-npm test
+yarn test
 
 removeSrcDir
 
 
 echoBlue "setting up electron project tests..."
-npm run setup-electron
+yarn run setup-electron
 
 echoBlue "running tests for electron project build..."
-npm test
+yarn test
 
 echoBlue "running selenium tests..."
 npm run test-selenium

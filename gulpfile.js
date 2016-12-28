@@ -30,7 +30,7 @@ gulpfile.isReactNative = (srcToCopy) => {
     return srcToCopy === 'react-native';
 };
 
-const errorHandler = (err) => {
+gulpfile.errorHandler = (err) => {
     if(err) {
         $.util.log('GULP PLUMBER > lint ERROR:', err);
     }
@@ -93,11 +93,7 @@ gulpfile.lint = (isLintBuild) => {
     const config  = require('./webpack/config');
 
     return gulp.src(isLintBuild ? config.buildFiles : config.srcFiles)
-        .pipe($.plumber({errorHandler: (err) => {
-            if(err) {
-                $.util.log('GULP PLUMBER > lint ERROR:', err);
-            }
-        }}))
+        .pipe($.plumber({errorHandler: gulpfile.errorHandler}))
         .pipe($.eslint({configFile: isLintBuild ? './test-riko/.eslintrc.js' : './src/__linters/.eslintrc.js'}))
         .pipe($.eslint.format())
         .pipe($.eslint.failAfterError())
@@ -133,7 +129,7 @@ gulp.task('test-jest', (cb) => {
 gulp.task('run-selenium-tests', () => {
     const nightWatchConfigPath = baseDir+'/nightwatch.json';
     return gulp.src(nightWatchConfigPath)
-        .pipe($.plumber({errorHandler: errorHandler}))
+        .pipe($.plumber({errorHandler: gulpfile.errorHandler}))
         .pipe($.debug({title: 'running selenium tests:'}))
 
         //**********************

@@ -167,6 +167,11 @@ describe('Config', function() {
             assert.isUndefined(gulpfile.handleMissingConfigFile());
         });
 
+        it('gulpfile.errorHandler should exist and be a function', function() {
+            assert.isFunction(gulpfile.errorHandler);
+            assert.isUndefined(gulpfile.errorHandler(true));
+        });
+
         it('gulpfile.lint should exist, be a function and return a truthy value', function() {
             assert.isFunction(gulpfile.lint);
             assert.isOk(gulpfile.lint(true));
