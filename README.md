@@ -18,6 +18,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 - [**Autoprefixing**](https://github.com/postcss/autoprefixer) for stylesheets.
 - [**Browsersync**](https://www.browsersync.io/) functionality by default.
 - [**Jest**](https://facebook.github.io/jest/), [**Mocha**](https://mochajs.org/), [**Chai**](http://chaijs.com/) unit testing.
+- Supports [**Selenium Testing**](http://www.seleniumhq.org/) via [**Nightwatch JS**](http://nightwatchjs.org/) & [**Browserstack**](https://www.browserstack.com/)
 - [**Bundle Visualizer**](https://chrisbateman.github.io/webpack-visualizer/): see the build product of your js sources & dependencies via current git SHA as url. 
     - eg: `localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html`
 - [**Source File Hashing**](#_): hashes build sources to control caching 
@@ -460,7 +461,10 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
      
     - `npm run mobile-test`
         - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the `src/package.json` if you wish.
-            
+      
+    - `npm run test-selenium`
+        - Execute any selenium tests via [**nightwatch js**](http://nightwatchjs.org/guide#writing-tests) End to End tests in `src/__tests-selenium`.
+    
     - `npm run test-jest`
         - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the `package.json` if you wish.
 

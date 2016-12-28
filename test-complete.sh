@@ -71,4 +71,7 @@ npm run setup-electron
 echoBlue "running tests for electron project build..."
 npm test
 
+echoBlue "running selenium tests..."
+npm run test-selenium
+
 echoGreen "All test successfully completed!"
