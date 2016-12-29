@@ -18,7 +18,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 - [**Autoprefixing**](https://github.com/postcss/autoprefixer) for stylesheets.
 - [**Browsersync**](https://www.browsersync.io/) functionality by default.
 - [**Jest**](https://facebook.github.io/jest/), [**Mocha**](https://mochajs.org/), [**Chai**](http://chaijs.com/) unit testing.
-- Supports [**Selenium Testing**](http://www.seleniumhq.org/) via [**Nightwatch JS**](http://nightwatchjs.org/) & [**Browserstack**](https://www.browserstack.com/)
+- [**Selenium Testing**](http://www.seleniumhq.org/) via [**Nightwatch JS**](http://nightwatchjs.org/) & [**Browserstack**](https://www.browserstack.com/)
 - [**Bundle Visualizer**](https://chrisbateman.github.io/webpack-visualizer/): see the build product of your js sources & dependencies via current git SHA as url. 
     - eg: `localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html`
 - [**Source File Hashing**](#_): hashes build sources to control caching 
@@ -463,7 +463,13 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
         - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the `src/package.json` if you wish.
       
     - `npm run test-selenium`
+        - To utilize this command you must have a [**browserstack**](https://www.browserstack.com) account.
+        - Next you should retrieve your __Username__ & __Access Key__ info from [**settings**](https://www.browserstack.com/accounts/settings).
+        - Once your have this can then update the nightwatch.json file located in the base directory.
+        - eg: `browserstack.user: browserstackuser`; Replace all `browserstackuser` with your __Username__ value.
+        - eg: `browserstack.key: browserstackkey`; Replace all `browserstackkey` with your __Access Key__ value.
         - Execute any selenium tests via [**nightwatch js**](http://nightwatchjs.org/guide#writing-tests) End to End tests in `src/__tests-selenium`.
+        - **NOTE**: only valid for web and electron projects 
     
     - `npm run test-jest`
         - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the `package.json` if you wish.
