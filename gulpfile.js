@@ -9,7 +9,7 @@ const
     baseDir     = path.resolve(__dirname),
     srcDir      = baseDir+'/src',
     args        = process.argv,
-    gulpfile    = this;
+    gulpfile    = {};
 
 gulpfile.getConfigFile = () => {
     let config;

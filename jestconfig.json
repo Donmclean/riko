@@ -2,6 +2,15 @@
   "verbose": true,
   "automock": false,
   "collectCoverage": true,
+  "collectCoverageFrom": ["src/js/**/*.js", "src/js/**/*.jsx", "!**/vendor/**"],
+  "coverageThreshold": {
+    "global": {
+      "branches": 0,
+      "functions": 0,
+      "lines": 0,
+      "statements": 0
+    }
+  },
   "coverageDirectory": "test-coverage",
   "rootDir": "./",
   "transform": {
