@@ -61,7 +61,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
 - run `git clone https://github.com/donmclean/riko.git`
 - cd into the cloned directory by running `cd riko`
-- run `npm install`
+- run `npm install` or `yarn`(_recommended_) if you have [yarn](https://yarnpkg.com/) installed
 - grab ~~coffee~~ a redbull
 
 #USAGE
