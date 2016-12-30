@@ -470,7 +470,7 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
         - **WARNING**: Do not run this while Docker or any other virtual machine is running.
      
     - `npm run mobile-test`
-        - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the `src/package.json` if you wish.
+        - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can make any jest configurations changes via the `jestconfig.json`.
       
     - `npm run test-selenium`
         - To utilize this command you must have a [**browserstack**](https://www.browserstack.com) account.
@@ -482,7 +482,7 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
         - **NOTE**: only valid for web and electron projects 
     
     - `npm run test-jest`
-        - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can change this via the `package.json` if you wish.
+        - Execute any jest tests. The default jest test directory is: `src/__tests__`. You can make any jest configurations changes via the `jestconfig.json`.
 
     - `npm run flow`
         - Executes flow to type check your js/jsx files.

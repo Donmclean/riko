@@ -14,8 +14,8 @@
     "mobile-test": "cd src/ && npm test",
     "prod": "NODE_ENV=production webpack",
     "flow": "flow check",
-    "test": "npm run test-build && gulp lint-src && NODE_ENV=test jest",
-    "test-jest": "jest",
+    "test": "npm run test-build && gulp lint-src && npm run test-jest",
+    "test-jest": "NODE_ENV=test jest --config ./jestconfig.json",
     "test-build": "gulp lint-build && NODE_ENV=production mocha test-riko/riko.spec.js",
     "test-complete": "sh test-complete.sh",
     "test-selenium": "gulp run-selenium-tests",
@@ -43,37 +43,6 @@
   ],
   "author": "Don Mclean",
   "license": "MIT",
-  "jest": {
-    "verbose": true,
-    "automock": false,
-    "collectCoverage": true,
-    "coverageDirectory": "test-coverage",
-    "rootDir": "./",
-    "transform": {
-      ".*": "<rootDir>/node_modules/babel-jest"
-    },
-    "testRegex": "(src/__tests__/.*|\\.(test|spec))\\.(es6|js|jsx)$",
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json"
-    ],
-    "moduleNameMapper": {
-      "^.+\\.(css|less|sass|scss)$": "<rootDir>/src/__tests__utils/styleMock.js",
-      "^.+\\.(jpe?g|png|gif|tif|svg|bmp|woff|woff2|eot|ttf|mp4|doc|docx|pdf|xls|xlsx|csv|txt)$": "<rootDir>/src/__tests__utils/fileMock.js"
-    },
-    "testPathDirs": [
-      "<rootDir>/src/__tests__"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/__tests__utils/"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/__tests__utils/"
-    ]
-  },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
     "babel-cli": "^6.11.4",
