@@ -162,7 +162,7 @@ Absolute paths to the configs/json files
 config.eslintConfig             = baseDir+'/src/__linters/.eslintrc.js';
 config.stylelintConfig          = baseDir+'/src/__linters/.stylelintrc.yaml';
 config.packageJson              = baseDir+'/package.json';
-config.nightwatchConfig         = baseDir+'/nightwatch.js';
+config.nightwatchConfig         = baseDir+'/nightwatchconfig.js';
 ```
 
 ##### ELECTRON OPTIONS
@@ -475,7 +475,7 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
     - `npm run test-selenium`
         - To utilize this command you must have a [**browserstack**](https://www.browserstack.com) account.
         - Next you should retrieve your __Username__ & __Access Key__ info from [**settings**](https://www.browserstack.com/accounts/settings).
-        - Once your have this can then update the nightwatch.js file located in the base directory.
+        - Once your have this can then update the nightwatchconfig.js file located in the base directory.
         - eg: `browserstack.user: browserstackuser`; Replace all `browserstackuser` with your __Username__ value.
         - eg: `browserstack.key: browserstackkey`; Replace all `browserstackkey` with your __Access Key__ value.
         - Execute any selenium tests via [**nightwatch js**](http://nightwatchjs.org/guide#writing-tests) End to End tests in `src/__tests-selenium`.

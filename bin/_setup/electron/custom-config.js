@@ -28,7 +28,7 @@ config.EXPRESS_ROOT             = config.destDir;
 config.eslintConfig             = config.srcDir+'/__linters/.eslintrc.js';
 config.stylelintConfig          = config.srcDir+'/__linters/.stylelintrc.yaml';
 config.packageJson              = baseDir+'/package.json';
-config.nightwatchConfig         = baseDir+'/nightwatch.js';
+config.nightwatchConfig         = baseDir+'/nightwatchconfig.js';
 
 config.srcFiles                 = [
     config.srcDir+'/**/*.js?(x)',
