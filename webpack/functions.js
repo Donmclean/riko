@@ -80,11 +80,7 @@ module.exports = (_v) => {
     };
 
     functions.executeJestTests = (silent = false) => {
-        return _v.spawn('gulp', ['test-jest'], silent ? {} : {stdio: 'inherit'});
-    };
-
-    functions.executeJestTestsSync = (silent = false) => {
-        return _v.spawnSync('gulp', ['test-jest'], silent ? {} : {stdio: 'inherit'});
+        return _v.spawn('npm', ['run', 'test-jest-watch'], silent ? {} : {stdio: 'inherit'});
     };
 
     functions.runFlow = (silent = false) => {

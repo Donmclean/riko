@@ -104,7 +104,6 @@ describe('Config', function() {
 
         it('executeJestTests should exist and a be a function', function() {
             assert.isFunction(functions.executeJestTests);
-            assert.isFunction(functions.executeJestTestsSync);
         });
 
         it('runFlow should exist and be a function', function() {

@@ -110,20 +110,6 @@ gulp.task('lint-src', () => {
     return gulpfile.lint(false);
 });
 
-gulp.task('test-jest', (cb) => {
-    const cmd = spawn('jest', {stdio: 'inherit'});
-
-    cmd.on('close', (code) => {
-        if(code > 0) {
-            $.util.log(`${$.util.colors.red('ERROR: JEST TEST FAILED!')}`);
-        } else {
-            $.util.log(`${$.util.colors.green('JEST TEST PASSED!')}`);
-        }
-        cb();
-    });
-
-});
-
 gulp.task('run-selenium-tests', () => {
     const config = gulpfile.getConfigFile();
     return gulp.src(config.nightwatchConfig)
