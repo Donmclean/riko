@@ -25,6 +25,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
     - eg: `index.html?405kjdjsd7ed89a68ac` `styles.min.css?405eccffee7ed89a68ac` `bundle.js?405eccffee7ed89a68ac`
 
 > NOTE: All `npm` commands can be executed with `yarn`
+
 ######- Development Mode: `npm run dev`
 
 - [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources.
