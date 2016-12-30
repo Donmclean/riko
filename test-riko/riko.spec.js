@@ -162,9 +162,9 @@ describe('Config', function() {
             assert.isFalse(gulpfile.isReactNative(''));
         });
 
-        it('gulpfile.handleMissingConfigFile should exist and be a function', function() {
-            assert.isFunction(gulpfile.handleMissingConfigFile);
-            assert.isUndefined(gulpfile.handleMissingConfigFile());
+        it('gulpfile.getConfigFile should exist and be a function', function() {
+            assert.isFunction(gulpfile.getConfigFile);
+            assert.isObject(gulpfile.getConfigFile());
         });
 
         it('gulpfile.errorHandler should exist and be a function', function() {

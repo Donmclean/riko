@@ -28,6 +28,7 @@ config.EXPRESS_ROOT             = config.destDir;
 config.eslintConfig             = config.srcDir+'/__linters/.eslintrc.js';
 config.stylelintConfig          = config.srcDir+'/__linters/.stylelintrc.yaml';
 config.packageJson              = baseDir+'/package.json';
+config.nightwatchConfig         = baseDir+'/nightwatch.js';
 
 config.srcFiles                 = [
     config.srcDir+'/**/*.js?(x)',
@@ -170,7 +171,14 @@ config.externalModules = {
 //*******************************TESTS**********************************
 //**********************************************************************
 
-// See Readme
+// provide browserstack account info here to for selenium testing to work
+// https://www.browserstack.com/accounts/settings
+// see readme for more details
+config.browserstackUsername = 'browserstackuser';
+config.browserstackAccessKey = 'browserstackkey';
+
+//Enable this to have tests execute on every webpack rebuild.
+config.hotExecuteTests = true;
 
 //**********************************************************************
 //*******************************EXTRAS*********************************
@@ -202,9 +210,6 @@ config.hotReloadingOptions     = {
 
 //Override hot module replacement and simply have the page refresh on file change
 config.BrowserSyncReloadOnChange = false;
-
-//Enable this to have tests execute on every webpack rebuild.
-config.hotExecuteTests = true;
 
 // IMPORTANT! must be and array. eg: [ 'echo hello world' ];
 config.onBuildStartShellCommands = [];

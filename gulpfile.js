@@ -1,25 +1,28 @@
 "use strict";
 const
-    gulp    = require('gulp'),
-    $       = require('gulp-load-plugins')(),
-    qfs     = require('q-io/fs'),
-    _       = require('lodash'),
-    path    = require('path'),
-    spawn   = require('child_process').spawn,
-    baseDir = path.resolve(__dirname),
-    srcDir  = baseDir+'/src',
-    args    = process.argv,
+    gulp        = require('gulp'),
+    $           = require('gulp-load-plugins')(),
+    qfs         = require('q-io/fs'),
+    _           = require('lodash'),
+    path        = require('path'),
+    spawn       = require('child_process').spawn,
+    baseDir     = path.resolve(__dirname),
+    srcDir      = baseDir+'/src',
+    args        = process.argv,
     gulpfile    = this;
 
-gulpfile.handleMissingConfigFile = () => {
+gulpfile.getConfigFile = () => {
+    let config;
     try {
-        require('./webpack/config');
+        config = require('./webpack/config');
     } catch (err) {
         $.util.log($.util.colors.red('ERROR:') + $.util.colors.yellow(' must have a valid custom-config.js file in ' +
             $.util.colors.red('src/') + ' folder. ') +
             $.util.colors.cyan('Try running '+ $.util.colors.blue('"npm run setup"')+' to get started.'));
         throw new Error('must have a valid custom-config.js');
     }
+
+    return config;
 };
 
 gulpfile.hasSrcFolder = (files) => {
@@ -37,7 +40,6 @@ gulpfile.errorHandler = (err) => {
 };
 
 gulp.task('setup', function (done) {
-
     let srcToCopy;
 
     switch (args[3]) {
@@ -89,8 +91,7 @@ gulp.task('setup', function (done) {
 });
 
 gulpfile.lint = (isLintBuild) => {
-
-    const config  = require('./webpack/config');
+    const config = gulpfile.getConfigFile();
 
     return gulp.src(isLintBuild ? config.buildFiles : config.srcFiles)
         .pipe($.plumber({errorHandler: gulpfile.errorHandler}))
@@ -101,18 +102,15 @@ gulpfile.lint = (isLintBuild) => {
 };
 
 gulp.task('lint-build', () => {
-    gulpfile.handleMissingConfigFile();
     return gulpfile.lint(true);
 
 });
 
 gulp.task('lint-src', () => {
-    gulpfile.handleMissingConfigFile();
     return gulpfile.lint(false);
 });
 
 gulp.task('test-jest', (cb) => {
-
     const cmd = spawn('jest', {stdio: 'inherit'});
 
     cmd.on('close', (code) => {
@@ -127,8 +125,8 @@ gulp.task('test-jest', (cb) => {
 });
 
 gulp.task('run-selenium-tests', () => {
-    const nightWatchConfigPath = baseDir+'/nightwatch.json';
-    return gulp.src(nightWatchConfigPath)
+    const config = gulpfile.getConfigFile();
+    return gulp.src(config.nightwatchConfig)
         .pipe($.plumber({errorHandler: gulpfile.errorHandler}))
         .pipe($.debug({title: 'running selenium tests:'}))
 
@@ -136,21 +134,21 @@ gulp.task('run-selenium-tests', () => {
         //LOCAL BROWSER CONFIGS
         //**********************
         // .pipe($.nightwatch({
-        //     configFile: nightWatchConfigPath,
+        //     configFile: config.nightwatchConfig,
         //     cliArgs: {
         //         env: 'chrome',
         //         verbose: true
         //     }
         // }))
         // .pipe($.nightwatch({
-        //     configFile: nightWatchConfigPath,
+        //     configFile: config.nightwatchConfig,
         //     cliArgs: {
         //         env: 'firefox',
         //         verbose: true
         //     }
         // }))
         // .pipe($.nightwatch({
-        //     configFile: nightWatchConfigPath,
+        //     configFile: config.nightwatchConfig,
         //     cliArgs: {
         //         env: 'safari',
         //         verbose: true
@@ -161,42 +159,42 @@ gulp.task('run-selenium-tests', () => {
         //BROWSERSTACK CONFIGS
         //*********************
         .pipe($.nightwatch({
-            configFile: nightWatchConfigPath,
+            configFile: config.nightwatchConfig,
             cliArgs: {
                 env: 'browserstack-chrome',
                 verbose: true
             }
         }));
     // .pipe($.nightwatch({
-    //     configFile: nightWatchConfigPath,
+    //     configFile: config.nightwatchConfig,
     //     cliArgs: {
     //         env: 'browserstack-firefox',
     //         verbose: true
     //     }
     // }))
     // .pipe($.nightwatch({
-    //     configFile: nightWatchConfigPath,
+    //     configFile: config.nightwatchConfig,
     //     cliArgs: {
     //         env: 'browserstack-safari',
     //         verbose: true
     //     }
     // }))
     // .pipe($.nightwatch({
-    //     configFile: nightWatchConfigPath,
+    //     configFile: config.nightwatchConfig,
     //     cliArgs: {
     //         env: 'browserstack-ie10',
     //         verbose: true
     //     }
     // }))
     // .pipe($.nightwatch({
-    //     configFile: nightWatchConfigPath,
+    //     configFile: config.nightwatchConfig,
     //     cliArgs: {
     //         env: 'browserstack-ie11',
     //         verbose: true
     //     }
     // }))
     // .pipe($.nightwatch({
-    //     configFile: nightWatchConfigPath,
+    //     configFile: config.nightwatchConfig,
     //     cliArgs: {
     //         env: 'browserstack-ipad2',
     //         verbose: true

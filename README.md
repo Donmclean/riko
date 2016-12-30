@@ -161,6 +161,7 @@ Absolute paths to the configs/json files
 config.eslintConfig             = baseDir+'/src/__linters/.eslintrc.js';
 config.stylelintConfig          = baseDir+'/src/__linters/.stylelintrc.yaml';
 config.packageJson              = baseDir+'/package.json';
+config.nightwatchConfig         = baseDir+'/nightwatch.js';
 ```
 
 ##### ELECTRON OPTIONS
@@ -351,6 +352,19 @@ To add vendor dependencies and expose them to global/window object simply use th
 `// eg: require("expose-loader?_!lodash");`
 <br/>See: [here](https://github.com/webpack/expose-loader).
 
+##### TEST OPTIONS
+
+provide [browserstack](https://www.browserstack.com/) account [info](https://www.browserstack.com/accounts/settings) here to for selenium testing to work<br>
+**IMPORTANT**: these are required fields for running your [nightwatch](http://nightwatchjs.org/) selenium tests via: `npm run test-selenium`.
+```javascript
+config.browserstackUsername = 'usernameGoesHere';
+config.browserstackAccessKey = 'accessKeyGoesHere';
+```
+Enable this to have tests execute on every webpack rebuild.
+```javascript
+config.hotExecuteTests = true;
+```
+
 ##### EXTRA OPTIONS
 
 Define which sourcemap type here.
@@ -393,11 +407,6 @@ config.hotReloadingOptions     = {
 Override hot module replacement and simply have the page refresh on file change.
 ```javascript
 config.BrowserSyncReloadOnChange = true;
-```
-
-Enable this to have tests & flow static type checking execute on every webpack rebuild.
-```javascript
-config.hotExecuteTests = false;
 ```
 
 Add any shell command to execute around the production build lifecycle `npm run prod`.
@@ -465,7 +474,7 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
     - `npm run test-selenium`
         - To utilize this command you must have a [**browserstack**](https://www.browserstack.com) account.
         - Next you should retrieve your __Username__ & __Access Key__ info from [**settings**](https://www.browserstack.com/accounts/settings).
-        - Once your have this can then update the nightwatch.json file located in the base directory.
+        - Once your have this can then update the nightwatch.js file located in the base directory.
         - eg: `browserstack.user: browserstackuser`; Replace all `browserstackuser` with your __Username__ value.
         - eg: `browserstack.key: browserstackkey`; Replace all `browserstackkey` with your __Access Key__ value.
         - Execute any selenium tests via [**nightwatch js**](http://nightwatchjs.org/guide#writing-tests) End to End tests in `src/__tests-selenium`.
