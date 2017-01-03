@@ -12,10 +12,10 @@ const initalState = {
 
 const asyncReducer = (state = initalState, action) => {
     switch (action.type) {
-        case types.GET_POSTS: {
+        case types.UPDATE_POSTS: {
             return _.assign({}, state, action.data);
         }
-        case types.UPDATE_INPUT_VALUE: {
+        case types.UPDATE_POST_NUMBER: {
             return _.assign({}, state, action.data);
         }
         default: {

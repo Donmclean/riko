@@ -2,21 +2,21 @@
 import axios from 'axios';
 import * as types from '../../js/constants/actions/actionTypes';
 
-export const updateInputValue = (postNumber) => ({
-    type: types.UPDATE_INPUT_VALUE,
+export const updatePostNumber = (postNumber) => ({
+    type: types.UPDATE_POST_NUMBER,
     data: {postNumber}
 });
 
-export const getPosts = (posts) => ({
-    type: types.GET_POSTS,
+export const setPosts = (posts) => ({
+    type: types.UPDATE_POSTS,
     data: posts
 });
 
-export const doGetPosts = (postId) => {
+export const fetchPosts = (postId) => {
     return (dispatch, getState) => {
         return axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
             .then((response) => {
-                dispatch(getPosts(response.data));
+                dispatch(setPosts(response.data));
             })
             .catch((error) => {
                 return new Error(error);

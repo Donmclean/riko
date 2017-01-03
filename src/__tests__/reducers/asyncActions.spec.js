@@ -4,36 +4,34 @@ import React from 'react';
 import _ from 'lodash';
 import * as asyncActions from '../../js/actions/asyncActionCreators';
 import * as types from '../../js/constants/actions/actionTypes';
-import nock from 'nock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+
+// Useful for not making direct api requests when testing
+// import nock from 'nock';
 
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 
 describe('Async Actions', () => {
-    afterEach(() => {
-        nock.cleanAll();
-    });
-
-    it('getPosts should create a get posts action', () => {
+    it('setPosts should create a get posts action', () => {
         const expectedAction = {
-            type: types.GET_POSTS
+            type: types.UPDATE_POSTS
         };
 
-        expect(asyncActions.getPosts()).toEqual(expectedAction);
+        expect(asyncActions.setPosts()).toEqual(expectedAction);
     });
 
-    it('doGetPosts should return a function', () => {
+    it('fetchPosts should return a function', () => {
         const postId = 1;
-        const dispatch = asyncActions.doGetPosts(postId);
+        const dispatch = asyncActions.fetchPosts(postId);
         expect(_.isFunction(dispatch)).toEqual(true);
     });
 
-    it('doGetPosts creates GET_POSTS when fetching posts has been done', () => {
+    it('fetchPosts creates UPDATE_POSTS when fetching posts has been done', () => {
         const postId = 1;
         const expectedData = [{
-            type: 'GET_POSTS',
+            type: 'UPDATE_POSTS',
             data: {
                 userId: 1,
                 id: 1,
@@ -44,27 +42,27 @@ describe('Async Actions', () => {
 
         const store = mockStore();
 
-        return store.dispatch(asyncActions.doGetPosts(postId))
+        return store.dispatch(asyncActions.fetchPosts(postId))
             .then(() => { // return of async actions
                 expect(store.getActions()).toEqual(expectedData);
             });
     });
 
-    it('doGetPosts should return empty array upon error occurring when fetching invalid post number or (404)', () => {
-        const postId = 101;
+    it('fetchPosts should return empty array upon error occurring when fetching invalid post number or (404)', () => {
+        const postId = 0;
         const store = mockStore();
 
-        return store.dispatch(asyncActions.doGetPosts(postId))
+        return store.dispatch(asyncActions.fetchPosts(postId))
             .then(() => { // return of async actions
                 expect(store.getActions()).toEqual([]);
             });
     });
 
-    it('updateInputValue should return valid data object', () => {
+    it('updatePostNumber should return valid data object', () => {
         const postNumber = 10;
 
-        const dispatch = asyncActions.updateInputValue(postNumber);
-        const expectedDispatch = { type: 'UPDATE_INPUT_VALUE', data: { postNumber: 10 } };
+        const dispatch = asyncActions.updatePostNumber(postNumber);
+        const expectedDispatch = { type: 'UPDATE_POST_NUMBER', data: { postNumber: 10 } };
 
         expect(dispatch).toEqual(expectedDispatch);
     });
