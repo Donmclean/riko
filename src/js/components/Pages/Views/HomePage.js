@@ -62,7 +62,7 @@ class HomePage extends Component {
                     <h2 className="hello-world">
                         <span className="hello-world__rotate">Rix!</span>
                     </h2>
-                    <CounterClicker {...this.props} />
+                    <CounterClicker />
                     <hr/>
                     <div className="async-section">
                         <div>

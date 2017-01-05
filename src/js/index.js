@@ -20,13 +20,24 @@ const epicMiddleware = createEpicMiddleware(epics);
 //Styles
 import styles from '../sass/styles.scss';
 
-//middleware
-const middleware = applyMiddleware(logger(reduxLoggerTransformImmutable), routerMiddleware(browserHistory), thunk, epicMiddleware);
+//All redux middlewares go here
+const middlewares = [routerMiddleware(browserHistory), thunk, epicMiddleware];
 
-// Add the reducer to your store on the `routing` key
+//Add Environment Specific Redux Middlewares here.
+switch(process.env.NODE_ENV) {
+    case 'development': {
+        middlewares.push(logger(reduxLoggerTransformImmutable));
+        break;
+    }
+    default: {
+        break;
+    }
+}
+
+//Top level Redux Store
 const store = createStore(
     reducers,
-    middleware
+    applyMiddleware(...middlewares)
 );
 
 // Create an enhanced history that syncs navigation events with the store

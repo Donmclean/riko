@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as types from '../../constants/actions/actionTypes';
 import Rx from 'rxjs/Rx';
+import getActions from '../../actions/_index';
 
 import { createObservable } from '../../classes/RxObservableHOC';
 
@@ -12,7 +13,7 @@ class CounterClicker extends Component {
     }
 
     handleCounterClick(type) {
-        const { actions } = this.props;
+        const actions = getActions(this.props.dispatch);
 
         switch (type) {
             case types.INCREMENT: {
@@ -63,7 +64,6 @@ class CounterClicker extends Component {
 }
 
 CounterClicker.propTypes = {
-    actions: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired
 };
 
