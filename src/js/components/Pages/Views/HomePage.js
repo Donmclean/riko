@@ -18,21 +18,18 @@ class HomePage extends Component {
         const { state } = this.props;
 
         //Setup Observables
-        window.x = this.testfetchPostSubscription = createObservable(
-            Rx.Observable.fromEvent(this.refs.testfetchPost, 'change')
-                .takeWhile(() => this.testfetchPostSubscription.dispose) //TODO: Use Redux Observable
-                .pluck('target', 'value')
-                .map(val => Number(val.replace(/\D/g, '')))
+        //TODO: Use Redux Observable
+        // window.x = this.testfetchPostSubscription = createObservable(
+        //     Rx.Observable.fromEvent(this.refs.testfetchPost, 'change')
+        //         .takeWhile(() => this.testfetchPostSubscription.dispose)
+        //         .pluck('target', 'value')
+        //         .map(val => Number(val.replace(/\D/g, '')))
                 // .doOnNext((val) => {this.updatePostNumber(val);})
                 // .debounce(2000)
                 // .doOnNext(this.handlePostNumberAsyncSelect.bind(this))
                 // .takeUntil(Rx.Observable.timer(14000))
             // ,this.handlePostNumberAsyncSelect.bind(this) //Optional
-        );
-    }
-
-    componentWillUnmount() {
-        this.testfetchPostSubscription.dispose();
+        // );
     }
 
     updatePostNumber(postNumber) {
@@ -58,6 +55,7 @@ class HomePage extends Component {
     render() {
         const { state } = this.props;
         console.info("this.props: ", this.props);
+        console.info("asyncReducer postNumber: ", state.asyncReducer.get('postNumber'));
         return (
             <div id="page-wrapper">
                 <div className="container-fluid">
@@ -71,14 +69,14 @@ class HomePage extends Component {
                             <h4>Asynchronous Actions</h4>
                             <div className="async-input">
                                 <label>Select Post Number To Fetch</label>
-                                {/*<select onChange={this.handlePostNumberSelect.bind(this)} value={state.asyncReducer.postNumber}>*/}
-                                    {/*<option disabled="true" defaultValue={0}>{0}</option>*/}
-                                    {/*{Array.from(new Array(100).keys()).map((number) => <option key={number + 1} value={number + 1}>{number + 1}</option>)}*/}
-                                {/*</select>*/}
-                                <select ref='testfetchPost' value={state.asyncReducer.postNumber}>
+                                <select onChange={this.handlePostNumberSelect.bind(this)} value={state.asyncReducer.get('postNumber')}>
                                     <option disabled="true" defaultValue={0}>{0}</option>
                                     {Array.from(new Array(100).keys()).map((number) => <option key={number + 1} value={number + 1}>{number + 1}</option>)}
                                 </select>
+                                {/*<select ref='testfetchPost' value={state.asyncReducer.get('postNumber')}>*/}
+                                    {/*<option disabled="true" defaultValue={0}>{0}</option>*/}
+                                    {/*{Array.from(new Array(100).keys()).map((number) => <option key={number + 1} value={number + 1}>{number + 1}</option>)}*/}
+                                {/*</select>*/}
                             </div>
                         </div>
                         <h1>Async Reducer State (Posts)</h1>
@@ -92,9 +90,9 @@ class HomePage extends Component {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td className="async-table-id">{state.asyncReducer.id}</td>
-                                    <td className="async-table-title">{state.asyncReducer.title}</td>
-                                    <td className="async-table-body">{state.asyncReducer.body}</td>
+                                    <td className="async-table-id">{state.asyncReducer.get('id')}</td>
+                                    <td className="async-table-title">{state.asyncReducer.get('title')}</td>
+                                    <td className="async-table-body">{state.asyncReducer.get('body')}</td>
                                 </tr>
                             </tbody>
                         </table>

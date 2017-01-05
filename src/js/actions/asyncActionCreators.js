@@ -4,7 +4,7 @@ import * as types from '../../js/constants/actions/actionTypes';
 
 export const updatePostNumber = (postNumber) => ({
     type: types.UPDATE_POST_NUMBER,
-    data: {postNumber}
+    data: postNumber
 });
 
 export const setPosts = (posts) => ({

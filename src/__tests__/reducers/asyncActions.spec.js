@@ -62,7 +62,7 @@ describe('Async Actions', () => {
         const postNumber = 10;
 
         const dispatch = asyncActions.updatePostNumber(postNumber);
-        const expectedDispatch = { type: 'UPDATE_POST_NUMBER', data: { postNumber: 10 } };
+        const expectedDispatch = { type: 'UPDATE_POST_NUMBER', data: 10 };
 
         expect(dispatch).toEqual(expectedDispatch);
     });

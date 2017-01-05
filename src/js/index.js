@@ -1,4 +1,3 @@
-/* eslint-env browser */
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -14,6 +13,7 @@ import { createEpicMiddleware } from 'redux-observable';
 import Routes from './components/Routes';
 import reducers from './reducers/_index';
 import { epics } from './epics/_index';
+import { reduxLoggerTransformImmutable } from './helpers/_index';
 
 const epicMiddleware = createEpicMiddleware(epics);
 
@@ -21,7 +21,7 @@ const epicMiddleware = createEpicMiddleware(epics);
 import styles from '../sass/styles.scss';
 
 //middleware
-const middleware = applyMiddleware(logger(), routerMiddleware(browserHistory), thunk, epicMiddleware);
+const middleware = applyMiddleware(logger(reduxLoggerTransformImmutable), routerMiddleware(browserHistory), thunk, epicMiddleware);
 
 // Add the reducer to your store on the `routing` key
 const store = createStore(

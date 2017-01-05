@@ -56,7 +56,7 @@ class CounterClicker extends Component {
                 <button ref='testINC'>Rx INCREMENT</button>
                 <button ref='testDEC'>Rx DECREMENT</button>
 
-                <h1>Counter Reducer State: {state.counterReducer}</h1>
+                <h1>Counter Reducer State: {state.counterReducer.get('value')}</h1>
             </div>
         );
     }

@@ -68,7 +68,7 @@
     "dot-notation": [2, { "allowKeywords": true }],
     "no-extra-parens": [2, "functions"],
     "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
-    "new-cap": 2,
+    "new-cap": 0,
     "new-parens": 2,
     "semi": 2,
     "semi-spacing": [2, {"before": false, "after": true}],
