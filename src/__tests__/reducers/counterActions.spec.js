@@ -40,11 +40,11 @@ describe('Counter Actions', () => {
 
     it(`${types.INCREMENT} executes successfully --WITH-- IMMUTABLE JS`, () => {
         //Setup
-        const initialState = Map({value: 0});
+        const defaultState = Map({value: 0});
         const expectedState = Map({value: 1});
 
         //Execute
-        const newState = counterReducer(initialState, counterActions.increment());
+        const newState = counterReducer(defaultState, counterActions.increment());
 
         //Verify
         expect(newState).toEqual(expectedState);
@@ -52,11 +52,11 @@ describe('Counter Actions', () => {
 
     it(`${types.DECREMENT} executes successfully --WITH-- IMMUTABLE JS`, () => {
         //Setup
-        const initialState = Map({value: 0});
+        const defaultState = Map({value: 0});
         const expectedState = Map({value: -1});
 
         //Execute
-        const newState = counterReducer(initialState, counterActions.decrement());
+        const newState = counterReducer(defaultState, counterActions.decrement());
 
         //Verify
         expect(newState).toEqual(expectedState);
