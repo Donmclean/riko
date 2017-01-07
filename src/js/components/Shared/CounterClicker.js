@@ -32,15 +32,15 @@ class CounterClicker extends Component {
 
     componentDidMount() {
         //Setup Observables
-        const testINCSubscription = createObservable(
-            Rx.Observable.fromEvent(this.refs.testINC, 'click').debounce(2000),
-            this.handleCounterClick.bind(this, types.INCREMENT)
-        );
-
-        const testDECSubscription = createObservable(
-            Rx.Observable.fromEvent(this.refs.testDEC, 'click').debounce(2000),
-            this.handleCounterClick.bind(this, types.DECREMENT)
-        );
+        // const testINCSubscription = createObservable(
+        //     Rx.Observable.fromEvent(this.refs.testINC, 'click').debounce(2000),
+        //     this.handleCounterClick.bind(this, types.INCREMENT)
+        // );
+        //
+        // const testDECSubscription = createObservable(
+        //     Rx.Observable.fromEvent(this.refs.testDEC, 'click').debounce(2000),
+        //     this.handleCounterClick.bind(this, types.DECREMENT)
+        // );
     }
 
     render() {
@@ -50,14 +50,14 @@ class CounterClicker extends Component {
                 <h4>Synchronous Actions</h4>
 
                 {/*OLD WAY*/}
-                <button onClick={this.handleCounterClick.bind(this, types.INCREMENT)}>INCREMENT</button>
-                <button onClick={this.handleCounterClick.bind(this, types.DECREMENT)}>DECREMENT</button>
+                <button className="inc" onClick={this.handleCounterClick.bind(this, types.INCREMENT)}>INCREMENT</button>
+                <button className="dec" onClick={this.handleCounterClick.bind(this, types.DECREMENT)}>DECREMENT</button>
 
                 {/*NEW WAY*/}
                 <button ref='testINC'>Rx INCREMENT</button>
                 <button ref='testDEC'>Rx DECREMENT</button>
 
-                <h1>Counter Reducer State: {state.counterReducer.get('value')}</h1>
+                <h1 className="counter-val">Counter Reducer State: {state.counterReducer.get('value')}</h1>
             </div>
         );
     }

@@ -1,0 +1,28 @@
+exports[`Counter Actions renders <CounterClicker /> component successfully in to the DOM with required props 1`] = `
+<div>
+  <h4>
+    Synchronous Actions
+  </h4>
+  <button
+    className="inc"
+    onClick={[Function]}>
+    INCREMENT
+  </button>
+  <button
+    className="dec"
+    onClick={[Function]}>
+    DECREMENT
+  </button>
+  <button>
+    Rx INCREMENT
+  </button>
+  <button>
+    Rx DECREMENT
+  </button>
+  <h1
+    className="counter-val">
+    Counter Reducer State: 
+    0
+  </h1>
+</div>
+`;
