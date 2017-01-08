@@ -1,3 +1,5 @@
+export const SHOULD_INCREMENT = 'SHOULD_INCREMENT';
+export const SHOULD_DECREMENT = 'SHOULD_DECREMENT';
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
 

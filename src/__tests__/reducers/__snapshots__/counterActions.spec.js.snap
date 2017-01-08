@@ -13,12 +13,6 @@ exports[`Counter Actions renders <CounterClicker /> component successfully in to
     onClick={[Function]}>
     DECREMENT
   </button>
-  <button>
-    Rx INCREMENT
-  </button>
-  <button>
-    Rx DECREMENT
-  </button>
   <h1
     className="counter-val">
     Counter Reducer State: 
