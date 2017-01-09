@@ -3,7 +3,7 @@ import { Map } from 'immutable';
 import * as types from '../constants/actions/actionTypes';
 
 //Every reducer should have an initial state variable here
-const initialState = Map({
+export const initialState = Map({ // Export it for test purposes
     value: 0
 });
 

@@ -3,7 +3,7 @@
 import React from 'react';
 import * as counterActions from '../../js/actions/counterActionCreators';
 import * as types from '../../js/constants/actions/actionTypes';
-import counterReducer from '../../js/reducers/counterReducer';
+import counterReducer, { initialState } from '../../js/reducers/counterReducer';
 import { Map } from 'immutable';
 
 //For testing components
@@ -16,13 +16,8 @@ const middlewares = []; //eg: [thunk] for async
 const mockStore = configureStore(middlewares);
 
 describe('Counter Actions', () => {
-    //Initialize mockstore with inital state of Reducer
-    const initialState = {
-        counterReducer: Map({
-            value: 0
-        })
-    };
-    const store = mockStore(initialState);
+    //Initialize mockStore with initial state of Reducer
+    const store = mockStore({counterReducer: initialState});
 
     it('should create a increment action', () => {
         const expectedAction = {
@@ -40,11 +35,10 @@ describe('Counter Actions', () => {
 
     it(`${types.INCREMENT} executes successfully --WITH-- IMMUTABLE JS`, () => {
         //Setup
-        const defaultState = Map({value: 0});
         const expectedState = Map({value: 1});
 
         //Execute
-        const newState = counterReducer(defaultState, counterActions.increment());
+        const newState = counterReducer(initialState, counterActions.increment());
 
         //Verify
         expect(newState).toEqual(expectedState);
@@ -52,11 +46,10 @@ describe('Counter Actions', () => {
 
     it(`${types.DECREMENT} executes successfully --WITH-- IMMUTABLE JS`, () => {
         //Setup
-        const defaultState = Map({value: 0});
         const expectedState = Map({value: -1});
 
         //Execute
-        const newState = counterReducer(defaultState, counterActions.decrement());
+        const newState = counterReducer(initialState, counterActions.decrement());
 
         //Verify
         expect(newState).toEqual(expectedState);
