@@ -134,7 +134,7 @@
     "worker-loader": "^0.7.1"
   },
   "dependencies": {
-    "react": "15.4.1",
+    "react": "^15.4.2",
     "react-dom": "^15.3.0"
   }
 }
