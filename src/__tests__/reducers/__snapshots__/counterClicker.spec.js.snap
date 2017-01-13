@@ -1,4 +1,4 @@
-exports[`Counter Actions renders <CounterClicker /> component successfully in to the DOM with required props 1`] = `
+exports[`Counter Test Suite Counter Component renders <CounterClicker /> component successfully in to the DOM with required props & state 1`] = `
 <div>
   <h4>
     Synchronous Actions
