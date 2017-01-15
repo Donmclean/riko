@@ -4,13 +4,19 @@ import React from 'react';
 import * as counterActions from '../../js/actions/counterActionCreators';
 import * as types from '../../js/constants/actions/actionTypes';
 import counterReducer, { initialState } from '../../js/reducers/counterReducer';
+
+//Include Redux Observable For 'Epic' Creation
+import { epics } from '../../js/epics/_index';
+import { createEpicMiddleware } from 'redux-observable';
+const epicMiddleware = createEpicMiddleware(epics);
+
 import { Map } from 'immutable';
 
 //For testing components
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store';
-const middlewares = []; //eg: [thunk] for async
+const middlewares = [epicMiddleware]; //eg: [thunk] for async | eg: [epicMiddleware] for testing epics
 const mockStore = configureStore(middlewares);
 
 //Component to be Tested
@@ -18,8 +24,12 @@ import CounterClicker from '../../js/components/Shared/CounterClicker';
 
 //Test suite designed to test the functionality of
 describe('Counter Test Suite', () => {
-    //Initialize mockStore with initial state of Reducer
-    const store = mockStore({counterReducer: initialState});
+    let store;
+
+    beforeEach(() => {
+        //Initialize mockStore with initial state of Reducer
+        store = mockStore({counterReducer: initialState});
+    });
 
     //Action Creator Specific Tests would go here
     describe('Counter Actions', () => {
@@ -60,6 +70,21 @@ describe('Counter Test Suite', () => {
 
             //Verify
             expect(newState).toEqual(expectedState);
+        });
+    });
+
+    //Epic Specific Tests would go here
+    describe('Counter Epic', () => {
+        it(`${types.SHOULD_INCREMENT} executes/returns the expected actions successfully`, (done) => {
+            store.dispatch(counterActions.shouldIncrement());
+
+            //Since the counter epic has a debounceTime attached we have to provide
+            //a setTimeout after the dispatch function is called for the Epic to complete.
+            setTimeout(() => {
+                expect(store.getActions()).toMatchSnapshot();
+                done();
+            }, 1100);
+
         });
     });
 

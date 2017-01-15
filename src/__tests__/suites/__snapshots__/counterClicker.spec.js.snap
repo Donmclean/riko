@@ -20,3 +20,14 @@ exports[`Counter Test Suite Counter Component renders <CounterClicker /> compone
   </h1>
 </div>
 `;
+
+exports[`Counter Test Suite Counter Epic SHOULD_INCREMENT executes/returns the expected actions successfully 1`] = `
+Array [
+  Object {
+    "type": "SHOULD_INCREMENT",
+  },
+  Object {
+    "type": "INCREMENT",
+  },
+]
+`;
