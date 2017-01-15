@@ -1,5 +1,3 @@
-"use strict";
-
 import React from 'react';
 import * as counterActions from '../../js/actions/counterActionCreators';
 import * as types from '../../js/constants/actions/actionTypes';
@@ -27,7 +25,7 @@ describe('Counter Test Suite', () => {
     let store;
 
     beforeEach(() => {
-        //Initialize mockStore with initial state of Reducer
+        //Initialize mockStore with initial state of reducer
         store = mockStore({counterReducer: initialState});
     });
 
@@ -98,12 +96,13 @@ describe('Counter Test Suite', () => {
             //Verify that initial State of the store is rendered correctly
             expect(wrapper.state().storeState).toEqual(store.getState());
 
-            //Verify Component Snapshot
+            //Render Component Tree
             const component = renderer.create(
                 <CounterClicker store={store}/>
             );
 
-            //remember to call component to JSON before matching snapshot
+            //Verify Component Snapshot
+            //call component to JSON before matching snapshot
             expect(component.toJSON()).toMatchSnapshot();
         });
     });
