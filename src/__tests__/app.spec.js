@@ -1,5 +1,3 @@
-import React from 'react';
-
 describe('Ensure DOM Essentials are available', function () {
     it('window is available', function () {
         expect(window).toBeTruthy();

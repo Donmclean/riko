@@ -13,7 +13,7 @@ export const setPosts = (posts) => ({
 });
 
 export const fetchPosts = (postId) => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         return axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
             .then((response) => {
                 dispatch(setPosts(response.data));

@@ -1,6 +1,6 @@
 "use strict";
-import React, { Component } from 'react';
-import { Router, Route, browserHistory, Redirect, IndexRoute } from 'react-router';
+import React from 'react';
+import { Router, Route, IndexRoute } from 'react-router';
 
 import App from './App';
 import HomePage from './Pages/Views/HomePage';

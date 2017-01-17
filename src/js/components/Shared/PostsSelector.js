@@ -37,7 +37,8 @@ class PostSelector extends Component {
 }
 
 PostSelector.propTypes = {
-    state: PropTypes.object.isRequired
+    state: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired
 };
 
 //'state' gets applied to components' props here via 'connect'.

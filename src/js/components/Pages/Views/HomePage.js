@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-// import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import CounterClicker from '../../Shared/CounterClicker';
 import PostSelector from '../../Shared/PostsSelector';
 import PostsTable from '../../Shared/PostsTable';

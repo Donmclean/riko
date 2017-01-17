@@ -28,7 +28,8 @@ class CounterClicker extends Component {
 }
 
 CounterClicker.propTypes = {
-    state: PropTypes.object.isRequired
+    state: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
