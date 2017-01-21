@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 //IMPORTANT!: Import actions to dispatch
-import getActions from '../../actions/_index';
+import getActions from '../../../actions/_index';
 
 class PostSelector extends Component {
     constructor(props) {

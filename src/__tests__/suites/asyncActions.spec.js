@@ -1,6 +1,5 @@
 "use strict";
 
-import React from 'react';
 import _ from 'lodash';
 import * as asyncActions from '../../js/actions/asyncActionCreators';
 import * as types from '../../js/constants/actions/actionTypes';

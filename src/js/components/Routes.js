@@ -3,8 +3,8 @@ import React from 'react';
 import { Router, Route, IndexRoute } from 'react-router';
 
 import App from './App';
-import HomePage from './Pages/Views/HomePage';
-import NotFoundPage from './Pages/NotFoundPage';
+import HomePage from './Pages/HomePage/HomePage';
+import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
 
 const routeChangeHandler = (prevState, nextState) => {
     console.info('prevState, nextState', prevState, nextState);

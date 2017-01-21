@@ -16,7 +16,7 @@
   "transform": {
     ".*": "<rootDir>/node_modules/babel-jest"
   },
-  "testRegex": "(src/__tests__/.*|\\.(test|spec))\\.(es6|js|jsx)$",
+  "testRegex": "(src/*|\\.(test|spec))\\.(es6|js|jsx)$",
   "moduleFileExtensions": [
     "js",
     "jsx",
@@ -27,7 +27,7 @@
     "^.+\\.(jpe?g|png|gif|tif|svg|bmp|woff|woff2|eot|ttf|mp4|doc|docx|pdf|xls|xlsx|csv|txt)$": "<rootDir>/src/__tests__utils/fileMock.js"
   },
   "testPathDirs": [
-    "<rootDir>/src/__tests__"
+    "<rootDir>/src/"
   ],
   "coveragePathIgnorePatterns": [
     "/node_modules/",

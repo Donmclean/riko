@@ -1,10 +1,10 @@
 import React from 'react';
-import * as counterActions from '../../js/actions/counterActionCreators';
-import * as types from '../../js/constants/actions/actionTypes';
-import counterReducer, { initialState } from '../../js/reducers/counterReducer';
+import * as counterActions from '../../../actions/counterActionCreators';
+import * as types from '../../../constants/actions/actionTypes';
+import counterReducer, { initialState } from '../../../reducers/counterReducer';
 
 //Include Redux Observable For 'Epic' Creation
-import { epics } from '../../js/epics/_index';
+import { epics } from '../../../epics/_index';
 import { createEpicMiddleware } from 'redux-observable';
 const epicMiddleware = createEpicMiddleware(epics);
 
@@ -18,7 +18,7 @@ const middlewares = [epicMiddleware]; //eg: [thunk] for async | eg: [epicMiddlew
 const mockStore = configureStore(middlewares);
 
 //Component to be Tested
-import CounterClicker from '../../js/components/Shared/CounterClicker';
+import CounterClicker from './CounterClicker';
 
 //Test suite designed to test the functionality of
 describe('Counter Test Suite', () => {
