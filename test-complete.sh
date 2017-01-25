@@ -41,34 +41,10 @@ removeSrcDir(){
     echoGreen "src directory removed successfully!"
 }
 
-echoBlue "setting up js project tests..."
-yarn run setup-js
-
 echoBlue "running prod build for js project..."
 yarn run prod
 
 echoBlue "running tests for js project build..."
-yarn test
-
-removeSrcDir
-
-
-echoBlue "setting up web project tests..."
-yarn run setup
-
-echoBlue "running prod build for web project..."
-yarn run prod
-
-echoBlue "running tests for web project build..."
-yarn test
-
-removeSrcDir
-
-
-echoBlue "setting up electron project tests..."
-yarn run setup-electron
-
-echoBlue "running tests for electron project build..."
 yarn test
 
 echoGreen "All test successfully completed!"

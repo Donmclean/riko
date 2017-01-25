@@ -2,6 +2,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { Button } from './counterClickerStyles';
+
 //IMPORTANT!: Import actions to dispatch
 import getActions from '../../../actions/_index';
 
@@ -18,8 +20,8 @@ class CounterClicker extends Component {
             <div>
                 <h4>Synchronous Actions</h4>
 
-                <button className="inc" onClick={this.actions.counterActionCreators.shouldIncrement}>INCREMENT</button>
-                <button className="dec" onClick={this.actions.counterActionCreators.decrement}>DECREMENT</button>
+                <Button className="inc" onClick={this.actions.counterActionCreators.shouldIncrement}>INCREMENT</Button>
+                <Button className="dec" onClick={this.actions.counterActionCreators.decrement}>DECREMENT</Button>
 
                 <h1 className="counter-val">Counter Reducer State: {state.counterReducer.get('value')}</h1>
             </div>

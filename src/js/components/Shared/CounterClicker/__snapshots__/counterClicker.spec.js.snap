@@ -4,12 +4,12 @@ exports[`Counter Test Suite Counter Component renders <CounterClicker /> compone
     Synchronous Actions
   </h4>
   <button
-    className="inc"
+    className="inc HaWdQ"
     onClick={[Function]}>
     INCREMENT
   </button>
   <button
-    className="dec"
+    className="dec HaWdQ"
     onClick={[Function]}>
     DECREMENT
   </button>

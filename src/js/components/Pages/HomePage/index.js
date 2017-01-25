@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import CounterClicker from '../../Shared/CounterClicker/CounterClicker';
-import PostSelector from '../../Shared/PostsSelector/PostsSelector';
-import PostsTable from '../../Shared/PostsTable/PostsTable';
+import CounterClicker from '../../Shared/CounterClicker';
+import PostSelector from '../../Shared/PostsSelector';
+import PostsTable from '../../Shared/PostsTable';
 
 class HomePage extends Component {
     constructor(props) {
