@@ -4,7 +4,7 @@ import * as types from '../../../constants/actions/actionTypes';
 import counterReducer, { initialState } from './counterReducer';
 
 //Include Redux Observable For 'Epic' Creation
-import { epics } from '../../../epics/_index';
+import { epics } from '../../../epics/index';
 import { createEpicMiddleware } from 'redux-observable';
 const epicMiddleware = createEpicMiddleware(epics);
 

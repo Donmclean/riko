@@ -1,4 +1,4 @@
-import * as types from '../constants/actions/actionTypes';
+import * as types from '../../../constants/actions/actionTypes';
 
 //The *KEY* is to receive an action that will trigger another action that actually has direct influence on state
 //We can call this an Epic listener. (eg: 'SHOULD_INCREMENT')

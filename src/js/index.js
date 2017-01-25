@@ -11,14 +11,14 @@ import { browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 
 import Routes from './components/Routes';
-import reducers from './reducers/_index';
+import reducers from './reducers/index';
 
 //Include Redux Observable For 'Epic' Creation
-import { epics } from './epics/_index';
+import { epics } from './epics/index';
 import { createEpicMiddleware } from 'redux-observable';
 const epicMiddleware = createEpicMiddleware(epics);
 
-import { reduxLoggerTransformImmutable } from './helpers/_index';
+import { reduxLoggerTransformImmutable } from './utils/reduxLogger';
 
 //Styles
 import '../sass/styles.scss';
