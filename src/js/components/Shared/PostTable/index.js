@@ -22,9 +22,9 @@ class PostsTable extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="async-table-id">{state.postsSelectorReducer.get('id')}</td>
-                            <td className="async-table-title">{state.postsSelectorReducer.get('title')}</td>
-                            <td className="async-table-body">{state.postsSelectorReducer.get('body')}</td>
+                            <td className="async-table-id">{state.postSelectorReducer.get('id')}</td>
+                            <td className="async-table-title">{state.postSelectorReducer.get('title')}</td>
+                            <td className="async-table-body">{state.postSelectorReducer.get('body')}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -38,8 +38,6 @@ PostsTable.propTypes = {
 };
 
 //'state' gets applied to components' props here via 'connect'.
-const mapStateToProps = (state) => {
-    return {state};
-};
+const mapStateToProps = (state) => ({state});
 
 export default connect(mapStateToProps)(PostsTable);

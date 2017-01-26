@@ -26,7 +26,7 @@ class PostSelector extends Component {
                 <h4>Asynchronous Actions</h4>
                 <div className="async-input">
                     <label>Select Post Number To Fetch</label>
-                    <select onChange={this.handlePostNumberSelect.bind(this)} value={state.postsSelectorReducer.get('postNumber')}>
+                    <select onChange={this.handlePostNumberSelect.bind(this)} value={state.postSelectorReducer.get('postNumber')}>
                         <option disabled="true" defaultValue={0}>{0}</option>
                         {/*GENERATES 100 <option> elements with values of 1 to 100*/}
                         {Array.from(new Array(100).keys()).map((number) => <option key={number + 1} value={number + 1}>{number + 1}</option>)}

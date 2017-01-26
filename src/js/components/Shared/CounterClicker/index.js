@@ -34,8 +34,6 @@ CounterClicker.propTypes = {
     dispatch: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
-    return {state};
-};
+const mapStateToProps = (state) => ({state});
 
 export default connect(mapStateToProps)(CounterClicker);

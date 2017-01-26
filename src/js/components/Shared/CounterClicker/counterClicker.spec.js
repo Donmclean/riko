@@ -17,6 +17,10 @@ import configureStore from 'redux-mock-store';
 const middlewares = [epicMiddleware]; //eg: [thunk] for async | eg: [epicMiddleware] for testing epics
 const mockStore = configureStore(middlewares);
 
+//This contains all reducers and their 'initialState' ready to be placed in 'mockStore' for testing
+//This should be ideal for testing dummy components
+import { mockStoreInitialState } from '../../../_Reducers';
+
 //Component to be Tested
 import CounterClicker from './index';
 
@@ -25,8 +29,8 @@ describe('Counter Test Suite', () => {
     let store;
 
     beforeEach(() => {
-        //Initialize mockStore with initial state of reducer
-        store = mockStore({counterReducer: initialState});
+        //Initialize mockStore with initial state of the reducers
+        store = mockStore(mockStoreInitialState);
     });
 
     //Action Creator Specific Tests would go here
@@ -36,6 +40,9 @@ describe('Counter Test Suite', () => {
                 type: types.INCREMENT
             };
             expect(counterActions.increment()).toEqual(expectedAction);
+
+            //OR
+            //expect(counterActions.increment()).toMatchSnapshot();
         });
 
         it('should create a decrement action', () => {
@@ -43,6 +50,9 @@ describe('Counter Test Suite', () => {
                 type: types.DECREMENT
             };
             expect(counterActions.decrement()).toEqual(expectedAction);
+
+            //OR
+            //expect(counterActions.decrement()).toMatchSnapshot();
         });
     });
 
@@ -57,6 +67,9 @@ describe('Counter Test Suite', () => {
 
             //Verify
             expect(newState).toEqual(expectedState);
+
+            //OR
+            //expect(newState).toMatchSnapshot();
         });
 
         it(`${types.DECREMENT} executes successfully`, () => {
@@ -68,6 +81,9 @@ describe('Counter Test Suite', () => {
 
             //Verify
             expect(newState).toEqual(expectedState);
+
+            //OR
+            //expect(newState).toMatchSnapshot();
         });
     });
 
