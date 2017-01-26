@@ -1,7 +1,7 @@
 {
   "verbose": true,
   "automock": false,
-  "collectCoverage": true,
+  "collectCoverage": false,
   "collectCoverageFrom": ["src/js/**/*.js", "src/js/**/*.jsx", "!**/vendor/**"],
   "coverageThreshold": {
     "global": {

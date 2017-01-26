@@ -15,7 +15,7 @@
     "prod": "NODE_ENV=production webpack",
     "flow": "flow check",
     "test": "npm run test-build && gulp lint-src && npm run test-jest",
-    "test-jest": "NODE_ENV=test jest --config ./jestconfig.json",
+    "test-jest": "NODE_ENV=test jest --coverage --config ./jestconfig.json",
     "test-jest-watch": "NODE_ENV=test jest -o --config ./jestconfig.json",
     "test-build": "gulp lint-build && NODE_ENV=production mocha test-riko/riko.spec.js",
     "test-complete": "sh test-complete.sh",
