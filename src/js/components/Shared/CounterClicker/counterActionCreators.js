@@ -1,4 +1,4 @@
-import * as types from '../../js/constants/actions/actionTypes';
+import * as types from '../../../constants/actionTypes';
 
 export const shouldIncrement = () => ({
     type: types.SHOULD_INCREMENT

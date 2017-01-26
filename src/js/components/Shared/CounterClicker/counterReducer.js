@@ -1,9 +1,9 @@
 "use strict";
 import { Map } from 'immutable';
-import * as types from '../../../constants/actions/actionTypes';
+import * as types from '../../../constants/actionTypes';
 
 //Every reducer should have an initial state variable here
-export const initialState = Map({ // Export it for test purposes
+export const initialState = Map({ // Export it for testing purposes
     value: 0
 });
 

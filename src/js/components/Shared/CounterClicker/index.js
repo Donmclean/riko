@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Button } from './counterClickerStyles';
 
 //IMPORTANT!: Import actions to dispatch
-import getActions from '../../../actions/_index';
+import getActions from '../../../_ActionCreators';
 
 class CounterClicker extends Component {
     constructor(props) {

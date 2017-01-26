@@ -1,8 +1,8 @@
 "use strict";
 
 import _ from 'lodash';
-import * as asyncActions from '../../js/actions/asyncActionCreators';
-import * as types from '../../js/constants/actions/actionTypes';
+import * as postSelectorActions from './postSelectorActionCreators';
+import * as types from '../../../constants/actionTypes';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -12,40 +12,44 @@ import thunk from 'redux-thunk';
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 
-describe('Async Test Suite', () => {
+describe('postSelector Test Suite', () => {
     //Action Creator Specific Tests would go here
-    describe('Async Actions', () => {
+    describe('postSelector Actions', () => {
         it(`setPosts should create an ${types.UPDATE_POSTS} action`, () => {
             const expectedAction = {
                 type: types.UPDATE_POSTS
             };
 
-            expect(asyncActions.setPosts()).toEqual(expectedAction);
+            expect(postSelectorActions.setPosts()).toEqual(expectedAction);
         });
 
         it(`updatePostNumber should create an ${types.UPDATE_POST_NUMBER} action`, () => {
             const postNumber = 10;
 
-            const dispatch = asyncActions.updatePostNumber(postNumber);
-            const expectedDispatch = { type: types.UPDATE_POST_NUMBER, data: 10 };
+            const dispatch = postSelectorActions.updatePostNumber(postNumber);
 
-            expect(dispatch).toEqual(expectedDispatch);
+            //OLD WAY
+            // const expectedDispatch = { type: types.UPDATE_POST_NUMBER, data: 10 };
+            // expect(dispatch).toEqual(expectedDispatch);
+
+            //NEW WAY!!!
+            expect(dispatch).toMatchSnapshot();
         });
 
         it('fetchPosts should return a dispatch function', () => {
             const postId = 1;
-            const dispatch = asyncActions.fetchPosts(postId);
+            const dispatch = postSelectorActions.fetchPosts(postId);
             expect(_.isFunction(dispatch)).toEqual(true);
         });
     });
 
-    describe('Async Dispatch Actions', () => {
+    describe('postSelector Dispatch Actions', () => {
         it(`fetchPosts creates ${types.UPDATE_POSTS} when fetching posts has been done`, () => {
             const postId = 1;
 
             const store = mockStore();
 
-            return store.dispatch(asyncActions.fetchPosts(postId))
+            return store.dispatch(postSelectorActions.fetchPosts(postId))
                 .then(() => { // return of async actions
                     expect(store.getActions()).toMatchSnapshot();
                 });
@@ -55,7 +59,7 @@ describe('Async Test Suite', () => {
             const postId = 0;
             const store = mockStore();
 
-            return store.dispatch(asyncActions.fetchPosts(postId))
+            return store.dispatch(postSelectorActions.fetchPosts(postId))
                 .then(() => { // return of async actions
                     expect(store.getActions()).toEqual([]);
                     expect(_.isEmpty(store.getActions())).toEqual(true);

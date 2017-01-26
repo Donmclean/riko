@@ -1,4 +1,11 @@
-exports[`Async Test Suite Async Dispatch Actions fetchPosts creates UPDATE_POSTS when fetching posts has been done 1`] = `
+exports[`postSelector Test Suite postSelector Actions updatePostNumber should create an UPDATE_POST_NUMBER action 1`] = `
+Object {
+  "data": 10,
+  "type": "UPDATE_POST_NUMBER",
+}
+`;
+
+exports[`postSelector Test Suite postSelector Dispatch Actions fetchPosts creates UPDATE_POSTS when fetching posts has been done 1`] = `
 Array [
   Object {
     "data": Object {

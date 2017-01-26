@@ -1,6 +1,6 @@
 "use strict";
 import axios from 'axios';
-import * as types from '../../js/constants/actions/actionTypes';
+import * as types from '../../../constants/actionTypes';
 
 export const updatePostNumber = (postNumber) => ({
     type: types.UPDATE_POST_NUMBER,

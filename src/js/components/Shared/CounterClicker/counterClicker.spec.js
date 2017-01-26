@@ -1,10 +1,10 @@
 import React from 'react';
-import * as counterActions from '../../../actions/counterActionCreators';
-import * as types from '../../../constants/actions/actionTypes';
+import * as counterActions from './counterActionCreators';
+import * as types from '../../../constants/actionTypes';
 import counterReducer, { initialState } from './counterReducer';
 
 //Include Redux Observable For 'Epic' Creation
-import { epics } from '../../../epics/index';
+import { epics } from '../../../_Epics';
 import { createEpicMiddleware } from 'redux-observable';
 const epicMiddleware = createEpicMiddleware(epics);
 

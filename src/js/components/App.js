@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import getActions from '../actions/_index';
+import getActions from '../_ActionCreators';
 
 export class App extends Component {
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CounterClicker from '../../Shared/CounterClicker';
-import PostSelector from '../../Shared/PostsSelector';
-import PostsTable from '../../Shared/PostsTable';
+import PostSelector from '../../Shared/PostSelector';
+import PostsTable from '../../Shared/PostTable';
 
 class HomePage extends Component {
     constructor(props) {
@@ -31,7 +31,7 @@ class HomePage extends Component {
     }
 }
 
-//Notice how dummy components like this one don't need be connected.
+//IMPORTANT: Notice how dummy components like this one don't need be connected.
 HomePage.propTypes = {};
 export default HomePage;
 

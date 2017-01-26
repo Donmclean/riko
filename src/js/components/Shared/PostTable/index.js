@@ -14,18 +14,18 @@ class PostsTable extends Component {
                 <h1>Async Reducer State (Posts)</h1>
                 <table className="async-table">
                     <thead>
-                    <tr>
-                        <th className="async-table-id">ID</th>
-                        <th className="async-table-title">TITLE</th>
-                        <th className="async-table-body">BODY</th>
-                    </tr>
+                        <tr>
+                            <th className="async-table-id">ID</th>
+                            <th className="async-table-title">TITLE</th>
+                            <th className="async-table-body">BODY</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td className="async-table-id">{state.asyncReducer.get('id')}</td>
-                        <td className="async-table-title">{state.asyncReducer.get('title')}</td>
-                        <td className="async-table-body">{state.asyncReducer.get('body')}</td>
-                    </tr>
+                        <tr>
+                            <td className="async-table-id">{state.postsSelectorReducer.get('id')}</td>
+                            <td className="async-table-title">{state.postsSelectorReducer.get('title')}</td>
+                            <td className="async-table-body">{state.postsSelectorReducer.get('body')}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

@@ -1,12 +1,12 @@
 "use strict";
-import * as types from '../../js/constants/actions/actionTypes';
+import * as types from '../../../constants/actionTypes';
 import { Map } from 'immutable';
 
 /*------------------------*/
 /*--WITH-- Immutable JS*/
 /*------------------------*/
 //Every reducer should have an initial state variable here
-export const initialState = Map({ // Export it for test purposes
+export const initialState = Map({ // Export it for testing purposes
     id: 0,
     userId: 0,
     title: "Initial State Title",
@@ -14,7 +14,7 @@ export const initialState = Map({ // Export it for test purposes
     postNumber: 0
 });
 
-const asyncReducer = (state = initialState, action) => {
+const postsSelectorReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.UPDATE_POSTS: {
             return state.mergeDeep(action.data);
@@ -28,4 +28,4 @@ const asyncReducer = (state = initialState, action) => {
     }
 };
 
-export default asyncReducer;
+export default postsSelectorReducer;

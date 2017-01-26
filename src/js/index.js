@@ -11,10 +11,10 @@ import { browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 
 import Routes from './components/Routes';
-import reducers from './reducers/index';
+import reducers from './_Reducers';
 
 //Include Redux Observable For 'Epic' Creation
-import { epics } from './epics/index';
+import { epics } from './_Epics';
 import { createEpicMiddleware } from 'redux-observable';
 const epicMiddleware = createEpicMiddleware(epics);
 
