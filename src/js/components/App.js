@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import getActions from '../_ActionCreators';
 
+//Import Global Styles
+import './AppGlobalStyles';
+
 export class App extends Component {
 
     createChildren() {

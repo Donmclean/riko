@@ -21,7 +21,7 @@ const epicMiddleware = createEpicMiddleware(epics);
 import { reduxLoggerTransformImmutable } from './utils/reduxLogger';
 
 //Styles
-import '../sass/styles.scss';
+// import '../sass/styles.scss';
 
 //All redux middlewares go here
 const middlewares = [routerMiddleware(browserHistory), thunk, epicMiddleware];

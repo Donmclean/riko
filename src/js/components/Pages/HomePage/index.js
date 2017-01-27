@@ -1,35 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import CounterClicker from '../../Shared/CounterClicker';
 import PostSelector from '../../Shared/PostSelector';
-import PostsTable from '../../Shared/PostTable';
+import PostTable from '../../Shared/PostTable';
 
-class HomePage extends Component {
-    constructor(props) {
-        super(props);
-        console.log('this.props: ', this.props);
-    }
+//Import Styled Components
+import { MainTitleWrapper, MainTitle, PostSection } from './homePageStyles';
 
-    render() {
-        //This component has no state
-        return (
-            <div id="page-wrapper">
-                <div className="container-fluid">
-                    <h2 className="hello-world">
-                        <span className="hello-world__rotate">Rix!</span>
-                    </h2>
-                    <div className="sync-section">
-                        <CounterClicker />
-                    </div>
-                    <hr/>
-                    <div className="async-section">
-                        <PostSelector />
-                        <PostsTable />
-                    </div>
-                </div>
+const HomePage = () => (
+    <div id="page-wrapper">
+        <div>
+            <MainTitleWrapper>
+                <MainTitle>Rix!</MainTitle>
+            </MainTitleWrapper>
+            <div>
+                <CounterClicker />
             </div>
-        );
-    }
-}
+            <hr/>
+            <PostSection>
+                <PostSelector />
+                <PostTable />
+            </PostSection>
+        </div>
+    </div>
+);
 
 //IMPORTANT: Notice how dummy components like this one don't need be connected.
 HomePage.propTypes = {};

@@ -20,10 +20,10 @@ class CounterClicker extends Component {
             <div>
                 <h4>Synchronous Actions</h4>
 
-                <Button className="inc" onClick={this.actions.counterActionCreators.shouldIncrement}>INCREMENT</Button>
-                <Button className="dec" onClick={this.actions.counterActionCreators.decrement}>DECREMENT</Button>
+                <Button onClick={this.actions.counterActionCreators.shouldIncrement}>INCREMENT</Button>
+                <Button onClick={this.actions.counterActionCreators.decrement}>DECREMENT</Button>
 
-                <h1 className="counter-val">Counter Reducer State: {state.counterReducer.get('value')}</h1>
+                <h1>Counter Reducer State: {state.counterReducer.get('value')}</h1>
             </div>
         );
     }

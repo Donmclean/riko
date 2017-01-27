@@ -64,8 +64,6 @@ describe('postSelector Test Suite', () => {
         it(`fetchPosts creates ${types.UPDATE_POSTS} when fetching posts has been done`, () => {
             const postId = 1;
 
-            const store = mockStore();
-
             return store.dispatch(postSelectorActions.fetchPosts(postId))
                 .then(() => { // return of async actions
                     expect(store.getActions()).toMatchSnapshot();
@@ -74,7 +72,6 @@ describe('postSelector Test Suite', () => {
 
         it('fetchPosts should return empty array upon error occurring when fetching invalid post number or (404)', () => {
             const postId = 0;
-            const store = mockStore();
 
             return store.dispatch(postSelectorActions.fetchPosts(postId))
                 .then(() => { // return of async actions

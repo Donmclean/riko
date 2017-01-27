@@ -4,11 +4,13 @@ exports[`postSelector Test Suite PostSelector Component renders <PostSelector />
     Asynchronous Actions
   </h4>
   <div
-    className="async-input">
-    <label>
+    className="a">
+    <label
+      className="cxXlLM">
       Select Post Number To Fetch
     </label>
     <select
+      className="cBDbSM"
       onChange={[Function]}
       value={0}>
       <option

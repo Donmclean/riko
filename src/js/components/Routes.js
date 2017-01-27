@@ -6,13 +6,9 @@ import App from './App';
 import HomePage from './Pages/HomePage';
 import NotFoundPage from './Pages/NotFoundPage';
 
-const routeChangeHandler = (prevState, nextState) => {
-    console.info('prevState, nextState', prevState, nextState);
-};
-
 const Routes = (props) => (
     <Router {...props}>
-        <Route path="/" component={App} onChange={routeChangeHandler}>
+        <Route path="/" component={App}>
             <IndexRoute component={HomePage}/>
             <Route path="*" component={NotFoundPage}/>
         </Route>

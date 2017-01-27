@@ -1,38 +1,39 @@
 exports[`PostTable Test Suite PostTable Component renders <PostTable /> component successfully in to the DOM with required props & state 1`] = `
-<div>
+<div
+  className="a">
   <h1>
     Async Reducer State (Posts)
   </h1>
   <table
-    className="async-table">
+    className="iprvVv">
     <thead>
       <tr>
-        <th
-          className="async-table-id">
+        <td
+          className="bBeomu">
           ID
-        </th>
-        <th
-          className="async-table-title">
+        </td>
+        <td
+          className="ieFpxY">
           TITLE
-        </th>
-        <th
-          className="async-table-body">
+        </td>
+        <td
+          className="jZgYSW">
           BODY
-        </th>
+        </td>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td
-          className="async-table-id">
+          className="bBeomu">
           0
         </td>
         <td
-          className="async-table-title">
+          className="ieFpxY">
           Initial State Title
         </td>
         <td
-          className="async-table-body">
+          className="jZgYSW">
           Pending Request..
         </td>
       </tr>
