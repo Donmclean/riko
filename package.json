@@ -4,6 +4,7 @@
   "description": "Webpack Build System for React JS Projects (web & electron)",
   "main": "server.js",
   "scripts": {
+    "x": "babel-node index.js",
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "dev": "NODE_ENV=development node server.js",
     "electron": "NODE_ENV=development ELECTRON=true node server.js",
@@ -66,6 +67,7 @@
     "chalk": "^1.1.3",
     "chokidar": "^1.6.1",
     "clean-webpack-plugin": "^0.1.10",
+    "commander": "^2.9.0",
     "connect-history-api-fallback": "^1.3.0",
     "copy-webpack-plugin": "^4.0.0",
     "css-loader": "^0.26.0",
