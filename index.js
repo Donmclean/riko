@@ -1,12 +1,10 @@
 const _v = require('./config/variables')();
 const tasks = require('./tasks');
+const funcs = require('./config/functions')();
 
 _v.program
     .version('2.0.0')
-    .option('-s, --setup [project-type] [path] [name]', 'a new project type')
-    .option('-P, --pineapple', 'Add pineapple')
-    .option('-b, --bbq-sauce', 'Add bbq sauce')
-    .option('-c, --cheese [type]', 'Add the specified type of cheese [marble]', 'marble')
+    .option('-s, --setup <project-type>', 'select a project type to create. -> [js, web, electron, mobile]')
     .parse(process.argv);
 
 //get args
@@ -17,4 +15,3 @@ const setupOptions = _v.program.setup;
 if(setupOptions) {
     tasks.setupWeb(setupOptions, args);
 }
-
