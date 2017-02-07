@@ -25,7 +25,7 @@
   ],
   "author": "Don Mclean",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "babel-cli": "^6.11.4",
     "babel-core": "^6.13.2",
     "babel-eslint": "^7.0.0",
@@ -52,9 +52,5 @@
     "lodash": "^4.17.4",
     "q-io": "^1.13.2",
     "yargs": "^6.6.0"
-  },
-  "dependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
   }
 }
