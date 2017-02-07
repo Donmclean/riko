@@ -14,10 +14,13 @@ module.exports = () => {
     funcs.sanitizeProjectName = (projectName) => projectName.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
     funcs.executeSetup = (actionType, projectType, projectName) => {
-        const { $, cwd, qfs } = _v;
+        const { $, qfs } = _v;
+        const cwd = process.cwd();
+        console.info('cwd1', process.cwd());
 
         qfs.list(cwd)
             .then(files => {
+                console.info('files: ', files);
                 if(funcs.folderAlreadyPresent(files, projectName)) {
                     $.util.log($.util.colors.yellow(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`));
                     throw new Error(`${projectName} folder must not exist during setup.`);
