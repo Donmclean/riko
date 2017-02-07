@@ -4,31 +4,7 @@
   "description": "Webpack Build System for React JS Projects (web & electron)",
   "main": "server.js",
   "scripts": {
-    "x": "babel-node index.js",
-    "start": "NODE_ENV=production npm run prod && npm run prod-server",
-    "dev": "NODE_ENV=development node server.js",
-    "electron": "NODE_ENV=development ELECTRON=true node server.js",
-    "electron-dev": "NODE_ENV=development ELECTRON=true electron -r babel-register ./src/electron.js ",
-    "electron-prod": "NODE_ENV=production ELECTRON=true node server.js",
-    "mobile-ios": "cd src && react-native run-ios",
-    "mobile-android": "sh src/launch-android-Emulator.sh",
-    "mobile-test": "cd src/ && npm test",
-    "prod": "NODE_ENV=production webpack",
-    "flow": "flow check",
-    "test": "npm run test-build && gulp lint-src && npm run test-jest",
-    "test-jest": "NODE_ENV=test jest --config ./jestconfig.json",
-    "test-jest-watch": "NODE_ENV=test jest -o --config ./jestconfig.json",
-    "test-build": "gulp lint-build && NODE_ENV=production mocha test-riko/riko.spec.js",
-    "test-complete": "sh test-complete.sh",
-    "test-selenium": "gulp run-selenium-tests",
-    "server": "NODE_ENV=production babel-node server.js",
-    "prod-server": "NODE_ENV=production LIVE=true babel-node server.js",
-    "setup": "gulp setup --web",
-    "setup-js": "gulp setup --js",
-    "setup-mobile": "gulp setup --mobile",
-    "setup-electron": "gulp setup --electron",
-    "vorlon": "PORT=1337 vorlon",
-    "test-coverage": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha test-riko/riko.spec.js --report lcovonly -- -R spec && codeclimate-test-reporter < ./coverage/lcov.info && rm -rf ./coverage"
+    "start": "NODE_ENV=production npm run prod && npm run prod-server"
   },
   "repository": {
     "type": "git",
@@ -60,7 +36,6 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-register": "^6.11.6",
     "babel-runtime": "^6.11.6",
-    "commander": "^2.9.0",
     "eslint": "^3.3.0",
     "fs-extra": "^2.0.0",
     "gulp": "^3.9.1",
@@ -69,7 +44,10 @@
     "gulp-load-plugins": "^1.2.4",
     "gulp-nightwatch": "^0.3.2",
     "gulp-plumber": "^1.1.0",
-    "gulp-util": "^3.0.7"
+    "gulp-util": "^3.0.7",
+    "lodash": "^4.17.4",
+    "q-io": "^1.13.2",
+    "yargs": "^6.6.0"
   },
   "dependencies": {
     "react": "^15.4.2",
