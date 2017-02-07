@@ -27,6 +27,9 @@ module.exports = () => {
                     qfs.copyTree(cwd+`/bin/_${actionType}/${projectType}`, projectName).then(() => {
                         $.util.log($.util.colors.yellow(`${$.util.colors.blue(projectName)} folder created ${$.util.colors.green('successfully')}`));
                     });
+                    console.info('cwd', process.cwd());
+                    console.info('PWD', process.env.PWD);
+                    console.info('__dirname', __dirname);
                 }
             });
     };
