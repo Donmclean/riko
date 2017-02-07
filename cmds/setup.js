@@ -3,7 +3,7 @@ const funcs = require('../config/functions')();
 
 const options = ['js', 'web', 'electron', 'mobile'];
 
-_v.argv
+const command = _v.argv
     .command({
         command: 'setup <project-type> <project-name..>',
         aliases: ['setup', 's'],
@@ -12,7 +12,7 @@ _v.argv
             const validChoice = funcs.isValidOption(options, argv.projectType);
             if(validChoice) {
                 const projectName = funcs.sanitizeProjectName(argv.projectName)
-                funcs.executeSetup(argv.projectType, projectName);
+                funcs.executeSetup(argv._, argv.projectType, projectName);
             } else {
                 funcs.throwOptionsError(options);
             }
@@ -22,3 +22,5 @@ _v.argv
     .demandCommand(1)
     .help()
     .argv;
+
+module.exports = command;
