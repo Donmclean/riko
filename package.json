@@ -2,7 +2,7 @@
   "name": "riko-cli",
   "version": "1.0.0",
   "description": "Webpack Build System for React JS Projects (web & electron)",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production npm run prod && npm run prod-server"
   },
