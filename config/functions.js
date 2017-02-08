@@ -14,25 +14,19 @@ module.exports = () => {
     funcs.sanitizeProjectName = (projectName) => projectName.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
     funcs.executeSetup = (actionType, projectType, projectName) => {
-        const { $, qfs } = _v;
-        const cwd = process.cwd();
-        console.info('cwd1', process.cwd());
+        const { $, qfs, cwd, baseDir } = _v;
 
         qfs.list(cwd)
             .then(files => {
-                console.info('files: ', files);
                 if(funcs.folderAlreadyPresent(files, projectName)) {
                     $.util.log($.util.colors.yellow(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`));
                     throw new Error(`${projectName} folder must not exist during setup.`);
                 } else {
                     $.util.log($.util.colors.yellow(`creating ${$.util.colors.blue(projectName)} folder and sub directories`));
 
-                    qfs.copyTree(cwd+`/bin/_${actionType}/${projectType}`, projectName).then(() => {
+                    qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`).then(() => {
                         $.util.log($.util.colors.yellow(`${$.util.colors.blue(projectName)} folder created ${$.util.colors.green('successfully')}`));
                     });
-                    console.info('cwd', process.cwd());
-                    console.info('PWD', process.env.PWD);
-                    console.info('__dirname', __dirname);
                 }
             });
     };

@@ -7,6 +7,6 @@ vars._          = require('lodash');
 vars.$          = require('gulp-load-plugins')();
 vars.spawn      = require('child_process').spawn;
 vars.cwd        = process.cwd();
-vars.baseDir    = vars.path.resolve(__dirname);
+vars.baseDir    = vars.path.resolve(__dirname, '../');
 
 module.exports = vars;
