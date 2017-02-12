@@ -1,5 +1,8 @@
 import React from 'react';
 
+//Styles
+import './App.scss';
+
 //Assets
 import image from '../../media/images/riko-favicon.png';
 

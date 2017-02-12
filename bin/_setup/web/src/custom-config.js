@@ -201,6 +201,12 @@ config.enableRemoteDebugging   = false;
 
 config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
 
+//Set to equal 'true' if you would like to use an express server with Webpack (Dev+Hot) Middlewares for hot reloading.
+//https://github.com/webpack/webpack-dev-middleware : https://github.com/glenjamin/webpack-hot-middleware
+//Set to equal 'false' if you would like to instead use the native webpack dev server for hot reloading.
+//Do keep in mind that 'false' also removes the 'Error proofing' capability (on error a helpful overlay pops up displaying the error)
+config.useWebpackDevMiddleWareInsteadOfDevServer = true;
+
 config.hotReloadingOptions     = {
     overlay: true,
     reload: true,

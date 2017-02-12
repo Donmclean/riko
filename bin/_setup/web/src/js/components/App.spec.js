@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import App from '../js/components/App.js';
+import App from './App.js';
 
 const renderer = ReactTestUtils.createRenderer();
 

@@ -19,7 +19,7 @@ html(lang="en")
 
         - var scripts = htmlWebpackPlugin.options.scripts;
         - for (var i = 0; i < scripts.length; i++)
-          script(src=scripts[i].src type="text/javascript" async=scripts[i].async defer=scripts[i].defer)
+          script(src=scripts[i].src type="text/javascript" async=!!scripts[i].async defer=!!scripts[i].defer)
 
         if htmlWebpackPlugin.options.googleAnalyticsEnabled
             // Google Analytics
