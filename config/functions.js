@@ -9,6 +9,11 @@ module.exports = () => {
         throw new Error('Invalid choice. Choices: ' + options.join(', '));
     };
 
+    funcs.genericLog = (str, color) => {
+        const { $ } = _v;
+        $.util.log($.util.colors[color || 'yellow'](str));
+    };
+
     funcs.folderAlreadyPresent = (files, folderName) => _v._.includes(files, folderName);
 
     funcs.sanitizeProjectName = (projectName) => projectName.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
@@ -19,13 +24,13 @@ module.exports = () => {
         qfs.list(cwd)
             .then(files => {
                 if(funcs.folderAlreadyPresent(files, projectName)) {
-                    $.util.log($.util.colors.yellow(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`));
+                    genericLog(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`);
                     throw new Error(`${projectName} folder must not exist during setup.`);
                 } else {
-                    $.util.log($.util.colors.yellow(`creating ${$.util.colors.blue(projectName)} folder and sub directories`));
+                    genericLog(`creating ${$.util.colors.blue(projectName)} folder and sub directories`);
 
                     qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`).then(() => {
-                        $.util.log($.util.colors.yellow(`${$.util.colors.blue(projectName)} folder created ${$.util.colors.green('successfully')}`));
+                        genericLog(`${$.util.colors.blue(projectName)} folder created ${$.util.colors.green('successfully')}`);
                     });
                 }
             });
