@@ -55,9 +55,9 @@ cd testWebProject
 yarn
 
 echoBlue "building..."
-yarn run prod
+npm run prod
 
 echoBlue "running tests..."
-yarn test
+npm test
 
 echoGreen "All test successfully completed!"
