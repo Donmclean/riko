@@ -125,18 +125,6 @@ describe('Config', () => {
             assert.isObject(gulpfile);
         });
 
-        it('gulpfile.hasSrcFolder should exist, be a function and return a boolean', () => {
-            assert.isFunction(gulpfile.hasSrcFolder);
-            assert.isTrue(gulpfile.hasSrcFolder(['src']));
-            assert.isFalse(gulpfile.hasSrcFolder([]));
-        });
-
-        it('gulpfile.isReactNative should exist, be a function and return a boolean', () => {
-            assert.isFunction(gulpfile.isReactNative);
-            assert.isTrue(gulpfile.isReactNative('react-native'));
-            assert.isFalse(gulpfile.isReactNative(''));
-        });
-
         it('gulpfile.getConfigFile should exist and be a function', () => {
             assert.isFunction(gulpfile.getConfigFile);
             assert.isObject(gulpfile.getConfigFile());
