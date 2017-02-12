@@ -24,15 +24,18 @@ module.exports = () => {
         qfs.list(cwd)
             .then(files => {
                 if(funcs.folderAlreadyPresent(files, projectName)) {
-                    genericLog(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`);
+                    funcs.genericLog(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`);
                     throw new Error(`${projectName} folder must not exist during setup.`);
                 } else {
-                    genericLog(`creating ${$.util.colors.blue(projectName)} folder and sub directories`);
+                    funcs.genericLog(`creating ${$.util.colors.blue(projectName)} folder and sub directories`);
 
                     qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`).then(() => {
-                        genericLog(`${$.util.colors.blue(projectName)} folder created ${$.util.colors.green('successfully')}`);
+                        funcs.genericLog(`${$.util.colors.blue(projectName)} folder created ${$.util.colors.green('successfully')}`);
                     });
                 }
+            })
+            .catch((err) => {
+                funcs.genericLog(err, 'red');
             });
     };
 
