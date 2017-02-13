@@ -36,9 +36,28 @@ echoGreen() {
 }
 
 removeSrcDir(){
-    echoBlue "removing src directory..."
-    rm -rf ./src
-    echoGreen "src directory removed successfully!"
+    echoBlue "removing $1 directory..."
+    rm -rf ./$1
+    echoGreen "$1 directory removed successfully!"
+}
+
+setupTest() {
+    echoBlue "setting up $1 project tests..."
+    riko setup $1 $2
+
+    echoBlue "installing dependencies..."
+    cd $2
+    yarn
+
+    echoBlue "building..."
+    npm run prod
+
+    echoBlue "running tests..."
+    npm test
+
+    cd ..
+
+    removeSrcDir $2
 }
 
 riko() {
@@ -46,18 +65,8 @@ riko() {
 }
 
 echoBlue "testing setup commands..."
+setupTest web testWebProject
 
-echoBlue "setting up js project tests..."
-riko setup web testWebProject
-
-echoBlue "installing..."
-cd testWebProject
-yarn
-
-echoBlue "building..."
-npm run prod
-
-echoBlue "running tests..."
-npm test
+setupTest electron testElectronProject
 
 echoGreen "All test successfully completed!"
