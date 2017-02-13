@@ -29,14 +29,19 @@ module.exports = () => {
                 } else {
                     funcs.genericLog(`creating ${$.util.colors.blue(projectName)} folder and sub directories`);
 
-                    qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`).then(() => {
-                        funcs.genericLog(`${$.util.colors.blue(projectName)} folder created ${$.util.colors.green('successfully')}`);
-                    });
+                    if(projectType === 'electron') {
+                        qfs.copyTree(`${baseDir}/bin/_${actionType}/web`, `${cwd}/${projectName}`)
+                        .then(() => qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}/src`))
+                        .then(() => funcs.genericLog(`${$.util.colors.blue(projectName)} folder created ${$.util.colors.green('successfully')}`))
+                        .catch((err) => funcs.genericLog(err, 'red'));
+                    } else {
+                        qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`)
+                        .then(() => funcs.genericLog(`${$.util.colors.blue(projectName)} folder created ${$.util.colors.green('successfully')}`))
+                        .catch((err) => funcs.genericLog(err, 'red'));
+                    }
                 }
             })
-            .catch((err) => {
-                funcs.genericLog(err, 'red');
-            });
+            .catch((err) => funcs.genericLog(err, 'red'));
     };
 
     return funcs;
