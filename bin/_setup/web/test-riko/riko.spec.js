@@ -109,12 +109,6 @@ describe('Config', () => {
         it('runFlow should exist and be a function', () => {
             assert.isFunction(functions.runFlow);
         });
-
-        it('runFlow should execute successfully', () => {
-            const silent = true;
-            const spawnSync = functions.runFlow(silent);
-            assert.isOk(spawnSync);
-        });
     });
 
     describe('gulpfile', () => {
