@@ -2,7 +2,7 @@
 
 Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
-[![npm](https://img.shields.io/badge/npm-v1.0.8-blue.svg)](https://www.npmjs.com/package/riko-cli) [![Build Status](https://travis-ci.org/Donmclean/riko.svg?branch=master)](https://travis-ci.org/Donmclean/riko) [![dependencies Status](https://david-dm.org/donmclean/riko/status.svg)](https://david-dm.org/donmclean/riko) [![devDependencies Status](https://david-dm.org/donmclean/riko/dev-status.svg)](https://david-dm.org/donmclean/riko?type=dev) [![Test Coverage](https://codeclimate.com/github/Donmclean/riko/badges/coverage.svg)](https://codeclimate.com/github/Donmclean/riko/coverage) [![Code Climate](https://codeclimate.com/github/Donmclean/riko/badges/gpa.svg)](https://codeclimate.com/github/Donmclean/riko) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Donmclean/riko/blob/master/LICENSE) [![DUB](https://img.shields.io/badge/Author-Don%20Mclean-red.svg)](http://donsmclean.com)
+[![npm](https://img.shields.io/badge/npm-v1.0.21-blue.svg)](https://www.npmjs.com/package/riko-cli) [![Build Status](https://travis-ci.org/Donmclean/riko.svg?branch=master)](https://travis-ci.org/Donmclean/riko) [![dependencies Status](https://david-dm.org/donmclean/riko/status.svg)](https://david-dm.org/donmclean/riko) [![devDependencies Status](https://david-dm.org/donmclean/riko/dev-status.svg)](https://david-dm.org/donmclean/riko?type=dev) [![Test Coverage](https://codeclimate.com/github/Donmclean/riko/badges/coverage.svg)](https://codeclimate.com/github/Donmclean/riko/coverage) [![Code Climate](https://codeclimate.com/github/Donmclean/riko/badges/gpa.svg)](https://codeclimate.com/github/Donmclean/riko) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Donmclean/riko/blob/master/LICENSE) [![DUB](https://img.shields.io/badge/Author-Don%20Mclean-red.svg)](http://donsmclean.com)
 
 #INSTALL
 
@@ -72,6 +72,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
 #USAGE
 
+- After setting up your project. `cd` into your project then run `npm install` or `yarn` (_highly recommended_) if you have [yarn](https://yarnpkg.com/) installed
 - After installation you can run either of the following two options: 
     - `npm run setup` to setup the most basic content to jump start your application.
     - `npm run setup-js` to setup a non html templated project. For example a js module or library project.
