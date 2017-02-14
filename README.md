@@ -4,6 +4,16 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
 [![npm](https://img.shields.io/badge/npm-v1.0.8-blue.svg)](https://www.npmjs.com/package/riko-cli) [![Build Status](https://travis-ci.org/Donmclean/riko.svg?branch=master)](https://travis-ci.org/Donmclean/riko) [![dependencies Status](https://david-dm.org/donmclean/riko/status.svg)](https://david-dm.org/donmclean/riko) [![devDependencies Status](https://david-dm.org/donmclean/riko/dev-status.svg)](https://david-dm.org/donmclean/riko?type=dev) [![Test Coverage](https://codeclimate.com/github/Donmclean/riko/badges/coverage.svg)](https://codeclimate.com/github/Donmclean/riko/coverage) [![Code Climate](https://codeclimate.com/github/Donmclean/riko/badges/gpa.svg)](https://codeclimate.com/github/Donmclean/riko) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Donmclean/riko/blob/master/LICENSE) [![DUB](https://img.shields.io/badge/Author-Don%20Mclean-red.svg)](http://donsmclean.com)
 
+#INSTALL
+
+- run `sudo npm install -g riko-cli`
+- verify installation by running `riko --version`
+
+#COMMANDS
+
+- `riko setup web <project-name>`
+- `riko setup electron <project-name>`
+
 #FEATURES
 
 - Supports the development of JS Modules, React [**Web**](https://facebook.github.io/react/), [**Mobile**](https://facebook.github.io/react-native/) & [**Electron**](http://electron.atom.io/) Applications.
@@ -56,13 +66,6 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
     - This Build System is not tested for development on Windows, Linux, or Ubuntu and 
     therefore does not support any those Operating Systems.
-
-#INSTALL
-
-- run `git clone https://github.com/donmclean/riko.git`
-- cd into the cloned directory by running `cd riko`
-- run `npm install` or `yarn`(_recommended_) if you have [yarn](https://yarnpkg.com/) installed
-- grab ~~coffee~~ a redbull
 
 #USAGE
 
