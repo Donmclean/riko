@@ -6,13 +6,16 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
 #INSTALL
 
-- run `sudo npm install -g riko-cli`
-- verify installation by running `riko --version`
+- `sudo npm install -g riko-cli`
 
 #COMMANDS
 
-- `riko setup web <project-name>`
-- `riko setup electron <project-name>`
+######Create/Initialize a new project
+- `riko setup`
+    - `<project-type> ['web', 'electron', 'js', 'mobile']`
+    - `<project-name> 'Awesome New Web Project'`
+    - example 1: `riko setup web Awesome New Web Project`
+    - example 2: `riko setup electron Amazing New Electron Project`
 
 #FEATURES
 
