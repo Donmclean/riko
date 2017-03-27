@@ -5,8 +5,8 @@ module.exports = () => {
 
     funcs.isValidOption = (options, targetOption) => _v._.includes(options, targetOption);
 
-    funcs.throwOptionsError = (options) => {
-        throw new Error('Invalid choice. Choices: ' + options.join(', '));
+    funcs.throwOptionsError = (options, choice) => {
+        throw new Error(`Invalid choice: (${choice}). Choices: ${options.join(', ')}`);
     };
 
     funcs.genericLog = (str, color) => {
@@ -150,7 +150,6 @@ module.exports = () => {
                 console.log('${_v.baseDir}: ', `${_v.baseDir}`);
                 newPlugins = config.plugins.concat([new _v.WebpackShellPlugin({
                     onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
-                    // onBuildEnd: ['npm run electron-dev']
                 })]);
                 break;
             }

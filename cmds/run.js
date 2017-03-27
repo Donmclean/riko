@@ -7,7 +7,7 @@ const options = ['web-dev', 'web-prod', 'web-server', 'web-prod-server', 'electr
 const command = _v.argv.command(
     {
         command: 'run <run-command>',
-        aliases: ['run', 'r'],
+        aliases: ['r'],
         desc: 'Runs actions on project.',
         handler: (argv) => {
             const validChoice = funcs.isValidOption(options, argv.runCommand);
@@ -16,13 +16,11 @@ const command = _v.argv.command(
                 const runCommand = funcs.sanitizeProjectName(argv.runCommand);
                 actions.run.executeRun(runCommand);
             } else {
-                funcs.throwOptionsError(options);
+                funcs.throwOptionsError(options, argv.runCommand);
             }
         }
     })
     .recommendCommands()
-    .demandCommand(1)
-    .help()
     .argv;
 
 module.exports = command;

@@ -43,7 +43,23 @@ config.module.rules = [
     {
         test: /\.jsx$|\.js$/,
         exclude: /(node_modules|vendor|bower_components)/,
-        loaders: process.env.NODE_ENV === 'development' ? ['react-hot-loader/webpack','babel-loader?presets[]=react-hmre'] : ['babel-loader']
+        use: process.env.NODE_ENV === 'development' ? [
+            {
+                loader: 'react-hot-loader/webpack'
+            },
+            {
+                loader: 'babel-loader',
+                options: {
+                    presets: 'react-hmre',
+                    extends: `${_v.cwd}/.babelrc`
+                }
+            },
+        ] : [{
+                loader: 'babel-loader',
+                options: {
+                    extends: `${_v.cwd}/.babelrc`
+                }
+            }]
     },
     //TEMPLATES (PUG)
     {

@@ -7,8 +7,8 @@ const options = ['js', 'web', 'electron', 'mobile'];
 const command = _v.argv.command(
     {
         command: 'setup <project-type> <project-name..>',
-        aliases: ['setup', 's'],
-        desc: 'Creates/Initializes a new project.',
+        aliases: ['s'],
+        desc: 'Initializes a new project.',
         handler: (argv) => {
             const validChoice = funcs.isValidOption(options, argv.projectType);
 
@@ -16,13 +16,11 @@ const command = _v.argv.command(
                 const projectName = funcs.sanitizeProjectName(argv.projectName);
                 actions.setup.executeSetup(argv._, argv.projectType, projectName);
             } else {
-                funcs.throwOptionsError(options);
+                funcs.throwOptionsError(options, argv.projectType);
             }
         }
     })
     .recommendCommands()
-    .demandCommand(1)
-    .help()
     .argv;
 
 module.exports = command;

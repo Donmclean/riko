@@ -6,7 +6,7 @@ const command = argv
     .commandDir('cmds')
     .demandCommand(1, 'You need at least one command before moving on')
     .recommendCommands()
-    .help()
+    .help('help')
     .argv;
 
 module.exports = command;
