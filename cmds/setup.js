@@ -1,5 +1,6 @@
-const _v = require('../config/variables');
+const _v = require('../config/variables')();
 const funcs = require('../config/functions')();
+const actions = require('../actions/_index');
 
 const options = ['js', 'web', 'electron', 'mobile'];
 
@@ -13,7 +14,7 @@ const command = _v.argv.command(
 
             if(validChoice) {
                 const projectName = funcs.sanitizeProjectName(argv.projectName);
-                funcs.executeSetup(argv._, argv.projectType, projectName);
+                actions.setup.executeSetup(argv._, argv.projectType, projectName);
             } else {
                 funcs.throwOptionsError(options);
             }

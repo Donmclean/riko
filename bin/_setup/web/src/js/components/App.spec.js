@@ -1,48 +1,22 @@
 "use strict";
 
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
-import App from './App.js';
-
-const renderer = ReactTestUtils.createRenderer();
 
 function sum(a, b) {
     return a + b;
 }
 
-describe('sum()2', function() {
-    it('should save add two numbers', function() {
+describe('sum()2', () => {
+    it('should save add two numbers', () => {
         expect(sum(1, 3)).toBe(4);
     });
 });
 
-describe('DOM Essentials', function () {
-    it('window is available', function () {
+describe('DOM Essentials', () => {
+    it('window is available', () => {
         expect(window).toBeTruthy();
     });
-    it('document is available', function () {
+    it('document is available', () => {
         expect(document).toBeTruthy();
     });
-    it('React TestUtils is available', function () {
-        expect(ReactTestUtils).toBeTruthy();
-    });
-});
-
-describe('App', function () {
-
-    renderer.render(<App />);
-    let result;
-
-    beforeEach(function() {
-        renderer.render(<App />);
-        result = renderer.getRenderOutput();
-    });
-
-    it('renders without problems', function () {
-        expect(result).toBeTruthy();
-    });
-    it('should render a div component', function() {
-        expect(result.type).toEqual('div');
-    });
-
 });
