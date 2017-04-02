@@ -1,7 +1,7 @@
 const
     _v              = require('./config/variables')(),
     funcs           = require('./config/functions')(),
-    customConfig    = funcs.verifyCustomConfigFileExists(),
+    customConfig    = funcs.verifyFileExists(`${_v.cwd}/src/rikoconfig`),
     config          = {},
     indexJSFile     = require('./config/index')(customConfig);
 
@@ -50,17 +50,32 @@ config.module.rules = [
             {
                 loader: 'babel-loader',
                 options: {
-                    presets: 'react-hmre',
-                    extends: `${_v.cwd}/.babelrc`
+                    presets: [
+                        ['es2015', {"modules": false}],
+                        'react'
+                    ],
+                    plugins: [
+                        "react-hot-loader/babel"
+                    ],
+                    babelrc: false,
                 }
             },
         ] : [{
                 loader: 'babel-loader',
                 options: {
-                    extends: `${_v.cwd}/.babelrc`
+                    presets: [
+                        ['es2015', {"modules": false}],
+                        'react'
+                    ],
+                    babelrc: false
                 }
             }]
     },
+    //TYPESCRIPT TODO: add this functionality
+    // {
+    //     test: /\.tsx?$/,
+    //     loaders: ['react-hot-loader/webpack', 'ts-loader'] // (or awesome-typescript-loader)
+    // },
     //TEMPLATES (PUG)
     {
         test: /\.pug$/,
@@ -257,6 +272,17 @@ switch (process.env.NODE_ENV) {
         config.devtool = customConfig.sourcemapDev ? customConfig.sourcemapType : null;
         config.bail = false;
 
+        config.devServer = {
+            hot: true,
+            // enable HMR on the server
+
+            contentBase: config.output.path,
+            // match the output path
+
+            publicPath: config.output.publicPath
+            // match the output `publicPath`
+        };
+
         const stylesheetDevRules = (type, regex) => ({
             test: new RegExp(regex),
             loaders: [
@@ -320,6 +346,7 @@ switch (process.env.NODE_ENV) {
 
         config.plugins = config.plugins.concat([
             new _v.webpack.HotModuleReplacementPlugin(),
+            new _v.webpack.NamedModulesPlugin(),
             new _v.webpack.ProvidePlugin(customConfig.externalModules),
             new _v.webpack.LoaderOptionsPlugin({
                 debug: true,

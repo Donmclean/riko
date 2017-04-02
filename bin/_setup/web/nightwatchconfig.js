@@ -1,4 +1,4 @@
-const config = require('./src/custom-config') || {};
+const config = require('./src/rikoconfig') || {};
 
 const nightwatchConfig = {
     "src_folders" : ["src/__tests-selenium"],

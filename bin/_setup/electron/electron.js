@@ -3,7 +3,7 @@ const electron = require('electron');
 // import electron from 'electron';
 let config;
 if(process.env.NODE_ENV === 'development') {
-  config = require('./custom-config');
+  config = require('./rikoconfig');
 }
 // Module to control application life.
 const app = electron.app;

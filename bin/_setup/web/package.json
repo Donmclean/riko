@@ -22,10 +22,7 @@
     "test-coverage": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha test-riko/riko.spec.js --report lcovonly -- -R spec && codeclimate-test-reporter < ./coverage/lcov.info && rm -rf ./coverage"
   },
   "dependencies": {
-    "flow-bin": "^0.42.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "jest": "^18.0.0",
-    "jest-cli": "^18.0.0"
+    "react-dom": "^15.4.2"
   }
 }

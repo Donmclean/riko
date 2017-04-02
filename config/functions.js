@@ -18,18 +18,17 @@ module.exports = () => {
 
     funcs.sanitizeProjectName = (projectName) => projectName.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
-    funcs.verifyCustomConfigFileExists = () => {
-        const { cwd } = _v;
-        let customConfig = null;
+    funcs.verifyFileExists = (path) => {
+        let file = null;
 
         try {
-            customConfig = require(`${cwd}/src/custom-config`);
+            file = require(`${path}`);
         } catch (err) {
-            funcs.genericLog('ERROR: no custom-config.js file found in src/ directory');
-            throw new Error('ERROR: no custom-config.js file found in src/ directory', err);
+            funcs.genericLog(`ERROR: no ${_v.path.basename(path)} file found in src/ directory`);
+            throw new Error(`ERROR: no ${_v.path.basename(path)} file found in src/ directory`, err);
         }
 
-        return customConfig;
+        return file;
     };
 
     funcs.insertGitSHAIntoFilename = (filename, GitVersion) => {
@@ -43,26 +42,6 @@ module.exports = () => {
         }
 
         return GitVersion + '.html';
-    };
-
-    funcs.webpackCompilationErrorHandler = (err, stats) => {
-        if (err) {
-            console.error(err.stack || err);
-            if (err.details) {
-                console.error(err.details);
-            }
-            return;
-        }
-
-        const info = stats.toJson();
-
-        if (stats.hasErrors()) {
-            console.error(info.errors);
-        }
-
-        if (stats.hasWarnings()) {
-            console.warn(info.warnings)
-        }
     };
 
     funcs.launchVorlonJS = () => {
@@ -163,7 +142,7 @@ module.exports = () => {
 
     funcs.logElectronRunServerError = () => {
         funcs.genericLog('Error: Can\'t find built Electron Package in destination folder... Either an error occurred while building or the platform option wasn\'t correctly specified.', 'red');
-        funcs.genericLog('To launch your Electron app on MAC be sure include "darwin" as an option to "platform" in your custom-config.js "electronPackagingOptions"', 'red');
+        funcs.genericLog('To launch your Electron app on MAC be sure include "darwin" as an option to "platform" in your rikoconfig.js "electronPackagingOptions"', 'red');
     };
 
     funcs.onDevBuildActions = (customConfig) => {
@@ -184,7 +163,20 @@ module.exports = () => {
     };
 
     funcs.executeJestTests = (silent = false) => {
-        return _v.spawn('npm', ['run', 'test-jest-watch'], silent ? {} : {stdio: 'inherit'});
+        const customJestConfig = funcs.verifyFileExists(`${_v.cwd}/jestconfig.js`);
+
+        const defaultJestConfig = {
+            "rootDir": `${_v.baseDir}`,
+            "transform": {
+                ".*": `${_v.baseDir}/node_modules/babel-jest`
+            }
+        };
+
+        const jestconfig = Object.assign({}, customJestConfig, defaultJestConfig);
+
+        return _v.spawn(
+            `${_v.baseDir}/node_modules/.bin/jest`, ['-o', '--config', `${JSON.stringify(jestconfig)}`], silent ? {} : {stdio: 'inherit'}
+        );
     };
 
     funcs.runFlow = () => {
@@ -194,7 +186,7 @@ module.exports = () => {
 
         return qfs.list(cwd).then((files) => {
             if(_.includes(files, '.flowconfig')) {
-                return _v.spawnSync('npm', ['run', 'flow'], {stdio: 'inherit'});
+                return _v.spawnSync(`${_v.baseDir}/node_modules/.bin/flow`, ['check'], {stdio: 'inherit'});
             } else {
                 funcs.genericLog('no .flowconfig found', 'red');
                 return false;

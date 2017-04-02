@@ -32,7 +32,7 @@ config.nightwatchConfig         = baseDir+'/nightwatchconfig.js';
 
 config.srcFiles                 = [
     config.srcDir+'/**/*.js?(x)',
-    '!'+config.srcDir+'/custom-config.js',
+    '!'+config.srcDir+'/rikoconfig.js',
     '!'+config.srcDir+'/vendor/**/*.js',
     '!'+config.srcDir+'/__tests__utils/**/*.js'
 ];
@@ -107,7 +107,7 @@ config.js_runtime_configs      = [
 //**********************************************************************
 //*******************************STYLES*********************************
 //**********************************************************************
-config.styles_main_file_name    = 'styles.min.css';
+config.styles_main_file_name        = 'styles.min.css';
 
 config.styles_external_stylesheets  = [
     'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
@@ -214,7 +214,7 @@ config.browserstackUsername = 'browserstackuser';
 config.browserstackAccessKey = 'browserstackkey';
 
 //Enable this to have tests execute on every webpack rebuild.
-config.hotExecuteTests = false;
+config.hotExecuteTests = true;
 
 //**********************************************************************
 //*******************************EXTRAS*********************************
@@ -237,17 +237,8 @@ config.enableRemoteDebugging   = false;
 
 config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
 
-//Set to equal 'true' if you would like to use an express server with Webpack (Dev+Hot) Middlewares for hot reloading.
-//https://github.com/webpack/webpack-dev-middleware : https://github.com/glenjamin/webpack-hot-middleware
-//Set to equal 'false' if you would like to instead use the native webpack dev server for hot reloading.
-//Do keep in mind that 'false' also removes the 'Error proofing' capability (on error a helpful overlay pops up displaying the error)
-config.useWebpackDevMiddleWareInsteadOfDevServer = true;
-
 config.hotReloadingOptions     = {
-    overlay: true,
-    reload: true,
-    noInfo: false,
-    quiet: false
+    overlay: true
 };
 
 //Override hot module replacement and simply have the page refresh on file change

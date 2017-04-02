@@ -116,9 +116,9 @@ eg: removing the `react` preset will break flow typechecking etc.
 ###### Flow
 - If you wish to edit configuration for the flow static type checker, simply edit the top level `.flowconfig` file. See [**here**](https://flowtype.org/docs/advanced-configuration.html).
 
-#### **THE 'custom-config.js' FILE**
+#### **THE 'rikoconfig.js' FILE**
 
-- **NOTE**: This is **NOT** available if you ran `npm run setup-mobile`. The `custom-config.js` is only for **JS Module, WEB & Electron Applications.**
+- **NOTE**: This is **NOT** available if you ran `npm run setup-mobile`. The `rikoconfig.js` is only for **JS Module, WEB & Electron Applications.**
 - This is where all your settings live. The build system has been created so you rarely have to enter the webpack.config.js file.
 - Here's the run down:
 
@@ -434,7 +434,7 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
 
 #USAGE - CONTINUED
 
-- After configuring everything in the `custom-config.js` file to your liking, you should now run the following commands: 
+- After configuring everything in the `rikoconfig.js` file to your liking, you should now run the following commands: 
     - `npm run test-build`
         - This runs a test on the riko build to ensure that the build in still in working order.
         - You should also run this command regularly after making alterations to any of the config files.
@@ -445,7 +445,7 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
         
     - `npm run electron-prod`
         - This will execute a production build on your current src/ folder.
-        - It will create packager an electron application based on the configurations specified in the custom-config.js (electronPackagingOptions)
+        - It will create packager an electron application based on the configurations specified in the rikoconfig.js (electronPackagingOptions)
         
     - `npm run prod-server`
         - This will fire up an express server for you to test out your new prod build.
@@ -501,7 +501,7 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
         - All test coverage information will be located in: '[root]/test-coverage'
     
     - `npm start` 
-       - Executes a production build. Then fires up a production ready server on the `custom-config.js` specified express port.
+       - Executes a production build. Then fires up a production ready server on the `rikoconfig.js` specified express port.
    
         
 #### Happy Coding :)

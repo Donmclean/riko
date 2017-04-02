@@ -3,6 +3,7 @@
 
 .idea
 dist
+temp
 node_modules
 test-coverage
 coverage
