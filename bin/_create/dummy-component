@@ -1,0 +1,11 @@
+import React, { PropTypes } from 'react';
+
+const <:rikofilename:> = (props) => (
+    <div></div>
+);
+
+<:rikofilename:>.propTypes = {
+
+};
+
+export default <:rikofilename:>;

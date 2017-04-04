@@ -1,0 +1,14 @@
+import React from 'react';
+import renderer from 'react-test-renderer';
+
+describe('<:rikofilename:> Component', () => {
+    it('renders <<:rikofilename:> /> component successfully in to the DOM', () => {
+        //Render component
+        const component = renderer.create(
+            <<:rikofilename:>/>
+        );
+
+        //Verify Component Snapshot
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+});

@@ -14,7 +14,7 @@ const command = _v.argv.command(
 
             if(validChoice) {
                 const runCommand = funcs.sanitizeProjectName(argv.runCommand);
-                actions.run.executeRun(runCommand);
+                actions.run(runCommand);
             } else {
                 funcs.throwOptionsError(options, argv.runCommand);
             }

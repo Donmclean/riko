@@ -1,7 +1,7 @@
 const
     _v              = require('./config/variables')(),
     funcs           = require('./config/functions')(),
-    customConfig    = funcs.verifyFileExists(`${_v.cwd}/src/rikoconfig`),
+    customConfig    = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`),
     config          = {},
     indexJSFile     = require('./config/index')(customConfig);
 

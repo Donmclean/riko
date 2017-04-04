@@ -18,7 +18,7 @@ module.exports = () => {
 
     funcs.sanitizeProjectName = (projectName) => projectName.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
-    funcs.verifyFileExists = (path) => {
+    funcs.getFileIfExists = (path) => {
         let file = null;
 
         try {
@@ -163,7 +163,7 @@ module.exports = () => {
     };
 
     funcs.executeJestTests = (silent = false) => {
-        const customJestConfig = funcs.verifyFileExists(`${_v.cwd}/jestconfig.js`);
+        const customJestConfig = funcs.getFileIfExists(`${_v.cwd}/jestconfig.js`);
 
         const defaultJestConfig = {
             "rootDir": `${_v.baseDir}`,

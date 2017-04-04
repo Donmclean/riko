@@ -220,4 +220,8 @@ config.eslintQuietMode = false; //set false to display warnings based on your es
 //enable webpack visualizer which allows you to see the build product of your js sources & dependencies via current git SHA as url
 config.enableWebpackVisualizer = true;
 
+//specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
+//must be an absolute path.
+config.customBoilerplatePath = `${config.srcDir}/riko-custom-boilerplates`;
+
 module.exports = config;
