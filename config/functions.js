@@ -145,6 +145,27 @@ module.exports = () => {
         funcs.genericLog('To launch your Electron app on MAC be sure include "darwin" as an option to "platform" in your rikoconfig.js "electronPackagingOptions"', 'red');
     };
 
+    funcs.assignEnvironmentVariablesBasedOnRunCommand = (runCommand) => {
+        switch (true) {
+            case !_v._.isEmpty(runCommand.match(/-dev\b/)): {
+                process.env.NODE_ENV = 'development';
+                break;
+            }
+            case !_v._.isEmpty(runCommand.match(/-prod\b/)): {
+                process.env.NODE_ENV = 'production';
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
+        process.env.ELECTRON = (runCommand === 'electron-dev' || runCommand === 'electron-prod');
+
+        console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
+        console.log('process.env.ELECTRON:', process.env.ELECTRON);
+    };
+
     funcs.onDevBuildActions = (customConfig) => {
         funcs.genericLog('Updating Source File Watcher executing initial tests...');
 

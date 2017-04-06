@@ -56,6 +56,7 @@ module.exports = () => {
     vars.morgan                 = require('morgan');
     vars.electronPackager       = require('electron-packager');
     vars.browserSync            = require('browser-sync');
+    vars.nodemon                = require('nodemon');
 
     //NODE VARS
     vars.isMAC                  = (process.env._system_type === 'Darwin');

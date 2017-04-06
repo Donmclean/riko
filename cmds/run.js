@@ -2,7 +2,14 @@ const _v = require('../config/variables')();
 const funcs = require('../config/functions')();
 const actions = require('../actions/_index');
 
-const options = ['web-dev', 'web-prod', 'web-server', 'web-prod-server', 'electron-dev', 'electron-prod', 'electron-server'];
+const options = [
+    //WEB COMMANDS
+    'web-dev', 'web-prod', 'web-server', 'web-prod-server',
+    //ELECTRON COMMANDS
+    'electron-dev', 'electron-prod', 'electron-server',
+    //NODE-SERVER COMMANDS
+    'node-server-dev', 'node-server-prod'
+];
 
 const command = _v.argv.command(
     {

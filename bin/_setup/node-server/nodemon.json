@@ -1,0 +1,14 @@
+{
+  "verbose": false,
+  "ignore": [
+    ".git",
+    ".gitignore",
+    "README.md",
+    "yarn.lock",
+    "node_modules/**/node_modules",
+    "package.json"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

@@ -9,8 +9,7 @@
   "scripts": {
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
-    "test-complete": "sh test-complete.sh",
-    "test-jest": "NODE_ENV=test jest --config ./jestconfig.json --coverage"
+    "test": "sh test-complete.sh"
   },
   "repository": {
     "type": "git",
@@ -86,6 +85,7 @@
     "mocha-lcov-reporter": "^1.2.0",
     "morgan": "^1.7.0",
     "node-sass": "^4.0.0",
+    "nodemon": "^1.11.0",
     "postcss-loader": "^1.0.0",
     "progress-bar-webpack-plugin": "^1.9.0",
     "pug": "^2.0.0-beta5",

@@ -6,14 +6,7 @@ module.exports = (runCommand) => {
     const { $, electronPackager, browserSync } = _v;
 
     //handle environment variables
-    process.env.NODE_ENV = (runCommand === 'web-dev') ? 'development' : 'production';
-    process.env.ELECTRON = (runCommand === 'electron-dev' || runCommand === 'electron-prod');
-    process.env.LIVE = (runCommand === 'web-prod-server');
-    if(JSON.parse(process.env.ELECTRON)) {
-        process.env.NODE_ENV = (runCommand === 'electron-dev') ? 'development' : 'production';
-    }
-
-    console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
+    funcs.assignEnvironmentVariablesBasedOnRunCommand(runCommand);
 
     const customConfig = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`);
     const config = require('../webpack.config');
@@ -80,6 +73,14 @@ module.exports = (runCommand) => {
 
             break;
         }
+        case 'node-server-dev': {
+            _v.spawn(`${_v.baseDir}/node_modules/.bin/nodemon`, ['--config', `${customConfig.nodemonJson}`, `${customConfig.entryFile}`], {stdio: 'inherit'});
+            break;
+        }
+        case 'node-server-prod': {
+            _v.spawn('node', [`${customConfig.entryFile}`], {stdio: 'inherit'});
+            break;
+        }
         default: {
 
             console.log('JSON.parse(process.env.ELECTRON): ', JSON.parse(process.env.ELECTRON));
@@ -114,22 +115,16 @@ module.exports = (runCommand) => {
                 next(err);
             });
 
-            let isLiveServer;
+            const isLiveServer = (runCommand === 'web-prod-server');
 
-            try {
-                isLiveServer = JSON.parse(process.env.LIVE);
-            } catch (err) {
-                isLiveServer = false;
-            }
-
-            if(!isLiveServer) {
-                console.log('Launching Browser Sync proxy of port: ' + customConfig.EXPRESS_PORT);
+            if(isLiveServer) {
+                funcs.genericLog('Listening on port: ' + customConfig.EXPRESS_PORT, 'yellow');
+            } else {
+                funcs.genericLog('Launching Browser Sync proxy of port: ' + customConfig.EXPRESS_PORT, 'yellow');
 
                 browserSync.init({
                     proxy: 'localhost:' + customConfig.EXPRESS_PORT
                 });
-            } else {
-                console.log('Listening on port: ' + customConfig.EXPRESS_PORT);
             }
 
             break;

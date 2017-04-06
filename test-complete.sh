@@ -43,30 +43,23 @@ removeSrcDir(){
 
 setupTest() {
     echoBlue "setting up $1 project tests..."
-    riko setup $1 $2
+    node index.js setup $1 $2
 
     echoBlue "installing dependencies..."
     cd $2
     yarn
 
     echoBlue "building..."
-    npm run prod
-
-    echoBlue "running tests..."
-    npm test
+    node ../index.js run $3
 
     cd ..
 
     removeSrcDir $2
 }
 
-riko() {
-    node index.js $1 $2 $3
-}
-
 echoBlue "testing setup commands..."
-setupTest web testWebProject
+setupTest web testWebProject web-prod
 
-setupTest electron testElectronProject
+setupTest electron testElectronProject electron-prod
 
 echoGreen "All test successfully completed!"
