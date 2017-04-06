@@ -15,15 +15,6 @@ config.srcDir                   = baseDir+"/src"; //IMPORTANT! DO NOT OVERRIDE!
 //**********************************************************************
 //******************************CUSTOM**********************************
 //**********************************************************************
-//IMPORTANT! All paths/directories should be relative to 'baseDir' unless specified otherwise.
-// eg: baseDir+'/path'
-
-config.moduleName               = 'riko';
-config.destDir                  = baseDir+"/dist";
-config.tempDir                  = baseDir+"/temp";
-
-config.EXPRESS_PORT             = 3000;
-config.EXPRESS_ROOT             = config.destDir;
 
 config.packageJson              = baseDir+'/package.json';
 config.nodemonJson              = `${baseDir}/nodemon.json`;

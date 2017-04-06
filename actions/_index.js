@@ -1,9 +1,10 @@
-const setup = require('./setup');
-const run = require('./run');
-const create = require('./create');
+const _v = require('../config/variables')();
+const { fs, baseDir } = _v;
 
-module.exports = {
-    setup,
-    run,
-    create
-};
+module.exports = fs.readdirSync(`${baseDir}/actions`)
+    .filter((file) => file !== '_index.js')
+    .reduce((result, file) => {
+        const filename = file.split('.')[0];
+        result[filename] = require(`./${filename}`);
+        return result;
+    }, {});

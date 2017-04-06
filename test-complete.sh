@@ -60,6 +60,4 @@ setupTest() {
 echoBlue "testing setup commands..."
 setupTest web testWebProject web-prod
 
-setupTest electron testElectronProject electron-prod
-
 echoGreen "All test successfully completed!"

@@ -145,6 +145,10 @@ module.exports = () => {
         funcs.genericLog('To launch your Electron app on MAC be sure include "darwin" as an option to "platform" in your rikoconfig.js "electronPackagingOptions"', 'red');
     };
 
+    funcs.readFilesInDirectorySync = (path) => {
+        return _v.fs.readdirSync(path).filter((file) => file !== '.DS_Store')
+    };
+
     funcs.assignEnvironmentVariablesBasedOnRunCommand = (runCommand) => {
         switch (true) {
             case !_v._.isEmpty(runCommand.match(/-dev\b/)): {

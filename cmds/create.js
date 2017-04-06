@@ -11,7 +11,7 @@ const command = _v.argv.command(
             const { fs, baseDir, cwd, _ } = _v;
 
             const defaultBoilerplatePath = `${baseDir}/bin/_create`;
-            const defaultOptions = fs.readdirSync(defaultBoilerplatePath);
+            const defaultOptions = funcs.readFilesInDirectorySync(defaultBoilerplatePath);
 
             const customConfig = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`);
             let customOptions;
