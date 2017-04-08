@@ -9,6 +9,8 @@ const path                      = require('path');
 //Root Directory
 const baseDir                   = path.resolve(__dirname, '../'); //IMPORTANT! DO NOT OVERRIDE!
 
+config.baseDir                  = baseDir; //IMPORTANT! DO NOT OVERRIDE!
+
 //Source Directory
 config.srcDir                   = baseDir+"/src"; //IMPORTANT! DO NOT OVERRIDE!
 

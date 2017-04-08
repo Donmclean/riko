@@ -1,6 +1,6 @@
 const
-    _v      = require('../config/variables')(),
-    funcs   = require('../config/functions')();
+    _v      = require('../utils/variables')(),
+    funcs   = require('../utils/functions')();
 
 module.exports = (runCommand) => {
     const { $, electronPackager, browserSync } = _v;

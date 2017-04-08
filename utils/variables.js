@@ -7,6 +7,7 @@ module.exports = () => {
     vars.cwd                    = process.cwd();
     vars.path                   = require('path');
     vars.baseDir                = vars.path.resolve(__dirname, '../');
+    vars.packageJson            = require('../package.json');
     vars.srcDir                 = vars.baseDir + '/src';
     vars.http                   = require('http');
     vars.ipAddress              = require('ip').address();
@@ -30,7 +31,6 @@ module.exports = () => {
         vars.GIT_VERSION        = 'GIT_VERSION';
         vars.GIT_VERSION_SHORT  = 'UNKNOWN_GIT_VERSION_SHORT';
     }
-    vars.BUILD_DATE             = new Date();
 
     vars.ProgressBarPlugin      = require('progress-bar-webpack-plugin');
     vars.HtmlWebpackPlugin      = require('html-webpack-plugin');

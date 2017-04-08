@@ -1,7 +1,9 @@
-const _v = require('../config/variables')();
-const { fs, baseDir } = _v;
+const _v = require('../utils/variables')();
+const funcs = require('../utils/functions')();
+const { baseDir } = _v;
+const actionsDir = `${baseDir}/actions`;
 
-module.exports = fs.readdirSync(`${baseDir}/actions`)
+module.exports = funcs.readFilesInDirectorySync(actionsDir)
     .filter((file) => file !== '_index.js')
     .reduce((result, file) => {
         const filename = file.split('.')[0];

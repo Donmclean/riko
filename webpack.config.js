@@ -1,9 +1,9 @@
 const
-    _v              = require('./config/variables')(),
-    funcs           = require('./config/functions')(),
+    _v              = require('./utils/variables')(),
+    funcs           = require('./utils/functions')(),
     customConfig    = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`),
     config          = {},
-    indexJSFile     = require('./config/index')(customConfig);
+    indexJSFile     = require('./utils/index')(customConfig);
 
 //CONFIGURATION
 config.context = customConfig.srcDir;
@@ -155,7 +155,7 @@ config.plugins = config.plugins.concat([
         format: 'webpack [:bar] ' + _v.chalk.green.bold(':percent') + ' (:elapsed seconds)',
         clear: true
     }),
-    new _v.WebpackNotifierPlugin({contentImage: customConfig.baseDir+'/test-riko/riko-favicon.png'})
+    new _v.WebpackNotifierPlugin({contentImage: _v.baseDir+'/utils/riko-logo.png'})
 ]);
 
 switch (process.env.NODE_ENV) {
@@ -253,7 +253,7 @@ switch (process.env.NODE_ENV) {
                 onBuildEnd: customConfig.onBuildEndShellCommands,
                 onBuildExit: customConfig.onBuildExitShellCommands
             }),
-            new _v.CleanWebpackPlugin([customConfig.destDir], {root: customConfig.baseDir, verbose: true, dry: false}),
+            new _v.CleanWebpackPlugin([_v.path.basename(customConfig.destDir)], {root: customConfig.baseDir, verbose: true, dry: false}),
             new _v.webpack.LoaderOptionsPlugin({
                 debug: false,
                 eslint: {

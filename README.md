@@ -1,4 +1,4 @@
-[![RIKO](./config/riko-favicon.png)](https://github.com/Donmclean/riko)
+[![RIKO](utils/riko-logo.png)](https://github.com/Donmclean/riko)
 
 Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 

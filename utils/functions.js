@@ -5,8 +5,8 @@ module.exports = () => {
 
     funcs.isValidOption = (options, targetOption) => _v._.includes(options, targetOption);
 
-    funcs.throwOptionsError = (options, choice) => {
-        throw new Error(`Invalid choice: (${choice}). Choices: ${options.join(', ')}`);
+    funcs.logOptionsError = (options, choice) => {
+        funcs.genericLog(`Invalid choice: (${choice}). ${!_v._.isEmpty(options) ? 'Choose: [' + options.join(', ') + ']' : ''}`, 'red');
     };
 
     funcs.genericLog = (str, color) => {
@@ -16,7 +16,7 @@ module.exports = () => {
 
     funcs.folderAlreadyPresent = (files, folderName) => _v._.includes(files, folderName);
 
-    funcs.sanitizeProjectName = (projectName) => projectName.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
+    funcs.sanitizeString = (str) => str.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
     funcs.getFileIfExists = (path) => {
         let file = null;
@@ -79,21 +79,16 @@ module.exports = () => {
 
         _v.qfs.isDirectory(dir).then((exists) => {
             if(exists) {
-                try {
-                    funcs.genericLog(`Cleaning ${dir} directory: `);
-                    _v.qfs.removeTree(dir)
-                        .then(() => {
-                            funcs.genericLog(`${dir} directory removed...`);
-                            deferred.resolve();
-                        })
-                        .catch((err) => {
-                            funcs.genericLog(`ERROR removing ${dir}\n ${err}`, 'red');
-                            deferred.reject(err);
-                        });
-                } catch (err) {
-                    funcs.genericLog(`ERROR removing ${dir}\n ${err}`, 'red');
-                    deferred.reject(err);
-                }
+                funcs.genericLog(`Cleaning ${dir} directory: `);
+                _v.qfs.removeTree(dir)
+                    .then(() => {
+                        funcs.genericLog(`${dir} directory removed...`);
+                        deferred.resolve();
+                    })
+                    .catch((err) => {
+                        funcs.genericLog(`ERROR removing ${dir}\n ${err}`, 'red');
+                        deferred.reject(err);
+                    });
             } else {
                 funcs.genericLog(`${dir} directory does not exist...`, 'red');
                 deferred.resolve();
