@@ -22,7 +22,12 @@ config.output = {
 
 config.resolve = {
     extensions: ['.js', '.jsx', '.json'],
-    alias: config.externalModulePaths
+    alias: config.externalModulePaths,
+    modules: [_v.path.resolve(_v.baseDir, "node_modules"), "node_modules"]
+};
+
+config.resolveLoader = {
+    modules: [_v.path.resolve(_v.baseDir, "node_modules")]
 };
 
 config.module = {};
@@ -51,11 +56,11 @@ config.module.rules = [
                 loader: 'babel-loader',
                 options: {
                     presets: [
-                        ['es2015', {"modules": false}],
-                        'react'
+                        [_v.path.resolve(_v.baseDir, "node_modules/babel-preset-es2015"), {"modules": false}],
+                        _v.path.resolve(_v.baseDir, "node_modules/babel-preset-react")
                     ],
                     plugins: [
-                        "react-hot-loader/babel"
+                        _v.path.resolve(_v.baseDir, "node_modules/react-hot-loader/babel")
                     ],
                     babelrc: false,
                 }
@@ -64,8 +69,8 @@ config.module.rules = [
                 loader: 'babel-loader',
                 options: {
                     presets: [
-                        ['es2015', {"modules": false}],
-                        'react'
+                        [_v.path.resolve(_v.baseDir, "node_modules/babel-preset-es2015"), {"modules": false}],
+                        _v.path.resolve(_v.baseDir, "node_modules/babel-preset-react")
                     ],
                     babelrc: false
                 }
