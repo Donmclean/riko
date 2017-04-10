@@ -120,8 +120,6 @@ module.exports = () => {
             case 'test':
             case 'development': {
                 //ELECTRON DEV MODE
-                console.log('${_v.cwd}: ', `${_v.cwd}`);
-                console.log('${_v.baseDir}: ', `${_v.baseDir}`);
                 newPlugins = config.plugins.concat([new _v.WebpackShellPlugin({
                     onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
                 })]);
@@ -140,8 +138,18 @@ module.exports = () => {
         funcs.genericLog('To launch your Electron app on MAC be sure include "darwin" as an option to "platform" in your rikoconfig.js "electronPackagingOptions"', 'red');
     };
 
-    funcs.readFilesInDirectorySync = (path) => {
-        return _v.fs.readdirSync(path).filter((file) => file !== '.DS_Store')
+    funcs.readFilesInDirectorySync = (path) => _v.fs.readdirSync(path).filter((file) => file !== '.DS_Store');
+
+    funcs.regexReplaceCustomBoilerplateString = (content, fileName) => content.replace(/<:rikofilename:>/g, _v.path.basename(fileName.split('.')[0], _v.path.extname(fileName)));
+
+    funcs.readReplaceAndWriteFilesToNewDirAsync = (fileName, sourceFilePath, newFilePath) => {
+        return _v.qfs.read(sourceFilePath)
+            .then((content) => {
+                const editedContent = funcs.regexReplaceCustomBoilerplateString(content, fileName);
+                const editedFilePath = funcs.regexReplaceCustomBoilerplateString(newFilePath, fileName);
+                funcs.genericLog(`Creating ${editedFilePath}`);
+                return _v.qfs.write(editedFilePath, editedContent);
+            })
     };
 
     funcs.assignEnvironmentVariablesBasedOnRunCommand = (runCommand) => {
@@ -154,12 +162,16 @@ module.exports = () => {
                 process.env.NODE_ENV = 'production';
                 break;
             }
+            case !_v._.isEmpty(runCommand.match(/-test\b/)): {
+                process.env.NODE_ENV = 'test';
+                break;
+            }
             default: {
                 break;
             }
         }
 
-        process.env.ELECTRON = (runCommand === 'electron-dev' || runCommand === 'electron-prod');
+        process.env.ELECTRON = !_v._.isEmpty(runCommand.match(/electron\b/));
 
         console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
         console.log('process.env.ELECTRON:', process.env.ELECTRON);
@@ -183,13 +195,21 @@ module.exports = () => {
     };
 
     funcs.executeJestTests = (silent = false) => {
-        const customJestConfig = funcs.getFileIfExists(`${_v.cwd}/jestconfig.js`);
+        const customJestConfig = funcs.getFileIfExists(`${_v.cwd}/jestconfig.js`)(_v.cwd);
+
+        const baseDirFiles = funcs.readFilesInDirectorySync(_v.baseDir)
+            .filter((file) => file !== 'node_modules')
+            .map((file) => `<rootDir>/${file}/`);
+
+        // console.log('baseDirFiles: ', baseDirFiles);
 
         const defaultJestConfig = {
             "rootDir": `${_v.baseDir}`,
             "transform": {
                 ".*": `${_v.baseDir}/node_modules/babel-jest`
-            }
+            },
+            "moduleDirectories": ['node_modules'].concat(customJestConfig.moduleDirectories || []),
+            "testPathIgnorePatterns": ['<rootDir>/bin/'] //baseDirFiles.concat(customJestConfig.testPathIgnorePatterns || [])
         };
 
         const jestconfig = Object.assign({}, customJestConfig, defaultJestConfig);

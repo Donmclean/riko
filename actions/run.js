@@ -67,7 +67,7 @@ module.exports = (runCommand) => {
                 stats
             }).listen(customConfig.EXPRESS_PORT, 'localhost', (err) => {
                 if (err) { console.log(err); }
-                console.log(`Listening at localhost: ${customConfig.EXPRESS_PORT}`);
+                funcs.genericLog(`Listening at localhost: ${customConfig.EXPRESS_PORT}`);
                 funcs.onDevBuildActions(customConfig);
             });
 
@@ -83,7 +83,7 @@ module.exports = (runCommand) => {
         }
         default: {
 
-            console.log('JSON.parse(process.env.ELECTRON): ', JSON.parse(process.env.ELECTRON));
+            funcs.genericLog(`JSON.parse(process.env.ELECTRON): ${JSON.parse(process.env.ELECTRON)}`);
 
             if(JSON.parse(process.env.ELECTRON)) {
                 return _v.webpack(config, () => {
@@ -96,7 +96,7 @@ module.exports = (runCommand) => {
                         }
 
                         funcs.removeDir(customConfig.tempDir).then(() => {
-                            console.log(customConfig.electronPackagingOptions.name + " build successfully!");
+                            funcs.genericLog(`${customConfig.electronPackagingOptions.name} build successfully!`);
                         });
                     });
                 });
@@ -111,13 +111,13 @@ module.exports = (runCommand) => {
             _v.app.listen(customConfig.EXPRESS_PORT);
 
             _v.app.use((err, req, res, next) => {
-                console.error("ERROR --> : ", err.stack);
+                funcs.genericLog(`ERROR --> : ${err.stack}`);
                 next(err);
             });
 
-            const isLiveServer = (runCommand === 'web-prod-server');
+            const isProdServer = (runCommand === 'web-prod-server');
 
-            if(isLiveServer) {
+            if(isProdServer) {
                 funcs.genericLog('Listening on port: ' + customConfig.EXPRESS_PORT, 'yellow');
             } else {
                 funcs.genericLog('Launching Browser Sync proxy of port: ' + customConfig.EXPRESS_PORT, 'yellow');
