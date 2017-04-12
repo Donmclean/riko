@@ -22,12 +22,16 @@ module.exports = () => {
     vars.spawn                  = require('child_process').spawn;
     vars.spawnSync              = require('child_process').spawnSync;
     vars.chokidar               = require('chokidar');
+    vars.isGitInitialized       = vars.fs.readdirSync(vars.cwd).includes('.git') ? (vars.fs.readdirSync(`${vars.cwd}/.git/objects`).length > 2) : false;
 
-    try {
-        vars.GIT_VERSION        = require('child_process').execSync('git rev-parse HEAD').toString().trim();
-        vars.GIT_VERSION_SHORT  = require('child_process').execSync('git rev-parse --short HEAD').toString().trim();
-    } catch (err) {
-        console.error("git is not initialized...");
+    if(vars.isGitInitialized) {
+        try {
+            vars.GIT_VERSION        = require('child_process').execSync('git rev-parse HEAD').toString().trim();
+            vars.GIT_VERSION_SHORT  = require('child_process').execSync('git rev-parse --short HEAD').toString().trim();
+        } catch (err) {
+            console.error('ERROR > ', err);
+        }
+    } else {
         vars.GIT_VERSION        = 'GIT_VERSION';
         vars.GIT_VERSION_SHORT  = 'UNKNOWN_GIT_VERSION_SHORT';
     }

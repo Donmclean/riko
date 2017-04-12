@@ -27,7 +27,7 @@ config.resolve = {
 };
 
 config.resolveLoader = {
-    modules: [_v.path.resolve(_v.baseDir, "node_modules")]
+    modules: [_v.path.resolve(_v.baseDir, "node_modules"), "node_modules"]
 };
 
 config.module = {};
@@ -48,33 +48,10 @@ config.module.rules = [
     {
         test: /\.jsx$|\.js$/,
         exclude: /(node_modules|vendor|bower_components)/,
-        use: process.env.NODE_ENV === 'development' ? [
-            {
-                loader: 'react-hot-loader/webpack'
-            },
-            {
-                loader: 'babel-loader',
-                options: {
-                    presets: [
-                        [_v.path.resolve(_v.baseDir, "node_modules/babel-preset-es2015"), {"modules": false}],
-                        _v.path.resolve(_v.baseDir, "node_modules/babel-preset-react")
-                    ],
-                    plugins: [
-                        _v.path.resolve(_v.baseDir, "node_modules/react-hot-loader/babel")
-                    ],
-                    babelrc: false,
-                }
-            },
-        ] : [{
-                loader: 'babel-loader',
-                options: {
-                    presets: [
-                        [_v.path.resolve(_v.baseDir, "node_modules/babel-preset-es2015"), {"modules": false}],
-                        _v.path.resolve(_v.baseDir, "node_modules/babel-preset-react")
-                    ],
-                    babelrc: false
-                }
-            }]
+        loaders: process.env.NODE_ENV === 'development' ? [
+            'react-hot-loader/webpack',
+            'babel-loader'
+        ] : ['babel-loader']
     },
     //TYPESCRIPT TODO: add this functionality
     // {

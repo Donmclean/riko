@@ -11,6 +11,8 @@ module.exports = (runCommand) => {
     const customConfig = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`);
     const config = require('../webpack.config');
 
+    //TODO: validate customConfig Here
+
     switch (runCommand) {
         case 'electron-server': {
             _v.qfs.list(customConfig.destDir).then((files) => {

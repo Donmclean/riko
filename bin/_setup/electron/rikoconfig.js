@@ -29,7 +29,7 @@ config.EXPRESS_ROOT             = config.destDir;
 
 config.eslintConfig             = config.srcDir+'/__linters/.eslintrc.js';
 config.stylelintConfig          = config.srcDir+'/__linters/stylelint.config.js';
-config.packageJson              = baseDir+'/package.json';
+config.packageJson              = require(baseDir+'/package.json');
 config.nightwatchConfig         = baseDir+'/nightwatchconfig.js';
 
 config.srcFiles                 = [
@@ -215,8 +215,9 @@ config.externalModules = {
 config.browserstackUsername = 'browserstackuser';
 config.browserstackAccessKey = 'browserstackkey';
 
-//Enable this to have tests execute on every webpack rebuild.
-config.hotExecuteTests = true;
+//Provide an npm package.json script command here to have tests execute on every webpack rebuild.
+//i.e: 'test' would execute as 'npm run test' or 'hot-test' as 'npm run hot-test'
+config.hotExecuteTestCommand = 'test';
 
 //**********************************************************************
 //*******************************EXTRAS*********************************

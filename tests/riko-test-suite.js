@@ -106,8 +106,8 @@
 //             assert.isFunction(functions.executeJestTests);
 //         });
 //
-//         it('runFlow should exist and be a function', () => {
-//             assert.isFunction(functions.runFlow);
+//         it('executeFlowTests should exist and be a function', () => {
+//             assert.isFunction(functions.executeFlowTests);
 //         });
 //     });
 //

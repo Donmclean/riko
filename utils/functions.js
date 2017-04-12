@@ -24,8 +24,8 @@ module.exports = () => {
         try {
             file = require(`${path}`);
         } catch (err) {
-            funcs.genericLog(`ERROR: no ${_v.path.basename(path)} file found in src/ directory`);
-            throw new Error(`ERROR: no ${_v.path.basename(path)} file found in src/ directory`, err);
+            funcs.genericLog(`ERROR: requiring ${_v.path.basename(path)} in ${_v.path.dirname(path)} directory \n ${err}`);
+            throw new Error(err);
         }
 
         return file;
@@ -183,43 +183,39 @@ module.exports = () => {
         const watcher = _v.chokidar.watch(customConfig.srcFiles, {ignored: /[\/\\]\./});
 
         watcher.on('change', () => {
-            const spawn = customConfig.hotExecuteTests ? funcs.executeJestTests() : null;
 
-            if(spawn) {
-                spawn.on('close', funcs.runFlow);
+            let spawn;
+
+            if(!_v._.isEmpty(customConfig.hotExecuteTestCommand)) {
+                spawn = funcs.executeJestTests(customConfig.packageJson, customConfig.hotExecuteTestCommand);
+            }
+
+            if(spawn || _v._.isEmpty(customConfig.hotExecuteTestCommand)) {
+                spawn.on('close', funcs.executeFlowTests);
             }
         });
 
-        const spawn = funcs.executeJestTests();
-        spawn.on('close', funcs.runFlow);
+        const spawn = funcs.executeJestTests(customConfig.packageJson, customConfig.hotExecuteTestCommand);
+        spawn.on('close', funcs.executeFlowTests);
     };
 
-    funcs.executeJestTests = (silent = false) => {
-        const customJestConfig = funcs.getFileIfExists(`${_v.cwd}/jestconfig.js`)(_v.cwd);
+    funcs.executeJestTests = (packageJson, customTestCommand) => {
+        const isValidCommand = _v._
+            .chain(packageJson.scripts)
+            .keys()
+            .includes(customTestCommand)
+            .value();
 
-        const baseDirFiles = funcs.readFilesInDirectorySync(_v.baseDir)
-            .filter((file) => file !== 'node_modules')
-            .map((file) => `<rootDir>/${file}/`);
-
-        // console.log('baseDirFiles: ', baseDirFiles);
-
-        const defaultJestConfig = {
-            "rootDir": `${_v.baseDir}`,
-            "transform": {
-                ".*": `${_v.baseDir}/node_modules/babel-jest`
-            },
-            "moduleDirectories": ['node_modules'].concat(customJestConfig.moduleDirectories || []),
-            "testPathIgnorePatterns": ['<rootDir>/bin/'] //baseDirFiles.concat(customJestConfig.testPathIgnorePatterns || [])
-        };
-
-        const jestconfig = Object.assign({}, customJestConfig, defaultJestConfig);
-
-        return _v.spawn(
-            `${_v.baseDir}/node_modules/.bin/jest`, ['-o', '--config', `${JSON.stringify(jestconfig)}`], silent ? {} : {stdio: 'inherit'}
-        );
+        if(isValidCommand) {
+            return _v.spawn('npm', ['run', customTestCommand], {stdio: 'inherit'});
+        } else {
+            funcs.genericLog(`Invalid command. Make sure the hot execute test command you're trying to execute lives in your package.json
+             under 'scripts'.`, 'red');
+            throw new Error('Invalid npm script command. see config.hotExecuteTestCommand in rikoconfig.js file');
+        }
     };
 
-    funcs.runFlow = () => {
+    funcs.executeFlowTests = () => {
         const { qfs, cwd, _ } = _v;
 
         funcs.genericLog('executing flow...');

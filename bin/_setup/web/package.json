@@ -11,9 +11,9 @@
     "electron-prod": "NODE_ENV=production ELECTRON=true node server.js",
     "prod": "NODE_ENV=production webpack",
     "flow": "flow check",
-    "test": "npm run test-build && gulp lint-src && npm run test-jest",
-    "test-jest": "NODE_ENV=test jest --config ./jestconfig.json --coverage",
-    "test-jest-watch": "NODE_ENV=test jest -o --config ./jestconfig.json",
+    "test": "BABEL_ENV=test jest --config ./jestconfig.json",
+    "test-jest": "BABEL_ENV=test jest --config ./jestconfig.json --coverage",
+    "test-jest-hot": "BABEL_ENV=test jest -o --config ./jestconfig.json",
     "test-build": "gulp lint-build && NODE_ENV=production mocha test-riko/riko.spec.js",
     "test-selenium": "gulp run-selenium-tests",
     "server": "NODE_ENV=production babel-node server.js",
@@ -24,5 +24,11 @@
   "dependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "babel-jest": "^19.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "jest": "^19.0.2"
   }
 }
