@@ -2,6 +2,16 @@
 module.exports = () => {
     const vars = {};
 
+    //TODO: create a module for this
+    //- hash map vars to {value: something, RequireType: '<string><options..>'}
+    // const valueRetrievalOptions = {
+    //     direct: (value) => value,
+    //     require: (value) => require(value),
+    //     requireCall: (value) => require(value)(),
+    //     requireValueKey: (value, key) => require(value)[key],
+    //     requireValueCall: (value) => require(value)[key]()
+    // };
+
     vars.argv                   = require('yargs');
     vars.$                      = require('gulp-load-plugins')();
     vars.cwd                    = process.cwd();
@@ -61,6 +71,7 @@ module.exports = () => {
     vars.electronPackager       = require('electron-packager');
     vars.browserSync            = require('browser-sync');
     vars.nodemon                = require('nodemon');
+    vars.inquirer               = require('inquirer');
 
     //NODE VARS
     vars.isMAC                  = (process.env._system_type === 'Darwin');

@@ -1,9 +1,9 @@
 const
-    _v              = require('./utils/variables')(),
-    funcs           = require('./utils/functions')(),
-    customConfig    = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`),
-    config          = {},
-    indexJSFile     = require('./utils/index')(customConfig);
+    _v                          = require('./utils/variables')(),
+    funcs                       = require('./utils/functions')(),
+    customConfig                = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`),
+    config                      = {},
+    options                     = require('./utils/options')(customConfig);
 
 //CONFIGURATION
 config.context = customConfig.srcDir;
@@ -105,7 +105,7 @@ const runtimeConfigs = _v._
 
 if(customConfig.requiresTemplate) {
     config.plugins = config.plugins.concat([
-        new _v.HtmlWebpackPlugin(indexJSFile),
+        new _v.HtmlWebpackPlugin(options.htmlWebpackPluginOptions),
         new _v.StyleLintPlugin({
             configFile: customConfig.stylelintConfig,
             files: [

@@ -18,6 +18,11 @@ module.exports = () => {
 
     funcs.sanitizeString = (str) => str.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
+    funcs.sortObjByOwnKeys = (obj) => Object.keys(obj).sort().reduce((accObj, key) => {
+        accObj[key] = obj[key];
+        return accObj;
+    }, {});
+
     funcs.getFileIfExists = (path) => {
         let file = null;
 
@@ -110,19 +115,23 @@ module.exports = () => {
         switch (process.env.NODE_ENV) {
             case 'production': {
                 //COPY ADDITIONAL ELECTRON FILES TO TEMP DIR
-                newPlugins = config.plugins.concat([new _v.CopyWebpackPlugin([
-                    { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
-                    { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
-                    { from: customConfig.electronPackagingOptions.icon, to: customConfig.tempDir }
-                ])]);
+                newPlugins = config.plugins.concat([
+                    new _v.CopyWebpackPlugin([
+                        { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
+                        { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
+                        { from: customConfig.electronPackagingOptions.icon, to: customConfig.tempDir }
+                    ])
+                ]);
                 break;
             }
             case 'test':
             case 'development': {
                 //ELECTRON DEV MODE
-                newPlugins = config.plugins.concat([new _v.WebpackShellPlugin({
-                    onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
-                })]);
+                newPlugins = config.plugins.concat([
+                    new _v.WebpackShellPlugin({
+                        onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
+                    })
+                ]);
                 break;
             }
             default: {
@@ -207,6 +216,7 @@ module.exports = () => {
             .value();
 
         if(isValidCommand) {
+            funcs.genericLog('Executing Tests...');
             return _v.spawn('npm', ['run', customTestCommand], {stdio: 'inherit'});
         } else {
             funcs.genericLog(`Invalid command. Make sure the hot execute test command you're trying to execute lives in your package.json
@@ -218,7 +228,7 @@ module.exports = () => {
     funcs.executeFlowTests = () => {
         const { qfs, cwd, _ } = _v;
 
-        funcs.genericLog('executing flow...');
+        funcs.genericLog('Executing Flow...');
 
         return qfs.list(cwd).then((files) => {
             if(_.includes(files, '.flowconfig')) {

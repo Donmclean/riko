@@ -3,7 +3,7 @@ const
     funcs   = require('../utils/functions')();
 
 module.exports = (actionType, projectType, projectName) => {
-    const { $, qfs, cwd, baseDir } = _v;
+    const { $, qfs, cwd, baseDir, packageJson } = _v;
     const logSuccess = () => funcs.genericLog(`${$.util.colors.blue(projectName)} was setup ${$.util.colors.green('successfully')}`);
 
     return qfs.list(cwd)
@@ -16,6 +16,18 @@ module.exports = (actionType, projectType, projectName) => {
                     case 'electron': {
                         qfs.copyTree(`${baseDir}/bin/_${actionType}/web`, `${cwd}/${projectName}`)
                             .then(() => qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}/src`))
+                            .then(() => qfs.read(`${cwd}/${projectName}/package.json`))
+                            .then((customPackageJson) => {
+                                const packageJsonObj = JSON.parse(customPackageJson);
+                                packageJsonObj.devDependencies = Object.assign(
+                                    {},
+                                    packageJsonObj.devDependencies,
+                                    {electron: packageJson.dependencies.electron}
+                                );
+                                packageJsonObj.devDependencies = funcs.sortObjByOwnKeys(packageJsonObj.devDependencies);
+                                return packageJsonObj;
+                            })
+                            .then((packageJsonObj) => qfs.write(`${cwd}/${projectName}/package.json`, JSON.stringify(packageJsonObj, null, "\t")))
                             .then(() => logSuccess())
                             .catch((err) => funcs.genericLog(err, 'red'));
                         break;

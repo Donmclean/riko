@@ -19,11 +19,28 @@ program
         funcs.genericLog(packageJson.version);
     });
 
+//INITIALIZE
+program
+    .command('init')
+    .alias('i')
+    .description('Initializes a new project via interactive command prompts.')
+    .action(() => {
+        cmds.init({
+            _: 'init'
+        });
+    }).on('--help', () => {
+    console.log('  Examples:');
+    console.log();
+    console.log('    $ init');
+    console.log('    $ i');
+    console.log();
+});
+
 //SETUP
 program
     .command('setup <project-type> <project-name>')
     .alias('s')
-    .description('Initializes a new project.')
+    .description('Initializes a new project with default options.')
     .action((projectType, projectName) => {
         cmds.setup({
             _: 'setup',
