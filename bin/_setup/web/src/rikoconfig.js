@@ -14,7 +14,7 @@ config.stylelintConfig          = 'stylelint.config.js';
 config.nightwatchConfig         = 'nightwatchconfig.js';
 
 config.faviconPath              = 'src/media/images/riko-favicon.png';
-config.EntryFile                = 'src/js/riko.js';
+config.entryFile                = 'src/js/riko.js';
 
 // IMPORTANT!!! (THESE PATHS SHOULD BE RELATIVE TO OUTPUT OR DESTINATION DIRECTORY)
 // ALSO DO NOT ADD LEADING/TRAILING SLASHES '/'

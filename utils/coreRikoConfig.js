@@ -35,7 +35,7 @@ const requiredPaths = [
     'nightwatchConfig',
 
     'faviconPath',
-    'EntryFile',
+    'entryFile',
 
     // 'js_output_path',
     // 'media_audio_output_path',

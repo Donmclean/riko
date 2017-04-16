@@ -29,7 +29,6 @@ module.exports = (argv) => {
     _v.inquirer.prompt(defaultQuestions)
         .then((answers) => {
             const { projectType, projectName } = answers;
-            console.log('answers: ', answers);
             actions.setup('setup', projectType, projectName);
         })
         .catch((err) => {
