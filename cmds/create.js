@@ -8,7 +8,7 @@ module.exports = (argv) => {
     const defaultBoilerplatePath = `${baseDir}/bin/_create`;
     const defaultOptions = funcs.readFilesInDirectorySync(defaultBoilerplatePath);
 
-    const customConfig = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`);
+    const customConfig = require('../utils/coreRikoConfig'); //funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`);
     let customOptions;
 
     try {

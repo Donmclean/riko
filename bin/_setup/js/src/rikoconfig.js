@@ -1,36 +1,20 @@
-const config = {};
-
-//**********************************************************************
-//*******************************CORE***********************************
-//**********************************************************************
-
-const path                      = require('path');
-
-//Root Directory
-const baseDir                   = path.resolve(__dirname, '../'); //IMPORTANT! DO NOT OVERRIDE!
-
-config.baseDir                  = baseDir; //IMPORTANT! DO NOT OVERRIDE!
-
-//Source Directory
-config.srcDir                   = baseDir+"/src"; //IMPORTANT! DO NOT OVERRIDE!
-
 //**********************************************************************
 //******************************CUSTOM**********************************
 //**********************************************************************
 //IMPORTANT! All paths/directories should be relative to 'baseDir' unless specified otherwise.
 // eg: baseDir+'/path'
+const config = {};
 
-config.moduleName               = 'riko';
+config.moduleName               = 'index';
 config.destDir                  = baseDir+"/dist";
 config.tempDir                  = baseDir+"/temp";
 
+config.eslintConfig             = '.eslintrc.js';
+config.stylelintConfig          = 'stylelint.config.js';
+config.nightwatchConfig         = 'nightwatchconfig.js';
+
 config.EXPRESS_PORT             = 3000;
 config.EXPRESS_ROOT             = config.destDir;
-
-config.eslintConfig             = config.srcDir+'/__linters/.eslintrc.js';
-config.stylelintConfig          = config.srcDir+'/__linters/stylelint.config.js';
-config.packageJson              = require(baseDir+'/package.json');
-config.nightwatchConfig         = baseDir+'/nightwatchconfig.js';
 
 config.srcFiles                 = [
     config.srcDir+'/**/*.js?(x)',

@@ -16,6 +16,19 @@ module.exports = () => {
 
     funcs.folderAlreadyPresent = (files, folderName) => _v._.includes(files, folderName);
 
+    funcs.sanitizePath = (base, path) => {
+        let resolvedPath;
+
+        try {
+            resolvedPath = _v.path.resolve(base, path);
+        } catch (err) {
+            funcs.genericLog(`${path} cannot be resolved`, 'red');
+            throw new Error(`cannot find ${path} to resolve`);
+        }
+
+        return resolvedPath;
+    };
+
     funcs.sanitizeString = (str) => str.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
     funcs.sortObjByOwnKeys = (obj) => Object.keys(obj).sort().reduce((accObj, key) => {
@@ -29,7 +42,7 @@ module.exports = () => {
         try {
             file = require(`${path}`);
         } catch (err) {
-            funcs.genericLog(`ERROR: requiring ${_v.path.basename(path)} in ${_v.path.dirname(path)} directory \n ${err}`);
+            funcs.genericLog(`ERROR: requiring ${_v.path.basename(path)} in ${_v.path.dirname(path)} directory \n ${err}`, 'red');
             throw new Error(err);
         }
 

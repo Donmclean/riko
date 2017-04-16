@@ -3,7 +3,7 @@ module.exports = (customConfig) => {
     const htmlWebpackPluginOptions = {};
 
     htmlWebpackPluginOptions.template    = customConfig.template_src_path;
-    htmlWebpackPluginOptions.favicon     = customConfig.media_favicon_path;
+    htmlWebpackPluginOptions.favicon     = customConfig.faviconPath;
     htmlWebpackPluginOptions.inject      = "body";
     htmlWebpackPluginOptions.hash        = true;
     htmlWebpackPluginOptions.cache       = true; //default

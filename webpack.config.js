@@ -1,7 +1,7 @@
 const
     _v                          = require('./utils/variables')(),
     funcs                       = require('./utils/functions')(),
-    customConfig                = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`),
+    customConfig                = require('./utils/coreRikoConfig'),
     config                      = {},
     options                     = require('./utils/options')(customConfig);
 
@@ -12,7 +12,7 @@ config.context = customConfig.srcDir;
 // process.traceDeprecation = true;
 
 config.entry = {};
-config.entry[customConfig.moduleName] = [customConfig.js_main_entry_path];
+config.entry[customConfig.moduleName] = [customConfig.entryFile];
 
 config.output = {
     filename: '[name].js?[hash]',
@@ -41,7 +41,7 @@ config.module.rules = [
         use: [{
             loader: 'eslint-loader',
             options: {
-                configFile: customConfig.srcDir+'/__linters/.eslintrc.js'
+                configFile: customConfig.eslintConfig
             }
         }]
     },
@@ -223,7 +223,7 @@ switch (process.env.NODE_ENV) {
 
         config.plugins = config.plugins.concat([
             new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourceMap: customConfig.sourcemapProd }),
-            new _v.webpack.optimize.CommonsChunkPlugin({name: customConfig.moduleName, filename: customConfig.js_output_path + '/' + customConfig.js_main_file_name + '?[hash]'}),
+            new _v.webpack.optimize.CommonsChunkPlugin({name: customConfig.moduleName, filename: customConfig.js_output_path + '/' + config.output.filename}),
             new _v.webpack.ProvidePlugin(customConfig.externalModules),
             new _v.ExtractTextPlugin({filename: customConfig.styles_main_file_name + '?[hash]', allChunks: true}),
 

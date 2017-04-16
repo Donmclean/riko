@@ -8,7 +8,7 @@ module.exports = (runCommand) => {
     //handle environment variables
     funcs.assignEnvironmentVariablesBasedOnRunCommand(runCommand);
 
-    const customConfig = funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`);
+    const customConfig = require('../utils/coreRikoConfig');
     const config = require('../webpack.config');
 
     //TODO: validate customConfig Here

@@ -1,43 +1,39 @@
+//**********************************************************************
+//*******************************PATHS**********************************
+//**********************************************************************
+//IMPORTANT! All paths/directories should be relative to 'BASE DIRECTORY' unless specified otherwise.
+//BASE DIRECTORY is same location as package.json file.
 const config = {};
 
-//**********************************************************************
-//*******************************CORE***********************************
-//**********************************************************************
-
-const path                      = require('path');
-
-//Root Directory
-const baseDir                   = path.resolve(__dirname, '../'); //IMPORTANT! DO NOT OVERRIDE!
-
-config.baseDir                  = baseDir; //IMPORTANT! DO NOT OVERRIDE!
-
-//Source Directory
-config.srcDir                   = baseDir+"/src"; //IMPORTANT! DO NOT OVERRIDE!
-
-//**********************************************************************
-//******************************CUSTOM**********************************
-//**********************************************************************
-//IMPORTANT! All paths/directories should be relative to 'baseDir' unless specified otherwise.
-// eg: baseDir+'/path'
-
 config.moduleName               = 'riko';
-config.destDir                  = baseDir+"/dist";
-config.tempDir                  = baseDir+"/temp";
+
+config.destDir                  = 'dist';
+config.tempDir                  = 'temp';
+config.eslintConfig             = '.eslintrc.js';
+config.stylelintConfig          = 'stylelint.config.js';
+config.nightwatchConfig         = 'nightwatchconfig.js';
+
+config.faviconPath              = 'src/media/images/riko-favicon.png';
+config.entryFile                = 'src/js/riko.js';
+
+// IMPORTANT!!! (THESE PATHS SHOULD BE RELATIVE TO OUTPUT OR DESTINATION DIRECTORY)
+// ALSO DO NOT ADD LEADING/TRAILING SLASHES '/'
+// eg: /assets/audio NOR eg: assets/audio/
+
+config.js_output_path           = 'assets/js';
+config.media_audio_output_path  = 'assets/audio';
+config.media_files_output_path  = 'assets/files'; //pdfs, docs, etc
+config.media_fonts_output_path  = 'assets/fonts';
+config.media_images_output_path = 'assets/images';
+config.media_video_output_path  = 'assets/video';
+
+config.styles_main_file_name    = 'styles.min.css';
+
+config.template_main_file_name  = 'index.html';
+config.template_stats_file_name = '';
+config.template_src_path        = 'src/templates/index.pug';
 
 config.EXPRESS_PORT             = 3000;
-config.EXPRESS_ROOT             = config.destDir;
-
-config.eslintConfig             = config.srcDir+'/__linters/.eslintrc.js';
-config.stylelintConfig          = config.srcDir+'/__linters/stylelint.config.js';
-config.packageJson              = require(baseDir+'/package.json');
-config.nightwatchConfig         = baseDir+'/nightwatchconfig.js';
-
-config.srcFiles                 = [
-    config.srcDir+'/**/*.js?(x)',
-    '!'+config.srcDir+'/rikoconfig.js',
-    '!'+config.srcDir+'/vendor/**/*.js',
-    '!'+config.srcDir+'/__tests__utils/**/*.js'
-];
 
 //**********************************************************************
 //*******************************PACKAGER*******************************
@@ -73,11 +69,6 @@ config.electronPackagingOptions.out         = config.destDir;
 //**********************************************************************
 //********************************JS************************************
 //**********************************************************************
-
-config.js_main_file_name        = config.moduleName+'.js';
-config.js_main_entry_path       = config.srcDir+'/js/'+config.js_main_file_name;
-config.js_output_path           = 'assets/js';
-
 config.js_external_scripts      = [
     {
         src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
@@ -109,7 +100,6 @@ config.js_runtime_configs      = [
 //**********************************************************************
 //*******************************STYLES*********************************
 //**********************************************************************
-config.styles_main_file_name        = 'styles.min.css';
 
 config.styles_external_stylesheets  = [
     'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
@@ -121,10 +111,6 @@ config.styles_external_stylesheets  = [
 //IMPORTANT!!! this should only be enabled if building an html web app
 //disable this if creating a non-html based project
 config.requiresTemplate         = true;
-
-config.template_main_file_name  = 'index.html';
-config.template_stats_file_name = '';
-config.template_src_path        = config.srcDir+'/templates/index.pug';
 
 //if you're using a custom template engine 'OTHER THAN' pug or html
 //add as string below.
@@ -140,18 +126,6 @@ config.gaPageViewOnLoad         = true;
 //**********************************************************************
 //********************************MEDIA*********************************
 //**********************************************************************
-
-// IMPORTANT!!! (THESE ARE ALREADY RELATIVE TO OUTPUT OR DESTINATION)
-// ALSO DO NOT ADD TRAILING SLASH '/' eg: assets/audio/
-
-config.media_audio_output_path  = 'assets/audio';
-config.media_files_output_path  = 'assets/files'; //pdfs, docs, etc
-config.media_fonts_output_path  = 'assets/fonts';
-config.media_images_output_path = 'assets/images';
-config.media_video_output_path  = 'assets/video';
-
-// IMPORTANT!!! Use absolute path here.
-config.media_favicon_path       = config.srcDir+'/media/images/riko-favicon.png';
 
 //Image optimization options
 //See: https://github.com/Klathmon/imagemin-webpack-plugin
@@ -237,7 +211,6 @@ config.sourcemapProd = true;
 //IMPORTANT! this is only recommend if you're debugging a specific device or not using sourcemaps.
 config.enableRemoteDebugging   = false;
 
-
 config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix all
 
 config.hotReloadingOptions     = {
@@ -261,6 +234,6 @@ config.enableWebpackVisualizer = true;
 
 //specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
 //must be an absolute path.
-config.customBoilerplatePath = `${config.srcDir}/riko-custom-boilerplates`;
+config.customBoilerplatePath = 'src/riko-custom-boilerplates';
 
 module.exports = config;

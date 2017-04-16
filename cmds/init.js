@@ -4,7 +4,7 @@ const
     actions = require('../actions/_index');
 
 module.exports = (argv) => {
-    const { $, qfs, cwd, baseDir, _ } = _v;
+    const { $, baseDir, _ } = _v;
 
     const defaultSetupOptionsPath = `${baseDir}/bin/_setup`;
     const projectTypes = funcs.readFilesInDirectorySync(defaultSetupOptionsPath);
