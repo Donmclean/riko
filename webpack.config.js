@@ -12,7 +12,7 @@ config.context = customConfig.srcDir;
 // process.traceDeprecation = true;
 
 config.entry = {};
-config.entry[customConfig.moduleName] = [customConfig.entryFile];
+config.entry[customConfig.title] = [customConfig.entryFile];
 
 config.output = {
     filename: '[name].js?[hash]',
@@ -63,11 +63,6 @@ config.module.rules = [
         test: /\.pug$/,
         exclude: /(node_modules|bower_components)/,
         loaders: ['pug-loader']
-    },
-    //TEMPLATES (OTHER)
-    {
-        test: /\.(ejs|mustache|hbs|handlebars)$/,
-        loader: "template-html-loader"+ !_v._.isEmpty(customConfig.template_engine) ? '?engine='+customConfig.template_engine : ''
     },
     //IMAGES
     {
@@ -223,9 +218,9 @@ switch (process.env.NODE_ENV) {
 
         config.plugins = config.plugins.concat([
             new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourceMap: customConfig.sourcemapProd }),
-            new _v.webpack.optimize.CommonsChunkPlugin({name: customConfig.moduleName, filename: customConfig.js_output_path + '/' + config.output.filename}),
+            new _v.webpack.optimize.CommonsChunkPlugin({name: customConfig.title, filename: customConfig.js_output_path + '/' + config.output.filename}),
             new _v.webpack.ProvidePlugin(customConfig.externalModules),
-            new _v.ExtractTextPlugin({filename: customConfig.styles_main_file_name + '?[hash]', allChunks: true}),
+            new _v.ExtractTextPlugin({filename: customConfig.css_output_path + '/' + customConfig.styles_main_file_name + '?[hash]', allChunks: true}),
 
             //Image optimization options | imagemin-webpack-plugin
             //https://github.com/Klathmon/imagemin-webpack-plugin

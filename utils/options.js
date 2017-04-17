@@ -2,7 +2,8 @@
 module.exports = (customConfig) => {
     const htmlWebpackPluginOptions = {};
 
-    htmlWebpackPluginOptions.template    = customConfig.template_src_path;
+    htmlWebpackPluginOptions.title       = customConfig.title;
+    htmlWebpackPluginOptions.template    = customConfig.templateFile;
     htmlWebpackPluginOptions.favicon     = customConfig.faviconPath;
     htmlWebpackPluginOptions.inject      = "body";
     htmlWebpackPluginOptions.hash        = true;
@@ -10,9 +11,6 @@ module.exports = (customConfig) => {
     htmlWebpackPluginOptions.showErrors  = true; //default
     htmlWebpackPluginOptions.scripts     = customConfig.js_external_scripts;
     htmlWebpackPluginOptions.stylesheets = customConfig.styles_external_stylesheets;
-    htmlWebpackPluginOptions.googleAnalyticsEnabled          = customConfig.gaEnable;
-    htmlWebpackPluginOptions.googleAnalyticsTrackingId       = customConfig.gaTrackingId;
-    htmlWebpackPluginOptions.googleAnalyticsPageViewOnLoad   = customConfig.gaPageViewOnLoad;
 
     return {
         htmlWebpackPluginOptions

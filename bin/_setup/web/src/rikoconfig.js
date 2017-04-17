@@ -5,7 +5,7 @@
 //BASE DIRECTORY is same location as package.json file.
 const config = {};
 
-config.moduleName               = 'riko';
+config.title                    = 'riko';
 
 config.destDir                  = 'dist';
 config.tempDir                  = 'temp';
@@ -15,6 +15,7 @@ config.nightwatchConfig         = 'nightwatchconfig.js';
 
 config.faviconPath              = 'src/media/images/riko-favicon.png';
 config.entryFile                = 'src/js/riko.js';
+config.templateFile             = 'src/templates/index.pug';
 
 // IMPORTANT!!! (THESE PATHS SHOULD BE RELATIVE TO OUTPUT OR DESTINATION DIRECTORY)
 // ALSO DO NOT ADD LEADING/TRAILING SLASHES '/'
@@ -31,7 +32,6 @@ config.styles_main_file_name    = 'styles.min.css';
 
 config.template_main_file_name  = 'index.html';
 config.template_stats_file_name = '';
-config.template_src_path        = 'src/templates/index.pug';
 
 config.EXPRESS_PORT             = 3000;
 
@@ -70,17 +70,6 @@ config.styles_external_stylesheets  = [];
 //IMPORTANT!!! this should only be enabled if building an html web app
 //disable this if creating a non-html based project
 config.requiresTemplate         = true;
-
-//if you're using a custom template engine 'OTHER THAN' pug or html
-//add as string below.
-//https://www.npmjs.com/package/template-html-loader
-//https://github.com/tj/consolidate.js
-config.template_engine          = ''; //eg: hbs, handlebars, ejs, mustache
-
-//Google Analytics
-config.gaEnable                 = true;
-config.gaTrackingId             = 'UA-XXXXX-Y';
-config.gaPageViewOnLoad         = true;
 
 //**********************************************************************
 //********************************MEDIA*********************************

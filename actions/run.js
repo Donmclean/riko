@@ -23,7 +23,7 @@ module.exports = (runCommand) => {
 
                         if(macFile) {
                             //TODO: fix error here
-                            _v.spawn('open', [`-a`, `${customConfig.moduleName}`, `${_v.cwd}/${_v.path.basename(customConfig.destDir)}/${macFile}/${customConfig.moduleName}.app`], {stdio: 'inherit'});
+                            _v.spawn('open', [`-a`, `${customConfig.title}`, `${_v.cwd}/${_v.path.basename(customConfig.destDir)}/${macFile}/${customConfig.title}.app`], {stdio: 'inherit'});
                         } else {
                             funcs.logElectronRunServerError();
                         }
@@ -52,9 +52,9 @@ module.exports = (runCommand) => {
             //HOT RELOADING WITH WEBPACK DEV SERVER
             //*******************************************************************
 
-            config.entry[customConfig.moduleName].unshift('webpack/hot/dev-server');
-            config.entry[customConfig.moduleName].unshift(`webpack-dev-server/client?http://localhost:${customConfig.EXPRESS_PORT}`);
-            config.entry[customConfig.moduleName].unshift('react-hot-loader/patch');
+            config.entry[customConfig.title].unshift('webpack/hot/dev-server');
+            config.entry[customConfig.title].unshift(`webpack-dev-server/client?http://localhost:${customConfig.EXPRESS_PORT}`);
+            config.entry[customConfig.title].unshift('react-hot-loader/patch');
 
             const { overlay } = customConfig.hotReloadingOptions;
 

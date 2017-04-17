@@ -107,7 +107,6 @@
     "stylelint-webpack-plugin": "^0.6.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.4.0",
-    "template-html-loader": "^1.0.0",
     "url-loader": "^0.5.7",
     "vorlon": "^0.5.3",
     "webpack": "^2.2.1",
