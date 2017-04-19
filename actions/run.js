@@ -9,6 +9,7 @@ module.exports = (runCommand) => {
     funcs.assignEnvironmentVariablesBasedOnRunCommand(runCommand);
 
     const customConfig = require('../utils/coreRikoConfig');
+    const webpackConfigUtils = require('../utils/webpackConfigUtils')(_v, funcs, customConfig);
     const config = require('../webpack.config');
 
     //TODO: validate customConfig Here
@@ -44,6 +45,26 @@ module.exports = (runCommand) => {
         case 'web-prod': {
             return _v.spawn(`${_v.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
         }
+        case 'electron-prod': {
+            funcs.genericLog('Compiling electron app..');
+            if(JSON.parse(process.env.ELECTRON)) {
+                return _v.webpack(config, () => {
+                    //Compile The Electron Application
+                    const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
+                    electronPackager(electronPackagerOptions, (err) => {
+                        if(err) {
+                            console.error('ERROR > in electron build', err);
+                            throw err;
+                        }
+
+                        funcs.removeDir(customConfig.tempDir).then(() => {
+                            funcs.genericLog(`${electronPackagerOptions.name} build successfully!`);
+                        });
+                    });
+                });
+            }
+            break;
+        }
         case 'electron-dev':
         case 'web-dev': {
             const stats = funcs.getStats('development');
@@ -52,9 +73,9 @@ module.exports = (runCommand) => {
             //HOT RELOADING WITH WEBPACK DEV SERVER
             //*******************************************************************
 
-            config.entry[customConfig.title].unshift('webpack/hot/dev-server');
-            config.entry[customConfig.title].unshift(`webpack-dev-server/client?http://localhost:${customConfig.EXPRESS_PORT}`);
-            config.entry[customConfig.title].unshift('react-hot-loader/patch');
+            config.entry['index'].unshift('webpack/hot/dev-server');
+            config.entry['index'].unshift(`webpack-dev-server/client?http://localhost:${customConfig.EXPRESS_PORT}`);
+            config.entry['index'].unshift('react-hot-loader/patch');
 
             const { overlay } = customConfig.hotReloadingOptions;
 
@@ -68,7 +89,7 @@ module.exports = (runCommand) => {
                 headers: { 'Access-Control-Allow-Origin': '*' },
                 stats
             }).listen(customConfig.EXPRESS_PORT, 'localhost', (err) => {
-                if (err) { console.log(err); }
+                if (err) { console.error(err); }
                 funcs.genericLog(`Listening at localhost: ${customConfig.EXPRESS_PORT}`);
                 funcs.onDevBuildActions(customConfig);
             });
@@ -84,26 +105,6 @@ module.exports = (runCommand) => {
             break;
         }
         default: {
-
-            funcs.genericLog(`JSON.parse(process.env.ELECTRON): ${JSON.parse(process.env.ELECTRON)}`);
-
-            if(JSON.parse(process.env.ELECTRON)) {
-                return _v.webpack(config, () => {
-                    //Compile The Electron Application
-                    customConfig.electronPackagingOptions.overwrite = true;
-                    electronPackager(customConfig.electronPackagingOptions, (err) => {
-                        if(err) {
-                            console.error('ERROR > in electron build', err);
-                            throw err;
-                        }
-
-                        funcs.removeDir(customConfig.tempDir).then(() => {
-                            funcs.genericLog(`${customConfig.electronPackagingOptions.name} build successfully!`);
-                        });
-                    });
-                });
-            }
-
             _v.app.use(_v.morgan('dev'));
 
             const root = customConfig.destDir;

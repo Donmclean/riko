@@ -29,30 +29,36 @@ const customConfig  = funcs.getFileIfExists(`${config.srcDir}/rikoconfig`);
 //**********************************************************************
 
 //Required Absolute Paths
-const requiredPaths = [
+const requiredAbsolutePaths = [
     'destDir',
     'tempDir',
-    'eslintConfig',
-    'stylelintConfig',
-    'nightwatchConfig',
 
-    'faviconPath',
     'entryFile',
 
-    'templateFile',
+    'templateFile', //'src/templates/index.pug'.match(/\.pug$/)
+
+    'customBoilerplatePath'
+];
+
+//Optional Absolute Paths
+const optionalPaths = [
+    'eslintConfig',
+    'stylelintConfig',
+
+    'entryFile',
 
     'customBoilerplatePath'
 ];
 
 //Optional Relative Paths
 const optionalRelativePaths = {
-    js_output_path: 'assets/js',
-    css_output_path: 'assets/css',
-    media_audio_output_path: 'assets/audio',
-    media_files_output_path: 'assets/files', //pdf, docs, etc
-    media_fonts_output_path: 'assets/fonts',
-    media_images_output_path: 'assets/images',
-    media_video_output_path: 'assets/videos'
+    jsOutputPath: 'assets/js',
+    cssOutputPath: 'assets/css',
+    audioOutputPath: 'assets/audio',
+    miscFileOutputPath: 'assets/files', //pdf, docs, etc
+    fontOutputPath: 'assets/fonts',
+    imageOutputPath: 'assets/images',
+    videoOutputPath: 'assets/videos'
 };
 
 const sanitizedOptionalRelativePaths = Object.keys(optionalRelativePaths).reduce((accObj, key) => {
@@ -60,7 +66,7 @@ const sanitizedOptionalRelativePaths = Object.keys(optionalRelativePaths).reduce
     return accObj;
 }, {});
 
-const resolvedPaths = requiredPaths.reduce((accObj, key) => {
+const resolvedPaths = requiredAbsolutePaths.reduce((accObj, key) => {
     accObj[key] = funcs.sanitizePath(config.baseDir, customConfig[key]);
     return accObj;
 }, {});

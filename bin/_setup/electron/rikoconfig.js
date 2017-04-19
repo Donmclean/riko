@@ -5,15 +5,11 @@
 //BASE DIRECTORY is same location as package.json file.
 const config = {};
 
-config.title                    = 'riko';
+config.title                    = 'Riko';
 
 config.destDir                  = 'dist';
 config.tempDir                  = 'temp';
-config.eslintConfig             = '.eslintrc.js';
-config.stylelintConfig          = 'stylelint.config.js';
-config.nightwatchConfig         = 'nightwatchconfig.js';
 
-config.faviconPath              = 'src/media/images/riko-favicon.png';
 config.entryFile                = 'src/js/riko.js';
 config.templateFile             = 'src/templates/index.pug';
 
@@ -21,17 +17,7 @@ config.templateFile             = 'src/templates/index.pug';
 // ALSO DO NOT ADD LEADING/TRAILING SLASHES '/'
 // eg: /assets/audio NOR eg: assets/audio/
 
-config.js_output_path           = 'assets/js';
-config.media_audio_output_path  = 'assets/audio';
-config.media_files_output_path  = 'assets/files'; //pdfs, docs, etc
-config.media_fonts_output_path  = 'assets/fonts';
-config.media_images_output_path = 'assets/images';
-config.media_video_output_path  = 'assets/video';
-
-config.styles_main_file_name    = 'styles.min.css';
-
-config.template_main_file_name  = 'index.html';
-config.template_stats_file_name = '';
+config.cssOutputFilename        = 'styles.min.css';
 
 config.EXPRESS_PORT             = 3000;
 
@@ -39,37 +25,23 @@ config.EXPRESS_PORT             = 3000;
 //*******************************PACKAGER*******************************
 //**********************************************************************
 //for Electron Applications Only
-config.electronPackagingOptions             = {};
+//See API for all options here: https://github.com/electron-userland/electron-packager/blob/master/docs/api.md
+config.electronPackagerOptions  = {
+    //applications icon  //OS X: .icns  //Windows: .ico
+    //get free conversions herehttps://iconverticons.com/online/
+    icon: 'src/riko-logo.icns',
 
-//Source directory for your electron source code
-config.electronPackagingOptions.dir         = config.tempDir;
+    //target platform(s) to build for
+    platform: ['darwin','win32'],
 
-//target system architecture(s)
-config.electronPackagingOptions.arch        = 'x64';
-
-//applications icon  //OS X: .icns  //Windows: .ico
-//get free conversions herehttps://iconverticons.com/online/
-config.electronPackagingOptions.icon        = config.srcDir+'/riko-logo.icns';
-
-//The application name
-config.electronPackagingOptions.name        = 'Riko';
-
-//target platform(s) to build for
-config.electronPackagingOptions.platform    = ['darwin','win32'];
-
-//disable pruning
-config.electronPackagingOptions.prune       = false; //THIS MUST BE FALSE!!! BREAKS IF TRUE.
-
-//Enable or disable asar archiving
-config.electronPackagingOptions.asar        = true;
-
-//directory where the finished package(s) are created
-config.electronPackagingOptions.out         = config.destDir;
+    //Enable or disable asar archiving
+    asar: true
+};
 
 //**********************************************************************
 //********************************JS************************************
 //**********************************************************************
-config.js_external_scripts      = [
+config.externalScripts      = [
     {
         src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
         async: false,
@@ -88,29 +60,15 @@ config.js_external_scripts      = [
 ];
 
 //IMPORTANT!!! ALL VALUES OF THE FOLLOWING 'value' key *MUST BE JSON STRINGIFIED*
-config.js_runtime_configs      = [
-    {
-        key: 'process.env',
-        value: {
-            'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        }
-    }
-];
+config.definePluginOptions = {};
 
 //**********************************************************************
 //*******************************STYLES*********************************
 //**********************************************************************
 
-config.styles_external_stylesheets  = [
+config.externalStylesheets  = [
     'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
 ];
-
-//**********************************************************************
-//******************************TEMPLATE********************************
-//**********************************************************************
-//IMPORTANT!!! this should only be enabled if building an html web app
-//disable this if creating a non-html based project
-config.requiresTemplate         = true;
 
 //**********************************************************************
 //********************************MEDIA*********************************
@@ -214,9 +172,36 @@ config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];
 
-config.failOnProdBuildJsError = true;
-config.failOnProdBuildStyleError = false;
-config.eslintQuietMode = false; //set false to display warnings based on your eslint config
+config.htmlWebpackPluginOptions = {
+    favicon: 'src/media/images/riko-favicon.png',
+    inject: 'body',
+    hash: true,
+    cache: true, //default
+    showErrors: true, //default
+};
+
+config.stylelintConfig = 'stylelint.config.js';
+config.stylelintOptions = {
+    files: [
+        '**/*.s?(a|c)ss',
+        '**/*.styl',
+        '**/*.less',
+        '**/*.css',
+        '!(vendor)**/*.css'
+    ],
+    failOnError: false
+};
+
+config.eslintConfig = '.eslintrc.js';
+//You can utilize 'process.env.NODE_ENV' here to specific options based on your NODE_ENV
+config.eslintOptions = {
+    failOnError: process.env.NODE_ENV === 'production',
+    failOnWarning: false,
+    emitError: process.env.NODE_ENV === 'development',
+    quiet: false //set true to disable warnings based on your eslint config
+};
+
+config.uglifyJsPluginOptions = {};
 
 //enable webpack visualizer which allows you to see the build product of your js sources & dependencies via current git SHA as url
 config.enableWebpackVisualizer = true;

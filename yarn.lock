@@ -341,7 +341,7 @@ async-throttle@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/async-throttle/-/async-throttle-1.1.0.tgz#229e7f3fa7a2a797e86f360e6309a08224d4fa7a"
 
-async@0.2.x:
+async@0.2.x, async@~0.2.10:
   version "0.2.10"
   resolved "https://registry.yarnpkg.com/async/-/async-0.2.10.tgz#b6bbe0b0674b9d719708ca38de8c237cb526c3d1"
 
@@ -3414,7 +3414,7 @@ fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
-fastparse@^1.1.1:
+fastparse@^1.0.0, fastparse@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
 
@@ -4332,6 +4332,15 @@ gulplog@^1.0.0:
 handle-thing@^1.2.4:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-1.2.5.tgz#fd7aad726bf1a5fd16dfc29b2f7a6601d27139c4"
+
+handlebars-loader@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/handlebars-loader/-/handlebars-loader-1.4.0.tgz#142b2c29bcb8e407554fbc8846feef9f90da3317"
+  dependencies:
+    async "~0.2.10"
+    fastparse "^1.0.0"
+    loader-utils "0.2.x"
+    object-assign "^4.1.0"
 
 handlebars@^4.0.1, handlebars@^4.0.3:
   version "4.0.6"

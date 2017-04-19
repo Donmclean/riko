@@ -2,17 +2,17 @@ const
     _v                          = require('./utils/variables')(),
     funcs                       = require('./utils/functions')(),
     customConfig                = require('./utils/coreRikoConfig'),
-    config                      = {},
-    options                     = require('./utils/options')(customConfig);
+    webpackConfigUtils          = require('./utils/webpackConfigUtils')(_v, funcs, customConfig),
+    config                      = {};
 
 //CONFIGURATION
-config.context = customConfig.srcDir;
+config.context = customConfig.baseDir;
 
 //TODO: fix bug in upgrading eslint-loader
 // process.traceDeprecation = true;
 
 config.entry = {};
-config.entry[customConfig.title] = [customConfig.entryFile];
+config.entry['index'] = [customConfig.entryFile];
 
 config.output = {
     filename: '[name].js?[hash]',
@@ -31,20 +31,9 @@ config.resolveLoader = {
 };
 
 config.module = {};
-config.module.rules = [
+config.module.rules = _v._.flatten([
     //JAVASCRIPT
-    {
-        test: /\.jsx$|\.js$/,
-        include: customConfig.srcDir,
-        exclude: /(node_modules|vendor|bower_components)/,
-        enforce: 'pre',
-        use: [{
-            loader: 'eslint-loader',
-            options: {
-                configFile: customConfig.eslintConfig
-            }
-        }]
-    },
+    customConfig.eslintConfig ? webpackConfigUtils.getEslintRule() : [],
     {
         test: /\.jsx$|\.js$/,
         exclude: /(node_modules|vendor|bower_components)/,
@@ -64,61 +53,45 @@ config.module.rules = [
         exclude: /(node_modules|bower_components)/,
         loaders: ['pug-loader']
     },
-    //IMAGES
+    //TEMPLATES (HANDLEBARS)
     {
-        test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-        loaders: [`file-loader?name=[name].[ext]?[hash]`]
+        test: /\.handlebars$|\.hbs$/,
+        exclude: /(node_modules|bower_components)/,
+        loaders: ['handlebars-loader']
     },
     //VIDEOS
     {
         test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-        loader: `file-loader?name=${customConfig.media_video_output_path}/[name].[ext]?[hash]`
+        loader: `file-loader?name=${customConfig.videoOutputPath}/[name].[ext]?[hash]`
     },
     //AUDIO
     {
         test: /\.(wav|mp3|aiff|flac|mp4a|m4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-        loader: `file-loader?name=${customConfig.media_audio_output_path}/[name].[ext]?[hash]`
+        loader: `file-loader?name=${customConfig.audioOutputPath}/[name].[ext]?[hash]`
     },
     //FILES
     {
         test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-        loader: `file-loader?name=${customConfig.media_files_output_path}/[name].[ext]?[hash]`
+        loader: `file-loader?name=${customConfig.miscFileOutputPath}/[name].[ext]?[hash]`
     }
-];
+]);
 
 //*****************************************************************
 //*****************************PLUGINS*****************************
 //*****************************************************************
 config.plugins = [];
 
-//handles mapping of runtime configs defined in customConfig.js
-const runtimeConfigs = _v._
-    .chain(customConfig.js_runtime_configs)
-    .keyBy((item) => item.key)
-    .mapValues((item) => item.value)
-    .value();
-
-if(customConfig.requiresTemplate) {
-    config.plugins = config.plugins.concat([
-        new _v.HtmlWebpackPlugin(options.htmlWebpackPluginOptions),
-        new _v.StyleLintPlugin({
-            configFile: customConfig.stylelintConfig,
-            files: [
-                '**/*.s?(a|c)ss',
-                '**/*.styl',
-                '**/*.less',
-                '**/*.css',
-                '!(vendor)**/*.css'
-            ],
-            failOnError: customConfig.failOnProdBuildStyleError
-        })
-    ]);
+if(!_v._.isEmpty(customConfig.templateFile)) {
+    config.plugins = config.plugins.concat(
+        [new _v.HtmlWebpackPlugin(webpackConfigUtils.getHtmlWebpackPluginOptions())],
+        [customConfig.stylelintConfig ? new _v.StyleLintPlugin(webpackConfigUtils.getStyleLintPluginOptions()) : []]
+    );
 }
 
 if(customConfig.enableWebpackVisualizer) {
     config.plugins = config.plugins.concat([
         new _v.Visualizer({
-            filename: funcs.insertGitSHAIntoFilename(customConfig.template_stats_file_name, _v.GIT_VERSION)
+            filename: funcs.insertGitSHAIntoFilename(_v.GIT_VERSION)
         })
     ]);
 }
@@ -127,19 +100,19 @@ config.plugins = config.plugins.concat([
     new _v.webpack.EnvironmentPlugin([
         "NODE_ENV"
     ]),
-    new _v.webpack.DefinePlugin(runtimeConfigs),
+    new _v.webpack.DefinePlugin(webpackConfigUtils.getDefinePluginOptions()),
     new _v.ProgressBarPlugin({
         format: 'webpack [:bar] ' + _v.chalk.green.bold(':percent') + ' (:elapsed seconds)',
         clear: true
     }),
-    new _v.WebpackNotifierPlugin({contentImage: _v.baseDir+'/utils/riko-logo.png'})
+    new _v.WebpackNotifierPlugin({contentImage: _v.baseDir+'/build-assets/riko-logo.png'})
 ]);
 
 switch (process.env.NODE_ENV) {
     case "production": {
         config.output.sourceMapFilename = '[file].map?[hash]';
         config.devtool = customConfig.sourcemapProd ? customConfig.sourcemapType : null;
-        config.bail = customConfig.failOnProdBuildJsError;
+        config.bail = true;
 
         const stylesheetProdRules = (type, regex) => ({
             test: new RegExp(regex),
@@ -207,20 +180,20 @@ switch (process.env.NODE_ENV) {
             //FONTS
             {
                 test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: `file-loader?name=${customConfig.media_fonts_output_path}/[name].[ext]?[hash]`
+                loader: `file-loader?name=${customConfig.fontOutputPath}/[name].[ext]?[hash]`
             },
             //IMAGES
             {
                 test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                loader: `file-loader?name=${customConfig.media_images_output_path}/[name].[ext]?[hash]`
+                loader: `file-loader?name=${customConfig.imageOutputPath}/[name].[ext]?[hash]`
             }
         ]);
 
         config.plugins = config.plugins.concat([
-            new _v.webpack.optimize.UglifyJsPlugin({mangle: false, sourceMap: customConfig.sourcemapProd }),
-            new _v.webpack.optimize.CommonsChunkPlugin({name: customConfig.title, filename: customConfig.js_output_path + '/' + config.output.filename}),
+            new _v.webpack.optimize.UglifyJsPlugin(webpackConfigUtils.getUglifyJsPluginOptions()),
+            new _v.webpack.optimize.CommonsChunkPlugin({name: 'index', filename: customConfig.jsOutputPath + '/' + config.output.filename}),
             new _v.webpack.ProvidePlugin(customConfig.externalModules),
-            new _v.ExtractTextPlugin({filename: customConfig.css_output_path + '/' + customConfig.styles_main_file_name + '?[hash]', allChunks: true}),
+            new _v.ExtractTextPlugin({filename: customConfig.cssOutputPath + '/' + customConfig.cssOutputFilename + '?[hash]', allChunks: true}),
 
             //Image optimization options | imagemin-webpack-plugin
             //https://github.com/Klathmon/imagemin-webpack-plugin
@@ -232,13 +205,7 @@ switch (process.env.NODE_ENV) {
             }),
             new _v.CleanWebpackPlugin([_v.path.basename(customConfig.destDir)], {root: customConfig.baseDir, verbose: true, dry: false}),
             new _v.webpack.LoaderOptionsPlugin({
-                debug: false,
-                eslint: {
-                    failOnError: customConfig.failOnProdBuildJsError,
-                    failOnWarning: false,
-                    quiet: customConfig.eslintQuietMode,
-                    configFile: customConfig.eslintConfig
-                }
+                debug: false
             })
         ]);
 
@@ -326,18 +293,11 @@ switch (process.env.NODE_ENV) {
             new _v.webpack.NamedModulesPlugin(),
             new _v.webpack.ProvidePlugin(customConfig.externalModules),
             new _v.webpack.LoaderOptionsPlugin({
-                debug: true,
-                eslint: {
-                    failOnError: false,
-                    failOnWarning: false,
-                    emitError: true,
-                    quiet: customConfig.eslintQuietMode,
-                    configFile: customConfig.eslintConfig
-                }
+                debug: true
             })
         ]);
 
-        if(customConfig.requiresTemplate && !JSON.parse(process.env.ELECTRON)) {
+        if(!_v._.isEmpty(customConfig.templateFile) && !JSON.parse(process.env.ELECTRON)) {
             //WEB DEV MODE
             config.plugins = config.plugins.concat([new _v.BrowserSyncPlugin(
                 {
@@ -352,7 +312,7 @@ switch (process.env.NODE_ENV) {
         //handle remote debugging
         if(customConfig.enableRemoteDebugging && process.env.NODE_ENV === "development") {
             funcs.launchVorlonJS();
-            customConfig.js_external_scripts.push({src: `http://${_v.ipAddress}:1337/vorlon.js`});
+            customConfig.externalScripts.push({src: `http://${_v.ipAddress}:1337/vorlon.js`});
         }
 
         break;

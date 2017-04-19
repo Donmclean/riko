@@ -18,6 +18,7 @@ module.exports = (actionType, projectType, projectName) => {
                             .then(() => qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}/src`))
                             .then(() => qfs.read(`${cwd}/${projectName}/package.json`))
                             .then((customPackageJson) => {
+                                //adds electron as devDependencies to package.json
                                 const packageJsonObj = JSON.parse(customPackageJson);
                                 packageJsonObj.devDependencies = Object.assign(
                                     {},

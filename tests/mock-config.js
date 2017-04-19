@@ -26,7 +26,7 @@ module.exports = () => {
         packageJson:  'string',
         nightwatchConfig: 'string',
         srcFiles: 'array',
-        electronPackagingOptions: 'object',
+        electronPackagerOptions: 'object',
         buildFiles: 'array',
         js_main_file_name:  'string',
         js_main_entry_path:  'string',

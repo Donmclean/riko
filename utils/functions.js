@@ -22,7 +22,7 @@ module.exports = () => {
         try {
             resolvedPath = _v.path.resolve(base, path);
         } catch (err) {
-            funcs.genericLog(`${path} cannot be resolved`, 'red');
+            funcs.genericLog(`${base}/${path} cannot be resolved`, 'red');
             throw new Error(`cannot find ${path} to resolve`);
         }
 
@@ -51,16 +51,7 @@ module.exports = () => {
         return file;
     };
 
-    funcs.insertGitSHAIntoFilename = (filename, GitVersion) => {
-        if(filename && !_v._.isEmpty(filename)) {
-            let arr = filename.split('.');
-            arr[0] = arr[0].concat('-');
-            arr[1] = '.'.concat(arr[1]);
-
-            arr.splice(1, 0, GitVersion);
-            return arr.join('');
-        }
-
+    funcs.insertGitSHAIntoFilename = (GitVersion) => {
         return GitVersion + '.html';
     };
 
@@ -94,6 +85,8 @@ module.exports = () => {
         });
     };
 
+    funcs.requiresTemplate = (projectType) => _v._.eq(projectType, 'web') || _v._.eq(projectType, 'electron');
+
     funcs.removeDir = (dir) => {
         const deferred = _v.Q.defer();
 
@@ -119,6 +112,8 @@ module.exports = () => {
     };
 
     funcs.handleElectronEnvironmentOptions = (config, customConfig) => {
+        const webpackConfigUtils = require('./webpackConfigUtils')(_v, funcs, customConfig);
+        const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
         let newPlugins = [];
 
         //GLOBAL OPTIONS
@@ -134,7 +129,7 @@ module.exports = () => {
                     new _v.CopyWebpackPlugin([
                         { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
                         { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
-                        { from: customConfig.electronPackagingOptions.icon, to: customConfig.tempDir }
+                        { from: electronPackagerOptions.icon, to: customConfig.tempDir }
                     ])
                 ]);
                 break;
@@ -159,7 +154,7 @@ module.exports = () => {
 
     funcs.logElectronRunServerError = () => {
         funcs.genericLog('Error: Can\'t find built Electron Package in destination folder... Either an error occurred while building or the platform option wasn\'t correctly specified.', 'red');
-        funcs.genericLog('To launch your Electron app on MAC be sure include "darwin" as an option to "platform" in your rikoconfig.js "electronPackagingOptions"', 'red');
+        funcs.genericLog('To launch your Electron app on MAC be sure include "darwin" as an option to "platform" in your rikoconfig.js "electronPackagerOptions"', 'red');
     };
 
     funcs.readFilesInDirectorySync = (path) => _v.fs.readdirSync(path).filter((file) => file !== '.DS_Store');
@@ -231,8 +226,11 @@ module.exports = () => {
             .value();
 
         if(isValidCommand) {
+            const env = Object.create( process.env );
+            env.NODE_ENV = 'test';
+
             funcs.genericLog('Executing Tests...');
-            return _v.spawn('npm', ['run', customTestCommand], {stdio: 'inherit'});
+            return _v.spawn('npm', ['run', customTestCommand], {stdio: 'inherit', env});
         } else {
             funcs.genericLog(`Invalid command. Make sure the hot execute test command you're trying to execute lives in your package.json
              under 'scripts'.`, 'red');

@@ -7,7 +7,9 @@ module.exports = (argv) => {
     const { $, baseDir, _ } = _v;
 
     const defaultSetupOptionsPath = `${baseDir}/bin/_setup`;
+    const defaultTemplateTypesPath = `${baseDir}/bin/_setup/web/src/templates`;
     const projectTypes = funcs.readFilesInDirectorySync(defaultSetupOptionsPath);
+    const templateTypes = funcs.readFilesInDirectorySync(defaultTemplateTypesPath);
 
     const defaultQuestions = [
         {
@@ -24,11 +26,25 @@ module.exports = (argv) => {
             filter: (val) => funcs.sanitizeString(val),
             validate: (value) => _.isEmpty(value) ? 'Please enter a valid project name' : true
         },
+        {
+            type: 'list',
+            name: 'templateFile',
+            message: 'What template engine would you like to use?',
+            choices: templateTypes,
+            filter: (val) => val.toLowerCase(),
+            when: (currentAnswers) => {
+                const { projectType } = currentAnswers;
+                return funcs.requiresTemplate(projectType);
+            }
+        }
     ];
 
     _v.inquirer.prompt(defaultQuestions)
-        .then((answers) => {
-            const { projectType, projectName } = answers;
+        .then((currentAnswers) => {
+            const { projectType, projectName } = currentAnswers;
+            //TODO: validate existence of these ^
+
+            console.log('currentAnswers: ', currentAnswers);
             actions.setup('setup', projectType, projectName);
         })
         .catch((err) => {

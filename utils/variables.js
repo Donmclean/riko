@@ -26,7 +26,7 @@ module.exports = () => {
     vars._                      = require('lodash');
     vars.Q                      = require('q');
     vars.qfs                    = require('q-io/fs');
-    vars.fs                     = require('fs-extra');
+    vars.fs                     = require('fs');
     vars.os                     = require('os');
     vars.exec                   = require('child_process').exec;
     vars.spawn                  = require('child_process').spawn;
