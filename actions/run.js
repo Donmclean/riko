@@ -43,6 +43,7 @@ module.exports = (runCommand) => {
             break;
         }
         case 'web-prod': {
+            config.entry['index'].unshift('babel-polyfill');
             return _v.spawn(`${_v.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
         }
         case 'electron-prod': {
@@ -76,6 +77,7 @@ module.exports = (runCommand) => {
             config.entry['index'].unshift('webpack/hot/dev-server');
             config.entry['index'].unshift(`webpack-dev-server/client?http://localhost:${customConfig.EXPRESS_PORT}`);
             config.entry['index'].unshift('react-hot-loader/patch');
+            config.entry['index'].unshift('babel-polyfill');
 
             const { overlay } = customConfig.hotReloadingOptions;
 
@@ -104,10 +106,12 @@ module.exports = (runCommand) => {
             _v.spawn('node', [`${customConfig.entryFile}`], {stdio: 'inherit'});
             break;
         }
-        default: {
+        case 'web-server':
+        case 'web-prod-server': {
             _v.app.use(_v.morgan('dev'));
 
             const root = customConfig.destDir;
+
             _v.app.use(_v.express.static(root));
             _v.app.use(_v.fallback('index.html', { root }));
 
@@ -126,10 +130,13 @@ module.exports = (runCommand) => {
                 funcs.genericLog('Launching Browser Sync proxy of port: ' + customConfig.EXPRESS_PORT, 'yellow');
 
                 browserSync.init({
-                    proxy: 'localhost:' + customConfig.EXPRESS_PORT
+                    proxy: `localhost:${customConfig.EXPRESS_PORT}`
                 });
             }
 
+            break;
+        }
+        default: {
             break;
         }
     }

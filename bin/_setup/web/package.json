@@ -29,6 +29,7 @@
     "babel-jest": "^19.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "jest": "^19.0.2"
+    "jest": "^19.0.2",
+    "jest-cli": "^19.0.2"
   }
 }

@@ -23,17 +23,17 @@ config.output = {
 config.resolve = {
     extensions: ['.js', '.jsx', '.json'],
     alias: config.externalModulePaths,
-    modules: [_v.path.resolve(_v.baseDir, "node_modules"), "node_modules"]
+    modules: [_v.path.resolve(customConfig.baseDir, "node_modules"), _v.path.resolve(_v.baseDir, "node_modules")]
 };
 
 config.resolveLoader = {
-    modules: [_v.path.resolve(_v.baseDir, "node_modules"), "node_modules"]
+    modules: [_v.path.resolve(customConfig.baseDir, "node_modules"), _v.path.resolve(_v.baseDir, "node_modules")]
 };
 
 config.module = {};
 config.module.rules = _v._.flatten([
     //JAVASCRIPT
-    customConfig.eslintConfig ? webpackConfigUtils.getEslintRule() : [],
+    !_v._.isEmpty(customConfig.eslintLoaderOptions) ? webpackConfigUtils.getEslintRule() : [],
     {
         test: /\.jsx$|\.js$/,
         exclude: /(node_modules|vendor|bower_components)/,
@@ -84,14 +84,20 @@ config.plugins = [];
 if(!_v._.isEmpty(customConfig.templateFile)) {
     config.plugins = config.plugins.concat(
         [new _v.HtmlWebpackPlugin(webpackConfigUtils.getHtmlWebpackPluginOptions())],
-        [customConfig.stylelintConfig ? new _v.StyleLintPlugin(webpackConfigUtils.getStyleLintPluginOptions()) : []]
+        [!_v._.isEmpty(customConfig.styleLintPluginOptions) ? new _v.StyleLintPlugin(customConfig.styleLintPluginOptions) : []]
     );
 }
 
-if(customConfig.enableWebpackVisualizer) {
+if(customConfig.enableWebpackVisualizers) {
     config.plugins = config.plugins.concat([
+        new _v.BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: false,
+            logLevel: 'error',
+            reportFilename: `report-${_v.GIT_SHA}.html`,
+        }),
         new _v.Visualizer({
-            filename: funcs.insertGitSHAIntoFilename(_v.GIT_VERSION)
+            filename: `${_v.GIT_SHA}.html`
         })
     ]);
 }
@@ -130,7 +136,7 @@ switch (process.env.NODE_ENV) {
                         options: {
                             plugins: () => {
                                 return [
-                                    _v.autoprefixer({ browsers: ['> 0%'] })
+                                    _v.autoprefixer(customConfig.autoprefixerOptions)
                                 ];
                             }
                         }
@@ -169,7 +175,7 @@ switch (process.env.NODE_ENV) {
                             options: {
                                 plugins: () => {
                                     return [
-                                        _v.autoprefixer({ browsers: ['> 0%'] })
+                                        _v.autoprefixer(customConfig.autoprefixerOptions)
                                     ];
                                 }
                             }
@@ -197,7 +203,7 @@ switch (process.env.NODE_ENV) {
 
             //Image optimization options | imagemin-webpack-plugin
             //https://github.com/Klathmon/imagemin-webpack-plugin
-            new _v.ImageminPlugin(customConfig.imageminConfig),
+            new _v.ImageminPlugin(customConfig.imageminPluginOptions),
             new _v.WebpackShellPlugin({
                 onBuildStart: customConfig.onBuildStartShellCommands,
                 onBuildEnd: customConfig.onBuildEndShellCommands,
@@ -237,7 +243,7 @@ switch (process.env.NODE_ENV) {
                     options: {
                         plugins: () => {
                             return [
-                                _v.autoprefixer({ browsers: ['> 0%'] })
+                                _v.autoprefixer(customConfig.autoprefixerOptions)
                             ];
                         }
                     }
@@ -265,7 +271,7 @@ switch (process.env.NODE_ENV) {
                         options: {
                             plugins: () => {
                                 return [
-                                    _v.autoprefixer({ browsers: ['> 0%'] })
+                                    _v.autoprefixer(customConfig.autoprefixerOptions)
                                 ];
                             }
                         }
@@ -301,18 +307,12 @@ switch (process.env.NODE_ENV) {
             //WEB DEV MODE
             config.plugins = config.plugins.concat([new _v.BrowserSyncPlugin(
                 {
-                    proxy: 'http://localhost:' + customConfig.EXPRESS_PORT
+                    proxy: `http://localhost:${customConfig.EXPRESS_PORT}`
                 },
                 {
-                    reload: customConfig.BrowserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)
+                    reload: !!customConfig.hotReloadingOptions.BrowserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)
                 })
             ]);
-        }
-
-        //handle remote debugging
-        if(customConfig.enableRemoteDebugging && process.env.NODE_ENV === "development") {
-            funcs.launchVorlonJS();
-            customConfig.externalScripts.push({src: `http://${_v.ipAddress}:1337/vorlon.js`});
         }
 
         break;

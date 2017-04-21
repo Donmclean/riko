@@ -12,14 +12,12 @@ module.exports = () => {
     //     requireValueCall: (value) => require(value)[key]()
     // };
 
-    vars.argv                   = require('yargs');
     vars.$                      = require('gulp-load-plugins')();
     vars.cwd                    = process.cwd();
     vars.path                   = require('path');
     vars.baseDir                = vars.path.resolve(__dirname, '../');
     vars.packageJson            = require('../package.json');
     vars.srcDir                 = vars.baseDir + '/src';
-    vars.http                   = require('http');
     vars.ipAddress              = require('ip').address();
     vars.webpack                = require('webpack');
     vars.chalk                  = require('chalk');
@@ -28,22 +26,24 @@ module.exports = () => {
     vars.qfs                    = require('q-io/fs');
     vars.fs                     = require('fs');
     vars.os                     = require('os');
-    vars.exec                   = require('child_process').exec;
-    vars.spawn                  = require('child_process').spawn;
-    vars.spawnSync              = require('child_process').spawnSync;
+    vars.cp                     = require('child_process');
+    vars.exec                   = vars.cp.exec;
+    vars.execSync               = vars.cp.execSync;
+    vars.spawn                  = vars.cp.spawn;
+    vars.spawnSync              = vars.cp.spawnSync;
     vars.chokidar               = require('chokidar');
     vars.isGitInitialized       = vars.fs.readdirSync(vars.cwd).includes('.git') ? (vars.fs.readdirSync(`${vars.cwd}/.git/objects`).length > 2) : false;
 
     if(vars.isGitInitialized) {
         try {
-            vars.GIT_VERSION        = require('child_process').execSync('git rev-parse HEAD').toString().trim();
-            vars.GIT_VERSION_SHORT  = require('child_process').execSync('git rev-parse --short HEAD').toString().trim();
+            vars.GIT_SHA        = vars.cp.execSync('git rev-parse HEAD').toString().trim();
+            vars.GIT_SHA_SHORT  = vars.cp.execSync('git rev-parse --short HEAD').toString().trim();
         } catch (err) {
-            console.error('ERROR > ', err);
+            console.error('ERROR > [git rev-parse HEAD] Failed...', err);
         }
     } else {
-        vars.GIT_VERSION        = 'GIT_VERSION';
-        vars.GIT_VERSION_SHORT  = 'UNKNOWN_GIT_VERSION_SHORT';
+        vars.GIT_SHA        = 'GIT_SHA';
+        vars.GIT_SHA_SHORT  = 'UNKNOWN_GIT_SHA_SHORT';
     }
 
     vars.ProgressBarPlugin      = require('progress-bar-webpack-plugin');
@@ -53,15 +53,13 @@ module.exports = () => {
     vars.ExtractTextPlugin      = require("extract-text-webpack-plugin");
     vars.Visualizer             = require('webpack-visualizer-plugin');
     vars.WebpackDevServer       = require('webpack-dev-server');
-    vars.WebpackDevMiddleware   = require("webpack-dev-middleware");
-    vars.WebpackHotMiddleware   = require("webpack-hot-middleware");
     vars.fallback               = require('express-history-api-fallback');
-    vars.historyApiFallback     = require('connect-history-api-fallback');
     vars.ImageminPlugin         = require('imagemin-webpack-plugin').default;
     vars.WebpackShellPlugin     = require('webpack-shell-plugin');
     vars.CleanWebpackPlugin     = require('clean-webpack-plugin');
     vars.WebpackNotifierPlugin  = require('webpack-notifier');
     vars.CopyWebpackPlugin      = require('copy-webpack-plugin');
+    vars.BundleAnalyzerPlugin   = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
     vars.autoprefixer           = require('autoprefixer');
 
@@ -72,9 +70,6 @@ module.exports = () => {
     vars.browserSync            = require('browser-sync');
     vars.nodemon                = require('nodemon');
     vars.inquirer               = require('inquirer');
-
-    //NODE VARS
-    vars.isMAC                  = (process.env._system_type === 'Darwin');
 
     return vars;
 };

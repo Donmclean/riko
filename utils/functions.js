@@ -51,21 +51,6 @@ module.exports = () => {
         return file;
     };
 
-    funcs.insertGitSHAIntoFilename = (GitVersion) => {
-        return GitVersion + '.html';
-    };
-
-    funcs.launchVorlonJS = () => {
-        _v.exec('npm run vorlon', (error, stdout, stderr) => {
-            if (error) {
-                console.error(`exec error > enableRemoteDebugging: ${error}`);
-                return;
-            }
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
-        });
-    };
-
     funcs.getStats = (NODE_ENV) => ({
         colors: true, hash: true, version: true, timings: true, assets: NODE_ENV === 'production',
         chunks: false, modules: false, reasons: false, children: false, source: false,
@@ -171,7 +156,26 @@ module.exports = () => {
             })
     };
 
+    funcs.getDefaultConfigFromRunCommand = (runCommand) => {
+        if(_v._.isNil(runCommand)) {
+            throw new Error (`runCommand is ${runCommand}`);
+        }
+
+        switch (true) {
+            case !_v._.isEmpty(runCommand.match(/electron\b/i)):
+            case !_v._.isEmpty(runCommand.match(/web\b/i)): {
+                return funcs.getFileIfExists('./defaultConfigs/webElectronConfig');
+            }
+            default: {
+                throw new Error (`can't get default from runCommand: ${runCommand}`);
+            }
+        }
+    };
+
     funcs.assignEnvironmentVariablesBasedOnRunCommand = (runCommand) => {
+        //Sets run command for later access
+        process.env.runCommand = runCommand;
+
         switch (true) {
             case !_v._.isEmpty(runCommand.match(/-dev\b/)): {
                 process.env.NODE_ENV = 'development';
@@ -205,16 +209,16 @@ module.exports = () => {
 
             let spawn;
 
-            if(!_v._.isEmpty(customConfig.hotExecuteTestCommand)) {
-                spawn = funcs.executeJestTests(customConfig.packageJson, customConfig.hotExecuteTestCommand);
+            if(!_v._.isEmpty(customConfig.hotReloadingOptions.hotExecuteTestCommand)) {
+                spawn = funcs.executeJestTests(customConfig.packageJson, customConfig.hotReloadingOptions.hotExecuteTestCommand);
             }
 
-            if(spawn || _v._.isEmpty(customConfig.hotExecuteTestCommand)) {
+            if(spawn || _v._.isEmpty(customConfig.hotReloadingOptions.hotExecuteTestCommand)) {
                 spawn.on('close', funcs.executeFlowTests);
             }
         });
 
-        const spawn = funcs.executeJestTests(customConfig.packageJson, customConfig.hotExecuteTestCommand);
+        const spawn = funcs.executeJestTests(customConfig.packageJson, customConfig.hotReloadingOptions.hotExecuteTestCommand);
         spawn.on('close', funcs.executeFlowTests);
     };
 
@@ -234,7 +238,7 @@ module.exports = () => {
         } else {
             funcs.genericLog(`Invalid command. Make sure the hot execute test command you're trying to execute lives in your package.json
              under 'scripts'.`, 'red');
-            throw new Error('Invalid npm script command. see config.hotExecuteTestCommand in rikoconfig.js file');
+            throw new Error('Invalid npm script command. see config.hotReloadingOptions.hotExecuteTestCommand in rikoconfig.js file');
         }
     };
 

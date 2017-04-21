@@ -7,13 +7,9 @@ module.exports = (_v, funcs, customConfig) => {
             exclude: /(node_modules|vendor|bower_components)/,
             enforce: 'pre',
             use: [{
-            loader: 'eslint-loader',
-            options: Object.assign(
-                {},
-                customConfig.eslintOptions,
-                { configFile: customConfig.eslintConfig }
-            )
-        }]
+                loader: 'eslint-loader',
+                options: customConfig.eslintLoaderOptions
+            }]
     });
 
     webpackConfigUtils.getHtmlWebpackPluginOptions = () => Object.assign(
@@ -25,12 +21,6 @@ module.exports = (_v, funcs, customConfig) => {
             stylesheets: customConfig.externalStylesheets,
             template: customConfig.templateFile
         }
-    );
-
-    webpackConfigUtils.getStyleLintPluginOptions = () => Object.assign(
-        {},
-        customConfig.stylelintOptions,
-        { configFile: customConfig.stylelintConfig }
     );
 
     webpackConfigUtils.getUglifyJsPluginOptions = () => Object.assign(
