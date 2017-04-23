@@ -5,6 +5,22 @@ const
     webpackConfigUtils          = require('./utils/webpackConfigUtils')(_v, funcs, customConfig),
     config                      = {};
 
+    //Static Webpack Plugins
+    _v.ProgressBarPlugin        = require('progress-bar-webpack-plugin');
+    _v.HtmlWebpackPlugin        = require('html-webpack-plugin');
+    _v.BrowserSyncPlugin        = require('browser-sync-webpack-plugin');
+    _v.ExtractTextPlugin        = require("extract-text-webpack-plugin");
+    _v.WebpackShellPlugin       = require('webpack-shell-plugin');
+    _v.CleanWebpackPlugin       = require('clean-webpack-plugin');
+    _v.WebpackNotifierPlugin    = require('webpack-notifier');
+    _v.CopyWebpackPlugin        = require('copy-webpack-plugin');
+
+    const staticWebpackPlugins  =_v._
+        .chain(_v)
+        .pickBy((value, key) => !_v._.isEmpty(key.match(/Plugin\b/)) || (key === 'webpack'))
+        .value();
+
+
 //CONFIGURATION
 config.context = customConfig.baseDir;
 
@@ -30,10 +46,14 @@ config.resolveLoader = {
     modules: [_v.path.resolve(customConfig.baseDir, "node_modules"), _v.path.resolve(_v.baseDir, "node_modules")]
 };
 
+const checkForConfigFile = (configFile) => {
+    return !_v._.isEmpty(configFile) && !!funcs.sanitizePath(customConfig.baseDir, configFile)
+};
+
 config.module = {};
 config.module.rules = _v._.flatten([
     //JAVASCRIPT
-    !_v._.isEmpty(customConfig.eslintLoaderOptions) ? webpackConfigUtils.getEslintRule() : [],
+    checkForConfigFile(customConfig.eslintLoaderOptions.configFile) ? webpackConfigUtils.getEslintRule() : [],
     {
         test: /\.jsx$|\.js$/,
         exclude: /(node_modules|vendor|bower_components)/,
@@ -81,38 +101,15 @@ config.module.rules = _v._.flatten([
 //*****************************************************************
 config.plugins = [];
 
-if(!_v._.isEmpty(customConfig.templateFile)) {
-    config.plugins = config.plugins.concat(
-        [new _v.HtmlWebpackPlugin(webpackConfigUtils.getHtmlWebpackPluginOptions())],
-        [!_v._.isEmpty(customConfig.styleLintPluginOptions) ? new _v.StyleLintPlugin(customConfig.styleLintPluginOptions) : []]
-    );
-}
+config.plugins = funcs.handlePlugins(
+    config.plugins,
+    [
+        customConfig.setPlugins('global', staticWebpackPlugins),
 
-if(customConfig.enableWebpackVisualizers) {
-    config.plugins = config.plugins.concat([
-        new _v.BundleAnalyzerPlugin({
-            analyzerMode: 'static',
-            openAnalyzer: false,
-            logLevel: 'error',
-            reportFilename: `report-${_v.GIT_SHA}.html`,
-        }),
-        new _v.Visualizer({
-            filename: `${_v.GIT_SHA}.html`
-        })
-    ]);
-}
-
-config.plugins = config.plugins.concat([
-    new _v.webpack.EnvironmentPlugin([
-        "NODE_ENV"
-    ]),
-    new _v.webpack.DefinePlugin(webpackConfigUtils.getDefinePluginOptions()),
-    new _v.ProgressBarPlugin({
-        format: 'webpack [:bar] ' + _v.chalk.green.bold(':percent') + ' (:elapsed seconds)',
-        clear: true
-    }),
-    new _v.WebpackNotifierPlugin({contentImage: _v.baseDir+'/build-assets/riko-logo.png'})
-]);
+        //build defaults
+        new _v.WebpackNotifierPlugin({contentImage: _v.baseDir+'/build-assets/riko-logo.png'})
+    ]
+);
 
 switch (process.env.NODE_ENV) {
     case "production": {
@@ -195,25 +192,23 @@ switch (process.env.NODE_ENV) {
             }
         ]);
 
-        config.plugins = config.plugins.concat([
-            new _v.webpack.optimize.UglifyJsPlugin(webpackConfigUtils.getUglifyJsPluginOptions()),
-            new _v.webpack.optimize.CommonsChunkPlugin({name: 'index', filename: customConfig.jsOutputPath + '/' + config.output.filename}),
-            new _v.webpack.ProvidePlugin(customConfig.externalModules),
-            new _v.ExtractTextPlugin({filename: customConfig.cssOutputPath + '/' + customConfig.cssOutputFilename + '?[hash]', allChunks: true}),
+        config.plugins = funcs.handlePlugins(
+            config.plugins,
+            [
+                customConfig.setPlugins('prod', staticWebpackPlugins),
 
-            //Image optimization options | imagemin-webpack-plugin
-            //https://github.com/Klathmon/imagemin-webpack-plugin
-            new _v.ImageminPlugin(customConfig.imageminPluginOptions),
-            new _v.WebpackShellPlugin({
-                onBuildStart: customConfig.onBuildStartShellCommands,
-                onBuildEnd: customConfig.onBuildEndShellCommands,
-                onBuildExit: customConfig.onBuildExitShellCommands
-            }),
-            new _v.CleanWebpackPlugin([_v.path.basename(customConfig.destDir)], {root: customConfig.baseDir, verbose: true, dry: false}),
-            new _v.webpack.LoaderOptionsPlugin({
-                debug: false
-            })
-        ]);
+                //build defaults
+                new _v.WebpackShellPlugin({
+                    onBuildStart: customConfig.onBuildStartShellCommands,
+                    onBuildEnd: customConfig.onBuildEndShellCommands,
+                    onBuildExit: customConfig.onBuildExitShellCommands
+                }),
+                new _v.CleanWebpackPlugin([_v.path.basename(customConfig.destDir)], {root: customConfig.baseDir, verbose: true, dry: false}),
+                new _v.webpack.LoaderOptionsPlugin({
+                    debug: false
+                })
+            ]
+        );
 
         break;
     }
@@ -294,16 +289,7 @@ switch (process.env.NODE_ENV) {
             }
         ]);
 
-        config.plugins = config.plugins.concat([
-            new _v.webpack.HotModuleReplacementPlugin(),
-            new _v.webpack.NamedModulesPlugin(),
-            new _v.webpack.ProvidePlugin(customConfig.externalModules),
-            new _v.webpack.LoaderOptionsPlugin({
-                debug: true
-            })
-        ]);
-
-        if(!_v._.isEmpty(customConfig.templateFile) && !JSON.parse(process.env.ELECTRON)) {
+        if(JSON.parse(process.env.isWeb) && !JSON.parse(process.env.isElectron)) {
             //WEB DEV MODE
             config.plugins = config.plugins.concat([new _v.BrowserSyncPlugin(
                 {
@@ -315,6 +301,20 @@ switch (process.env.NODE_ENV) {
             ]);
         }
 
+        config.plugins = funcs.handlePlugins(
+            config.plugins,
+            [
+                customConfig.setPlugins('dev', staticWebpackPlugins),
+
+                //build defaults
+                new _v.webpack.HotModuleReplacementPlugin(),
+                new _v.webpack.NamedModulesPlugin(),
+                new _v.webpack.LoaderOptionsPlugin({
+                    debug: true
+                })
+            ]
+        );
+
         break;
     }
     default: {
@@ -323,7 +323,7 @@ switch (process.env.NODE_ENV) {
 }
 
 //HANDLE ELECTRON SPECIFIC OPTIONS
-if(JSON.parse(process.env.ELECTRON)) {
+if(JSON.parse(process.env.isElectron)) {
     config.plugins = funcs.handleElectronEnvironmentOptions(config, customConfig);
 }
 

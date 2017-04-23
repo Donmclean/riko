@@ -96,9 +96,24 @@ module.exports = () => {
         return deferred.promise;
     };
 
+    funcs.pickPluginFromKey = (plugins, key) => _v._.chain(plugins).keys().includes(key).value();
+
+    funcs.handlePlugins = (plugins, valueToConcat = []) => {
+        return _v._
+            .chain(plugins)
+            .concat(...valueToConcat)
+            .flatten()
+            .compact()
+            .value();
+    };
+
     funcs.handleElectronEnvironmentOptions = (config, customConfig) => {
         const webpackConfigUtils = require('./webpackConfigUtils')(_v, funcs, customConfig);
         const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
+
+        const WebpackShellPlugin = require('webpack-shell-plugin');
+        const CopyWebpackPlugin = require('copy-webpack-plugin');
+
         let newPlugins = [];
 
         //GLOBAL OPTIONS
@@ -111,7 +126,7 @@ module.exports = () => {
             case 'production': {
                 //COPY ADDITIONAL ELECTRON FILES TO TEMP DIR
                 newPlugins = config.plugins.concat([
-                    new _v.CopyWebpackPlugin([
+                    new CopyWebpackPlugin([
                         { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
                         { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
                         { from: electronPackagerOptions.icon, to: customConfig.tempDir }
@@ -123,7 +138,7 @@ module.exports = () => {
             case 'development': {
                 //ELECTRON DEV MODE
                 newPlugins = config.plugins.concat([
-                    new _v.WebpackShellPlugin({
+                    new WebpackShellPlugin({
                         onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
                     })
                 ]);
@@ -194,10 +209,10 @@ module.exports = () => {
             }
         }
 
-        process.env.ELECTRON = !_v._.isEmpty(runCommand.match(/electron\b/));
+        process.env.isWeb = !_v._.isEmpty(runCommand.match(/(web)\b/i));
+        process.env.isElectron = !_v._.isEmpty(runCommand.match(/(electron)\b/i));
 
         console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
-        console.log('process.env.ELECTRON:', process.env.ELECTRON);
     };
 
     funcs.onDevBuildActions = (customConfig) => {

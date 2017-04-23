@@ -41,39 +41,34 @@ const defaultConfig = funcs.getDefaultConfigFromRunCommand(process.env.runComman
 
 funcs.genericLog('validating rikoconfig.js file..');
 
-const requiredFields = [
-    'title',
-    'cssOutputFilename' //.match(/\.(css)$/)
-];
+const requiredFields = {
+    title: 'string',
+    destDir: 'path',
+    tempDir: 'path',
+    entryFile: 'path'
+};
 
+//Validate Config Fields
 _.forEach(defaultConfig, (value, key) => {
-    _.includes(requiredFields , key) ? assert.ok(!_.isEmpty(customConfig[key]), `config.${key} must not be empty rikoconfig.js`) : null;
-    key === 'cssOutputFilename' ? assert.ok(!_.isEmpty(customConfig[key].match(/\.(css)$/)), `config.${key} must be a .css filename in rikoconfig.js`) : null;
+    //make sure default keys are present in rikoconfig
     assert.ok(key in customConfig, `config.${key} must be present in rikoconfig.js`);
+
+    //handle require fields
+    _.includes(requiredFields , key) ? assert.ok(!_.isEmpty(customConfig[key]), `config.${key} must not be empty rikoconfig.js`) : null;
+
+    //make sure default keys are of valid type in rikoconfig
     assert.equal(typeof customConfig[key], typeof value, `config.${key}'s value must be of type '${typeof value}' in rikoconfig.js`);
+
+    //resolve required paths
+    (requiredFields[key] === 'path') ? customConfig[key] = funcs.sanitizePath(config.baseDir, customConfig[key]) : null;
 });
-
-//Required Absolute Paths
-const requiredAbsolutePaths = [
-    'destDir',
-    'tempDir',
-    'entryFile',
-    'templateFile'
-];
-
-const resolvedPaths = requiredAbsolutePaths.reduce((accObj, key) => {
-    assert.ok(!_.isEmpty(customConfig[key]), `config.${key} must not be empty in rikoconfig.js`);
-    key === 'templateFile' ? assert.ok(customConfig[key].match(/\.(pug|ejs|hbs)$/), `config.${key}'s value must be a valid .pug, .ejs or .hbs file`) : null;
-    accObj[key] = funcs.sanitizePath(config.baseDir, customConfig[key]);
-    return accObj;
-}, {});
 
 funcs.genericLog('rikoconfig.js file is vaild!', 'green');
 
 const newConfig = Object.assign(
     {},
+    defaultConfig,
     customConfig,
-    resolvedPaths,
     config
 );
 

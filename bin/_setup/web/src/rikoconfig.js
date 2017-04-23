@@ -11,9 +11,6 @@ config.destDir                  = 'dist';
 config.tempDir                  = 'temp';
 
 config.entryFile                = 'src/js/riko.js';
-config.templateFile             = 'src/templates/index.pug';
-
-config.cssOutputFilename        = 'styles.min.css';
 
 config.EXPRESS_PORT             = 3000;
 
@@ -93,50 +90,66 @@ config.eslintLoaderOptions = {
 //**********************************************************************
 //*************************PLUGIN OPTIONS*******************************
 //**********************************************************************
-config.htmlWebpackPluginOptions = {
-    favicon: 'src/media/images/riko-favicon.png',
-    inject: 'body',
-    hash: true,
-    cache: true, //default
-    showErrors: true, //default
-};
 
-config.styleLintPluginOptions = {
-    configFile: 'stylelint.config.js',
-    files: [
-        '**/*.s?(a|c)ss',
-        '**/*.styl',
-        '**/*.less',
-        '**/*.css',
-        '!(vendor)**/*.css'
-    ],
-    failOnError: false
-};
+config.setPlugins = (env, plugins) => {
+    const { webpack, HtmlWebpackPlugin, ProgressBarPlugin, ExtractTextPlugin } = plugins;
+    switch (env) {
+        case 'global': {
+            return [
+                new HtmlWebpackPlugin({
+                    title: 'Riko',
 
-//Image optimization options
-//See: https://github.com/Klathmon/imagemin-webpack-plugin
-config.imageminPluginOptions = {
-    // progressive: true,
-    pngquant:{
-        quality: '65-90',
-        speed: 4
-    },
-    svgo:{
-        plugins: [
-            {
-                removeViewBox: false
-            },
-            {
-                removeEmptyAttrs: false
-            }
-        ]
+                    template: 'src/templates/index.pug',
+                    favicon: 'src/media/images/riko-favicon.png',
+                    inject: 'body',
+                    hash: true,
+                    cache: true, //default
+                    showErrors: true, //default
+
+                    scripts: [],
+                    stylesheets: []
+                }),
+                new webpack.EnvironmentPlugin([
+                    "NODE_ENV"
+                ]),
+                new webpack.DefinePlugin({
+                    'process.env': {
+                        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                    }
+                }),
+                new ProgressBarPlugin({
+                    format: 'webpack [:bar] ' + ':percent' + ' (:elapsed seconds)',
+                    clear: true
+                })
+            ];
+        }
+        case 'prod': {
+            return [
+                new webpack.optimize.UglifyJsPlugin({
+                    mangle: false,
+                    sourceMap: true
+                }),
+                new webpack.optimize.CommonsChunkPlugin({
+                    name: 'index',
+                    filename: 'assets/js/[name].js?[hash]'
+                }),
+                new webpack.ProvidePlugin({}),
+                new ExtractTextPlugin({
+                    filename: 'assets/css/styles.min.css?[hash]',
+                    allChunks: true
+                }),
+            ];
+        }
+        case 'dev': {
+            return [
+                new webpack.ProvidePlugin({})
+            ];
+        }
+        default: {
+            return [];
+        }
     }
 };
-
-config.uglifyJsPluginOptions = {};
-
-//IMPORTANT!!! ALL VALUES OF THE FOLLOWING 'value' key *MUST BE JSON STRINGIFIED*
-config.definePluginOptions = {};
 
 //**********************************************************************
 //*******************************EXTRAS*********************************
@@ -165,10 +178,6 @@ config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix everything: br
 config.onBuildStartShellCommands = [];
 config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];
-
-//enable webpack visualizers which allows you to see the build product of your js sources & dependencies via current git SHA as url
-//GIT_SHA.html || report-GIT_SHA.html
-config.enableWebpackVisualizers = true;
 
 //specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
 //must be an absolute path.

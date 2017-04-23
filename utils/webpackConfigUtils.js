@@ -15,11 +15,10 @@ module.exports = (_v, funcs, customConfig) => {
     webpackConfigUtils.getHtmlWebpackPluginOptions = () => Object.assign(
         {},
         { title: customConfig.title },
-        customConfig.htmlWebpackPluginOptions,
+        customConfig.plugins.htmlWebpackPlugin.options,
         {
             scripts: customConfig.externalScripts,
-            stylesheets: customConfig.externalStylesheets,
-            template: customConfig.templateFile
+            stylesheets: customConfig.externalStylesheets
         }
     );
 

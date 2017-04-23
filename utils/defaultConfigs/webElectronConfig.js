@@ -1,24 +1,21 @@
-const defaultConfig = {};
+const config = {};
 
-defaultConfig.title = 'Riko';
+config.title = 'Riko';
 
-defaultConfig.destDir = 'dist';
-defaultConfig.tempDir = 'temp';
+config.destDir = 'dist';
+config.tempDir = 'temp';
 
-defaultConfig.entryFile = 'src/js/riko.js';
-defaultConfig.templateFile = 'src/templates/index.pug';
+config.entryFile = 'src/js/riko.js';
 
-defaultConfig.cssOutputFilename = 'styles.min.css';
+config.EXPRESS_PORT = 3000;
 
-defaultConfig.EXPRESS_PORT = 3000;
-
-defaultConfig.electronPackagerOptions = {
+config.electronPackagerOptions = {
     icon: 'src/riko-logo.icns',
     platform: ['darwin','win32'],
     asar: true
 };
 
-defaultConfig.externalScripts = [
+config.externalScripts = [
     // example
     // {
     //     src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
@@ -27,20 +24,20 @@ defaultConfig.externalScripts = [
     // }
 ];
 
-defaultConfig.externalStylesheets = [
+config.externalStylesheets = [
     // 'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
 ];
 
-defaultConfig.externalModulePaths = {
+config.externalModulePaths = {
     //eg: $ : 'src/vendor/jquery.min.js'
 };
 
-defaultConfig.externalModules = {
+config.externalModules = {
     //eg: $ : 'jquery'
     //or: $ : '$' //if you're not using the npm module. Make sure path is mapped in config.externalModulePaths
 };
 
-defaultConfig.eslintLoaderOptions = {
+config.eslintLoaderOptions = {
     configFile: '.eslintrc.js',
     failOnError: process.env.NODE_ENV === 'production',
     failOnWarning: false,
@@ -48,49 +45,67 @@ defaultConfig.eslintLoaderOptions = {
     quiet: false //set true to disable warnings based on your eslint config
 };
 
-defaultConfig.htmlWebpackPluginOptions = {
-    favicon: 'src/media/images/riko-favicon.png',
-    inject: 'body',
-    hash: true,
-    cache: true, //default
-    showErrors: true, //default
-};
+config.setPlugins = (env, plugins) => {
+    const { webpack, HtmlWebpackPlugin, ProgressBarPlugin, ExtractTextPlugin } = plugins;
+    switch (env) {
+        case 'global': {
+            return [
+                new HtmlWebpackPlugin({
+                    title: 'Riko',
 
-defaultConfig.styleLintPluginOptions = {
-    configFile: 'stylelint.config.js',
-    files: [
-        '**/*.s?(a|c)ss',
-        '**/*.styl',
-        '**/*.less',
-        '**/*.css',
-        '!(vendor)**/*.css'
-    ],
-    failOnError: false
-};
+                    template: 'src/templates/index.pug',
+                    favicon: 'src/media/images/riko-favicon.png',
+                    inject: 'body',
+                    hash: true,
+                    cache: true, //default
+                    showErrors: true, //default
 
-defaultConfig.imageminPluginOptions = {
-    // progressive: true,
-    pngquant:{
-        quality: '65-90',
-        speed: 4
-    },
-    svgo:{
-        plugins: [
-            {
-                removeViewBox: false
-            },
-            {
-                removeEmptyAttrs: false
-            }
-        ]
+                    scripts: [],
+                    stylesheets: []
+                }),
+                new webpack.EnvironmentPlugin([
+                    "NODE_ENV"
+                ]),
+                new webpack.DefinePlugin({
+                    'process.env': {
+                        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                    }
+                }),
+                new ProgressBarPlugin({
+                    format: 'webpack [:bar] ' + ':percent' + ' (:elapsed seconds)',
+                    clear: true
+                })
+            ];
+        }
+        case 'prod': {
+            return [
+                new webpack.optimize.UglifyJsPlugin({
+                    mangle: false,
+                    sourceMap: true
+                }),
+                new webpack.optimize.CommonsChunkPlugin({
+                    name: 'index',
+                    filename: 'assets/js/[name].js?[hash]'
+                }),
+                new webpack.ProvidePlugin({}),
+                new ExtractTextPlugin({
+                    filename: 'assets/css/styles.min.css?[hash]',
+                    allChunks: true
+                }),
+            ];
+        }
+        case 'dev': {
+            return [
+                new webpack.ProvidePlugin({})
+            ];
+        }
+        default: {
+            return [];
+        }
     }
 };
 
-defaultConfig.uglifyJsPluginOptions = {};
-
-defaultConfig.definePluginOptions = {};
-
-defaultConfig.hotReloadingOptions = {
+config.hotReloadingOptions = {
     overlay: true,
 
     BrowserSyncReloadOnChange: false,
@@ -98,19 +113,17 @@ defaultConfig.hotReloadingOptions = {
     hotExecuteTestCommand: 'test'
 };
 
-defaultConfig.sourcemapType = 'source-map';
+config.sourcemapType = 'source-map';
 
-defaultConfig.sourcemapDev = true;
-defaultConfig.sourcemapProd = true;
+config.sourcemapDev = true;
+config.sourcemapProd = true;
 
-defaultConfig.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix everything: browsers: ['> 0%']
+config.autoprefixerOptions = { browsers: ['> 0%'] }; //prefix everything: browsers: ['> 0%']
 
-defaultConfig.onBuildStartShellCommands = [];
-defaultConfig.onBuildEndShellCommands = [];
-defaultConfig.onBuildExitShellCommands = [];
+config.onBuildStartShellCommands = [];
+config.onBuildEndShellCommands = [];
+config.onBuildExitShellCommands = [];
 
-defaultConfig.enableWebpackVisualizers = true;
+config.customBoilerplatePath = 'src/riko-custom-boilerplates';
 
-defaultConfig.customBoilerplatePath = 'src/riko-custom-boilerplates';
-
-module.exports = defaultConfig;
+module.exports = config;

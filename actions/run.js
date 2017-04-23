@@ -48,7 +48,7 @@ module.exports = (runCommand) => {
         }
         case 'electron-prod': {
             funcs.genericLog('Compiling electron app..');
-            if(JSON.parse(process.env.ELECTRON)) {
+            if(JSON.parse(process.env.isElectron)) {
                 return _v.webpack(config, () => {
                     //Compile The Electron Application
                     const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
