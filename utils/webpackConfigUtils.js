@@ -12,15 +12,7 @@ module.exports = (_v, funcs, customConfig) => {
             }]
     });
 
-    webpackConfigUtils.getHtmlWebpackPluginOptions = () => Object.assign(
-        {},
-        { title: customConfig.title },
-        customConfig.plugins.htmlWebpackPlugin.options,
-        {
-            scripts: customConfig.externalScripts,
-            stylesheets: customConfig.externalStylesheets
-        }
-    );
+    webpackConfigUtils.getHtmlWebpackPluginOptions = () => customConfig.plugins.htmlWebpackPlugin.options;
 
     webpackConfigUtils.getUglifyJsPluginOptions = () => Object.assign(
         {},

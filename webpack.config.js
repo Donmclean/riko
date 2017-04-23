@@ -6,7 +6,6 @@ const
     config                      = {};
 
     //Static Webpack Plugins
-    _v.ProgressBarPlugin        = require('progress-bar-webpack-plugin');
     _v.HtmlWebpackPlugin        = require('html-webpack-plugin');
     _v.BrowserSyncPlugin        = require('browser-sync-webpack-plugin');
     _v.ExtractTextPlugin        = require("extract-text-webpack-plugin");
@@ -121,7 +120,7 @@ switch (process.env.NODE_ENV) {
             test: new RegExp(regex),
             use: _v.ExtractTextPlugin.extract({
                 fallback: "style-loader",
-                use: [
+                use: _v._.compact([
                     {
                         loader: 'css-loader',
                         options: {
@@ -138,13 +137,14 @@ switch (process.env.NODE_ENV) {
                             }
                         }
                     },
-                    {
+                    (type !== 'css') ? {
                         loader: `${type}-loader`,
                         options: {
                             sourceMap: customConfig.sourcemapProd
                         }
-                    }
-                ]
+                    } : null
+
+                ])
             })
         });
 
@@ -156,30 +156,7 @@ switch (process.env.NODE_ENV) {
             //STYLUS
             stylesheetProdRules('stylus', /\.styl$/),
             //CSS
-            {
-                test: /\.css$/,
-                use: _v.ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: customConfig.sourcemapProd
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                plugins: () => {
-                                    return [
-                                        _v.autoprefixer(customConfig.autoprefixerOptions)
-                                    ];
-                                }
-                            }
-                        }
-                    ]
-                })
-            },
+            stylesheetProdRules('css', /\.css$/),
             //FONTS
             {
                 test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -230,7 +207,7 @@ switch (process.env.NODE_ENV) {
 
         const stylesheetDevRules = (type, regex) => ({
             test: new RegExp(regex),
-            loaders: [
+            loaders: _v._.compact([
                 'style-loader',
                 `css-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}`,
                 {
@@ -243,8 +220,8 @@ switch (process.env.NODE_ENV) {
                         }
                     }
                 },
-                `${type}-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}`
-            ]
+                (type !== 'css') ? `${type}-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}` : null
+            ])
         });
 
         config.module.rules = config.module.rules.concat([
@@ -255,24 +232,7 @@ switch (process.env.NODE_ENV) {
             //STYLUS
             stylesheetDevRules('stylus', /\.styl$/),
             // CSS
-            {
-                test: /\.css$/,
-                include: customConfig.srcDir,
-                loaders: [
-                    'style-loader',
-                    `css-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}`,
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: () => {
-                                return [
-                                    _v.autoprefixer(customConfig.autoprefixerOptions)
-                                ];
-                            }
-                        }
-                    }
-                ]
-            },
+            stylesheetDevRules('css', /\.css$/),
             //FONTS
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

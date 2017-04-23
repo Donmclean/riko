@@ -34,41 +34,12 @@ config.electronPackagerOptions  = {
 //**********************************************************************
 //****************************EXTERNALS*********************************
 //**********************************************************************
-config.externalScripts      = [
-    // example
-    // {
-    //     src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
-    //     async: false,
-    //     defer: false
-    // }
-];
-
-config.externalStylesheets  = [
-    // 'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
-];
 
 //IMPORTANT!!! all module dependencies that are NOT npm installed modules
 // -  eg: require('src/vendor/jquery.min.js')
 // must be specified with it's valid ABSOLUTE path here
 config.externalModulePaths = {
     //eg: $ : 'src/vendor/jquery.min.js'
-};
-
-// add vendor dependencies that you wish to expose globally but not expose
-// to global/window object here.
-//
-// If using an npm module. Use the same way as you would in a require statement.
-// eg: _ : 'lodash'
-//
-// But if using a vendor dependency. Use the MATCHING KEY from config.externalModulePaths
-// IMPORTANT!!! DO NOT USE AN ABSOLUTE PATH.
-//
-// eg:  config.externalModulePaths  = {$ : 'src/vendor/jquery.min.js'};
-//      config.externalModules      = {$: '$'};
-// Notice how the '$' value of externalModules matches the key $ of externalModulePaths
-config.externalModules = {
-    //eg: $ : 'jquery'
-    //or: $ : '$' //if you're not using the npm module. Make sure path is mapped in config.externalModulePaths
 };
 
 // To add vendor dependencies and expose them to global/window object simply use the expose-loader
@@ -92,7 +63,7 @@ config.eslintLoaderOptions = {
 //**********************************************************************
 
 config.setPlugins = (env, plugins) => {
-    const { webpack, HtmlWebpackPlugin, ProgressBarPlugin, ExtractTextPlugin } = plugins;
+    const { webpack, HtmlWebpackPlugin, ExtractTextPlugin } = plugins;
     switch (env) {
         case 'global': {
             return [
@@ -106,20 +77,22 @@ config.setPlugins = (env, plugins) => {
                     cache: true, //default
                     showErrors: true, //default
 
-                    scripts: [],
-                    stylesheets: []
+                    scripts: [
+                        // example
+                        // {
+                        //     src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
+                        //     async: false,
+                        //     defer: false
+                        // }
+                    ],
+                    stylesheets: [
+                        // 'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
+                    ]
                 }),
-                new webpack.EnvironmentPlugin([
-                    "NODE_ENV"
-                ]),
                 new webpack.DefinePlugin({
                     'process.env': {
                         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
                     }
-                }),
-                new ProgressBarPlugin({
-                    format: 'webpack [:bar] ' + ':percent' + ' (:elapsed seconds)',
-                    clear: true
                 })
             ];
         }

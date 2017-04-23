@@ -15,26 +15,8 @@ config.electronPackagerOptions = {
     asar: true
 };
 
-config.externalScripts = [
-    // example
-    // {
-    //     src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
-    //     async: false,
-    //     defer: false
-    // }
-];
-
-config.externalStylesheets = [
-    // 'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
-];
-
 config.externalModulePaths = {
     //eg: $ : 'src/vendor/jquery.min.js'
-};
-
-config.externalModules = {
-    //eg: $ : 'jquery'
-    //or: $ : '$' //if you're not using the npm module. Make sure path is mapped in config.externalModulePaths
 };
 
 config.eslintLoaderOptions = {
