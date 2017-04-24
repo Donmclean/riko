@@ -51,6 +51,57 @@ module.exports = () => {
         return file;
     };
 
+    funcs.stylesheetProdRules = (type, regex, customConfig, ExtractTextPlugin) => ({
+        test: new RegExp(regex),
+        use: ExtractTextPlugin.extract({
+            fallback: "style-loader",
+            use: _v._.compact([
+                {
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: customConfig.sourcemapProd
+                    }
+                },
+                {
+                    loader: 'postcss-loader',
+                    options: {
+                        plugins: () => {
+                            return [
+                                _v.autoprefixer(customConfig.autoprefixerOptions)
+                            ];
+                        }
+                    }
+                },
+                (type !== 'css') ? {
+                    loader: `${type}-loader`,
+                    options: {
+                        sourceMap: customConfig.sourcemapProd
+                    }
+                } : null
+
+            ])
+        })
+    });
+
+    funcs.stylesheetDevRules = (type, regex, customConfig) => ({
+        test: new RegExp(regex),
+        loaders: _v._.compact([
+            'style-loader',
+            `css-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}`,
+            {
+                loader: 'postcss-loader',
+                options: {
+                    plugins: () => {
+                        return [
+                            _v.autoprefixer(customConfig.autoprefixerOptions)
+                        ];
+                    }
+                }
+            },
+            (type !== 'css') ? `${type}-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}` : null
+        ])
+    });
+
     funcs.getStats = (NODE_ENV) => ({
         colors: true, hash: true, version: true, timings: true, assets: NODE_ENV === 'production',
         chunks: false, modules: false, reasons: false, children: false, source: false,

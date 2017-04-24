@@ -116,47 +116,15 @@ switch (process.env.NODE_ENV) {
         config.devtool = customConfig.sourcemapProd ? customConfig.sourcemapType : null;
         config.bail = true;
 
-        const stylesheetProdRules = (type, regex) => ({
-            test: new RegExp(regex),
-            use: _v.ExtractTextPlugin.extract({
-                fallback: "style-loader",
-                use: _v._.compact([
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: customConfig.sourcemapProd
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: () => {
-                                return [
-                                    _v.autoprefixer(customConfig.autoprefixerOptions)
-                                ];
-                            }
-                        }
-                    },
-                    (type !== 'css') ? {
-                        loader: `${type}-loader`,
-                        options: {
-                            sourceMap: customConfig.sourcemapProd
-                        }
-                    } : null
-
-                ])
-            })
-        });
-
         config.module.rules = config.module.rules.concat([
             //SASS
-            stylesheetProdRules('sass', /\.scss$/),
+            funcs.stylesheetProdRules('sass', /\.scss$/, customConfig, _v.ExtractTextPlugin),
             //LESS
-            stylesheetProdRules('less', /\.less$/),
+            funcs.stylesheetProdRules('less', /\.less$/, customConfig, _v.ExtractTextPlugin),
             //STYLUS
-            stylesheetProdRules('stylus', /\.styl$/),
+            funcs.stylesheetProdRules('stylus', /\.styl$/, customConfig, _v.ExtractTextPlugin),
             //CSS
-            stylesheetProdRules('css', /\.css$/),
+            funcs.stylesheetProdRules('css', /\.css$/, customConfig, _v.ExtractTextPlugin),
             //FONTS
             {
                 test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -205,34 +173,15 @@ switch (process.env.NODE_ENV) {
             // match the output `publicPath`
         };
 
-        const stylesheetDevRules = (type, regex) => ({
-            test: new RegExp(regex),
-            loaders: _v._.compact([
-                'style-loader',
-                `css-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}`,
-                {
-                    loader: 'postcss-loader',
-                    options: {
-                        plugins: () => {
-                            return [
-                                _v.autoprefixer(customConfig.autoprefixerOptions)
-                            ];
-                        }
-                    }
-                },
-                (type !== 'css') ? `${type}-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}` : null
-            ])
-        });
-
         config.module.rules = config.module.rules.concat([
             // SASS
-            stylesheetDevRules('sass', /\.scss$/),
+            funcs.stylesheetDevRules('sass', /\.scss$/, customConfig),
             // LESS
-            stylesheetDevRules('less', /\.less$/),
+            funcs.stylesheetDevRules('less', /\.less$/, customConfig),
             //STYLUS
-            stylesheetDevRules('stylus', /\.styl$/),
+            funcs.stylesheetDevRules('stylus', /\.styl$/, customConfig),
             // CSS
-            stylesheetDevRules('css', /\.css$/),
+            funcs.stylesheetDevRules('css', /\.css$/, customConfig),
             //FONTS
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
