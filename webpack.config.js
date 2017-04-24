@@ -100,6 +100,7 @@ config.module.rules = _v._.flatten([
 //*****************************************************************
 config.plugins = [];
 
+//Set Global Plugins
 config.plugins = funcs.handlePlugins(
     config.plugins,
     [
@@ -137,6 +138,7 @@ switch (process.env.NODE_ENV) {
             }
         ]);
 
+        //Set Production Plugins
         config.plugins = funcs.handlePlugins(
             config.plugins,
             [
@@ -210,6 +212,7 @@ switch (process.env.NODE_ENV) {
             ]);
         }
 
+        //Set Development Plugins
         config.plugins = funcs.handlePlugins(
             config.plugins,
             [
