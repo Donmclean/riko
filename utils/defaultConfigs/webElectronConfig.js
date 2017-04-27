@@ -1,11 +1,12 @@
 const config = {};
 
-config.title = 'Riko';
+config.entry = {
+    index: [ 'src/js/riko.js' ]
+};
 
-config.destDir = 'dist';
-config.tempDir = 'temp';
-
-config.entryFile = 'src/js/riko.js';
+config.output = {
+    path: 'dist',
+};
 
 config.EXPRESS_PORT = 3000;
 

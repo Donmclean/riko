@@ -12,24 +12,6 @@ module.exports = (_v, funcs, customConfig) => {
             }]
     });
 
-    webpackConfigUtils.getHtmlWebpackPluginOptions = () => customConfig.plugins.htmlWebpackPlugin.options;
-
-    webpackConfigUtils.getUglifyJsPluginOptions = () => Object.assign(
-        {},
-        { mangle: false, sourceMap: customConfig.sourcemapProd },
-        customConfig.uglifyJsPluginOptions
-    );
-
-    webpackConfigUtils.getDefinePluginOptions = () => Object.assign(
-        {},
-        {
-            'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-            }
-        },
-        customConfig.definePluginOptions
-    );
-
     webpackConfigUtils.getElectronPackagerOptions = () => Object.assign(
         {},
 
@@ -45,10 +27,9 @@ module.exports = (_v, funcs, customConfig) => {
         //Required
         {
             dir: customConfig.tempDir,
-            name: customConfig.title,
             prune: false,
             overwrite: true,
-            out: customConfig.destDir
+            out: customConfig.output.path
         }
     );
 

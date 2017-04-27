@@ -26,12 +26,11 @@ config.context = customConfig.baseDir;
 //TODO: fix bug in upgrading eslint-loader
 // process.traceDeprecation = true;
 
-config.entry = {};
-config.entry['index'] = [customConfig.entryFile];
+config.entry = customConfig.entry;
 
 config.output = {
     filename: '[name].js?[hash]',
-    path: customConfig.destDir,
+    path: customConfig.output.path,
     publicPath: '/'
 };
 
@@ -150,7 +149,7 @@ switch (process.env.NODE_ENV) {
                     onBuildEnd: customConfig.onBuildEndShellCommands,
                     onBuildExit: customConfig.onBuildExitShellCommands
                 }),
-                new _v.CleanWebpackPlugin([_v.path.basename(customConfig.destDir)], {root: customConfig.baseDir, verbose: true, dry: false}),
+                new _v.CleanWebpackPlugin([_v.path.basename(config.output.path)], {root: customConfig.baseDir, verbose: true, dry: false}),
                 new _v.webpack.LoaderOptionsPlugin({
                     debug: false
                 })

@@ -158,6 +158,16 @@ module.exports = () => {
             .value();
     };
 
+    funcs.resolveObjValues = (obj, baseResolvePath) => _v._.reduce(obj, (newObj, val, key) => {
+        if(_v._.isArray(val)) {
+            newObj[key] = val.map((entryPath) => funcs.sanitizePath(baseResolvePath, entryPath));
+        } else {
+            newObj[key] = funcs.sanitizePath(baseResolvePath, val);
+        }
+
+        return newObj;
+    }, {});
+
     funcs.handleElectronEnvironmentOptions = (config, customConfig) => {
         const webpackConfigUtils = require('./webpackConfigUtils')(_v, funcs, customConfig);
         const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
@@ -263,7 +273,7 @@ module.exports = () => {
         process.env.isWeb = !_v._.isEmpty(runCommand.match(/(web)\b/i));
         process.env.isElectron = !_v._.isEmpty(runCommand.match(/(electron)\b/i));
 
-        console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
+        funcs.genericLog(`Environment (process.env.NODE_ENV): ${process.env.NODE_ENV}`, 'blue');
     };
 
     funcs.onDevBuildActions = (customConfig) => {

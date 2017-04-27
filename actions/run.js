@@ -16,7 +16,7 @@ module.exports = (runCommand) => {
 
     switch (runCommand) {
         case 'electron-server': {
-            _v.qfs.list(customConfig.destDir).then((files) => {
+            _v.qfs.list(customConfig.output.path).then((files) => {
                 switch (_v.os.platform()) {
                     case 'darwin': {
                         //handles open electron app on MAC
@@ -24,7 +24,7 @@ module.exports = (runCommand) => {
 
                         if(macFile) {
                             //TODO: fix error here
-                            _v.spawn('open', [`-a`, `${customConfig.title}`, `${_v.cwd}/${_v.path.basename(customConfig.destDir)}/${macFile}/${customConfig.title}.app`], {stdio: 'inherit'});
+                            _v.spawn('open', [`-a`, `${_v.cwd}/${_v.path.basename(customConfig.output.path)}/${macFile}/${customConfig.electronPackagerOptions.name}.app`], {stdio: 'inherit'});
                         } else {
                             funcs.logElectronRunServerError();
                         }
@@ -110,7 +110,7 @@ module.exports = (runCommand) => {
         case 'web-prod-server': {
             _v.app.use(_v.morgan('dev'));
 
-            const root = customConfig.destDir;
+            const root = config.output.path;
 
             _v.app.use(_v.express.static(root));
             _v.app.use(_v.fallback('index.html', { root }));

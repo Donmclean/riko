@@ -13,6 +13,9 @@ config.baseDir      = process.cwd(); //IMPORTANT! DO NOT OVERRIDE!
 //Source Directory
 config.srcDir       = `${config.baseDir}/src`; //IMPORTANT! DO NOT OVERRIDE!
 
+//Temporary Directory
+config.tempDir      = `${config.baseDir}/temp`;
+
 //Custom project Package.json
 config.packageJson  = funcs.getFileIfExists(`${config.baseDir}/package.json`);
 
@@ -42,10 +45,8 @@ const defaultConfig = funcs.getDefaultConfigFromRunCommand(process.env.runComman
 funcs.genericLog('validating rikoconfig.js file..');
 
 const requiredFields = {
-    title: 'string',
-    destDir: 'path',
-    tempDir: 'path',
-    entryFile: 'path'
+    entry: 'object',
+    output: 'object'
 };
 
 //Validate Config Fields
@@ -60,7 +61,19 @@ _.forEach(defaultConfig, (value, key) => {
     assert.equal(typeof customConfig[key], typeof value, `config.${key}'s value must be of type '${typeof value}' in rikoconfig.js`);
 
     //resolve required paths
-    (requiredFields[key] === 'path') ? customConfig[key] = funcs.sanitizePath(config.baseDir, customConfig[key]) : null;
+    switch(requiredFields[key]) {
+        case 'string': {
+            customConfig[key] = funcs.sanitizePath(config.baseDir, customConfig[key]);
+            break;
+        }
+        case 'object': {
+            customConfig[key] = funcs.resolveObjValues(value, config.baseDir);
+            break;
+        }
+        default: {
+            break;
+        }
+    }
 });
 
 funcs.genericLog('rikoconfig.js file is vaild!', 'green');

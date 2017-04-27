@@ -5,31 +5,15 @@
 //BASE DIRECTORY is same location as package.json file.
 const config = {};
 
-config.title                    = 'Riko';
-
-config.destDir                  = 'dist';
-config.tempDir                  = 'temp';
-
-config.entryFile                = 'src/js/riko.js';
-
-config.EXPRESS_PORT             = 3000;
-
-//**********************************************************************
-//*******************************ELECTRON*******************************
-//**********************************************************************
-//for Electron Applications Only
-//See API for all options here: https://github.com/electron-userland/electron-packager/blob/master/docs/api.md
-config.electronPackagerOptions  = {
-    //applications icon  //OS X: .icns  //Windows: .ico
-    //get free conversions herehttps://iconverticons.com/online/
-    icon: 'src/riko-logo.icns',
-
-    //target platform(s) to build for
-    platform: ['darwin','win32'],
-
-    //Enable or disable asar archiving
-    asar: true
+config.entry = {
+    index: [ 'src/js/riko.js' ]
 };
+
+config.output = {
+    path: 'dist'
+};
+
+config.EXPRESS_PORT = 3000;
 
 //**********************************************************************
 //****************************EXTERNALS*********************************
@@ -122,6 +106,25 @@ config.setPlugins = (env, plugins) => {
             return [];
         }
     }
+};
+
+//**********************************************************************
+//*******************************ELECTRON*******************************
+//**********************************************************************
+//for Electron Applications Only
+//See API for all options here: https://github.com/electron-userland/electron-packager/blob/master/docs/api.md
+config.electronPackagerOptions  = {
+    name: 'Riko',
+
+    //applications icon  //OS X: .icns  //Windows: .ico
+    //get free conversions herehttps://iconverticons.com/online/
+    icon: 'src/riko-logo.icns',
+
+    //target platform(s) to build for
+    platform: ['darwin','win32'],
+
+    //Enable or disable asar archiving
+    asar: true
 };
 
 //**********************************************************************
