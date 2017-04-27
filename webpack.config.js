@@ -36,7 +36,6 @@ config.output = {
 
 config.resolve = {
     extensions: ['.js', '.jsx', '.json'],
-    alias: config.externalModulePaths,
     modules: [_v.path.resolve(customConfig.baseDir, "node_modules"), _v.path.resolve(_v.baseDir, "node_modules")]
 };
 

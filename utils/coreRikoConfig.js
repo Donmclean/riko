@@ -36,7 +36,7 @@ config.imageOutputPath = 'assets/images';
 config.videoOutputPath = 'assets/videos';
 
 const customConfig  = funcs.getFileIfExists(`${config.srcDir}/rikoconfig`);
-const defaultConfig = funcs.getDefaultConfigFromRunCommand(process.env.runCommand);
+const defaultConfig = process.env.runCommand ? funcs.getDefaultConfigFromRunCommand(process.env.runCommand) : {};
 
 //**********************************************************************
 //******************************ASSERTIONS******************************

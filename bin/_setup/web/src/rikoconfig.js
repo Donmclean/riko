@@ -19,13 +19,6 @@ config.EXPRESS_PORT = 3000;
 //****************************EXTERNALS*********************************
 //**********************************************************************
 
-//IMPORTANT!!! all module dependencies that are NOT npm installed modules
-// -  eg: require('src/vendor/jquery.min.js')
-// must be specified with it's valid ABSOLUTE path here
-config.externalModulePaths = {
-    //eg: $ : 'src/vendor/jquery.min.js'
-};
-
 // To add vendor dependencies and expose them to global/window object simply use the expose-loader
 // eg: require("expose-loader?_!lodash");
 // see: https://github.com/webpack/expose-loader

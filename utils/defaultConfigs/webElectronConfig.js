@@ -16,10 +16,6 @@ config.electronPackagerOptions = {
     asar: true
 };
 
-config.externalModulePaths = {
-    //eg: $ : 'src/vendor/jquery.min.js'
-};
-
 config.eslintLoaderOptions = {
     configFile: '.eslintrc.js',
     failOnError: process.env.NODE_ENV === 'production',
