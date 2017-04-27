@@ -149,9 +149,9 @@ module.exports = () => {
 
     funcs.pickPluginFromKey = (plugins, key) => _v._.chain(plugins).keys().includes(key).value();
 
-    funcs.handlePlugins = (plugins, valueToConcat = []) => {
+    funcs.handleCustomAdditions = (items = [], valueToConcat = []) => {
         return _v._
-            .chain(plugins)
+            .chain(items)
             .concat(...valueToConcat)
             .flatten()
             .compact()
@@ -280,30 +280,34 @@ module.exports = () => {
         funcs.genericLog('Updating Source File Watcher executing initial tests...');
 
         const watcher = _v.chokidar.watch(customConfig.srcFiles, {ignored: /[\/\\]\./});
+        const hasHotExecTestCommand = !_v._.isEmpty(customConfig.hotReloadingOptions.hotExecuteTestCommand);
+        const hasHotExecFlowTypeCommand = !_v._.isEmpty(customConfig.hotReloadingOptions.hotExecuteFlowTypeCommand);
 
         watcher.on('change', () => {
-
             let spawn;
 
-            if(!_v._.isEmpty(customConfig.hotReloadingOptions.hotExecuteTestCommand)) {
-                spawn = funcs.executeJestTests(customConfig.packageJson, customConfig.hotReloadingOptions.hotExecuteTestCommand);
+            if(hasHotExecTestCommand) {
+                spawn = funcs.executeJestTests(customConfig);
             }
 
-            if(spawn || _v._.isEmpty(customConfig.hotReloadingOptions.hotExecuteTestCommand)) {
-                spawn.on('close', funcs.executeFlowTests);
+            if(hasHotExecFlowTypeCommand || spawn) {
+                spawn.on('close', () => funcs.executeFlowTests(customConfig));
             }
         });
 
-        const spawn = funcs.executeJestTests(customConfig.packageJson, customConfig.hotReloadingOptions.hotExecuteTestCommand);
-        spawn.on('close', funcs.executeFlowTests);
+        const spawn = hasHotExecTestCommand ? funcs.executeJestTests(customConfig) : null;
+        spawn ? spawn.on('close', () => funcs.executeFlowTests(customConfig)) : null;
     };
 
-    funcs.executeJestTests = (packageJson, customTestCommand) => {
-        const isValidCommand = _v._
-            .chain(packageJson.scripts)
-            .keys()
-            .includes(customTestCommand)
-            .value();
+    funcs.isValidPackageJsonScript = (packageJson, customTestCommand) => _v._
+        .chain(packageJson.scripts)
+        .keys()
+        .includes(customTestCommand)
+        .value();
+
+    funcs.executeJestTests = (customConfig) => {
+        const customTestCommand = customConfig.hotReloadingOptions.hotExecuteTestCommand;
+        const isValidCommand = funcs.isValidPackageJsonScript(customConfig.packageJson, customTestCommand);
 
         if(isValidCommand) {
             const env = Object.create( process.env );
@@ -318,19 +322,42 @@ module.exports = () => {
         }
     };
 
-    funcs.executeFlowTests = () => {
+    funcs.processExitHandler = () => process.on('SIGINT', () => {
+        process.stdout.write('\n');
+        process.exit(0);
+    });
+
+    funcs.executeFlowTests = (customConfig) => {
         const { qfs, cwd, _ } = _v;
 
-        funcs.genericLog('Executing Flow...');
+        const customTestCommand = customConfig.hotReloadingOptions.hotExecuteFlowTypeCommand;
+        const isValidCommand = funcs.isValidPackageJsonScript(customConfig.packageJson, customTestCommand);
+        const isDefaultFlowTypeHotExecCommand = (customTestCommand === 'default');
 
-        return qfs.list(cwd).then((files) => {
-            if(_.includes(files, '.flowconfig')) {
-                return _v.spawnSync(`${_v.baseDir}/node_modules/.bin/flow`, ['check'], {stdio: 'inherit'});
-            } else {
-                funcs.genericLog('no .flowconfig found', 'red');
-                return false;
-            }
-        });
+        if(isValidCommand || isDefaultFlowTypeHotExecCommand) {
+            funcs.genericLog('Executing Flow...');
+
+            return qfs.list(cwd).then((files) => {
+                if(_.includes(files, '.flowconfig')) {
+                    const env = Object.create( process.env );
+                    env.NODE_ENV = 'test';
+
+                    if(isDefaultFlowTypeHotExecCommand) {
+                        return _v.spawnSync(`${_v.baseDir}/node_modules/.bin/flow`, ['check'], {stdio: 'inherit', env});
+                    } else {
+                        return _v.spawn('npm', ['run', customTestCommand], {stdio: 'inherit', env});
+                    }
+
+                } else {
+                    funcs.genericLog('no .flowconfig found', 'red');
+                    return false;
+                }
+            });
+        } else {
+            funcs.genericLog(`Invalid command. Make sure the hot execute flowtype command you're trying to execute lives in your package.json
+             under 'scripts'.`, 'red');
+            throw new Error('Invalid npm script command. see config.hotReloadingOptions.hotExecuteFlowTypeCommand in rikoconfig.js file');
+        }
     };
 
     return funcs;

@@ -48,6 +48,8 @@ const checkForConfigFile = (configFile) => {
 };
 
 config.module = {};
+
+//build defaults
 config.module.rules = _v._.flatten([
     //JAVASCRIPT
     checkForConfigFile(customConfig.eslintLoaderOptions.configFile) ? webpackConfigUtils.getEslintRule() : [],
@@ -93,13 +95,18 @@ config.module.rules = _v._.flatten([
     }
 ]);
 
+// Set Global Rules/Loaders
+config.module.rules = funcs.handleCustomAdditions(
+    customConfig.setLoaders('global', config.module.rules)
+);
+
 //*****************************************************************
 //*****************************PLUGINS*****************************
 //*****************************************************************
 config.plugins = [];
 
 //Set Global Plugins
-config.plugins = funcs.handlePlugins(
+config.plugins = funcs.handleCustomAdditions(
     config.plugins,
     [
         customConfig.setPlugins('global', staticWebpackPlugins),
@@ -137,7 +144,7 @@ switch (process.env.NODE_ENV) {
         ]);
 
         //Set Production Plugins
-        config.plugins = funcs.handlePlugins(
+        config.plugins = funcs.handleCustomAdditions(
             config.plugins,
             [
                 customConfig.setPlugins('production', staticWebpackPlugins),
@@ -211,7 +218,7 @@ switch (process.env.NODE_ENV) {
         }
 
         //Set Development Plugins
-        config.plugins = funcs.handlePlugins(
+        config.plugins = funcs.handleCustomAdditions(
             config.plugins,
             [
                 customConfig.setPlugins('development', staticWebpackPlugins),

@@ -5,6 +5,8 @@ const
 module.exports = (runCommand) => {
     const { $, electronPackager, browserSync } = _v;
 
+    funcs.processExitHandler();
+
     //handle environment variables
     funcs.assignEnvironmentVariablesBasedOnRunCommand(runCommand);
 

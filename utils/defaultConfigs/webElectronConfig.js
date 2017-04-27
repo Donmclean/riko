@@ -24,6 +24,23 @@ config.eslintLoaderOptions = {
     quiet: false //set true to disable warnings based on your eslint config
 };
 
+config.setLoaders = (env, loaders) => {
+    switch (env) {
+        case 'global': {
+            return loaders;
+        }
+        case 'production': {
+            return loaders;
+        }
+        case 'development': {
+            return loaders;
+        }
+        default: {
+            return [];
+        }
+    }
+};
+
 config.setPlugins = (env, plugins) => {
     const { webpack, HtmlWebpackPlugin, ProgressBarPlugin, ExtractTextPlugin } = plugins;
     switch (env) {
@@ -87,7 +104,9 @@ config.hotReloadingOptions = {
 
     BrowserSyncReloadOnChange: false,
 
-    hotExecuteTestCommand: 'test'
+    hotExecuteTestCommand: 'test',
+
+    hotExecuteFlowTypeCommand: 'default'
 };
 
 config.sourcemapType = 'source-map';

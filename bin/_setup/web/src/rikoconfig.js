@@ -35,6 +35,23 @@ config.eslintLoaderOptions = {
     quiet: false //set true to disable warnings based on your eslint config
 };
 
+config.setLoaders = (env, loaders) => {
+    switch (env) {
+        case 'global': {
+            return loaders;
+        }
+        case 'production': {
+            return loaders;
+        }
+        case 'development': {
+            return loaders;
+        }
+        default: {
+            return [];
+        }
+    }
+};
+
 //**********************************************************************
 //*************************PLUGIN OPTIONS*******************************
 //**********************************************************************
@@ -129,7 +146,9 @@ config.hotReloadingOptions     = {
 
     //Provide an npm package.json script command here to have tests execute on every webpack rebuild.
     //i.e: 'test' would execute as 'npm run test' or 'hot-test' as 'npm run hot-test'
-    hotExecuteTestCommand: 'test'
+    hotExecuteTestCommand: 'test',
+
+    hotExecuteFlowTypeCommand: 'default'
 };
 
 //https://webpack.github.io/docs/configuration.html#devtool
