@@ -73,7 +73,7 @@ config.setPlugins = (env, plugins) => {
                 })
             ];
         }
-        case 'prod': {
+        case 'production': {
             return [
                 new webpack.optimize.UglifyJsPlugin({
                     mangle: false,
@@ -90,10 +90,8 @@ config.setPlugins = (env, plugins) => {
                 }),
             ];
         }
-        case 'dev': {
-            return [
-                new webpack.ProvidePlugin({})
-            ];
+        case 'development': {
+            return [];
         }
         default: {
             return [];
@@ -114,7 +112,7 @@ config.electronPackagerOptions  = {
     icon: 'src/riko-logo.icns',
 
     //target platform(s) to build for
-    platform: ['darwin','win32'],
+    platform: 'all',
 
     //Enable or disable asar archiving
     asar: true

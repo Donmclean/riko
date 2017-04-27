@@ -27,8 +27,6 @@ config.srcFiles     = [
 ];
 
 //Relative Output Paths
-config.jsOutputPath = 'assets/js';
-config.cssOutputPath = 'assets/css';
 config.audioOutputPath = 'assets/audio';
 config.miscFileOutputPath = 'assets/files'; //pdf, docs, etc
 config.fontOutputPath = 'assets/fonts';

@@ -17,7 +17,7 @@ module.exports = (_v, funcs, customConfig) => {
 
         //Default
         {
-            platform: ['darwin'],
+            platform: 'all',
             icon: _v.path.resolve(__dirname, '../build-assets/riko-logo.incs')
         },
 
@@ -27,7 +27,6 @@ module.exports = (_v, funcs, customConfig) => {
         //Required
         {
             dir: customConfig.tempDir,
-            prune: false,
             overwrite: true,
             out: customConfig.output.path
         }

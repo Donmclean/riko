@@ -12,7 +12,7 @@ config.EXPRESS_PORT = 3000;
 
 config.electronPackagerOptions = {
     icon: 'src/riko-logo.icns',
-    platform: ['darwin','win32'],
+    platform: 'all',
     asar: true
 };
 
@@ -56,7 +56,7 @@ config.setPlugins = (env, plugins) => {
                 })
             ];
         }
-        case 'prod': {
+        case 'production': {
             return [
                 new webpack.optimize.UglifyJsPlugin({
                     mangle: false,
@@ -73,10 +73,8 @@ config.setPlugins = (env, plugins) => {
                 }),
             ];
         }
-        case 'dev': {
-            return [
-                new webpack.ProvidePlugin({})
-            ];
+        case 'development': {
+            return [];
         }
         default: {
             return [];

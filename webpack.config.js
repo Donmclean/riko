@@ -140,7 +140,7 @@ switch (process.env.NODE_ENV) {
         config.plugins = funcs.handlePlugins(
             config.plugins,
             [
-                customConfig.setPlugins('prod', staticWebpackPlugins),
+                customConfig.setPlugins('production', staticWebpackPlugins),
 
                 //build defaults
                 new _v.WebpackShellPlugin({
@@ -214,7 +214,7 @@ switch (process.env.NODE_ENV) {
         config.plugins = funcs.handlePlugins(
             config.plugins,
             [
-                customConfig.setPlugins('dev', staticWebpackPlugins),
+                customConfig.setPlugins('development', staticWebpackPlugins),
 
                 //build defaults
                 new _v.webpack.HotModuleReplacementPlugin(),
