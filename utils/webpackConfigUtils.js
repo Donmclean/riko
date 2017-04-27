@@ -1,17 +1,6 @@
 module.exports = (_v, funcs, customConfig) => {
     const webpackConfigUtils = {};
 
-    webpackConfigUtils.getEslintRule = () => ({
-        test: /\.jsx$|\.js$/,
-            include: customConfig.srcDir,
-            exclude: /(node_modules|vendor|bower_components)/,
-            enforce: 'pre',
-            use: [{
-                loader: 'eslint-loader',
-                options: customConfig.eslintLoaderOptions
-            }]
-    });
-
     webpackConfigUtils.getElectronPackagerOptions = () => Object.assign(
         {},
 

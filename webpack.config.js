@@ -43,17 +43,27 @@ config.resolveLoader = {
     modules: [_v.path.resolve(customConfig.baseDir, "node_modules"), _v.path.resolve(_v.baseDir, "node_modules")]
 };
 
-const checkForConfigFile = (configFile) => {
-    return !_v._.isEmpty(configFile) && !!funcs.sanitizePath(customConfig.baseDir, configFile)
-};
-
 config.module = {};
 
-//build defaults
-config.module.rules = _v._.flatten([
+const defaultLoaders = {
     //JAVASCRIPT
-    checkForConfigFile(customConfig.eslintLoaderOptions.configFile) ? webpackConfigUtils.getEslintRule() : [],
-    {
+    eslintDefault: {
+        test: /\.jsx$|\.js$/,
+        include: customConfig.srcDir,
+        exclude: /(node_modules|vendor|bower_components)/,
+        enforce: 'pre',
+        use: [{
+            loader: 'eslint-loader',
+            options: {
+                configFile: '.eslintrc.js',
+                failOnError: process.env.NODE_ENV === 'production',
+                failOnWarning: false,
+                emitError: process.env.NODE_ENV === 'development',
+                quiet: false //set true to disable warnings based on your eslint config
+            }
+        }]
+    },
+    jsDefault: {
         test: /\.jsx$|\.js$/,
         exclude: /(node_modules|vendor|bower_components)/,
         loaders: process.env.NODE_ENV === 'development' ? [
@@ -67,38 +77,36 @@ config.module.rules = _v._.flatten([
     //     loaders: ['react-hot-loader/webpack', 'ts-loader'] // (or awesome-typescript-loader)
     // },
     //TEMPLATES (PUG)
-    {
+    pugDefault: {
         test: /\.pug$/,
         exclude: /(node_modules|bower_components)/,
         loaders: ['pug-loader']
     },
     //TEMPLATES (HANDLEBARS)
-    {
+    handlebarsDefault: {
         test: /\.handlebars$|\.hbs$/,
         exclude: /(node_modules|bower_components)/,
         loaders: ['handlebars-loader']
     },
     //VIDEOS
-    {
+    videoDefault: {
         test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
         loader: `file-loader?name=${customConfig.videoOutputPath}/[name].[ext]?[hash]`
     },
     //AUDIO
-    {
+    audioDefault: {
         test: /\.(wav|mp3|aiff|flac|mp4a|m4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
         loader: `file-loader?name=${customConfig.audioOutputPath}/[name].[ext]?[hash]`
     },
     //FILES
-    {
+    miscFilesDefault: {
         test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
         loader: `file-loader?name=${customConfig.miscFileOutputPath}/[name].[ext]?[hash]`
     }
-]);
+};
 
 // Set Global Rules/Loaders
-config.module.rules = funcs.handleCustomAdditions(
-    customConfig.setLoaders('global', config.module.rules)
-);
+config.module.rules = Object.values(customConfig.setLoaders('global', defaultLoaders));
 
 //*****************************************************************
 //*****************************PLUGINS*****************************
@@ -142,6 +150,9 @@ switch (process.env.NODE_ENV) {
                 loader: `file-loader?name=${customConfig.imageOutputPath}/[name].[ext]?[hash]`
             }
         ]);
+
+        // Set Production Rules/Loaders
+        config.module.rules = Object.values(customConfig.setLoaders('production', config.module.rules));
 
         //Set Production Plugins
         config.plugins = funcs.handleCustomAdditions(
@@ -216,6 +227,9 @@ switch (process.env.NODE_ENV) {
                 })
             ]);
         }
+
+        // Set Development Rules/Loaders
+        config.module.rules = Object.values(customConfig.setLoaders('development', config.module.rules));
 
         //Set Development Plugins
         config.plugins = funcs.handleCustomAdditions(

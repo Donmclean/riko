@@ -27,17 +27,16 @@ config.EXPRESS_PORT = 3000;
 //*************************LOADER OPTIONS*******************************
 //**********************************************************************
 //You can utilize 'process.env.NODE_ENV' here to specific options based on your NODE_ENV
-config.eslintLoaderOptions = {
-    configFile: '.eslintrc.js',
-    failOnError: process.env.NODE_ENV === 'production',
-    failOnWarning: false,
-    emitError: process.env.NODE_ENV === 'development',
-    quiet: false //set true to disable warnings based on your eslint config
-};
-
 config.setLoaders = (env, loaders) => {
     switch (env) {
         case 'global': {
+            loaders.eslintDefault.use.options = {
+                configFile: '.eslintrc.js',
+                failOnError: process.env.NODE_ENV === 'production',
+                failOnWarning: false,
+                emitError: process.env.NODE_ENV === 'development',
+                quiet: false //set true to disable warnings based on your eslint config
+            };
             return loaders;
         }
         case 'production': {
