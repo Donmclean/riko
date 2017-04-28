@@ -47,7 +47,12 @@ module.exports = (runCommand) => {
         case 'web-prod': {
             config.entry['index'].unshift('babel-polyfill');
 
-            return _v.webpack(config, () => {
+            return _v.webpack(config, (err, stats) => {
+                if (err) {
+                    funcs.genericLog('Error during compilation...', 'red');
+                    console.error(err);
+                    throw Error(err);
+                }
                 funcs.genericLog('build completed successfully!', 'green');
             });
             // return _v.spawn(`${_v.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
