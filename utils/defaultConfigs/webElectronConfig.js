@@ -1,22 +1,30 @@
-const config = {};
-
-config.entry = {
-    index: [ 'src/js/riko.js' ]
+const config = {
+    entry: {
+        index: [ './src/js/riko.js' ]
+    },
+    output: {
+        path: 'dist'
+    }
 };
 
-config.output = {
-    path: 'dist',
+config.setWebpackConfigOptions = (env, webpackConfig) => {
+    switch (env) {
+        case 'global': {
+            return webpackConfig;
+        }
+        case 'production': {
+            return webpackConfig;
+        }
+        case 'development': {
+            return webpackConfig;
+        }
+        default: {
+            return webpackConfig;
+        }
+    }
 };
 
-config.EXPRESS_PORT = 3000;
-
-config.electronPackagerOptions = {
-    icon: 'src/riko-logo.icns',
-    platform: 'all',
-    asar: true
-};
-
-config.setLoaders = (env, loaders) => {
+config.setWebpackLoaders = (env, loaders) => {
     switch (env) {
         case 'global': {
             loaders.eslintDefault.use.options = {
@@ -40,7 +48,7 @@ config.setLoaders = (env, loaders) => {
     }
 };
 
-config.setPlugins = (env, plugins) => {
+config.setWebpackPlugins = (env, plugins) => {
     const { webpack, HtmlWebpackPlugin, ProgressBarPlugin, ExtractTextPlugin } = plugins;
     switch (env) {
         case 'global': {
@@ -97,6 +105,14 @@ config.setPlugins = (env, plugins) => {
         }
     }
 };
+
+config.electronPackagerOptions = {
+    icon: 'src/riko-logo.icns',
+    platform: 'all',
+    asar: true
+};
+
+config.EXPRESS_PORT = 3000;
 
 config.hotReloadingOptions = {
     overlay: true,

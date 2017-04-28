@@ -1,33 +1,39 @@
 //**********************************************************************
-//*******************************PATHS**********************************
+//*******************************CUSTOM*********************************
 //**********************************************************************
 //IMPORTANT! All paths/directories should be relative to 'BASE DIRECTORY' unless specified otherwise.
 //BASE DIRECTORY is same location as package.json file.
-const config = {};
-
-config.entry = {
-    index: [ 'src/js/riko.js' ]
+const config = {
+    entry: {
+        index: [ './src/js/riko.js' ]
+    },
+    output: {
+        path: 'dist'
+    }
 };
 
-config.output = {
-    path: 'dist'
+config.setWebpackConfigOptions = (env, webpackConfig) => {
+    switch (env) {
+        case 'global': {
+            return webpackConfig;
+        }
+        case 'production': {
+            return webpackConfig;
+        }
+        case 'development': {
+            return webpackConfig;
+        }
+        default: {
+            return webpackConfig;
+        }
+    }
 };
-
-config.EXPRESS_PORT = 3000;
-
-//**********************************************************************
-//****************************EXTERNALS*********************************
-//**********************************************************************
-
-// To add vendor dependencies and expose them to global/window object simply use the expose-loader
-// eg: require("expose-loader?_!lodash");
-// see: https://github.com/webpack/expose-loader
 
 //**********************************************************************
 //*************************LOADER OPTIONS*******************************
 //**********************************************************************
 //You can utilize 'process.env.NODE_ENV' here to specific options based on your NODE_ENV
-config.setLoaders = (env, loaders) => {
+config.setWebpackLoaders = (env, loaders) => {
     switch (env) {
         case 'global': {
             loaders.eslintDefault.use.options = {
@@ -55,7 +61,7 @@ config.setLoaders = (env, loaders) => {
 //*************************PLUGIN OPTIONS*******************************
 //**********************************************************************
 
-config.setPlugins = (env, plugins) => {
+config.setWebpackPlugins = (env, plugins) => {
     const { webpack, HtmlWebpackPlugin, ExtractTextPlugin } = plugins;
     switch (env) {
         case 'global': {
@@ -99,7 +105,6 @@ config.setPlugins = (env, plugins) => {
                     name: 'index',
                     filename: 'assets/js/[name].js?[hash]'
                 }),
-                new webpack.ProvidePlugin({}),
                 new ExtractTextPlugin({
                     filename: 'assets/css/styles.min.css?[hash]',
                     allChunks: true
@@ -114,6 +119,14 @@ config.setPlugins = (env, plugins) => {
         }
     }
 };
+
+//**********************************************************************
+//****************************EXTERNALS*********************************
+//**********************************************************************
+
+// To add vendor dependencies and expose them to global/window object simply use the expose-loader
+// eg: require("expose-loader?_!lodash");
+// see: https://github.com/webpack/expose-loader
 
 //**********************************************************************
 //*******************************ELECTRON*******************************
@@ -137,6 +150,8 @@ config.electronPackagerOptions  = {
 //**********************************************************************
 //*******************************EXTRAS*********************************
 //**********************************************************************
+config.EXPRESS_PORT = 3000;
+
 config.hotReloadingOptions     = {
     overlay: true,
 
@@ -165,7 +180,7 @@ config.onBuildEndShellCommands = [];
 config.onBuildExitShellCommands = [];
 
 //specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
-//must be an absolute path.
+//path must be relative to package.json.
 config.customBoilerplatePath = 'src/riko-custom-boilerplates';
 
 module.exports = config;

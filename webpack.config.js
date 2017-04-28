@@ -2,8 +2,7 @@ const
     _v                          = require('./utils/variables')(),
     funcs                       = require('./utils/functions')(),
     customConfig                = require('./utils/coreRikoConfig'),
-    webpackConfigUtils          = require('./utils/webpackConfigUtils')(_v, funcs, customConfig),
-    config                      = {};
+    webpackConfigUtils          = require('./utils/webpackConfigUtils')(_v, funcs, customConfig);
 
     //Static Webpack Plugins
     _v.HtmlWebpackPlugin        = require('html-webpack-plugin');
@@ -21,6 +20,8 @@ const
 
 
 //CONFIGURATION
+let config = {};
+
 config.context = customConfig.baseDir;
 
 //TODO: fix bug in upgrading eslint-loader
@@ -106,23 +107,23 @@ const defaultLoaders = {
 };
 
 // Set Global Rules/Loaders
-config.module.rules = Object.values(customConfig.setLoaders('global', defaultLoaders));
+config.module.rules = Object.values(customConfig.setWebpackLoaders('global', defaultLoaders));
 
-//*****************************************************************
-//*****************************PLUGINS*****************************
-//*****************************************************************
 config.plugins = [];
 
 //Set Global Plugins
 config.plugins = funcs.handleCustomAdditions(
     config.plugins,
     [
-        customConfig.setPlugins('global', staticWebpackPlugins),
+        customConfig.setWebpackPlugins('global', staticWebpackPlugins),
 
         //build defaults
         new _v.WebpackNotifierPlugin({contentImage: _v.baseDir+'/build-assets/riko-logo.png'})
     ]
 );
+
+// Set Global Config Options
+config = Object.assign({}, config, customConfig.setWebpackConfigOptions('global', Object.create(config)));
 
 switch (process.env.NODE_ENV) {
     case "production": {
@@ -151,14 +152,17 @@ switch (process.env.NODE_ENV) {
             }
         ]);
 
+        // Set Production Config Options
+        config = Object.assign({}, config, customConfig.setWebpackConfigOptions('production', Object.create(config)));
+
         // Set Production Rules/Loaders
-        config.module.rules = Object.values(customConfig.setLoaders('production', config.module.rules));
+        config.module.rules = Object.values(customConfig.setWebpackLoaders('production', config.module.rules));
 
         //Set Production Plugins
         config.plugins = funcs.handleCustomAdditions(
             config.plugins,
             [
-                customConfig.setPlugins('production', staticWebpackPlugins),
+                customConfig.setWebpackPlugins('production', staticWebpackPlugins),
 
                 //build defaults
                 new _v.WebpackShellPlugin({
@@ -216,6 +220,9 @@ switch (process.env.NODE_ENV) {
             }
         ]);
 
+        // Set Production Config Options
+        config = Object.assign({}, config, customConfig.setWebpackConfigOptions('development', Object.create(config)));
+
         if(JSON.parse(process.env.isWeb) && !JSON.parse(process.env.isElectron)) {
             //WEB DEV MODE
             config.plugins = config.plugins.concat([new _v.BrowserSyncPlugin(
@@ -229,13 +236,13 @@ switch (process.env.NODE_ENV) {
         }
 
         // Set Development Rules/Loaders
-        config.module.rules = Object.values(customConfig.setLoaders('development', config.module.rules));
+        config.module.rules = Object.values(customConfig.setWebpackLoaders('development', config.module.rules));
 
         //Set Development Plugins
         config.plugins = funcs.handleCustomAdditions(
             config.plugins,
             [
-                customConfig.setPlugins('development', staticWebpackPlugins),
+                customConfig.setWebpackPlugins('development', staticWebpackPlugins),
 
                 //build defaults
                 new _v.webpack.HotModuleReplacementPlugin(),

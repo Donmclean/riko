@@ -276,6 +276,20 @@ module.exports = () => {
         funcs.genericLog(`Environment (process.env.NODE_ENV): ${process.env.NODE_ENV}`, 'blue');
     };
 
+    funcs.handleTestExecution = (customConfig, hasHotExecTestCommand, hasHotExecFlowTypeCommand) => {
+        let spawn;
+
+        if(hasHotExecTestCommand) {
+            spawn = funcs.executeJestTests(customConfig);
+        } else if(hasHotExecFlowTypeCommand) {
+            funcs.executeFlowTests(customConfig);
+        }
+
+        if(spawn && hasHotExecFlowTypeCommand) {
+            spawn.on('close', () => funcs.executeFlowTests(customConfig));
+        }
+    };
+
     funcs.onDevBuildActions = (customConfig) => {
         funcs.genericLog('Updating Source File Watcher executing initial tests...');
 
@@ -284,19 +298,10 @@ module.exports = () => {
         const hasHotExecFlowTypeCommand = !_v._.isEmpty(customConfig.hotReloadingOptions.hotExecuteFlowTypeCommand);
 
         watcher.on('change', () => {
-            let spawn;
-
-            if(hasHotExecTestCommand) {
-                spawn = funcs.executeJestTests(customConfig);
-            }
-
-            if(hasHotExecFlowTypeCommand || spawn) {
-                spawn.on('close', () => funcs.executeFlowTests(customConfig));
-            }
+            funcs.handleTestExecution(customConfig, hasHotExecTestCommand, hasHotExecFlowTypeCommand);
         });
 
-        const spawn = hasHotExecTestCommand ? funcs.executeJestTests(customConfig) : null;
-        spawn ? spawn.on('close', () => funcs.executeFlowTests(customConfig)) : null;
+        funcs.handleTestExecution(customConfig, hasHotExecTestCommand, hasHotExecFlowTypeCommand);
     };
 
     funcs.isValidPackageJsonScript = (packageJson, customTestCommand) => _v._
