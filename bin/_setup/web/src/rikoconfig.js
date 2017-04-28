@@ -3,12 +3,14 @@
 //**********************************************************************
 //IMPORTANT! All paths/directories should be relative to 'BASE DIRECTORY' unless specified otherwise.
 //BASE DIRECTORY is same location as package.json file.
+const cwd = process.cwd();
+
 const config = {
     entry: {
-        index: [ './src/js/riko.js' ]
+        index: [ `${cwd}/src/js/index` ]
     },
     output: {
-        path: 'dist'
+        path: `${cwd}/dist`
     }
 };
 

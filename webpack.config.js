@@ -128,7 +128,7 @@ config = Object.assign({}, config, customConfig.setWebpackConfigOptions('global'
 switch (process.env.NODE_ENV) {
     case "production": {
         config.output.sourceMapFilename = '[file].map?[hash]';
-        config.devtool = customConfig.sourcemapProd ? customConfig.sourcemapType : null;
+        config.devtool = customConfig.sourcemapProd ? customConfig.sourcemapType : false;
         config.bail = true;
 
         config.module.rules = config.module.rules.concat([
@@ -181,7 +181,7 @@ switch (process.env.NODE_ENV) {
     }
     case "test":
     case "development": {
-        config.devtool = customConfig.sourcemapDev ? customConfig.sourcemapType : null;
+        config.devtool = customConfig.sourcemapDev ? customConfig.sourcemapType : false;
         config.bail = false;
 
         config.devServer = {

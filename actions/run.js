@@ -46,7 +46,11 @@ module.exports = (runCommand) => {
         }
         case 'web-prod': {
             config.entry['index'].unshift('babel-polyfill');
-            return _v.spawn(`${_v.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
+
+            return _v.webpack(config, () => {
+                funcs.genericLog('build completed successfully!', 'green');
+            });
+            // return _v.spawn(`${_v.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
         }
         case 'electron-prod': {
             funcs.genericLog('Compiling electron app..');
@@ -61,7 +65,7 @@ module.exports = (runCommand) => {
                         }
 
                         funcs.removeDir(customConfig.tempDir).then(() => {
-                            funcs.genericLog(`${electronPackagerOptions.name} build successfully!`);
+                            funcs.genericLog(`${electronPackagerOptions.name} built successfully!`);
                         });
                     });
                 });

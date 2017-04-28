@@ -158,16 +158,6 @@ module.exports = () => {
             .value();
     };
 
-    funcs.resolveObjValues = (obj, baseResolvePath) => _v._.reduce(obj, (newObj, val, key) => {
-        if(_v._.isArray(val)) {
-            newObj[key] = val.map((entryPath) => funcs.sanitizePath(baseResolvePath, entryPath));
-        } else {
-            newObj[key] = funcs.sanitizePath(baseResolvePath, val);
-        }
-
-        return newObj;
-    }, {});
-
     funcs.handleElectronEnvironmentOptions = (config, customConfig) => {
         const webpackConfigUtils = require('./webpackConfigUtils')(_v, funcs, customConfig);
         const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();

@@ -57,28 +57,12 @@ _.forEach(defaultConfig, (value, key) => {
 
     //make sure default keys are of valid type in rikoconfig
     assert.equal(typeof customConfig[key], typeof value, `config.${key}'s value must be of type '${typeof value}' in rikoconfig.js`);
-
-    //resolve required paths
-    switch(requiredFields[key]) {
-        case 'string': {
-            customConfig[key] = funcs.sanitizePath(config.baseDir, customConfig[key]);
-            break;
-        }
-        case 'object': {
-            customConfig[key] = funcs.resolveObjValues(value, config.baseDir);
-            break;
-        }
-        default: {
-            break;
-        }
-    }
 });
 
 funcs.genericLog('rikoconfig.js file is vaild!', 'green');
 
 const newConfig = Object.assign(
     {},
-    defaultConfig,
     customConfig,
     config
 );
