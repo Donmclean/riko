@@ -35,13 +35,13 @@ echoGreen() {
     echo ${YELLOW}${TIME} ${GREEN}$1${RESET}
 }
 
-echoBlue "setting up a react-native project..."
+echoBlue "setting up a react-native project ($1)..."
 
 echoBlue "validating watchman..."
 brew install watchman
 
 echoBlue "initializing react-native application"
-react-native init src
+react-native init $1
 echoGreen "react-native initialized!"
 
 echoBlue "adding missing local.properties file to android project..."

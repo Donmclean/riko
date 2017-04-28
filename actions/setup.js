@@ -3,7 +3,7 @@ const
     funcs   = require('../utils/functions')();
 
 module.exports = (actionType, projectType, projectName) => {
-    const { $, qfs, cwd, baseDir, packageJson } = _v;
+    const { $, qfs, cwd, baseDir, packageJson, spawn } = _v;
     const logSuccess = () => funcs.genericLog(`${$.util.colors.blue(projectName)} was setup ${$.util.colors.green('successfully')}`);
 
     return qfs.list(cwd)
@@ -38,6 +38,17 @@ module.exports = (actionType, projectType, projectName) => {
                         qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`)
                             .then(() => logSuccess())
                             .catch((err) => funcs.genericLog(err, 'red'));
+                        break;
+                    }
+                    case 'mobile': {
+                        qfs.copyTree(baseDir+`/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`).then(() => {
+                            //run react native shell script
+                            const cmd = spawn('sh', [`${baseDir}/bin/_${actionType}/${projectType}/react-native.sh`, projectName], {stdio: 'inherit'});
+
+                            cmd.on('close', () => {
+                                funcs.genericLog(`${$.util.colors.blue(`${projectName}`)} folder created ${$.util.colors.green('successfully')}`);
+                            });
+                        });
                         break;
                     }
                     default: {

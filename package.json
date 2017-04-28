@@ -88,6 +88,7 @@
     "q": "^1.4.1",
     "q-io": "^1.13.2",
     "react-hot-loader": "^3.0.0-beta.6",
+    "react-native": "^0.43.4",
     "sass-loader": "^5.0.1",
     "selenium-server-standalone-jar": "^3.0.1",
     "style-loader": "^0.13.1",
