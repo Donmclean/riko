@@ -35,13 +35,26 @@ config.output = {
     publicPath: '/'
 };
 
+//Set Additional node_modules Resolver Paths
+const yarnNodeModulePath = _v.path.resolve(_v.os.homedir() + '/.config/yarn/global/', 'node_modules');
+const yarnNodeModulePathLinuxRoot = _v.path.resolve('/usr/local/share/.config/yarn/global', 'node_modules');
+const yarnNodeModulePathWindows = _v.path.resolve('%LOCALAPPDATA%/Yarn/config/global', 'node_modules');
+
+const moduleResolverPaths = [
+    _v.path.resolve(customConfig.baseDir, "node_modules"),
+    _v.path.resolve(_v.baseDir, "node_modules"),
+    yarnNodeModulePath,
+    yarnNodeModulePathLinuxRoot,
+    yarnNodeModulePathWindows
+];
+
 config.resolve = {
     extensions: ['.js', '.jsx', '.json'],
-    modules: [_v.path.resolve(customConfig.baseDir, "node_modules"), _v.path.resolve(_v.baseDir, "node_modules")]
+    modules: moduleResolverPaths
 };
 
 config.resolveLoader = {
-    modules: [_v.path.resolve(customConfig.baseDir, "node_modules"), _v.path.resolve(_v.baseDir, "node_modules")]
+    modules: moduleResolverPaths
 };
 
 config.module = {};
