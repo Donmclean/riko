@@ -1,6 +1,6 @@
 const config = {
     entry: {
-        index: [ './src/js/riko.js' ]
+        index: [ './src/js/index.js' ]
     },
     output: {
         path: 'dist'

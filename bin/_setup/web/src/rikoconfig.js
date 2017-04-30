@@ -7,7 +7,7 @@ const cwd = process.cwd();
 
 const config = {
     entry: {
-        index: [ `${cwd}/src/js/index` ]
+        index: [ './src/js/index.js' ]
     },
     output: {
         path: `${cwd}/dist`
