@@ -38,13 +38,6 @@ config.setWebpackConfigOptions = (env, webpackConfig) => {
 config.setWebpackLoaders = (env, loaders) => {
     switch (env) {
         case 'global': {
-            loaders.eslintDefault.use.options = {
-                configFile: '.eslintrc.js',
-                failOnError: process.env.NODE_ENV === 'production',
-                failOnWarning: false,
-                emitError: process.env.NODE_ENV === 'development',
-                quiet: false //set true to disable warnings based on your eslint config
-            };
             return loaders;
         }
         case 'production': {

@@ -24,9 +24,6 @@ let config = {};
 
 config.context = customConfig.baseDir;
 
-//TODO: fix bug in upgrading eslint-loader
-// process.traceDeprecation = true;
-
 config.entry = customConfig.entry;
 
 config.output = {
@@ -61,22 +58,6 @@ config.module = {};
 
 const defaultLoaders = {
     //JAVASCRIPT
-    eslintDefault: {
-        test: /\.jsx$|\.js$/,
-        include: customConfig.srcDir,
-        exclude: /(node_modules|vendor|bower_components)/,
-        enforce: 'pre',
-        use: [{
-            loader: 'eslint-loader',
-            options: {
-                configFile: '.eslintrc.js',
-                failOnError: process.env.NODE_ENV === 'production',
-                failOnWarning: false,
-                emitError: process.env.NODE_ENV === 'development',
-                quiet: false //set true to disable warnings based on your eslint config
-            }
-        }]
-    },
     jsDefault: {
         test: /\.jsx$|\.js$/,
         exclude: /(node_modules|vendor|bower_components)/,
