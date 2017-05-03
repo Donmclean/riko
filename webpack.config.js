@@ -8,7 +8,6 @@ const
     _v.HtmlWebpackPlugin        = require('html-webpack-plugin');
     _v.BrowserSyncPlugin        = require('browser-sync-webpack-plugin');
     _v.ExtractTextPlugin        = require("extract-text-webpack-plugin");
-    _v.WebpackShellPlugin       = require('webpack-shell-plugin');
     _v.CleanWebpackPlugin       = require('clean-webpack-plugin');
     _v.WebpackNotifierPlugin    = require('webpack-notifier');
     _v.CopyWebpackPlugin        = require('copy-webpack-plugin');
@@ -56,9 +55,9 @@ config.resolveLoader = {
 
 config.module = {};
 
-const defaultLoaders = {
+const defaultLoaders = [
     //JAVASCRIPT
-    jsDefault: {
+    {
         test: /\.jsx$|\.js$/,
         exclude: /(node_modules|vendor|bower_components)/,
         loaders: process.env.NODE_ENV === 'development' ? [
@@ -72,36 +71,36 @@ const defaultLoaders = {
     //     loaders: ['react-hot-loader/webpack', 'ts-loader'] // (or awesome-typescript-loader)
     // },
     //TEMPLATES (PUG)
-    pugDefault: {
+    {
         test: /\.pug$/,
         exclude: /(node_modules|bower_components)/,
         loaders: ['pug-loader']
     },
     //TEMPLATES (HANDLEBARS)
-    handlebarsDefault: {
+    {
         test: /\.handlebars$|\.hbs$/,
         exclude: /(node_modules|bower_components)/,
         loaders: ['handlebars-loader']
     },
     //VIDEOS
-    videoDefault: {
+    {
         test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
         loader: `file-loader?name=${customConfig.videoOutputPath}/[name].[ext]?[hash]`
     },
     //AUDIO
-    audioDefault: {
+    {
         test: /\.(wav|mp3|aiff|flac|mp4a|m4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
         loader: `file-loader?name=${customConfig.audioOutputPath}/[name].[ext]?[hash]`
     },
     //FILES
-    miscFilesDefault: {
+    {
         test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
         loader: `file-loader?name=${customConfig.miscFileOutputPath}/[name].[ext]?[hash]`
     }
-};
+];
 
 // Set Global Rules/Loaders
-config.module.rules = Object.values(customConfig.setWebpackLoaders('global', defaultLoaders));
+config.module.rules = Object.values(customConfig.setWebpackLoaders('global', defaultLoaders) || defaultLoaders);
 
 config.plugins = [];
 
@@ -109,7 +108,7 @@ config.plugins = [];
 config.plugins = funcs.handleCustomAdditions(
     config.plugins,
     [
-        customConfig.setWebpackPlugins('global', staticWebpackPlugins),
+        customConfig.setWebpackPlugins('global', staticWebpackPlugins) || [],
 
         //build defaults
         new _v.WebpackNotifierPlugin({contentImage: _v.baseDir+'/build-assets/riko-logo.png'})
@@ -150,20 +149,15 @@ switch (process.env.NODE_ENV) {
         config = Object.assign({}, config, customConfig.setWebpackConfigOptions('production', Object.create(config)));
 
         // Set Production Rules/Loaders
-        config.module.rules = Object.values(customConfig.setWebpackLoaders('production', config.module.rules));
+        config.module.rules = Object.values(customConfig.setWebpackLoaders('production', config.module.rules) || config.module.rules);
 
         //Set Production Plugins
         config.plugins = funcs.handleCustomAdditions(
             config.plugins,
             [
-                customConfig.setWebpackPlugins('production', staticWebpackPlugins),
+                customConfig.setWebpackPlugins('production', staticWebpackPlugins) || [],
 
                 //build defaults
-                new _v.WebpackShellPlugin({
-                    onBuildStart: customConfig.onBuildStartShellCommands,
-                    onBuildEnd: customConfig.onBuildEndShellCommands,
-                    onBuildExit: customConfig.onBuildExitShellCommands
-                }),
                 new _v.CleanWebpackPlugin([_v.path.basename(config.output.path)], {root: customConfig.baseDir, verbose: true, dry: false}),
                 new _v.webpack.LoaderOptionsPlugin({
                     debug: false
@@ -230,13 +224,13 @@ switch (process.env.NODE_ENV) {
         }
 
         // Set Development Rules/Loaders
-        config.module.rules = Object.values(customConfig.setWebpackLoaders('development', config.module.rules));
+        config.module.rules = Object.values(customConfig.setWebpackLoaders('development', config.module.rules) || config.module.rules);
 
         //Set Development Plugins
         config.plugins = funcs.handleCustomAdditions(
             config.plugins,
             [
-                customConfig.setWebpackPlugins('development', staticWebpackPlugins),
+                customConfig.setWebpackPlugins('development', staticWebpackPlugins) || [],
 
                 //build defaults
                 new _v.webpack.HotModuleReplacementPlugin(),

@@ -124,10 +124,6 @@ config.sourcemapProd = true;
 
 config.autoprefixerOptions = { browsers: ['> 0%'] }; //prefix everything: browsers: ['> 0%']
 
-config.onBuildStartShellCommands = [];
-config.onBuildEndShellCommands = [];
-config.onBuildExitShellCommands = [];
-
 config.customBoilerplatePath = 'src/riko-custom-boilerplates';
 
 module.exports = config;
