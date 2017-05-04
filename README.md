@@ -4,20 +4,20 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
 [![npm](https://img.shields.io/badge/npm-v1.0.21-blue.svg)](https://www.npmjs.com/package/riko-cli) [![Build Status](https://travis-ci.org/Donmclean/riko.svg?branch=master)](https://travis-ci.org/Donmclean/riko) [![dependencies Status](https://david-dm.org/donmclean/riko/status.svg)](https://david-dm.org/donmclean/riko) [![devDependencies Status](https://david-dm.org/donmclean/riko/dev-status.svg)](https://david-dm.org/donmclean/riko?type=dev) [![Test Coverage](https://codeclimate.com/github/Donmclean/riko/badges/coverage.svg)](https://codeclimate.com/github/Donmclean/riko/coverage) [![Code Climate](https://codeclimate.com/github/Donmclean/riko/badges/gpa.svg)](https://codeclimate.com/github/Donmclean/riko) [![Known Vulnerabilities](https://snyk.io/test/github/Donmclean/riko/badge.svg)](https://snyk.io/test/github/Donmclean/riko) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Donmclean/riko/blob/master/LICENSE) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NVQAJLLBQKUUG) [![DUB](https://img.shields.io/badge/Author-Don%20Mclean-red.svg)](http://donsmclean.com)
 
-#INSTALL
+# INSTALL
 
 - `sudo npm install -g riko-cli`
 
-#COMMANDS
+# COMMANDS
 
-######Create/Initialize a new project
+###### Create/Initialize a new project
 - `riko setup`
     - `<project-type> ['web', 'electron', 'js', 'mobile']`
     - `<project-name> 'Awesome New Web Project'`
     - example 1: `riko setup web Awesome New Web Project`
     - example 2: `riko setup electron Amazing New Electron Project`
 
-#FEATURES
+# FEATURES
 
 - Supports the development of JS Modules, React [**Web**](https://facebook.github.io/react/), [**Mobile**](https://facebook.github.io/react-native/) & [**Electron**](http://electron.atom.io/) Applications.
 - Supports compilation of [**es6 js**](http://es6-features.org/) & [**jsx**](https://facebook.github.io/react/docs/jsx-in-depth.html) source files.
@@ -39,27 +39,27 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
 
 > NOTE: All `npm` commands can be executed with `yarn`
 
-######- Development Mode: `npm run dev`
+###### - Development Mode: `npm run dev`
 
 - [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources.
 - [**Error proofing**](https://github.com/webpack/webpack-dev-server/issues/522) (on error a helpful overlay pops up displaying the error).
 - [**Remote Debugging**](http://vorlonjs.com/): Debug your application on almost any device.
 
-######- Production Mode: `npm run prod`
+###### - Production Mode: `npm run prod`
 
 - [**Asset Copying**](#_): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_). 
 - [**Source Minification**](#_): Optimize/Minify stylesheets and js files.
 - [**Image Minification**](https://github.com/tcoopman/image-webpack-loader): Optimize/Minify png, jpg, gif and svg images.
 - [**Shell Script Integration**](https://www.npmjs.com/package/webpack-shell-plugin): run shell scripts on build start, end and/or exit.
 
-######- Electron Mode: `npm run electron`
+###### - Electron Mode: `npm run electron`
 
 - [**Electron Mode**](http://electron.atom.io/) has the same features as web just different commands.
 - [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources.
 - [**Error proofing**](https://github.com/webpack/webpack-dev-server/issues/522) (on error a helpful overlay pops up displaying the error).
 - [**Remote Debugging**](http://vorlonjs.com/): Debug your application on almost any device.
 
-#CAVEATS
+# CAVEATS
 
 - FOUC (Flash of Unstyled Content)
 
@@ -70,7 +70,7 @@ Webpack Build System for JS Modules & React JS (Web, Mobile & Electron Apps)
     - This Build System is not tested for development on Windows, Linux, or Ubuntu and 
     therefore does not support any those Operating Systems.
 
-#USAGE
+# USAGE
 
 - After setting up your project. `cd` into your project then run `npm install` or `yarn` (_highly recommended_) if you have [yarn](https://yarnpkg.com/) installed
 - After installation you can run either of the following two options: 
