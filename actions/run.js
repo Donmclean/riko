@@ -47,20 +47,14 @@ module.exports = (runCommand) => {
         case 'web-prod': {
             config.entry['index'].unshift('babel-polyfill');
 
-            return _v.webpack(config, (err, stats) => {
-                if (err) {
-                    funcs.genericLog('Error during compilation...', 'red');
-                    console.error(err);
-                    throw Error(err);
-                }
-                funcs.genericLog('build completed successfully!', 'green');
-            });
-            // return _v.spawn(`${_v.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
+            return _v.spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
         }
         case 'electron-prod': {
             funcs.genericLog('Compiling electron app..');
             if(JSON.parse(process.env.isElectron)) {
-                return _v.webpack(config, () => {
+                const spawn = _v.spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
+
+                spawn.on('close', () => {
                     //Compile The Electron Application
                     const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
                     electronPackager(electronPackagerOptions, (err) => {
@@ -74,6 +68,8 @@ module.exports = (runCommand) => {
                         });
                     });
                 });
+
+                return spawn;
             }
             break;
         }

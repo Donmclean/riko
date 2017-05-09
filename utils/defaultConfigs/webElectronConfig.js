@@ -7,94 +7,19 @@ const config = {
     }
 };
 
-config.setWebpackConfigOptions = (env, webpackConfig) => {
+config.setWebpackConfigOptions = (env, config, webpack, immutable) => {
     switch (env) {
         case 'global': {
-            return webpackConfig;
+            return config;
         }
         case 'production': {
-            return webpackConfig;
+            return config;
         }
         case 'development': {
-            return webpackConfig;
+            return config;
         }
         default: {
-            return webpackConfig;
-        }
-    }
-};
-
-config.setWebpackLoaders = (env, loaders) => {
-    switch (env) {
-        case 'global': {
-            return loaders;
-        }
-        case 'production': {
-            return loaders;
-        }
-        case 'development': {
-            return loaders;
-        }
-        default: {
-            return [];
-        }
-    }
-};
-
-config.setWebpackPlugins = (env, plugins) => {
-    const { webpack, HtmlWebpackPlugin, ProgressBarPlugin, ExtractTextPlugin } = plugins;
-    switch (env) {
-        case 'global': {
-            return [
-                new HtmlWebpackPlugin({
-                    title: 'Riko',
-
-                    template: 'src/templates/index.pug',
-                    favicon: 'src/media/images/riko-favicon.png',
-                    inject: 'body',
-                    hash: true,
-                    cache: true, //default
-                    showErrors: true, //default
-
-                    scripts: [],
-                    stylesheets: []
-                }),
-                new webpack.EnvironmentPlugin([
-                    "NODE_ENV"
-                ]),
-                new webpack.DefinePlugin({
-                    'process.env': {
-                        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-                    }
-                }),
-                new ProgressBarPlugin({
-                    format: 'webpack [:bar] ' + ':percent' + ' (:elapsed seconds)',
-                    clear: true
-                })
-            ];
-        }
-        case 'production': {
-            return [
-                new webpack.optimize.UglifyJsPlugin({
-                    mangle: false,
-                    sourceMap: true
-                }),
-                new webpack.optimize.CommonsChunkPlugin({
-                    name: 'index',
-                    filename: 'assets/js/[name].js?[hash]'
-                }),
-                new webpack.ProvidePlugin({}),
-                new ExtractTextPlugin({
-                    filename: 'assets/css/styles.min.css?[hash]',
-                    allChunks: true
-                }),
-            ];
-        }
-        case 'development': {
-            return [];
-        }
-        default: {
-            return [];
+            return config;
         }
     }
 };

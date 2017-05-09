@@ -12,6 +12,7 @@ module.exports = () => {
     vars.webpack                = require('webpack');
     vars.chalk                  = require('chalk');
     vars._                      = require('lodash');
+    vars.immutable              = require('immutable');
     vars.Q                      = require('q');
     vars.qfs                    = require('q-io/fs');
     vars.fs                     = require('fs');

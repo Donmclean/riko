@@ -149,58 +149,14 @@ module.exports = () => {
 
     funcs.pickPluginFromKey = (plugins, key) => _v._.chain(plugins).keys().includes(key).value();
 
-    funcs.handleCustomAdditions = (items = [], valueToConcat = []) => {
-        return _v._
-            .chain(items)
-            .concat(...valueToConcat)
-            .flatten()
-            .compact()
-            .value();
-    };
+    funcs.handleCustomAdditions = (env, configMap, defaultLoaders, defaultPlugins) => {
+        // Concat With Default Rules/Loaders
+        configMap.updateIn(['module', 'rules'], (loaders) => _v.immutable.fromJS(loaders).concat(_v.immutable.fromJS(defaultLoaders)));
 
-    funcs.handleElectronEnvironmentOptions = (config, customConfig) => {
-        const webpackConfigUtils = require('./webpackConfigUtils')(_v, funcs, customConfig);
-        const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
+        // Concat With Default Plugins
+        configMap.update('plugins', (plugins) => _v.immutable.fromJS(plugins).concat(_v.immutable.fromJS(defaultPlugins)).flatten(true));
 
-        const WebpackShellPlugin = require('webpack-shell-plugin');
-        const CopyWebpackPlugin = require('copy-webpack-plugin');
-
-        let newPlugins = [];
-
-        //GLOBAL OPTIONS
-
-        //change public path if building electron
-        config.output.path = customConfig.tempDir;
-        config.output.publicPath = '';
-
-        switch (process.env.NODE_ENV) {
-            case 'production': {
-                //COPY ADDITIONAL ELECTRON FILES TO TEMP DIR
-                newPlugins = config.plugins.concat([
-                    new CopyWebpackPlugin([
-                        { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
-                        { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
-                        { from: electronPackagerOptions.icon, to: customConfig.tempDir }
-                    ])
-                ]);
-                break;
-            }
-            case 'test':
-            case 'development': {
-                //ELECTRON DEV MODE
-                newPlugins = config.plugins.concat([
-                    new WebpackShellPlugin({
-                        onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
-                    })
-                ]);
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-
-        return newPlugins;
+        configMap.mergeDeep(configMap.map((values) => _v.immutable.fromJS(values)));
     };
 
     funcs.logElectronRunServerError = () => {

@@ -13,35 +13,12 @@ const config = {
         path: `${cwd}/dist`
     },
 
-    //**********************************************************************
-    //*************************LOADER OPTIONS*******************************
-    //**********************************************************************
-    //You can utilize 'process.env.NODE_ENV' here to specific options based on your NODE_ENV
-    setWebpackLoaders: (env, loaders) => {
-        switch (env) {
-            case 'global': {
-                return loaders;
-            }
-            case 'production': {
-                return loaders;
-            }
-            case 'development': {
-                return loaders;
-            }
-            default: {
-                return {};
-            }
-        }
-    },
+    setWebpackConfigOptions: (env, config, webpack, immutable) => {
+        const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-    //**********************************************************************
-    //*************************PLUGIN OPTIONS*******************************
-    //**********************************************************************
-    setWebpackPlugins: (env, plugins) => {
-        const { webpack, HtmlWebpackPlugin, ExtractTextPlugin } = plugins;
         switch (env) {
             case 'global': {
-                return [
+                config.set('plugins', [
                     new HtmlWebpackPlugin({
                         title: 'Riko',
 
@@ -69,10 +46,11 @@ const config = {
                             NODE_ENV: JSON.stringify(process.env.NODE_ENV)
                         }
                     })
-                ];
+                ]);
+                break;
             }
             case 'production': {
-                return [
+                config.set('plugins', [
                     new webpack.optimize.UglifyJsPlugin({
                         mangle: false,
                         sourceMap: true
@@ -80,35 +58,15 @@ const config = {
                     new webpack.optimize.CommonsChunkPlugin({
                         name: 'index',
                         filename: 'assets/js/[name].js?[hash]'
-                    }),
-                    new ExtractTextPlugin({
-                        filename: 'assets/css/styles.min.css?[hash]',
-                        allChunks: true
-                    }),
-                ];
+                    })
+                ]);
+                break;
             }
             case 'development': {
-                return [];
+                break;
             }
             default: {
-                return [];
-            }
-        }
-    },
-
-    setWebpackConfigOptions: (env, webpackConfig) => {
-        switch (env) {
-            case 'global': {
-                return webpackConfig;
-            }
-            case 'production': {
-                return webpackConfig;
-            }
-            case 'development': {
-                return webpackConfig;
-            }
-            default: {
-                return webpackConfig;
+                break;
             }
         }
     },
