@@ -108,6 +108,4 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
     configMap.set('stats', funcs.getStats(process.env.NODE_ENV));
 });
 
-console.log('after config global config????: ', config.toJS());
-
 module.exports = config.toJS();
