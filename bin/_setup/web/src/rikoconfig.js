@@ -58,7 +58,7 @@ const config = {
             case 'production': {
                 config.set('plugins', [
                     new webpack.optimize.UglifyJsPlugin({
-                        mangle: false,
+                        mangle: true,
                         sourceMap: true
                     }),
                     new webpack.optimize.CommonsChunkPlugin({
@@ -101,7 +101,7 @@ const config = {
         overlay: true,
 
         //Override hot module replacement and simply have the page refresh on file change
-        BrowserSyncReloadOnChange: false,
+        browserSyncReloadOnChange: false,
 
         //Provide an npm package.json script command here to have tests execute on every webpack rebuild.
         //i.e: 'test' would execute as 'npm run test' or 'hot-test' as 'npm run hot-test'

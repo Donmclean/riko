@@ -37,7 +37,7 @@ const config = {
     hotReloadingOptions: {
         overlay: true,
 
-        BrowserSyncReloadOnChange: false,
+        browserSyncReloadOnChange: false,
 
         hotExecuteTestCommand: 'test',
 

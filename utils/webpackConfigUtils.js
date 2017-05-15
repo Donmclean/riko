@@ -178,27 +178,33 @@ module.exports = (_v, funcs, customConfig) => {
 
                 const WebpackShellPlugin = require('webpack-shell-plugin');
 
-                if(JSON.parse(process.env.isElectron)) {
-                    //ELECTRON DEV ONLY MODE
-                    developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
-                        new WebpackShellPlugin({
-                            onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
-                        })
-                    ]);
-                }
-
-                if(JSON.parse(process.env.isWeb) && !JSON.parse(process.env.isElectron)) {
-                    //WEB DEV ONLY MODE
-                    developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
-                        new _v.BrowserSyncPlugin(
-                            {
-                                proxy: `http://localhost:${customConfig.SERVER_PORT}`
-                            },
-                            {
-                                reload: !!customConfig.hotReloadingOptions.BrowserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)
-                            }
-                        )
-                    ]);
+                switch (true) {
+                    case JSON.parse(process.env.isElectron): {
+                        //ELECTRON DEV ONLY MODE
+                        developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
+                            new WebpackShellPlugin({
+                                onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
+                            })
+                        ]);
+                        break;
+                    }
+                    case JSON.parse(process.env.isWeb): {
+                        //WEB DEV ONLY MODE
+                        developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
+                            new _v.BrowserSyncPlugin(
+                                {
+                                    proxy: `http://localhost:${customConfig.SERVER_PORT}`
+                                },
+                                {
+                                    reload: customConfig.hotReloadingOptions.browserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)
+                                }
+                            )
+                        ]);
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
                 }
 
                 return developmentConfigOptions;
