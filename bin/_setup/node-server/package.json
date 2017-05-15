@@ -7,6 +7,7 @@
     "start": "NODE_ENV=production node src/app.js"
   },
   "dependencies": {
-    "body-parser": "^1.17.1"
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
   }
 }

@@ -188,6 +188,9 @@ module.exports = () => {
             case !_v._.isEmpty(runCommand.match(/web\b/i)): {
                 return funcs.getFileIfExists('./defaultConfigs/webElectronConfig');
             }
+            case !_v._.isEmpty(runCommand.match(/node-server\b/i)): {
+                return funcs.getFileIfExists('./defaultConfigs/nodeServerConfig');
+            }
             default: {
                 throw new Error (`can't get default from runCommand: ${runCommand}`);
             }

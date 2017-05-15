@@ -10,11 +10,15 @@ module.exports = (runCommand) => {
     //handle environment variables
     funcs.assignEnvironmentVariablesBasedOnRunCommand(runCommand);
 
-    const customConfig = require('../utils/coreRikoConfig');
-    const webpackConfigUtils = require('../utils/webpackConfigUtils')(_v, funcs, customConfig);
-    const config = require('../webpack.config');
+    const requiresWebpack = (JSON.parse(process.env.isWeb) || JSON.parse(process.env.isElectron));
 
+    const customConfig = require('../utils/coreRikoConfig');
     //TODO: validate customConfig Here
+
+
+    //TODO: extract these dependecies
+    const webpackConfigUtils = requiresWebpack ? require('../utils/webpackConfigUtils')(_v, funcs, customConfig): {};
+    const config = requiresWebpack ? require('../webpack.config') : {};
 
     switch (runCommand) {
         case 'electron-server': {
