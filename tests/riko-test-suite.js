@@ -106,8 +106,8 @@
 //             assert.isFunction(functions.executeJestTests);
 //         });
 //
-//         it('executeFlowTests should exist and be a function', () => {
-//             assert.isFunction(functions.executeFlowTests);
+//         it('hotExecuteFlowTests should exist and be a function', () => {
+//             assert.isFunction(functions.hotExecuteFlowTests);
 //         });
 //     });
 //

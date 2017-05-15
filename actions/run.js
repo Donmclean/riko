@@ -82,7 +82,7 @@ module.exports = (runCommand) => {
             //*******************************************************************
 
             config.entry['index'].unshift('webpack/hot/dev-server');
-            config.entry['index'].unshift(`webpack-dev-server/client?http://localhost:${customConfig.EXPRESS_PORT}`);
+            config.entry['index'].unshift(`webpack-dev-server/client?http://localhost:${customConfig.SERVER_PORT}`);
             config.entry['index'].unshift('react-hot-loader/patch');
             config.entry['index'].unshift('babel-polyfill');
 
@@ -97,9 +97,9 @@ module.exports = (runCommand) => {
                 inline: true,
                 headers: { 'Access-Control-Allow-Origin': '*' },
                 stats
-            }).listen(customConfig.EXPRESS_PORT, 'localhost', (err) => {
+            }).listen(customConfig.SERVER_PORT, 'localhost', (err) => {
                 if (err) { console.error(err); }
-                funcs.genericLog(`Listening at localhost: ${customConfig.EXPRESS_PORT}`);
+                funcs.genericLog(`Listening at localhost: ${customConfig.SERVER_PORT}`);
                 funcs.onDevBuildActions(customConfig);
             });
 
@@ -122,7 +122,7 @@ module.exports = (runCommand) => {
             _v.app.use(_v.express.static(root));
             _v.app.use(_v.fallback('index.html', { root }));
 
-            _v.app.listen(customConfig.EXPRESS_PORT);
+            _v.app.listen(customConfig.SERVER_PORT);
 
             _v.app.use((err, req, res, next) => {
                 funcs.genericLog(`ERROR --> : ${err.stack}`);
@@ -132,12 +132,12 @@ module.exports = (runCommand) => {
             const isProdServer = (runCommand === 'web-prod-server');
 
             if(isProdServer) {
-                funcs.genericLog('Listening on port: ' + customConfig.EXPRESS_PORT, 'yellow');
+                funcs.genericLog('Listening on port: ' + customConfig.SERVER_PORT, 'yellow');
             } else {
-                funcs.genericLog('Launching Browser Sync proxy of port: ' + customConfig.EXPRESS_PORT, 'yellow');
+                funcs.genericLog('Launching Browser Sync proxy of port: ' + customConfig.SERVER_PORT, 'yellow');
 
                 browserSync.init({
-                    proxy: `localhost:${customConfig.EXPRESS_PORT}`
+                    proxy: `localhost:${customConfig.SERVER_PORT}`
                 });
             }
 

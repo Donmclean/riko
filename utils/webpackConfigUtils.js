@@ -192,7 +192,7 @@ module.exports = (_v, funcs, customConfig) => {
                     developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
                         new _v.BrowserSyncPlugin(
                             {
-                                proxy: `http://localhost:${customConfig.EXPRESS_PORT}`
+                                proxy: `http://localhost:${customConfig.SERVER_PORT}`
                             },
                             {
                                 reload: !!customConfig.hotReloadingOptions.BrowserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)

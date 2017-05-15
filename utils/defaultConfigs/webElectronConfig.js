@@ -1,54 +1,55 @@
 const config = {
+    SERVER_PORT: 3000,
+
     entry: {
         index: [ './src/js/index.js' ]
     },
+
     output: {
         path: 'dist'
-    }
-};
+    },
 
-config.setWebpackConfigOptions = (env, config, webpack, immutable) => {
-    switch (env) {
-        case 'global': {
-            return config;
+    devtool: 'source-map',
+
+    setWebpackConfigOptions: (env, config, webpack, immutable) => {
+        switch (env) {
+            case 'global': {
+                return config;
+            }
+            case 'production': {
+                return config;
+            }
+            case 'development': {
+                return config;
+            }
+            default: {
+                return config;
+            }
         }
-        case 'production': {
-            return config;
-        }
-        case 'development': {
-            return config;
-        }
-        default: {
-            return config;
-        }
-    }
+    },
+
+    electronPackagerOptions: {
+        icon: 'src/riko-logo.icns',
+        platform: 'all',
+        asar: true
+    },
+
+    hotReloadingOptions: {
+        overlay: true,
+
+        BrowserSyncReloadOnChange: false,
+
+        hotExecuteTestCommand: 'test',
+
+        hotExecuteFlowTypeCommand: 'default'
+    },
+
+    //prefix everything: browsers: ['> 0%']
+    autoprefixerOptions: {
+        browsers: ['> 0%']
+    },
+
+    customBoilerplatePath: 'src/riko-custom-boilerplates'
 };
-
-config.electronPackagerOptions = {
-    icon: 'src/riko-logo.icns',
-    platform: 'all',
-    asar: true
-};
-
-config.EXPRESS_PORT = 3000;
-
-config.hotReloadingOptions = {
-    overlay: true,
-
-    BrowserSyncReloadOnChange: false,
-
-    hotExecuteTestCommand: 'test',
-
-    hotExecuteFlowTypeCommand: 'default'
-};
-
-config.sourcemapType = 'source-map';
-
-config.sourcemapDev = true;
-config.sourcemapProd = true;
-
-config.autoprefixerOptions = { browsers: ['> 0%'] }; //prefix everything: browsers: ['> 0%']
-
-config.customBoilerplatePath = 'src/riko-custom-boilerplates';
 
 module.exports = config;

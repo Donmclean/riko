@@ -13,7 +13,7 @@ config.eslintConfig             = '.eslintrc.js';
 config.stylelintConfig          = 'stylelint.config.js';
 config.nightwatchConfig         = 'nightwatchconfig.js';
 
-config.EXPRESS_PORT             = 3000;
+config.SERVER_PORT             = 3000;
 config.EXPRESS_ROOT             = config.destDir;
 
 config.srcFiles                 = [

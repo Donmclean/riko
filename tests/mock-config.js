@@ -19,7 +19,7 @@ module.exports = () => {
         destDir:  'string',
         srcDir:  'string',
         tempDir: 'string',
-        EXPRESS_PORT:  'number',
+        SERVER_PORT:  'number',
         EXPRESS_ROOT:  'string',
         eslintConfig:  'string',
         stylelintConfig:  'string',

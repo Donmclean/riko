@@ -11,6 +11,8 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
 
     configMap.set('entry', customConfig.entry);
 
+    configMap.set('devtool', false);
+
     configMap.set('output', _v.immutable.fromJS({
         filename: '[name].js?[hash]',
         path: customConfig.output.path,
@@ -45,6 +47,8 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
 
     configMap.set('plugins', _v.immutable.fromJS([]));
 
+    configMap.set('stats', funcs.getStats(process.env.NODE_ENV));
+
     // Set Global Config Options
     const globalCustomOptionsMap = new _v.immutable.Map().withMutations((globalCustomOptionsMap) => {
         customConfig.setWebpackConfigOptions('global', globalCustomOptionsMap, _v.webpack, _v.immutable);
@@ -57,7 +61,7 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
     switch (process.env.NODE_ENV) {
         case "production": {
             configMap.setIn(['output', 'sourceMapFilename'], '[file].map?[hash]');
-            configMap.set('devtool', customConfig.sourcemapProd ? customConfig.sourcemapType : false);
+            configMap.set('devtool', customConfig.devtool);
             configMap.set('bail', true);
 
             // Set Production Config Options
@@ -74,7 +78,7 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
         }
         case "test":
         case "development": {
-            configMap.set('devtool', customConfig.sourcemapProd ? customConfig.sourcemapType : false);
+            configMap.set('devtool', customConfig.devtool);
             configMap.set('bail', false);
 
             configMap.set('devServer', _v.immutable.fromJS({
@@ -104,8 +108,6 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
             break;
         }
     }
-
-    configMap.set('stats', funcs.getStats(process.env.NODE_ENV));
 });
 
 module.exports = config.toJS();

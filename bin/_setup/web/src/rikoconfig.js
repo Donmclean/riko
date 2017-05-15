@@ -6,12 +6,18 @@
 const cwd = process.cwd();
 
 const config = {
+    SERVER_PORT: 3000,
+
     entry: {
         index: [ './src/js/index.js' ]
     },
+
     output: {
         path: `${cwd}/dist`
     },
+
+    //https://webpack.github.io/docs/configuration.html#devtool
+    devtool: 'source-map',
 
     setWebpackConfigOptions: (env, config, webpack, immutable) => {
         const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -88,7 +94,30 @@ const config = {
 
         //Enable or disable asar archiving
         asar: true
-    }
+    },
+    //**********************************************************************
+
+    hotReloadingOptions: {
+        overlay: true,
+
+        //Override hot module replacement and simply have the page refresh on file change
+        BrowserSyncReloadOnChange: false,
+
+        //Provide an npm package.json script command here to have tests execute on every webpack rebuild.
+        //i.e: 'test' would execute as 'npm run test' or 'hot-test' as 'npm run hot-test'
+        hotExecuteTestCommand: 'test',
+
+        hotExecuteFlowTypeCommand: 'default'
+    },
+
+    //prefix everything: browsers: ['> 0%']
+    autoprefixerOptions: {
+        browsers: ['> 0%']
+    },
+
+    //specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
+    //path must be relative to package.json.
+    customBoilerplatePath: 'src/riko-custom-boilerplates'
 };
 
 //**********************************************************************
@@ -98,36 +127,5 @@ const config = {
 // To add vendor dependencies and expose them to global/window object simply use the expose-loader
 // eg: require("expose-loader?_!lodash");
 // see: https://github.com/webpack/expose-loader
-
-//**********************************************************************
-//*******************************EXTRAS*********************************
-//**********************************************************************
-config.EXPRESS_PORT = 3000;
-
-config.hotReloadingOptions     = {
-    overlay: true,
-
-    //Override hot module replacement and simply have the page refresh on file change
-    BrowserSyncReloadOnChange: false,
-
-    //Provide an npm package.json script command here to have tests execute on every webpack rebuild.
-    //i.e: 'test' would execute as 'npm run test' or 'hot-test' as 'npm run hot-test'
-    hotExecuteTestCommand: 'test',
-
-    hotExecuteFlowTypeCommand: 'default'
-};
-
-//https://webpack.github.io/docs/configuration.html#devtool
-config.sourcemapType = 'source-map';
-
-//Enable of disable sourcemaps
-config.sourcemapDev = true;
-config.sourcemapProd = true;
-
-config.autoprefixerOptions     = { browsers: ['> 0%'] }; //prefix everything: browsers: ['> 0%']
-
-//specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
-//path must be relative to package.json.
-config.customBoilerplatePath = 'src/riko-custom-boilerplates';
 
 module.exports = config;

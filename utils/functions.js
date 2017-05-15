@@ -59,7 +59,7 @@ module.exports = () => {
                 {
                     loader: 'css-loader',
                     options: {
-                        sourceMap: customConfig.sourcemapProd
+                        sourceMap: !!customConfig.devtool
                     }
                 },
                 {
@@ -75,7 +75,7 @@ module.exports = () => {
                 (type !== 'css') ? {
                     loader: `${type}-loader`,
                     options: {
-                        sourceMap: customConfig.sourcemapProd
+                        sourceMap: !!customConfig.devtool
                     }
                 } : null
 
@@ -87,7 +87,7 @@ module.exports = () => {
         test: new RegExp(regex),
         loaders: _v._.compact([
             'style-loader',
-            `css-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}`,
+            `css-loader${customConfig.devtool ? '?sourceMap' : ''}`,
             {
                 loader: 'postcss-loader',
                 options: {
@@ -98,7 +98,7 @@ module.exports = () => {
                     }
                 }
             },
-            (type !== 'css') ? `${type}-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}` : null
+            (type !== 'css') ? `${type}-loader${customConfig.devtool ? '?sourceMap' : ''}` : null
         ])
     });
 
@@ -226,13 +226,13 @@ module.exports = () => {
         let spawn;
 
         if(hasHotExecTestCommand) {
-            spawn = funcs.executeJestTests(customConfig);
+            spawn = funcs.hotExecuteTests(customConfig);
         } else if(hasHotExecFlowTypeCommand) {
-            funcs.executeFlowTests(customConfig);
+            funcs.hotExecuteFlowTests(customConfig);
         }
 
         if(spawn && hasHotExecFlowTypeCommand) {
-            spawn.on('close', () => funcs.executeFlowTests(customConfig));
+            spawn.on('close', () => funcs.hotExecuteFlowTests(customConfig));
         }
     };
 
@@ -256,8 +256,9 @@ module.exports = () => {
         .includes(customTestCommand)
         .value();
 
-    funcs.executeJestTests = (customConfig) => {
-        const customTestCommand = customConfig.hotReloadingOptions.hotExecuteTestCommand;
+    funcs.hotExecuteTests = (customConfig) => {
+        const hotReloadingOptions = customConfig.hotReloadingOptions || {};
+        const customTestCommand = hotReloadingOptions.hotExecuteTestCommand;
         const isValidCommand = funcs.isValidPackageJsonScript(customConfig.packageJson, customTestCommand);
 
         if(isValidCommand) {
@@ -278,7 +279,7 @@ module.exports = () => {
         process.exit(0);
     });
 
-    funcs.executeFlowTests = (customConfig) => {
+    funcs.hotExecuteFlowTests = (customConfig) => {
         const { qfs, cwd, _ } = _v;
 
         const customTestCommand = customConfig.hotReloadingOptions.hotExecuteFlowTypeCommand;
