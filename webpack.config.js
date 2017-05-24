@@ -11,8 +11,6 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
 
     configMap.set('entry', customConfig.entry);
 
-    configMap.set('devtool', false);
-
     configMap.set('output', _v.immutable.fromJS({
         filename: '[name].js?[hash]',
         path: customConfig.output.path,
@@ -56,12 +54,12 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
 
     const globalDefaults = webpackConfigUtils.getDefaultConfigOptions('global', configMap);
     funcs.handleCustomAdditions('global', configMap, globalDefaults.loaders, globalDefaults.plugins);
-    funcs.handleCustomAdditions('global', configMap, globalCustomOptionsMap.getIn(['modules', 'rules']) || [], globalCustomOptionsMap.get('plugins') || []);
+    funcs.handleCustomAdditions('global', configMap, globalCustomOptionsMap.getIn(['module', 'rules']) || [], globalCustomOptionsMap.get('plugins') || []);
 
     switch (process.env.NODE_ENV) {
         case "production": {
             configMap.setIn(['output', 'sourceMapFilename'], '[file].map?[hash]');
-            configMap.set('devtool', customConfig.devtool);
+            configMap.set('devtool', customConfig.devtool || false);
             configMap.set('bail', true);
 
             // Set Production Config Options
@@ -72,13 +70,13 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
             const productionDefaults = webpackConfigUtils.getDefaultConfigOptions('production', configMap);
 
             funcs.handleCustomAdditions('production', configMap, productionDefaults.loaders, productionDefaults.plugins);
-            funcs.handleCustomAdditions('production', configMap, productionCustomOptionsMap.getIn(['modules', 'rules']) || [], productionCustomOptionsMap.get('plugins') || []);
+            funcs.handleCustomAdditions('production', configMap, productionCustomOptionsMap.getIn(['module', 'rules']) || [], productionCustomOptionsMap.get('plugins') || []);
 
             break;
         }
         case "test":
         case "development": {
-            configMap.set('devtool', customConfig.devtool);
+            configMap.set('devtool', customConfig.devtool || false);
             configMap.set('bail', false);
 
             configMap.set('devServer', _v.immutable.fromJS({
@@ -100,7 +98,7 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
             const developmentDefaults = webpackConfigUtils.getDefaultConfigOptions('development', configMap);
 
             funcs.handleCustomAdditions('development', configMap, developmentDefaults.loaders, developmentDefaults.plugins);
-            funcs.handleCustomAdditions('development', configMap, developmentCustomOptionsMap.getIn(['modules', 'rules']) || [], developmentCustomOptionsMap.get('plugins') || []);
+            funcs.handleCustomAdditions('development', configMap, developmentCustomOptionsMap.getIn(['module', 'rules']) || [], developmentCustomOptionsMap.get('plugins') || []);
 
             break;
         }

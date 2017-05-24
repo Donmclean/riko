@@ -21,8 +21,8 @@ module.exports = () => {
     vars.cp                     = require('child_process');
     vars.exec                   = vars.cp.exec;
     vars.execSync               = vars.cp.execSync;
-    vars.spawn                  = vars.cp.spawn;
-    vars.spawnSync              = vars.cp.spawnSync;
+    vars.spawn                  = require('cross-spawn');
+    vars.spawnSync              = vars.spawn.sync;
     vars.chokidar               = require('chokidar');
     vars.isGitInitialized       = vars.fs.readdirSync(vars.cwd).includes('.git') ? (vars.fs.readdirSync(`${vars.cwd}/.git/objects`).length > 2) : false;
 
