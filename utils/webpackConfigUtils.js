@@ -30,7 +30,7 @@ module.exports = (_v, funcs, customConfig) => {
         switch (env) {
             case 'global': {
                 const globalConfigOptions = {
-                    loaders: [
+                    rules: [
                         //JAVASCRIPT
                         {
                             test: /\.jsx$|\.js$/,
@@ -60,17 +60,17 @@ module.exports = (_v, funcs, customConfig) => {
                         //VIDEOS
                         {
                             test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                            loader: `file-loader?name=${customConfig.videoOutputPath}/[name].[ext]?[hash]`
+                            loader: `file-loader?name=${customConfig.videoOutputPath}/[name].[hash].[ext]`
                         },
                         //AUDIO
                         {
                             test: /\.(wav|mp3|aiff|flac|mp4a|m4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                            loader: `file-loader?name=${customConfig.audioOutputPath}/[name].[ext]?[hash]`
+                            loader: `file-loader?name=${customConfig.audioOutputPath}/[name].[hash].[ext]`
                         },
                         //FILES
                         {
                             test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                            loader: `file-loader?name=${customConfig.miscFileOutputPath}/[name].[ext]?[hash]`
+                            loader: `file-loader?name=${customConfig.miscFileOutputPath}/[name].[hash].[ext]`
                         }
                     ],
 
@@ -89,7 +89,7 @@ module.exports = (_v, funcs, customConfig) => {
             }
             case 'production': {
                 const productionConfigOptions = {
-                    loaders: [
+                    rules: [
                         //SASS
                         funcs.stylesheetProdRules('sass', /\.scss$/, customConfig, _v.ExtractTextPlugin),
                         //LESS
@@ -101,21 +101,22 @@ module.exports = (_v, funcs, customConfig) => {
                         //FONTS
                         {
                             test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                            loader: `file-loader?name=${customConfig.fontOutputPath}/[name].[ext]?[hash]`
+                            loader: `file-loader?name=${customConfig.fontOutputPath}/[name].[hash].[ext]`
                         },
                         //IMAGES
                         {
                             test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                            loader: `file-loader?name=${customConfig.imageOutputPath}/[name].[ext]?[hash]`
+                            loader: `file-loader?name=${customConfig.imageOutputPath}/[name].[hash].[ext]`
                         }
                     ],
                     plugins: [
                         new _v.ExtractTextPlugin({
-                            filename: 'assets/css/styles.min.css?[hash]',
+                            filename: 'assets/css/styles.min.[hash].css',
                             allChunks: true
                         }),
                         new _v.CleanWebpackPlugin([_v.path.basename(configMap.getIn(['output', 'path']))], {root: customConfig.baseDir, verbose: true, dry: false}),
                         new _v.webpack.LoaderOptionsPlugin({
+                            minimize: true,
                             debug: false
                         })
                     ]
@@ -127,15 +128,11 @@ module.exports = (_v, funcs, customConfig) => {
 
                 if(JSON.parse(process.env.isElectron)) {
                     productionConfigOptions.plugins = productionConfigOptions.plugins.concat([
-                        [
-                            [
-                                new CopyWebpackPlugin([
-                                    { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
-                                    { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
-                                    { from: electronPackagerOptions.icon, to: customConfig.tempDir }
-                                ])
-                            ]
-                        ]
+                        new CopyWebpackPlugin([
+                            { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
+                            { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
+                            { from: electronPackagerOptions.icon, to: customConfig.tempDir }
+                        ])
                     ]);
                 }
 
@@ -143,7 +140,7 @@ module.exports = (_v, funcs, customConfig) => {
             }
             case 'development': {
                 const developmentConfigOptions = {
-                    loaders: [
+                    rules: [
                         // SASS
                         funcs.stylesheetDevRules('sass', /\.scss$/, customConfig),
                         // LESS

@@ -149,14 +149,34 @@ module.exports = () => {
 
     funcs.pickPluginFromKey = (plugins, key) => _v._.chain(plugins).keys().includes(key).value();
 
-    funcs.handleCustomAdditions = (env, configMap, defaultLoaders, defaultPlugins) => {
-        // Concat With Default Rules/Loaders
-        configMap.updateIn(['module', 'rules'], (loaders) => _v.immutable.fromJS(loaders).concat(_v.immutable.fromJS(defaultLoaders)));
+    funcs.handleCustomAdditions = (configMap, envConfigMap, defaultRules, defaultPlugins) => {
+        //extract unique default loaders by 'test' key
+        const uniqDefaultRules = _v._.chain(defaultRules)
+            .reject((defaultRule) => _v._.includes(_v.immutable.fromJS(envConfigMap.getIn(['module', 'rules'])
+                    .map((rule) => rule.test.toString())).toJS(), defaultRule.test.toString()))
+            .value();
 
-        // Concat With Default Plugins
-        configMap.update('plugins', (plugins) => _v.immutable.fromJS(plugins).concat(_v.immutable.fromJS(defaultPlugins)).flatten(true));
+        const mergedWithDefaultsRules = _v.merge(
+            {rules: _v.immutable.fromJS(uniqDefaultRules).toJS()},
+            {rules: _v.immutable.fromJS(envConfigMap.getIn(['module', 'rules'])).toJS()}
+        );
 
-        configMap.mergeDeep(configMap.map((values) => _v.immutable.fromJS(values)));
+        configMap.updateIn(['module','rules'], (rules) => _v.immutable.fromJS(rules).concat(_v.immutable.fromJS(mergedWithDefaultsRules.rules)));
+
+        //extract unique default plugins by 'constructor.name'
+        const uniqDefaultPlugins = _v._.reject(defaultPlugins, (defaultPlugin) => {
+            return _v._.includes(
+                envConfigMap.get('plugins').map(plugin => plugin.constructor.name),
+                defaultPlugin.constructor.name
+            );
+        });
+
+        const mergedWithDefaultPlugins  = _v.merge(
+            {plugins: _v.immutable.fromJS(uniqDefaultPlugins).toJS()},
+            {plugins: _v.immutable.fromJS(envConfigMap.get('plugins')).toJS()}
+        );
+
+        configMap.update('plugins', (plugins) => _v.immutable.fromJS(plugins).concat(_v.immutable.fromJS(mergedWithDefaultPlugins)).flatten(true));
     };
 
     funcs.logElectronRunServerError = () => {

@@ -63,7 +63,7 @@ const config = {
                     }),
                     new webpack.optimize.CommonsChunkPlugin({
                         name: 'index',
-                        filename: 'assets/js/[name].js?[hash]'
+                        filename: 'assets/js/[name].[hash].js'
                     })
                 ]);
                 break;

@@ -39,6 +39,7 @@ module.exports = () => {
     }
 
     vars.WebpackDevServer       = require('webpack-dev-server');
+    vars.merge                  = require('webpack-merge');
     vars.autoprefixer           = require('autoprefixer');
 
     vars.express                = require('express');
