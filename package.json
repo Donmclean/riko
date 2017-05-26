@@ -22,7 +22,11 @@
   "keywords": [
     "javascript",
     "react",
+    "reactjs",
+    "react-native",
     "webpack",
+    "webpack2",
+    "webpack-config",
     "electron",
     "test",
     "coverage"

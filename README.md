@@ -50,7 +50,9 @@ Riko is as much a concept of building as it is build system. It is designed to a
 
 # FEATURES
 
-- Supports the development of JS Modules, React [**Web**](https://facebook.github.io/react/), [**Mobile**](https://facebook.github.io/react-native/) & [**Electron**](http://electron.atom.io/) Applications.
+Supports the development of [**Node JS**](https://nodejs.org) Projects, [**Javascript Libraries**](https://www.javascripting.com/), [**React**](https://facebook.github.io/react/), [**React Native**](https://facebook.github.io/react-native/) & [**Electron**](http://electron.atom.io/) Applications.
+
+#### React | Electron
 - Supports compilation of [**es6 js**](http://es6-features.org/) & [**jsx**](https://facebook.github.io/react/docs/jsx-in-depth.html) source files.
 - Supports compilation of [**pug**](https://pugjs.org) template files to html.
 - Supports compilation of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/), and [**css**](http://www.w3schools.com/css/) stylesheets.
@@ -63,32 +65,18 @@ Riko is as much a concept of building as it is build system. It is designed to a
 - [**Browsersync**](https://www.browsersync.io/) functionality by default.
 - [**Jest**](https://facebook.github.io/jest/), [**Mocha**](https://mochajs.org/), [**Chai**](http://chaijs.com/) unit testing.
 - [**Selenium Testing**](http://www.seleniumhq.org/) via [**Nightwatch JS**](http://nightwatchjs.org/) & [**Browserstack**](https://www.browserstack.com/)
-- [**Bundle Visualizer**](https://chrisbateman.github.io/webpack-visualizer/): see the build product of your js sources & dependencies via current git SHA as url. 
-    - eg: `localhost:3000/4bd933dd0d4ec24302ffb3e92dde767d31f7e392.html`
-- [**Source File Hashing**](#_): hashes build sources to control caching 
-    - eg: `index.html?405kjdjsd7ed89a68ac` `styles.min.css?405eccffee7ed89a68ac` `bundle.js?405eccffee7ed89a68ac`
 
-> NOTE: All `npm` commands can be executed with `yarn`
-
-###### - Development Mode: `npm run dev`
+###### - Development Mode: eg: `riko run react-dev` | `riko r electron-dev`
 
 - [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources.
 - [**Error proofing**](https://github.com/webpack/webpack-dev-server/issues/522) (on error a helpful overlay pops up displaying the error).
 - [**Remote Debugging**](http://vorlonjs.com/): Debug your application on almost any device.
+- [**Electron Mode**](http://electron.atom.io/) has the exact same features as **React** setup with [**electron**](http://electron.atom.io/) native OS powers.
 
-###### - Production Mode: `npm run prod`
+###### - Production Mode: `riko run react-prod` | `riko r electron-prod`
 
-- [**Asset Copying**](#_): Specify the output directories or your files. (eg: _src/images_  -->  _dist/assets/images_). 
-- [**Source Minification**](#_): Optimize/Minify stylesheets and js files.
-- [**Image Minification**](https://github.com/tcoopman/image-webpack-loader): Optimize/Minify png, jpg, gif and svg images.
-- [**Shell Script Integration**](https://www.npmjs.com/package/webpack-shell-plugin): run shell scripts on build start, end and/or exit.
-
-###### - Electron Mode: `npm run electron`
-
-- [**Electron Mode**](http://electron.atom.io/) has the same features as web just different commands.
-- [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources.
-- [**Error proofing**](https://github.com/webpack/webpack-dev-server/issues/522) (on error a helpful overlay pops up displaying the error).
-- [**Remote Debugging**](http://vorlonjs.com/): Debug your application on almost any device.
+- [**Tree Shaking**](https://webpack.js.org/guides/tree-shaking/): Since Riko uses [**Webpack 2**](https://webpack.js.org) to bundle [**React**](https://facebook.github.io/react/) & [**Electron**](http://electron.atom.io/) projects, it automatically removes unused code to achieve the smallest bundle sizes.
+- [**Electron Packager**](https://github.com/electron-userland/electron-packager): Bundles your electron app with your specified options via `rikoconfig.js`.
 
 # CAVEATS
 
@@ -96,10 +84,11 @@ Riko is as much a concept of building as it is build system. It is designed to a
 
     - To make the hot reloading of CSS work, we are not extracting CSS in development. Ideally, during server rendering, we will be extracting CSS, and we will get a .css file, and we can use it in the html template. That's what we are doing in production. 
     - In development, after all scripts get loaded, react loads the CSS as BLOBs. That's why there is a second of FOUC in development.
-- No Support for Windows/Linux/Ubuntu Development
 
-    - This Build System is not tested for development on Windows, Linux, or Ubuntu and 
-    therefore does not support any those Operating Systems.
+- Full support for MAC OS only. Only Partial Support for Windows/Linux/Ubuntu Development.
+
+    - This Build System is not yet tested for development on Windows, Linux, or Ubuntu and 
+    therefore there are currently unsupported.
 
 # USAGE
 
