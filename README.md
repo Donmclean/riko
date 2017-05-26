@@ -12,7 +12,7 @@ Riko is as much a concept of building as it is build system. It is designed to a
 
 # COMMANDS
 
-###### Setup a new (highly customizable) project with defaults
+###### **Setup** a new (highly customizable) project with defaults
 - `riko s|setup`
     - `<project-type> [react, react-native, electron, node-server]`
     - `<project-name> 'Awesome New Web Project'`
@@ -21,7 +21,7 @@ Riko is as much a concept of building as it is build system. It is designed to a
     - example 2: `riko s electron Amazing New Electron Project`
     - example 3: `riko s -h`
     
-###### Run a build related task from your project base directory
+###### **Run** a build related task from your project base directory
 - `riko r|run`
     - `<run-command> [react-dev, react-prod, react-server, react-prod-server, electron-dev, electron-prod, electron-server, node-server-dev, node-server-prod]`
     - `[-h | --help] 'displays helpful info about current command'`
@@ -29,7 +29,7 @@ Riko is as much a concept of building as it is build system. It is designed to a
     - example 2: `riko r electron-prod`
     - example 3: `riko run --help`
     
-###### Creates default and custom boilerplate files to increase developer workflow
+###### **Create** default and custom boilerplate files to increase developer workflow
 - `riko c|create`
     - `<file-type> [component, componentDir, dummy-component, test-component]`
     - `<file-name..> Footer`
@@ -38,12 +38,12 @@ Riko is as much a concept of building as it is build system. It is designed to a
     - example 2: `riko c componentDir Header`
     - example 3: `riko create -h`
     
-###### Help displays helpful instructions on command usage
+###### **Help** displays helpful instructions on command usage
 - `riko -h|--help`
     - example 1: `riko --help`
     - example 2: `riko -h`
     
-###### Version displays cli version
+###### **Version** displays cli version
 - `riko -v|--version`
     - example 1: `riko --version`
     - example 2: `riko -v`
