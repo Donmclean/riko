@@ -204,11 +204,11 @@ module.exports = () => {
         }
 
         switch (true) {
-            case !_v._.isEmpty(runCommand.match(/electron\b/i)):
-            case !_v._.isEmpty(runCommand.match(/web\b/i)): {
+            case JSON.parse(process.env.isReact):
+            case JSON.parse(process.env.isElectron): {
                 return funcs.getFileIfExists('./defaultConfigs/webElectronConfig');
             }
-            case !_v._.isEmpty(runCommand.match(/node-server\b/i)): {
+            case JSON.parse(process.env.isNodeServer): {
                 return funcs.getFileIfExists('./defaultConfigs/nodeServerConfig');
             }
             default: {
@@ -217,10 +217,11 @@ module.exports = () => {
         }
     };
 
-    funcs.assignEnvironmentVariablesBasedOnRunCommand = (runCommand) => {
+    funcs.assignEnvironmentVariablesBasedOnRunCommand = (runCommands, runCommand) => {
         //Sets run command for later access
         process.env.runCommand = runCommand;
 
+        //assign environment variable
         switch (true) {
             case !_v._.isEmpty(runCommand.match(/-dev\b/)): {
                 process.env.NODE_ENV = 'development';
@@ -239,8 +240,10 @@ module.exports = () => {
             }
         }
 
-        process.env.isWeb = !_v._.isEmpty(runCommand.match(/(web)\b/i));
-        process.env.isElectron = !_v._.isEmpty(runCommand.match(/(electron)\b/i));
+        //assign project types booleans
+        process.env.isReact = _v._.includes(runCommands.react, runCommand);
+        process.env.isElectron = _v._.includes(runCommands.electron, runCommand);
+        process.env.isNodeServer = _v._.includes(runCommands['node-server'], runCommand);
 
         funcs.genericLog(`Environment (process.env.NODE_ENV): ${process.env.NODE_ENV}`, 'blue');
     };

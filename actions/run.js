@@ -1,16 +1,18 @@
 const
-    _v      = require('../utils/variables')(),
-    funcs   = require('../utils/functions')();
+    _v = require('../utils/variables')(),
+    funcs = require('../utils/functions')(),
+    { runCommands } = require('../constants/index');
 
 module.exports = (runCommand) => {
     const { $, electronPackager, browserSync } = _v;
 
+    //add exit handler
     funcs.processExitHandler();
 
-    //handle environment variables
-    funcs.assignEnvironmentVariablesBasedOnRunCommand(runCommand);
+    //assign environment variables
+    funcs.assignEnvironmentVariablesBasedOnRunCommand(runCommands, runCommand);
 
-    const requiresWebpack = (JSON.parse(process.env.isWeb) || JSON.parse(process.env.isElectron));
+    const requiresWebpack = (JSON.parse(process.env.isReact) || JSON.parse(process.env.isElectron));
 
     const customConfig = require('../utils/coreRikoConfig');
     //TODO: validate customConfig Here
@@ -48,7 +50,7 @@ module.exports = (runCommand) => {
                 });
             break;
         }
-        case 'web-prod': {
+        case 'react-prod': {
             config.entry['index'].unshift('babel-polyfill');
 
             return _v.spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
@@ -78,7 +80,7 @@ module.exports = (runCommand) => {
             break;
         }
         case 'electron-dev':
-        case 'web-dev': {
+        case 'react-dev': {
             const stats = funcs.getStats('development');
 
             //*******************************************************************
@@ -117,8 +119,8 @@ module.exports = (runCommand) => {
             _v.spawn('node', [`${customConfig.entryFile}`], {stdio: 'inherit'});
             break;
         }
-        case 'web-server':
-        case 'web-prod-server': {
+        case 'react-server':
+        case 'react-prod-server': {
             _v.app.use(_v.morgan('dev'));
 
             const root = config.output.path;
@@ -133,7 +135,7 @@ module.exports = (runCommand) => {
                 next(err);
             });
 
-            const isProdServer = (runCommand === 'web-prod-server');
+            const isProdServer = (runCommand === 'react-prod-server');
 
             if(isProdServer) {
                 funcs.genericLog('Listening on port: ' + customConfig.SERVER_PORT, 'yellow');

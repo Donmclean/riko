@@ -185,7 +185,7 @@ module.exports = (_v, funcs, customConfig) => {
                         ]);
                         break;
                     }
-                    case JSON.parse(process.env.isWeb): {
+                    case JSON.parse(process.env.isReact): {
                         //WEB DEV ONLY MODE
                         developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
                             new _v.BrowserSyncPlugin(

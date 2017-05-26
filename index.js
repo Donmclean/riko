@@ -88,7 +88,7 @@ program
         console.log('  Examples:');
         console.log();
         console.log('    $ run electron-dev');
-        console.log('    $ run web-server');
+        console.log('    $ run react-server');
         console.log();
     });
 

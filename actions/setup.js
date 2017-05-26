@@ -34,7 +34,7 @@ module.exports = (actionType, projectType, projectName) => {
                         break;
                     }
                     case 'node-server':
-                    case 'web': {
+                    case 'react': {
                         qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`)
                             .then(() => logSuccess())
                             .catch((err) => funcs.genericLog(err, 'red'));

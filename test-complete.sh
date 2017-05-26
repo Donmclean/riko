@@ -58,6 +58,6 @@ setupTest() {
 }
 
 echoBlue "testing setup commands..."
-setupTest web testWebProject web-prod
+setupTest react testWebProject react-prod
 
 echoGreen "All test successfully completed!"
