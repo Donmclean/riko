@@ -3,12 +3,12 @@ const funcs = require('../utils/functions')();
 const actions = require('../actions/_index');
 
 module.exports = (argv) => {
-    const { baseDir, cwd, _ } = _v;
+    const { baseDir, _ } = _v;
 
     const defaultBoilerplatePath = `${baseDir}/bin/_create`;
     const defaultOptions = funcs.readFilesInDirectorySync(defaultBoilerplatePath);
 
-    const customConfig = require('../utils/coreRikoConfig'); //funcs.getFileIfExists(`${_v.cwd}/src/rikoconfig`);
+    const customConfig = require('../utils/coreRikoConfig');
     let customOptions;
 
     try {

@@ -16,14 +16,32 @@ Riko is as much a concept of building as it is build system. It is designed to a
 - `riko s|setup`
     - `<project-type> [react, react-native, electron, node-server]`
     - `<project-name> 'Awesome New Web Project'`
+    - `[-h | --help] 'displays helpful info about current command'`
     - example 1: `riko setup react Awesome New React Project`
     - example 2: `riko s electron Amazing New Electron Project`
+    - example 3: `riko s -h`
     
 ###### Run a build related task from your project base directory
 - `riko r|run`
     - `<run-command> [react-dev, react-prod, react-server, react-prod-server, electron-dev, electron-prod, electron-server, node-server-dev, node-server-prod]`
+    - `[-h | --help] 'displays helpful info about current command'`
     - example 1: `riko run react-dev`
     - example 2: `riko r electron-prod`
+    - example 3: `riko run --help`
+    
+###### Creates default and custom boilerplate files to increase developer workflow
+- `riko c|create`
+    - `<file-type> [component, componentDir, dummy-component, test-component]`
+    - `<file-name..> Footer`
+    - `[-h | --help] 'displays helpful info about current command'`
+    - example 1: `riko create component Footer`
+    - example 2: `riko c componentDir Header`
+    - example 3: `riko create -h`
+    
+###### Help displays helpful instructions on command usage
+- `riko -h|--help`
+    - example 2: `riko --help`
+    - example 3: `riko -h`
 
 # FEATURES
 
