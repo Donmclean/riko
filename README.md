@@ -40,13 +40,13 @@ Riko is as much a concept of building as it is build system. It is designed to a
     
 ###### Help displays helpful instructions on command usage
 - `riko -h|--help`
-    - example 2: `riko --help`
-    - example 3: `riko -h`
+    - example 1: `riko --help`
+    - example 2: `riko -h`
     
 ###### Version displays cli version
 - `riko -v|--version`
-    - example 2: `riko --version`
-    - example 3: `riko -v`
+    - example 1: `riko --version`
+    - example 2: `riko -v`
 
 # FEATURES
 
