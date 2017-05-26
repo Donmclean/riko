@@ -18,6 +18,12 @@ Riko is as much a concept of building as it is build system. It is designed to a
     - `<project-name> 'Awesome New Web Project'`
     - example 1: `riko setup react Awesome New React Project`
     - example 2: `riko s electron Amazing New Electron Project`
+    
+###### Run a build related task from your project base directory
+- `riko r|run`
+    - `<run-command> [react-dev, react-prod, react-server, react-prod-server, electron-dev, electron-prod, electron-server, node-server-dev, node-server-prod]`
+    - example 1: `riko run react-dev`
+    - example 2: `riko r electron-prod`
 
 # FEATURES
 
