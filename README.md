@@ -5,6 +5,7 @@ Modern CLI Build System for creating Javascript Projects (Node, React, React Nat
 [![npm](https://img.shields.io/badge/npm-v1.0.21-blue.svg)](https://www.npmjs.com/package/riko-cli) [![Build Status](https://travis-ci.org/Donmclean/riko.svg?branch=master)](https://travis-ci.org/Donmclean/riko) [![dependencies Status](https://david-dm.org/donmclean/riko/status.svg)](https://david-dm.org/donmclean/riko) [![devDependencies Status](https://david-dm.org/donmclean/riko/dev-status.svg)](https://david-dm.org/donmclean/riko?type=dev) [![Test Coverage](https://codeclimate.com/github/Donmclean/riko/badges/coverage.svg)](https://codeclimate.com/github/Donmclean/riko/coverage) [![Code Climate](https://codeclimate.com/github/Donmclean/riko/badges/gpa.svg)](https://codeclimate.com/github/Donmclean/riko) [![Known Vulnerabilities](https://snyk.io/test/github/Donmclean/riko/badge.svg)](https://snyk.io/test/github/Donmclean/riko) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Donmclean/riko/blob/master/LICENSE) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NVQAJLLBQKUUG) [![DUB](https://img.shields.io/badge/Author-Don%20Mclean-red.svg)](http://donsmclean.com)
 
 Riko is as much a concept of building as it is build system. It is designed to aid developers throughout the project lifecycle as well as increasing their efficiency.
+Learn more about the Riko concept [**here**](docs/concept.md)
 
 # INSTALL
 
@@ -53,12 +54,12 @@ Riko is as much a concept of building as it is build system. It is designed to a
 Supports the development of [**Node JS**](https://nodejs.org), [**React**](https://facebook.github.io/react/), [**React Native**](https://facebook.github.io/react-native/) & [**Electron**](http://electron.atom.io/) Projects.
 
 #### React | Electron Projects
-- Supports compilation of [**es6 js**](http://es6-features.org/) & [**jsx**](https://facebook.github.io/react/docs/jsx-in-depth.html) source files.
+- Supports compilation of [**es6 js**](http://es6-features.org/) & [**jsx**](https://facebook.github.io/react/docs/jsx-in-depth.html) source files via [**babel**](https://babeljs.io/).
 - Supports compilation of [**pug**](https://pugjs.org) template files to html.
-- Supports compilation of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/), and [**css**](http://www.w3schools.com/css/) stylesheets.
+- Supports preprocessing of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/) and [**stylus**](http://stylus-lang.com/) stylesheets.
 - Supports generation of [**Source mapping**](https://www.npmjs.com/package/source-map) for stylesheets and js sources.
 - Supports [**Flow**](https://flowtype.org/) Static Type Checking out of the box.
-- Supports [**Yarn**](https://yarnpkg.com/). The new fast, reliable, and secure dependency management.
+- Supports [**Yarn**](https://yarnpkg.com/). The new fast, reliable and secure dependency management tool.
 - Javascript (_js_,_jsx_) linting via [**eslint**](http://eslint.org/).
 - Stylesheet (_sass_, _less_, _css_) linting via [**stylelint**](https://github.com/stylelint/stylelint).
 - [**Autoprefixing**](https://github.com/postcss/autoprefixer) for stylesheets.
