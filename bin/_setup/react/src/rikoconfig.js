@@ -1,8 +1,7 @@
 //**********************************************************************
 //*******************************CUSTOM*********************************
 //**********************************************************************
-//IMPORTANT! All paths/directories should be relative to 'BASE DIRECTORY' unless specified otherwise.
-//BASE DIRECTORY is same location as package.json file.
+const path = require('path');
 const cwd = process.cwd();
 
 const config = {
@@ -13,10 +12,11 @@ const config = {
     },
 
     output: {
-        path: `${cwd}/dist`
+        path: path.resolve(cwd, 'dist')
     },
 
     //https://webpack.github.io/docs/configuration.html#devtool
+    //set to false to disable default source mapping
     devtool: 'source-map',
 
     setWebpackConfigOptions: (env, config, webpack, immutable) => {
