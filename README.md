@@ -14,7 +14,7 @@ Riko is as much a concept of building as it is build system. It is designed to a
 
 ###### Setup a new (highly customizable) project with defaults
 - `riko s|setup`
-    - `<project-type> ['react', 'react-native', 'electron', 'node-server']`
+    - `<project-type> [react, react-native, electron, node-server]`
     - `<project-name> 'Awesome New Web Project'`
     - example 1: `riko setup react Awesome New React Project`
     - example 2: `riko s electron Amazing New Electron Project`
