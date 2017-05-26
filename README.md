@@ -95,14 +95,15 @@ Supports the development of [**Node JS**](https://nodejs.org), [**React**](https
 
 - After running a setup command like: `riko setup react myNewProject`. `cd` into your project then run `npm install` or `yarn` (_highly recommended_) if you have [yarn](https://yarnpkg.com/) installed
 - After entered your new project directory and installing it's dependencies you can now execute `run` commands like: `riko run react-dev` or `riko run electron-prod`. it all depends on what project you chose when you ran `setup`. 
+    
     **NOTE: _WHEN SETTING UP A MOBILE (REACT NATIVE) APP ON MAC_**<br/>
         - You must have [xcode](https://developer.apple.com/xcode), a valid [iOS simulator](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/iOS_Simulator_Guide/Introduction/Introduction.html), [Android Studio](https://developer.android.com/studio/index.html), [JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) and [JRE](https://java.com/en/download/) installed.<br/>
         - You must have [brew](http://brew.sh/) installed.<br/>
+    
     **NOTE: _WHEN SETTING UP AN ELECTRON APP ON MAC_**<br/>
         - You must have [xcode](https://developer.apple.com/xcode) installed.<br/>
         - You must successfully run `sh src/electron.sh` to be able to package a __windows__ version of your app.<br/>
-        - If this fails you should complete the following instructions:<br/>
-        [Install Wine on Mac](https://www.davidbaumgold.com/tutorials/wine-mac/) to package a __windows__ version of your app.
+        - If this fails you should complete the following instructions [here](https://www.davidbaumgold.com/tutorials/wine-mac/) to package a __windows__ version of your app.
 
 - After running one of the setup commands notice there is a new `src/` folder in the directory. 
 - here is where all of your source code will live. From js scripts to stylesheets, etc.
