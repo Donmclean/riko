@@ -239,8 +239,26 @@ hotReloadingOptions: {
 };
 ```
 
-Add specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
-path must be relative to package.json.
+Specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
+Path must be relative to package.json.
+```javascript
+customBoilerplatePath: 'src/riko-custom-boilerplates'
+```
+
+##### NODE SERVER CONFIG OPTIONS
+
+main entry file for your node server
+```javascript
+entryFile: 'src/app.js'
+```
+
+Add custom path to your nodemon.json file. See all options [**here**](https://github.com/remy/nodemon#config-files)
+```javascript
+nodemonJson: 'nodemon.json'
+```
+
+Specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
+Path must be relative to package.json.
 ```javascript
 customBoilerplatePath: 'src/riko-custom-boilerplates'
 ```

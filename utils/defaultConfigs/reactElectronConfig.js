@@ -11,7 +11,7 @@ const config = {
 
     devtool: 'source-map',
 
-    setWebpackConfigOptions: (env, config, webpack, immutable) => {
+    setWebpackConfigOptions: (env, config) => {
         switch (env) {
             case 'global': {
                 return config;

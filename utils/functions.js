@@ -33,6 +33,8 @@ module.exports = () => {
 
     funcs.sanitizeString = (str) => str.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
+    funcs.hasWhiteSpace = (str) => /\s/g.test(str);
+
     funcs.sortObjByOwnKeys = (obj) => Object.keys(obj).sort().reduce((accObj, key) => {
         accObj[key] = obj[key];
         return accObj;
@@ -206,7 +208,7 @@ module.exports = () => {
         switch (true) {
             case JSON.parse(process.env.isReact):
             case JSON.parse(process.env.isElectron): {
-                return funcs.getFileIfExists('./defaultConfigs/webElectronConfig');
+                return funcs.getFileIfExists('./defaultConfigs/reactElectronConfig');
             }
             case JSON.parse(process.env.isNodeServer): {
                 return funcs.getFileIfExists('./defaultConfigs/nodeServerConfig');
@@ -246,6 +248,16 @@ module.exports = () => {
         process.env.isNodeServer = _v._.includes(runCommands['node-server'], runCommand);
 
         funcs.genericLog(`Environment (process.env.NODE_ENV): ${process.env.NODE_ENV}`, 'blue');
+    };
+
+    funcs.doRunCommandValidations = () => {
+        const baseDirName = _v.path.basename(_v.cwd);
+        const hasWhiteSpace = funcs.hasWhiteSpace(baseDirName);
+
+        if(hasWhiteSpace) {
+            funcs.genericLog(`Base directory (${baseDirName}) cannot have whitespaces.`, 'red');
+            throw new Error(`Base directory cannot have whitespaces.`);
+        }
     };
 
     funcs.handleTestExecution = (customConfig, hasHotExecTestCommand, hasHotExecFlowTypeCommand) => {

@@ -6,8 +6,8 @@ const config = {
 
     nodemonJson: 'nodemon.json',
 
-    //specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
-    //must be an absolute path.
+    //Specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
+    //Path must be relative to package.json.
     customBoilerplatePath: 'src/riko-custom-boilerplates'
 };
 

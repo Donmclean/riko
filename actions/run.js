@@ -4,7 +4,7 @@ const
     { runCommands } = require('../constants/index');
 
 module.exports = (runCommand) => {
-    const { $, electronPackager, browserSync } = _v;
+    const { electronPackager, browserSync } = _v;
 
     //add exit handler
     funcs.processExitHandler();
@@ -14,9 +14,10 @@ module.exports = (runCommand) => {
 
     const requiresWebpack = (JSON.parse(process.env.isReact) || JSON.parse(process.env.isElectron));
 
+    funcs.doRunCommandValidations();
+
     const customConfig = require('../utils/coreRikoConfig');
     //TODO: validate customConfig Here
-
 
     //TODO: extract these dependecies
     const webpackConfigUtils = requiresWebpack ? require('../utils/webpackConfigUtils')(_v, funcs, customConfig): {};

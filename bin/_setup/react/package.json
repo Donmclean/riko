@@ -1,25 +1,13 @@
 {
-  "name": "riko",
-  "version": "1.0.0",
+  "name": "riko hello world",
+  "version": "0.0.1",
   "description": "Hello World boilerplate",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=production npm run prod && npm run prod-server",
-    "dev": "NODE_ENV=development node server.js",
-    "electron": "NODE_ENV=development ELECTRON=true node server.js",
-    "electron-dev": "NODE_ENV=development ELECTRON=true electron -r babel-register ./src/electron.js ",
-    "electron-prod": "NODE_ENV=production ELECTRON=true node server.js",
-    "prod": "NODE_ENV=production webpack",
     "flow": "flow check",
     "test": "BABEL_ENV=test jest --config ./jestconfig.json",
     "test-jest": "BABEL_ENV=test jest --config ./jestconfig.json --coverage",
-    "test-jest-hot": "BABEL_ENV=test jest -o --config ./jestconfig.json",
-    "test-build": "gulp lint-build && NODE_ENV=production mocha test-riko/riko.spec.js",
-    "test-selenium": "gulp run-selenium-tests",
-    "server": "NODE_ENV=production babel-node server.js",
-    "prod-server": "NODE_ENV=production LIVE=true babel-node server.js",
-    "vorlon": "PORT=1337 vorlon",
-    "test-coverage": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha test-riko/riko.spec.js --report lcovonly -- -R spec && codeclimate-test-reporter < ./coverage/lcov.info && rm -rf ./coverage"
+    "test-jest-hot": "BABEL_ENV=test jest -o --config ./jestconfig.json"
   },
   "dependencies": {
     "prop-types": "^15.5.8",

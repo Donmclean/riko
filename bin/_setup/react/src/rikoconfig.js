@@ -115,8 +115,8 @@ const config = {
         browsers: ['> 0%']
     },
 
-    //specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
-    //path must be relative to package.json.
+    //Specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
+    //Path must be relative to package.json.
     customBoilerplatePath: 'src/riko-custom-boilerplates'
 };
 

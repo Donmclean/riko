@@ -3,7 +3,7 @@ const
     funcs   = require('../utils/functions')();
 
 module.exports = (finalPath, actionType, fileType, fileName) => {
-    const { $, fs, qfs, cwd, Q } = _v;
+    const { fs, qfs, cwd, Q } = _v;
     const fullFilePath = `${finalPath}/${fileType}`;
 
     return qfs.isDirectory(fullFilePath).then((isDirectory) => {
