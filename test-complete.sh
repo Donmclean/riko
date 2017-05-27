@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 BLACK=$(tput setaf 0)
 RED=$(tput setaf 1)
