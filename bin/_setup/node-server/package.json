@@ -1,5 +1,5 @@
 {
-  "name": "riko hello world node-server",
+  "name": "riko-hello-world-node-server",
   "version": "0.0.1",
   "description": "Hello World boilerplate",
   "main": "server.js",
