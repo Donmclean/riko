@@ -1,0 +1,19 @@
+---
+engines:
+  duplication:
+    config:
+      languages:
+        javascript:
+          mass_threshold: 55
+    enabled: true
+  eslint:
+    channel: eslint-3
+    config:
+      config: ./.eslintrc
+    enabled: true
+exclude_paths:
+  - bin/**/*
+  - ./nightwatchconfig.js
+ratings:
+  paths:
+    - "**.js"
