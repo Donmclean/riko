@@ -15,7 +15,7 @@
     "preversion": "node ./utils/publishScript.js",
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
     "minor-release": "npm version minor && npm publish && git push --follow-tags",
     "major-release": "npm version major && npm publish && git push --follow-tags",
     "lint": "gulp lint",
