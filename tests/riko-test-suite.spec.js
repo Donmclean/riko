@@ -11,7 +11,7 @@ const
 describe('Riko Test Suite', () => {
     describe('_v = variables', () => {
         it('should exist and be truthy', () => {
-            _v._.forEach(_v, (variable, key) => assert.isOk(variable, `${variable} needs to be defined`));
+            _v._.forEach(_v, (variable) => assert.isOk(variable, `${variable} needs to be defined`));
         });
     });
 
