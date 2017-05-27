@@ -33,6 +33,8 @@ module.exports = () => {
 
     funcs.sanitizeString = (str) => str.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
+    funcs.hasWhiteSpace = (str) => /\s/g.test(str);
+
     funcs.sortObjByOwnKeys = (obj) => Object.keys(obj).sort().reduce((accObj, key) => {
         accObj[key] = obj[key];
         return accObj;
@@ -59,7 +61,7 @@ module.exports = () => {
                 {
                     loader: 'css-loader',
                     options: {
-                        sourceMap: customConfig.sourcemapProd
+                        sourceMap: !!customConfig.devtool
                     }
                 },
                 {
@@ -75,7 +77,7 @@ module.exports = () => {
                 (type !== 'css') ? {
                     loader: `${type}-loader`,
                     options: {
-                        sourceMap: customConfig.sourcemapProd
+                        sourceMap: !!customConfig.devtool
                     }
                 } : null
 
@@ -87,7 +89,7 @@ module.exports = () => {
         test: new RegExp(regex),
         loaders: _v._.compact([
             'style-loader',
-            `css-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}`,
+            `css-loader${customConfig.devtool ? '?sourceMap' : ''}`,
             {
                 loader: 'postcss-loader',
                 options: {
@@ -98,7 +100,7 @@ module.exports = () => {
                     }
                 }
             },
-            (type !== 'css') ? `${type}-loader${customConfig.sourcemapDev ? '?sourceMap' : ''}` : null
+            (type !== 'css') ? `${type}-loader${customConfig.devtool ? '?sourceMap' : ''}` : null
         ])
     });
 
@@ -121,7 +123,7 @@ module.exports = () => {
         });
     };
 
-    funcs.requiresTemplate = (projectType) => _v._.eq(projectType, 'web') || _v._.eq(projectType, 'electron');
+    funcs.requiresTemplate = (projectType) => _v._.eq(projectType, 'react') || _v._.eq(projectType, 'electron');
 
     funcs.removeDir = (dir) => {
         const deferred = _v.Q.defer();
@@ -142,6 +144,9 @@ module.exports = () => {
                 funcs.genericLog(`${dir} directory does not exist...`, 'red');
                 deferred.resolve();
             }
+        }).catch((err) => {
+            funcs.genericLog(`ERROR directory does not exist \n ${err}`, 'red');
+            deferred.reject(err);
         });
 
         return deferred.promise;
@@ -149,58 +154,34 @@ module.exports = () => {
 
     funcs.pickPluginFromKey = (plugins, key) => _v._.chain(plugins).keys().includes(key).value();
 
-    funcs.handleCustomAdditions = (items = [], valueToConcat = []) => {
-        return _v._
-            .chain(items)
-            .concat(...valueToConcat)
-            .flatten()
-            .compact()
+    funcs.handleCustomAdditions = (configMap, envConfigMap, defaultRules, defaultPlugins) => {
+        //extract unique default loaders by 'test' key
+        const uniqDefaultRules = _v._.chain(defaultRules)
+            .reject((defaultRule) => _v._.includes(_v.immutable.fromJS(envConfigMap.getIn(['module', 'rules'])
+                    .map((rule) => rule.test.toString())).toJS(), defaultRule.test.toString()))
             .value();
-    };
 
-    funcs.handleElectronEnvironmentOptions = (config, customConfig) => {
-        const webpackConfigUtils = require('./webpackConfigUtils')(_v, funcs, customConfig);
-        const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
+        const mergedWithDefaultsRules = _v.merge(
+            {rules: _v.immutable.fromJS(uniqDefaultRules).toJS()},
+            {rules: _v.immutable.fromJS(envConfigMap.getIn(['module', 'rules'])).toJS()}
+        );
 
-        const WebpackShellPlugin = require('webpack-shell-plugin');
-        const CopyWebpackPlugin = require('copy-webpack-plugin');
+        configMap.updateIn(['module','rules'], (rules) => _v.immutable.fromJS(rules).concat(_v.immutable.fromJS(mergedWithDefaultsRules.rules)));
 
-        let newPlugins = [];
+        //extract unique default plugins by 'constructor.name'
+        const uniqDefaultPlugins = _v._.reject(defaultPlugins, (defaultPlugin) => {
+            return _v._.includes(
+                envConfigMap.get('plugins').map(plugin => plugin.constructor.name),
+                defaultPlugin.constructor.name
+            );
+        });
 
-        //GLOBAL OPTIONS
+        const mergedWithDefaultPlugins  = _v.merge(
+            {plugins: _v.immutable.fromJS(uniqDefaultPlugins).toJS()},
+            {plugins: _v.immutable.fromJS(envConfigMap.get('plugins')).toJS()}
+        );
 
-        //change public path if building electron
-        config.output.path = customConfig.tempDir;
-        config.output.publicPath = '';
-
-        switch (process.env.NODE_ENV) {
-            case 'production': {
-                //COPY ADDITIONAL ELECTRON FILES TO TEMP DIR
-                newPlugins = config.plugins.concat([
-                    new CopyWebpackPlugin([
-                        { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
-                        { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
-                        { from: electronPackagerOptions.icon, to: customConfig.tempDir }
-                    ])
-                ]);
-                break;
-            }
-            case 'test':
-            case 'development': {
-                //ELECTRON DEV MODE
-                newPlugins = config.plugins.concat([
-                    new WebpackShellPlugin({
-                        onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
-                    })
-                ]);
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-
-        return newPlugins;
+        configMap.update('plugins', (plugins) => _v.immutable.fromJS(plugins).concat(_v.immutable.fromJS(mergedWithDefaultPlugins)).flatten(true));
     };
 
     funcs.logElectronRunServerError = () => {
@@ -228,9 +209,12 @@ module.exports = () => {
         }
 
         switch (true) {
-            case !_v._.isEmpty(runCommand.match(/electron\b/i)):
-            case !_v._.isEmpty(runCommand.match(/web\b/i)): {
-                return funcs.getFileIfExists('./defaultConfigs/webElectronConfig');
+            case JSON.parse(process.env.isReact):
+            case JSON.parse(process.env.isElectron): {
+                return funcs.getFileIfExists('./defaultConfigs/reactElectronConfig');
+            }
+            case JSON.parse(process.env.isNodeServer): {
+                return funcs.getFileIfExists('./defaultConfigs/nodeServerConfig');
             }
             default: {
                 throw new Error (`can't get default from runCommand: ${runCommand}`);
@@ -238,10 +222,11 @@ module.exports = () => {
         }
     };
 
-    funcs.assignEnvironmentVariablesBasedOnRunCommand = (runCommand) => {
+    funcs.assignEnvironmentVariablesBasedOnRunCommand = (runCommands, runCommand) => {
         //Sets run command for later access
         process.env.runCommand = runCommand;
 
+        //assign environment variable
         switch (true) {
             case !_v._.isEmpty(runCommand.match(/-dev\b/)): {
                 process.env.NODE_ENV = 'development';
@@ -260,23 +245,35 @@ module.exports = () => {
             }
         }
 
-        process.env.isWeb = !_v._.isEmpty(runCommand.match(/(web)\b/i));
-        process.env.isElectron = !_v._.isEmpty(runCommand.match(/(electron)\b/i));
+        //assign project types booleans
+        process.env.isReact = _v._.includes(runCommands.react, runCommand);
+        process.env.isElectron = _v._.includes(runCommands.electron, runCommand);
+        process.env.isNodeServer = _v._.includes(runCommands['node-server'], runCommand);
 
         funcs.genericLog(`Environment (process.env.NODE_ENV): ${process.env.NODE_ENV}`, 'blue');
+    };
+
+    funcs.doRunCommandValidations = () => {
+        const baseDirName = _v.path.basename(_v.cwd);
+        const hasWhiteSpace = funcs.hasWhiteSpace(baseDirName);
+
+        if(hasWhiteSpace) {
+            funcs.genericLog(`Base directory (${baseDirName}) cannot have whitespaces.`, 'red');
+            throw new Error(`Base directory cannot have whitespaces.`);
+        }
     };
 
     funcs.handleTestExecution = (customConfig, hasHotExecTestCommand, hasHotExecFlowTypeCommand) => {
         let spawn;
 
         if(hasHotExecTestCommand) {
-            spawn = funcs.executeJestTests(customConfig);
+            spawn = funcs.hotExecuteTests(customConfig);
         } else if(hasHotExecFlowTypeCommand) {
-            funcs.executeFlowTests(customConfig);
+            funcs.hotExecuteFlowTests(customConfig);
         }
 
         if(spawn && hasHotExecFlowTypeCommand) {
-            spawn.on('close', () => funcs.executeFlowTests(customConfig));
+            spawn.on('close', () => funcs.hotExecuteFlowTests(customConfig));
         }
     };
 
@@ -300,8 +297,9 @@ module.exports = () => {
         .includes(customTestCommand)
         .value();
 
-    funcs.executeJestTests = (customConfig) => {
-        const customTestCommand = customConfig.hotReloadingOptions.hotExecuteTestCommand;
+    funcs.hotExecuteTests = (customConfig) => {
+        const hotReloadingOptions = customConfig.hotReloadingOptions || {};
+        const customTestCommand = hotReloadingOptions.hotExecuteTestCommand;
         const isValidCommand = funcs.isValidPackageJsonScript(customConfig.packageJson, customTestCommand);
 
         if(isValidCommand) {
@@ -322,7 +320,7 @@ module.exports = () => {
         process.exit(0);
     });
 
-    funcs.executeFlowTests = (customConfig) => {
+    funcs.hotExecuteFlowTests = (customConfig) => {
         const { qfs, cwd, _ } = _v;
 
         const customTestCommand = customConfig.hotReloadingOptions.hotExecuteFlowTypeCommand;

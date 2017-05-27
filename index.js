@@ -50,7 +50,7 @@ program
     }).on('--help', () => {
         console.log('  Examples:');
         console.log();
-        console.log('    $ setup web AwesomeNewWebProject');
+        console.log('    $ setup react AwesomeNewWebProject');
         console.log('    $ setup electron Awesome New Electron Project');
         console.log();
     });
@@ -88,7 +88,7 @@ program
         console.log('  Examples:');
         console.log();
         console.log('    $ run electron-dev');
-        console.log('    $ run web-server');
+        console.log('    $ run react-server');
         console.log();
     });
 

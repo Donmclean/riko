@@ -1,15 +1,10 @@
+const _ = require('lodash');
 const funcs = require('../utils/functions')();
 const actions = require('../actions/_index');
+const { runCommands } = require('../constants/index');
 
 module.exports = (argv) => {
-    const options = [
-        //WEB COMMANDS
-        'web-dev', 'web-prod', 'web-server', 'web-prod-server',
-        //ELECTRON COMMANDS
-        'electron-dev', 'electron-prod', 'electron-server',
-        //NODE-SERVER COMMANDS
-        'node-server-dev', 'node-server-prod'
-    ];
+    const options = _.chain(runCommands).values().flatten().value();
 
     const validChoice = funcs.isValidOption(options, argv.runCommand);
 

@@ -3,11 +3,11 @@ const
     funcs   = require('../utils/functions')(),
     actions = require('../actions/_index');
 
-module.exports = (argv) => {
-    const { $, baseDir, _ } = _v;
+module.exports = () => {
+    const { baseDir, _ } = _v;
 
     const defaultSetupOptionsPath = `${baseDir}/bin/_setup`;
-    const defaultTemplateTypesPath = `${baseDir}/bin/_setup/web/src/templates`;
+    const defaultTemplateTypesPath = `${baseDir}/bin/_setup/react/src/templates`;
     const projectTypes = funcs.readFilesInDirectorySync(defaultSetupOptionsPath);
     const templateTypes = funcs.readFilesInDirectorySync(defaultTemplateTypesPath);
 
@@ -41,10 +41,11 @@ module.exports = (argv) => {
 
     _v.inquirer.prompt(defaultQuestions)
         .then((currentAnswers) => {
-            const { projectType, projectName } = currentAnswers;
+            let { projectType, projectName } = currentAnswers;
             //TODO: validate existence of these ^
 
-            console.log('currentAnswers: ', currentAnswers);
+            projectName = funcs.sanitizeString(funcs.hasWhiteSpace(projectName) ? _v._.camelCase(projectName) : projectName);
+
             actions.setup('setup', projectType, projectName);
         })
         .catch((err) => {

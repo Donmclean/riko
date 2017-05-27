@@ -43,6 +43,7 @@ const defaultConfig = process.env.runCommand ? funcs.getDefaultConfigFromRunComm
 funcs.genericLog('validating rikoconfig.js file..');
 
 const requiredFields = {
+    SERVER_PORT: 'number',
     entry: 'object',
     output: 'object'
 };
