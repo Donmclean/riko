@@ -24,19 +24,6 @@ module.exports = () => {
     vars.spawn                  = require('cross-spawn');
     vars.spawnSync              = vars.spawn.sync;
     vars.chokidar               = require('chokidar');
-    vars.isGitInitialized       = vars.fs.readdirSync(vars.cwd).includes('.git') ? (vars.fs.readdirSync(`${vars.cwd}/.git/objects`).length > 2) : false;
-
-    if(vars.isGitInitialized) {
-        try {
-            vars.GIT_SHA        = vars.cp.execSync('git rev-parse HEAD').toString().trim();
-            vars.GIT_SHA_SHORT  = vars.cp.execSync('git rev-parse --short HEAD').toString().trim();
-        } catch (err) {
-            console.error('ERROR > [git rev-parse HEAD] Failed...', err);
-        }
-    } else {
-        vars.GIT_SHA        = 'GIT_SHA';
-        vars.GIT_SHA_SHORT  = 'UNKNOWN_GIT_SHA_SHORT';
-    }
 
     vars.WebpackDevServer       = require('webpack-dev-server');
     vars.merge                  = require('webpack-merge');
