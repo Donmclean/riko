@@ -7,7 +7,7 @@ module.exports = (argv) => {
     const { $, baseDir, _ } = _v;
 
     const defaultSetupOptionsPath = `${baseDir}/bin/_setup`;
-    const defaultTemplateTypesPath = `${baseDir}/bin/_setup/web/src/templates`;
+    const defaultTemplateTypesPath = `${baseDir}/bin/_setup/react/src/templates`;
     const projectTypes = funcs.readFilesInDirectorySync(defaultSetupOptionsPath);
     const templateTypes = funcs.readFilesInDirectorySync(defaultTemplateTypesPath);
 

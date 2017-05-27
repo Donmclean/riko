@@ -14,7 +14,7 @@ module.exports = (actionType, projectType, projectName) => {
             } else {
                 switch (projectType) {
                     case 'electron': {
-                        qfs.copyTree(`${baseDir}/bin/_${actionType}/web`, `${cwd}/${projectName}`)
+                        qfs.copyTree(`${baseDir}/bin/_${actionType}/react`, `${cwd}/${projectName}`)
                             .then(() => qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}/src`))
                             .then(() => qfs.read(`${cwd}/${projectName}/package.json`))
                             .then((customPackageJson) => {

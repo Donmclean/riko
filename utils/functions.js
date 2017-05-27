@@ -121,7 +121,7 @@ module.exports = () => {
         });
     };
 
-    funcs.requiresTemplate = (projectType) => _v._.eq(projectType, 'web') || _v._.eq(projectType, 'electron');
+    funcs.requiresTemplate = (projectType) => _v._.eq(projectType, 'react') || _v._.eq(projectType, 'electron');
 
     funcs.removeDir = (dir) => {
         const deferred = _v.Q.defer();

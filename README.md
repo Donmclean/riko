@@ -136,12 +136,12 @@ devtool: 'source-map' //set to false to disable default source mapping
 ##### WEBPACK OPTIONAL CUSTOM SETTINGS
 We can further customize the webpack config with the below function. see docs [**here**](https://webpack.js.org/configuration/).
 _setWebpackConfigOptions(env, config, webpack, immutable)_
-- Arguments
-    - _env_ (String): environment in which to set config options in.
-    - _config_ (Instance of Immutable JS Map [withMutations](https://facebook.github.io/immutable-js/docs/#/Map/withMutations)): contains current state of the webpack config in a mutable Map which allows you to easily set and customize the webpack config. see example below.
-    - _webpack_ (Webpack instance): useful for including this like `webpack.optimize.UglifyJsPlugin` or logging current configuration, etc.
-    - _immutable_ (Immutable JS instance): useful for applying additional logic when handling the `config` argument. 
-- Returns <_undefined_>
+- **Arguments**
+    - **env** (String): environment in which to set config options in.
+    - **config** (Instance of Immutable JS Map [withMutations](https://facebook.github.io/immutable-js/docs/#/Map/withMutations)): contains current state of the webpack config in a mutable Map which allows you to easily set and customize the webpack config. see example below.
+    - **webpack** (Webpack instance): useful for including this like `webpack.optimize.UglifyJsPlugin` or logging current configuration, etc.
+    - **immutable** (Immutable JS instance): useful for applying additional logic when handling the `config` argument. 
+- **Returns** <**undefined**>
 ```javascript
 setWebpackConfigOptions: (env, config, webpack, immutable) => {
     const SomeRandomWebpackPlugin = require('some-random-webpack-plugin');
