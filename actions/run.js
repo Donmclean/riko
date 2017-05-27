@@ -32,7 +32,6 @@ module.exports = (runCommand) => {
                         const macFile = _v._.find(files, (file) => file.match(/\b(darwin)\b/i));
 
                         if(macFile) {
-                            //TODO: fix error here
                             _v.spawn('open', [`-a`, `${_v.cwd}/${_v.path.basename(customConfig.output.path)}/${macFile}/${customConfig.electronPackagerOptions.name}.app`], {stdio: 'inherit'});
                         } else {
                             funcs.logElectronRunServerError();
