@@ -14,6 +14,8 @@
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "preversion": "node ./utils/publishScript.js",
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect",
     "minor-release": "npm version minor && npm publish && git push --follow-tags",
     "major-release": "npm version major && npm publish && git push --follow-tags",
     "lint": "gulp lint",
@@ -112,6 +114,8 @@
     "webpack-merge": "^4.1.0",
     "webpack-notifier": "^1.4.1",
     "webpack-shell-plugin": "^0.5.0",
-    "worker-loader": "^0.7.1"
-  }
+    "worker-loader": "^0.7.1",
+    "snyk": "^1.30.1"
+  },
+  "snyk": true
 }
