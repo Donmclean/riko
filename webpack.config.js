@@ -59,7 +59,7 @@ const config = new _v.immutable.Map().withMutations((configMap) => {
 
     switch (process.env.NODE_ENV) {
         case "production": {
-            configMap.setIn(['output', 'sourceMapFilename'], '[file].map');
+            configMap.setIn(['output', 'sourceMapFilename'], '[name].[hash].map');
             configMap.set('devtool', customConfig.devtool || false);
             configMap.set('bail', true);
 
