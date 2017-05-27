@@ -1,20 +1,27 @@
 const
-    _v      = require('../utils/variables')(),
-    funcs   = require('../utils/functions')();
+    _v = require('../utils/variables')(),
+    funcs = require('../utils/functions')(),
+    { runCommands } = require('../constants/index');
 
 module.exports = (runCommand) => {
-    const { $, electronPackager, browserSync } = _v;
+    const { electronPackager, browserSync } = _v;
 
+    //add exit handler
     funcs.processExitHandler();
 
-    //handle environment variables
-    funcs.assignEnvironmentVariablesBasedOnRunCommand(runCommand);
+    //assign environment variables
+    funcs.assignEnvironmentVariablesBasedOnRunCommand(runCommands, runCommand);
+
+    const requiresWebpack = (JSON.parse(process.env.isReact) || JSON.parse(process.env.isElectron));
+
+    funcs.doRunCommandValidations();
 
     const customConfig = require('../utils/coreRikoConfig');
-    const webpackConfigUtils = require('../utils/webpackConfigUtils')(_v, funcs, customConfig);
-    const config = require('../webpack.config');
-
     //TODO: validate customConfig Here
+
+    //TODO: extract these dependecies
+    const webpackConfigUtils = requiresWebpack ? require('../utils/webpackConfigUtils')(_v, funcs, customConfig): {};
+    const config = requiresWebpack ? require('../webpack.config') : {};
 
     switch (runCommand) {
         case 'electron-server': {
@@ -25,7 +32,6 @@ module.exports = (runCommand) => {
                         const macFile = _v._.find(files, (file) => file.match(/\b(darwin)\b/i));
 
                         if(macFile) {
-                            //TODO: fix error here
                             _v.spawn('open', [`-a`, `${_v.cwd}/${_v.path.basename(customConfig.output.path)}/${macFile}/${customConfig.electronPackagerOptions.name}.app`], {stdio: 'inherit'});
                         } else {
                             funcs.logElectronRunServerError();
@@ -44,23 +50,17 @@ module.exports = (runCommand) => {
                 });
             break;
         }
-        case 'web-prod': {
+        case 'react-prod': {
             config.entry['index'].unshift('babel-polyfill');
 
-            return _v.webpack(config, (err, stats) => {
-                if (err) {
-                    funcs.genericLog('Error during compilation...', 'red');
-                    console.error(err);
-                    throw Error(err);
-                }
-                funcs.genericLog('build completed successfully!', 'green');
-            });
-            // return _v.spawn(`${_v.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
+            return _v.spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
         }
         case 'electron-prod': {
             funcs.genericLog('Compiling electron app..');
             if(JSON.parse(process.env.isElectron)) {
-                return _v.webpack(config, () => {
+                const spawn = _v.spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${_v.baseDir}/webpack.config.js`], {stdio: 'inherit'});
+
+                spawn.on('close', () => {
                     //Compile The Electron Application
                     const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
                     electronPackager(electronPackagerOptions, (err) => {
@@ -74,11 +74,13 @@ module.exports = (runCommand) => {
                         });
                     });
                 });
+
+                return spawn;
             }
             break;
         }
         case 'electron-dev':
-        case 'web-dev': {
+        case 'react-dev': {
             const stats = funcs.getStats('development');
 
             //*******************************************************************
@@ -86,7 +88,7 @@ module.exports = (runCommand) => {
             //*******************************************************************
 
             config.entry['index'].unshift('webpack/hot/dev-server');
-            config.entry['index'].unshift(`webpack-dev-server/client?http://localhost:${customConfig.EXPRESS_PORT}`);
+            config.entry['index'].unshift(`webpack-dev-server/client?http://localhost:${customConfig.SERVER_PORT}`);
             config.entry['index'].unshift('react-hot-loader/patch');
             config.entry['index'].unshift('babel-polyfill');
 
@@ -101,9 +103,9 @@ module.exports = (runCommand) => {
                 inline: true,
                 headers: { 'Access-Control-Allow-Origin': '*' },
                 stats
-            }).listen(customConfig.EXPRESS_PORT, 'localhost', (err) => {
+            }).listen(customConfig.SERVER_PORT, 'localhost', (err) => {
                 if (err) { console.error(err); }
-                funcs.genericLog(`Listening at localhost: ${customConfig.EXPRESS_PORT}`);
+                funcs.genericLog(`Listening at localhost: ${customConfig.SERVER_PORT}`);
                 funcs.onDevBuildActions(customConfig);
             });
 
@@ -117,8 +119,8 @@ module.exports = (runCommand) => {
             _v.spawn('node', [`${customConfig.entryFile}`], {stdio: 'inherit'});
             break;
         }
-        case 'web-server':
-        case 'web-prod-server': {
+        case 'react-server':
+        case 'react-prod-server': {
             _v.app.use(_v.morgan('dev'));
 
             const root = config.output.path;
@@ -126,22 +128,22 @@ module.exports = (runCommand) => {
             _v.app.use(_v.express.static(root));
             _v.app.use(_v.fallback('index.html', { root }));
 
-            _v.app.listen(customConfig.EXPRESS_PORT);
+            _v.app.listen(customConfig.SERVER_PORT);
 
             _v.app.use((err, req, res, next) => {
                 funcs.genericLog(`ERROR --> : ${err.stack}`);
                 next(err);
             });
 
-            const isProdServer = (runCommand === 'web-prod-server');
+            const isProdServer = (runCommand === 'react-prod-server');
 
             if(isProdServer) {
-                funcs.genericLog('Listening on port: ' + customConfig.EXPRESS_PORT, 'yellow');
+                funcs.genericLog('Listening on port: ' + customConfig.SERVER_PORT, 'yellow');
             } else {
-                funcs.genericLog('Launching Browser Sync proxy of port: ' + customConfig.EXPRESS_PORT, 'yellow');
+                funcs.genericLog('Launching Browser Sync proxy of port: ' + customConfig.SERVER_PORT, 'yellow');
 
                 browserSync.init({
-                    proxy: `localhost:${customConfig.EXPRESS_PORT}`
+                    proxy: `localhost:${customConfig.SERVER_PORT}`
                 });
             }
 

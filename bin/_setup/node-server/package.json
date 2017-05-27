@@ -1,12 +1,13 @@
 {
-  "name": "riko",
-  "version": "1.0.0",
+  "name": "riko-hello-world-node-server",
+  "version": "0.0.1",
   "description": "Hello World boilerplate",
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node src/app.js"
   },
   "dependencies": {
-    "body-parser": "^1.17.1"
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
   }
 }

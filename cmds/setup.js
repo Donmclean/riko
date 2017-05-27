@@ -10,7 +10,8 @@ module.exports = (argv) => {
     const validChoice = funcs.isValidOption(options, argv.projectType);
 
     if(validChoice) {
-        const projectName = funcs.sanitizeString(argv.projectName);
+        const projectName = funcs.sanitizeString(funcs.hasWhiteSpace(argv.projectName) ? _v._.camelCase(argv.projectName) : argv.projectName);
+
         actions.setup(argv._, argv.projectType, projectName);
     } else {
         funcs.logOptionsError(options, argv.projectType);

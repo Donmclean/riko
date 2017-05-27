@@ -13,11 +13,6 @@ const srcFiles = [
 
 gulp.task('lint', () => {
     return gulp.src(srcFiles)
-        .pipe($.plumber({errorHandler: (err) => {
-            if(err) {
-                $.util.log('GULP PLUMBER > lint ERROR:', err);
-            }
-        }}))
         .pipe($.eslint({configFile: '.eslintrc' }))
         .pipe($.eslint.format())
         .pipe($.eslint.failAfterError())

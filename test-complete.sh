@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 BLACK=$(tput setaf 0)
 RED=$(tput setaf 1)
@@ -42,6 +43,9 @@ removeSrcDir(){
 }
 
 setupTest() {
+    echoBlue "linting & running build tests..."
+    npm run test-build
+
     echoBlue "setting up $1 project tests..."
     node index.js setup $1 $2
 
@@ -58,6 +62,6 @@ setupTest() {
 }
 
 echoBlue "testing setup commands..."
-setupTest web testWebProject web-prod
+setupTest react testWebProject react-prod
 
 echoGreen "All test successfully completed!"

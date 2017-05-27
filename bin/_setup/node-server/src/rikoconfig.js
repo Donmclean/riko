@@ -1,14 +1,14 @@
 //**********************************************************************
 //******************************CUSTOM**********************************
 //**********************************************************************
-const config = {};
+const config = {
+    entryFile: 'src/app.js',
 
-config.nodemonJson              = `${baseDir}/nodemon.json`;
+    nodemonJson: 'nodemon.json',
 
-config.entryFile = config.srcDir+'/app.js';
-
-//specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
-//must be an absolute path.
-config.customBoilerplatePath = `${config.srcDir}/riko-custom-boilerplates`;
+    //Specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
+    //Path must be relative to package.json.
+    customBoilerplatePath: 'src/riko-custom-boilerplates'
+};
 
 module.exports = config;
