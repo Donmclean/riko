@@ -44,7 +44,7 @@ removeSrcDir(){
 
 setupTest() {
     echoBlue "linting & running build tests..."
-    npm run test-build
+    npm run test-coverage
 
     echoBlue "setting up $1 project tests..."
     node index.js setup $1 $2

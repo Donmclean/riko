@@ -20,7 +20,7 @@
     "major-release": "npm version major && npm publish && git push --follow-tags",
     "lint": "gulp lint",
     "test-build": "npm run lint && mocha tests/riko-test-suite.spec.js",
-    "test-coverage": "gulp lint && NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report lcovonly -- -R spec && CODECLIMATE_REPO_TOKEN=CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < ./coverage/lcov.info && rm -rf ./coverage",
+    "test-coverage": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report lcovonly -- -R spec && CODECLIMATE_REPO_TOKEN=CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < ./coverage/lcov.info && rm -rf ./coverage",
     "test": "sh test-complete.sh"
   },
   "repository": {
@@ -105,6 +105,7 @@
     "react-hot-loader": "3.0.0-beta.7",
     "react-native": "^0.43.4",
     "sass-loader": "^5.0.1",
+    "snyk": "^1.30.1",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.4.0",
@@ -114,8 +115,7 @@
     "webpack-merge": "^4.1.0",
     "webpack-notifier": "^1.4.1",
     "webpack-shell-plugin": "^0.5.0",
-    "worker-loader": "^0.7.1",
-    "snyk": "^1.30.1"
+    "worker-loader": "^0.7.1"
   },
   "snyk": true
 }
