@@ -43,7 +43,10 @@ removeSrcDir(){
 
 setupTest() {
     echoBlue "linting source files..."
-    npm run gulp-lint
+    npm run lint
+
+    echoBlue "running build tests..."
+    npm run test-build
 
     echoBlue "setting up $1 project tests..."
     node index.js setup $1 $2

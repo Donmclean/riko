@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - "7.3.0"
 script:
+  - yarn global add codeclimate-test-reporter
   - npm test
 #after_script:
 #  - yarn global add codeclimate-test-reporter

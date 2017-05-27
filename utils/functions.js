@@ -144,6 +144,9 @@ module.exports = () => {
                 funcs.genericLog(`${dir} directory does not exist...`, 'red');
                 deferred.resolve();
             }
+        }).catch((err) => {
+            funcs.genericLog(`ERROR directory does not exist \n ${err}`, 'red');
+            deferred.reject(err);
         });
 
         return deferred.promise;
