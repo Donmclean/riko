@@ -42,10 +42,7 @@ removeSrcDir(){
 }
 
 setupTest() {
-    echoBlue "linting source files..."
-    npm run lint
-
-    echoBlue "running build tests..."
+    echoBlue "linting & running build tests..."
     npm run test-build
 
     echoBlue "setting up $1 project tests..."
