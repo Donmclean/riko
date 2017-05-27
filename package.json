@@ -13,7 +13,7 @@
   "scripts": {
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "preversion": "node ./utils/publishScript.js",
-    "patch-release": "npm version patch --",
+    "patch-release": "npm version patch -- patch",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect",
     "minor-release": "npm version minor && npm publish && git push --follow-tags -u",
