@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
-    "publish": "node ./utils/publishScript.js",
+    "preversion": "node ./utils/publishScript.js",
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
     "minor-release": "npm version minor && npm publish && git push --follow-tags",
     "major-release": "npm version major && npm publish && git push --follow-tags",
