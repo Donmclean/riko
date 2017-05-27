@@ -20,7 +20,7 @@
     "major-release": "npm version major && npm publish && git push --follow-tags",
     "lint": "gulp lint",
     "test-build": "npm run lint && mocha tests/riko-test-suite.spec.js",
-    "test-coverage": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report lcovonly -- -R spec && CODECLIMATE_REPO_TOKEN=CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < ./coverage/lcov.info && rm -rf ./coverage",
+    "test-coverage": "NODE_ENV=production istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report lcovonly -- -R spec && CODECLIMATE_REPO_TOKEN=4d1a8b85d8877e268cc06c22a4f84767976bba945f638c2ea4dcc57742779aff codeclimate-test-reporter < ./coverage/lcov.info && rm -rf ./coverage",
     "test": "sh test-complete.sh"
   },
   "repository": {
