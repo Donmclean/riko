@@ -8,6 +8,7 @@ const
 const srcFiles = [
     baseDir+'/**/*.js',
     '!'+baseDir+'/bin/**',
+    '!'+baseDir+'/coverage/**',
     '!'+baseDir+'/node_modules/**'
 ];
 
