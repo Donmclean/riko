@@ -113,7 +113,7 @@ Supports the development of [**Node JS**](https://nodejs.org), [**React**](https
 - This is where all your build related settings will live. The build system has been created so you rarely have to manage labor intensive build configurations.
 - All you would need to do is customize your `rikoconfig.js` file.
 
-##### REACT & ELECTRON CONFIG OPTIONS
+### REACT & ELECTRON CONFIG OPTIONS
 
 Port your wish to serve your files on.
 ```javascript
@@ -245,7 +245,7 @@ Path must be relative to package.json.
 customBoilerplatePath: 'src/riko-custom-boilerplates'
 ```
 
-##### NODE SERVER CONFIG OPTIONS
+### NODE SERVER CONFIG OPTIONS
 
 main entry file for your node server
 ```javascript
