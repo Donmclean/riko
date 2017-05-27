@@ -11,7 +11,7 @@ const urlStringEnd = '-blue.svg';
 const npmBadgeVersionUrl = readMe.substring(readMe.indexOf(urlStringStart), (readMe.indexOf(urlStringEnd) + urlStringEnd.length));
 
 if(npmBadgeVersionUrl) {
-    return _v.fs.writeFileSync(readMePath, readMe.replace(npmBadgeVersionUrl, urlStringStart + packageJson.version + urlStringEnd));
+    _v.fs.writeFileSync(readMePath, readMe.replace(npmBadgeVersionUrl, urlStringStart + packageJson.version + urlStringEnd));
 } else {
     throw new Error('npmBadgeVersionUrl is invalid');
 }
