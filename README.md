@@ -11,6 +11,11 @@ Learn more about the Riko concept [**here**](docs/concept.md)
 
 - `npm install -g riko-cli`
 
+###### Note: make sure you have export your npm bin to $PATH in bash profile 
+```bash
+PATH="$(npm bin -g):$PATH"
+```
+
 # COMMANDS
 
 ###### **Setup** a new (highly customizable) project with defaults
