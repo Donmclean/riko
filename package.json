@@ -13,11 +13,9 @@
   "scripts": {
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "version": "node ./utils/publishScript.js && git add .",
-    "patch-release": "npm version patch && npm publish && git push --follow-tags -u",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect",
-    "minor-release": "npm version minor && npm publish && git push --follow-tags -u",
-    "major-release": "npm version major && npm publish && git push --follow-tags -u",
+    "publish-release": "npm publish && git push --follow-tags",
     "lint": "gulp lint",
     "test-build": "npm run lint && istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report html --report lcov -- -R spec",
     "test-coverage": "istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
