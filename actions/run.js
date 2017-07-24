@@ -18,7 +18,6 @@ module.exports = (runCommand) => {
 
     const customConfig = require('../utils/coreRikoConfig');
     //TODO: validate customConfig Here
-
     //TODO: extract these dependecies
     const webpackConfigUtils = requiresWebpack ? require('../utils/webpackConfigUtils')(_v, funcs, customConfig): {};
     const config = requiresWebpack ? require('../webpack.config') : {};
@@ -79,6 +78,16 @@ module.exports = (runCommand) => {
             }
             break;
         }
+        case 'react-native-ios': {
+            return _v.spawn(`${customConfig.baseDir}/node_modules/.bin/react-native`, ['run-ios'], {stdio: 'inherit'});
+        }
+        case 'react-native-launch-android': {
+            funcs.genericLog('launching android emulator...', 'blue');
+            return _v.spawn(`sh`, [`${_v.cwd}/launch-android-Emulator.sh`, '&'], {stdio: 'ignore'});
+        }
+        case 'react-native-android': {
+            return _v.spawnSync(`${_v.cwd}/node_modules/.bin/react-native`, ['run-android'], {stdio: 'inherit'});
+        }
         case 'electron-dev':
         case 'react-dev': {
             const stats = funcs.getStats('development');
@@ -128,7 +137,9 @@ module.exports = (runCommand) => {
             _v.app.use(_v.express.static(root));
             _v.app.use(_v.fallback('index.html', { root }));
 
-            _v.app.listen(customConfig.SERVER_PORT);
+            const portToServe = process.argv[4] || customConfig.SERVER_PORT;
+
+            _v.app.listen(portToServe);
 
             _v.app.use((err, req, res, next) => {
                 funcs.genericLog(`ERROR --> : ${err.stack}`);
@@ -138,12 +149,12 @@ module.exports = (runCommand) => {
             const isProdServer = (runCommand === 'react-prod-server');
 
             if(isProdServer) {
-                funcs.genericLog('Listening on port: ' + customConfig.SERVER_PORT, 'yellow');
+                funcs.genericLog('Listening on port: ' + portToServe, 'yellow');
             } else {
-                funcs.genericLog('Launching Browser Sync proxy of port: ' + customConfig.SERVER_PORT, 'yellow');
+                funcs.genericLog('Launching Browser Sync proxy of port: ' + portToServe, 'yellow');
 
                 browserSync.init({
-                    proxy: `localhost:${customConfig.SERVER_PORT}`
+                    proxy: `localhost:${portToServe}`
                 });
             }
 

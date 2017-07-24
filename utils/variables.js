@@ -23,6 +23,7 @@ module.exports = () => {
     vars.execSync               = vars.cp.execSync;
     vars.spawn                  = require('cross-spawn');
     vars.spawnSync              = vars.spawn.sync;
+    vars.shell                  = require('shelljs');
     vars.chokidar               = require('chokidar');
 
     vars.WebpackDevServer       = require('webpack-dev-server');
