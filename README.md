@@ -9,7 +9,7 @@ Learn more about the Riko concept [**here**](docs/concept.md)
 
 # INSTALL
 
-- `npm install -g riko-cli`
+- `yarn global add riko-cli --prefix /usr/local` OR `npm install -g riko-cli`
 
 ###### Note: make sure you export your npm bin to $PATH in bash profile 
 ```bash
@@ -29,7 +29,7 @@ PATH="$(npm bin -g):$PATH"
     
 ###### **Run** a build related task from your project base directory
 - `riko r|run`
-    - `<run-command> [react-dev, react-prod, react-server, react-prod-server, electron-dev, electron-prod, electron-server, node-server-dev, node-server-prod]`
+    - `<run-command> [react-dev, react-prod, react-server, react-prod-server, react-native-launch-android, react-native-android, react-native-ios, electron-dev, electron-prod, electron-server, node-server-dev, node-server-prod]`
     - `[-h | --help] 'displays helpful info about current command'`
     - example 1: `riko run react-dev`
     - example 2: `riko r electron-prod`

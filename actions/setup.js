@@ -3,7 +3,7 @@ const
     funcs   = require('../utils/functions')();
 
 module.exports = (actionType, projectType, projectName) => {
-    const { $, qfs, cwd, baseDir, packageJson, spawn } = _v;
+    const { $, qfs, cwd, baseDir, packageJson, spawnSync } = _v;
     const logSuccess = () => funcs.genericLog(`${$.util.colors.blue(projectName)} was setup ${$.util.colors.green('successfully')}`);
 
     return qfs.list(cwd)
@@ -40,15 +40,15 @@ module.exports = (actionType, projectType, projectName) => {
                             .catch((err) => funcs.genericLog(err, 'red'));
                         break;
                     }
-                    case 'mobile': {
-                        qfs.copyTree(baseDir+`/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`).then(() => {
-                            //run react native shell script
-                            const cmd = spawn('sh', [`${baseDir}/bin/_${actionType}/${projectType}/react-native.sh`, projectName], {stdio: 'inherit'});
+                    case 'react-native': {
+                        //run react native shell script
+                        spawnSync('sh', [`${baseDir}/bin/_${actionType}/${projectType}/react-native-install.sh`, projectName], {stdio: 'inherit'});
 
-                            cmd.on('close', () => {
-                                funcs.genericLog(`${$.util.colors.blue(`${projectName}`)} folder created ${$.util.colors.green('successfully')}`);
-                            });
-                        });
+                        //copy rikoconfig.js file
+                        qfs.makeTree(`${cwd}/${projectName}/src`)
+                            .then(() => qfs.copy(`${baseDir}/bin/_${actionType}/${projectType}/rikoconfig.js`, `${cwd}/${projectName}/src/rikoconfig.js`))
+                            .then(() => funcs.genericLog(`${$.util.colors.blue(`${projectName}`)} folder created ${$.util.colors.green('successfully')}`))
+                            .catch((err) => funcs.genericLog(err, 'red'));
                         break;
                     }
                     default: {

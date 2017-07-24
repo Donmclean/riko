@@ -209,6 +209,9 @@ module.exports = () => {
         }
 
         switch (true) {
+            case JSON.parse(process.env.isReactNative): {
+                return funcs.getFileIfExists('./defaultConfigs/reactNativeConfig');
+            }
             case JSON.parse(process.env.isReact):
             case JSON.parse(process.env.isElectron): {
                 return funcs.getFileIfExists('./defaultConfigs/reactElectronConfig');
@@ -246,6 +249,7 @@ module.exports = () => {
         }
 
         //assign project types booleans
+        process.env.isReactNative = _v._.includes(runCommands['react-native'], runCommand);
         process.env.isReact = _v._.includes(runCommands.react, runCommand);
         process.env.isElectron = _v._.includes(runCommands.electron, runCommand);
         process.env.isNodeServer = _v._.includes(runCommands['node-server'], runCommand);

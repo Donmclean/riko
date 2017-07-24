@@ -1,4 +1,4 @@
-import App from './components/App';
+import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
@@ -19,7 +19,7 @@ render(App);
 // Hot Module Replacement API
 // ONLY VALID FOR process.env.NODE_ENV = 'development'
 if (module.hot) {
-    module.hot.accept('./components/App', () => {
+    module.hot.accept('./App', () => {
         render(App)
     });
 }
