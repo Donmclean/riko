@@ -79,14 +79,14 @@ module.exports = (runCommand) => {
             break;
         }
         case 'react-native-ios': {
-            return _v.spawn(`${customConfig.baseDir}/node_modules/.bin/react-native`, ['run-ios'], {stdio: 'inherit'});
+            return _v.spawn('react-native', ['run-ios'], {stdio: 'inherit'});
         }
         case 'react-native-launch-android': {
             funcs.genericLog('launching android emulator...', 'blue');
             return _v.spawn(`sh`, [`${_v.cwd}/launch-android-Emulator.sh`, '&'], {stdio: 'ignore'});
         }
         case 'react-native-android': {
-            return _v.spawnSync(`${_v.cwd}/node_modules/.bin/react-native`, ['run-android'], {stdio: 'inherit'});
+            return _v.spawnSync('react-native', ['run-android'], {stdio: 'inherit'});
         }
         case 'electron-dev':
         case 'react-dev': {

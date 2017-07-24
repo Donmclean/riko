@@ -101,7 +101,6 @@
     "q": "^1.4.1",
     "q-io": "^1.13.2",
     "react-hot-loader": "3.0.0-beta.7",
-    "react-native": "^0.43.4",
     "sass-loader": "^5.0.1",
     "shelljs": "^0.7.8",
     "snyk": "^1.31.0",
