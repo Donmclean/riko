@@ -1,219 +1,220 @@
-module.exports = (_v, funcs, customConfig) => {
-    const webpackConfigUtils = {};
-    //Static Webpack Plugins
-    _v.BrowserSyncPlugin        = require('browser-sync-webpack-plugin');
-    _v.ExtractTextPlugin        = require("extract-text-webpack-plugin");
-    _v.CleanWebpackPlugin       = require('clean-webpack-plugin');
-    _v.WebpackNotifierPlugin    = require('webpack-notifier');
+import path from 'path';
+import customConfig from '../utils/coreRikoConfig';
 
-    webpackConfigUtils.getElectronPackagerOptions = () => Object.assign(
-        {},
+import { stylesheetProdRules, stylesheetDevRules } from '../utils/functions';
+import webpack from 'webpack';
+import { cwd, baseDir } from '../utils/variables';
 
-        //Default
-        {
-            platform: 'all',
-            icon: _v.path.resolve(__dirname, '../build-assets/riko-logo.incs')
-        },
 
-        //Custom
-        customConfig.electronPackagerOptions,
+//Static Webpack Plugins
+import BrowserSyncPlugin from 'browser-sync-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import WebpackNotifierPlugin from 'webpack-notifier';
+import WebpackShellPlugin from 'webpack-shell-plugin';
 
-        //Required
-        {
-            dir: customConfig.tempDir,
-            overwrite: true,
-            out: customConfig.output.path
-        }
-    );
+export const getElectronPackagerOptions = () => Object.assign(
+    {},
 
-    webpackConfigUtils.getDefaultConfigOptions = (env, configMap) => {
-        switch (env) {
-            case 'global': {
-                const globalConfigOptions = {
-                    rules: [
-                        //JAVASCRIPT
-                        {
-                            test: /\.jsx$|\.js$/,
-                            exclude: /(node_modules|vendor|bower_components)/,
-                            loaders: process.env.NODE_ENV === 'development' ? [
-                                'react-hot-loader/webpack',
-                                'babel-loader'
-                            ] : ['babel-loader']
-                        },
-                        //TYPESCRIPT TODO: add this functionality
-                        // {
-                        //     test: /\.tsx?$/,
-                        //     loaders: ['react-hot-loader/webpack', 'ts-loader'] // (or awesome-typescript-loader)
-                        // },
-                        //TEMPLATES (PUG)
-                        {
-                            test: /\.pug$/,
-                            exclude: /(node_modules|bower_components)/,
-                            loaders: ['pug-loader']
-                        },
-                        //TEMPLATES (HANDLEBARS)
-                        {
-                            test: /\.handlebars$|\.hbs$/,
-                            exclude: /(node_modules|bower_components)/,
-                            loaders: ['handlebars-loader']
-                        },
-                        //VIDEOS
-                        {
-                            test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                            loader: `file-loader?name=${customConfig.videoOutputPath}/[name].[hash].[ext]`
-                        },
-                        //AUDIO
-                        {
-                            test: /\.(wav|mp3|aiff|flac|mp4a|m4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                            loader: `file-loader?name=${customConfig.audioOutputPath}/[name].[hash].[ext]`
-                        },
-                        //FILES
-                        {
-                            test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                            loader: `file-loader?name=${customConfig.miscFileOutputPath}/[name].[hash].[ext]`
-                        }
-                    ],
+    //Default
+    {
+        platform: 'all',
+        icon: path.resolve(__dirname, '../build-assets/riko-logo.incs')
+    },
 
-                    plugins: [
-                        new _v.WebpackNotifierPlugin({contentImage: _v.baseDir+'/build-assets/riko-logo.png'})
-                    ]
-                };
+    //Custom
+    customConfig.electronPackagerOptions,
 
-                if(JSON.parse(process.env.isElectron)) {
-                    //GLOBAL OPTIONS
-                    configMap.setIn(['output', 'path'], customConfig.tempDir);
-                    configMap.setIn(['output', 'publicPath'], '');
-                }
+    //Required
+    {
+        dir: customConfig.tempDir,
+        overwrite: true,
+        out: customConfig.output.path
+    }
+);
 
-                return globalConfigOptions;
+export const getDefaultConfigOptions = (env, configMap) => {
+    switch (env) {
+        case 'global': {
+            const globalConfigOptions = {
+                rules: [
+                    //JAVASCRIPT
+                    {
+                        test: /\.jsx$|\.js$/,
+                        exclude: /(node_modules|vendor|bower_components)/,
+                        loaders: process.env.NODE_ENV === 'development' ? [
+                            'react-hot-loader/webpack',
+                            'babel-loader'
+                        ] : ['babel-loader']
+                    },
+                    //TYPESCRIPT TODO: add this functionality
+                    // {
+                    //     test: /\.tsx?$/,
+                    //     loaders: ['react-hot-loader/webpack', 'ts-loader'] // (or awesome-typescript-loader)
+                    // },
+                    //TEMPLATES (PUG)
+                    {
+                        test: /\.pug$/,
+                        exclude: /(node_modules|bower_components)/,
+                        loaders: ['pug-loader']
+                    },
+                    //TEMPLATES (HANDLEBARS)
+                    {
+                        test: /\.handlebars$|\.hbs$/,
+                        exclude: /(node_modules|bower_components)/,
+                        loaders: ['handlebars-loader']
+                    },
+                    //VIDEOS
+                    {
+                        test: /\.(mpeg|mpg|mp4|avi|wmv|flv)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+                        loader: `file-loader?name=${customConfig.videoOutputPath}/[name].[hash].[ext]`
+                    },
+                    //AUDIO
+                    {
+                        test: /\.(wav|mp3|aiff|flac|mp4a|m4a|wma|aac|au|rm)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+                        loader: `file-loader?name=${customConfig.audioOutputPath}/[name].[hash].[ext]`
+                    },
+                    //FILES
+                    {
+                        test: /\.(doc|docx|pdf|xls|xlsx|csv|txt)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+                        loader: `file-loader?name=${customConfig.miscFileOutputPath}/[name].[hash].[ext]`
+                    }
+                ],
+
+                plugins: [
+                    new WebpackNotifierPlugin({contentImage: baseDir+'/build-assets/riko-logo.png'})
+                ]
+            };
+
+            if(JSON.parse(process.env.isElectron)) {
+                //GLOBAL OPTIONS
+                configMap.setIn(['output', 'path'], customConfig.tempDir);
+                configMap.setIn(['output', 'publicPath'], '');
             }
-            case 'production': {
-                const productionConfigOptions = {
-                    rules: [
-                        //SASS
-                        funcs.stylesheetProdRules('sass', /\.scss$/, customConfig, _v.ExtractTextPlugin),
-                        //LESS
-                        funcs.stylesheetProdRules('less', /\.less$/, customConfig, _v.ExtractTextPlugin),
-                        //STYLUS
-                        funcs.stylesheetProdRules('stylus', /\.styl$/, customConfig, _v.ExtractTextPlugin),
-                        //CSS
-                        funcs.stylesheetProdRules('css', /\.css$/, customConfig, _v.ExtractTextPlugin),
-                        //FONTS
-                        {
-                            test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                            loader: `file-loader?name=${customConfig.fontOutputPath}/[name].[hash].[ext]`
-                        },
-                        //IMAGES
-                        {
-                            test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                            loader: `file-loader?name=${customConfig.imageOutputPath}/[name].[hash].[ext]`
-                        }
-                    ],
-                    plugins: [
-                        new _v.ExtractTextPlugin({
-                            filename: 'assets/css/styles.min.[hash].css',
-                            allChunks: true
-                        }),
-                        new _v.CleanWebpackPlugin([_v.path.basename(configMap.getIn(['output', 'path']))], {root: customConfig.baseDir, verbose: true, dry: false}),
-                        new _v.webpack.LoaderOptionsPlugin({
-                            minimize: true,
-                            debug: false
+
+            return globalConfigOptions;
+        }
+        case 'production': {
+            const productionConfigOptions = {
+                rules: [
+                    //SASS
+                    stylesheetProdRules('sass', /\.scss$/, customConfig, ExtractTextPlugin),
+                    //LESS
+                    stylesheetProdRules('less', /\.less$/, customConfig, ExtractTextPlugin),
+                    //STYLUS
+                    stylesheetProdRules('stylus', /\.styl$/, customConfig, ExtractTextPlugin),
+                    //CSS
+                    stylesheetProdRules('css', /\.css$/, customConfig, ExtractTextPlugin),
+                    //FONTS
+                    {
+                        test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                        loader: `file-loader?name=${customConfig.fontOutputPath}/[name].[hash].[ext]`
+                    },
+                    //IMAGES
+                    {
+                        test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+                        loader: `file-loader?name=${customConfig.imageOutputPath}/[name].[hash].[ext]`
+                    }
+                ],
+                plugins: [
+                    new ExtractTextPlugin({
+                        filename: 'assets/css/styles.min.[hash].css',
+                        allChunks: true
+                    }),
+                    new CleanWebpackPlugin([path.basename(configMap.getIn(['output', 'path']))], {root: customConfig.baseDir, verbose: true, dry: false}),
+                    new webpack.LoaderOptionsPlugin({
+                        minimize: true,
+                        debug: false
+                    })
+                ]
+            };
+
+            const electronPackagerOptions = getElectronPackagerOptions();
+
+            if(JSON.parse(process.env.isElectron)) {
+                productionConfigOptions.plugins = productionConfigOptions.plugins.concat([
+                    new CopyWebpackPlugin([
+                        { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
+                        { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
+                        { from: electronPackagerOptions.icon, to: customConfig.tempDir }
+                    ])
+                ]);
+            }
+
+            return productionConfigOptions;
+        }
+        case 'development': {
+            const developmentConfigOptions = {
+                rules: [
+                    // SASS
+                    stylesheetDevRules('sass', /\.scss$/, customConfig),
+                    // LESS
+                    stylesheetDevRules('less', /\.less$/, customConfig),
+                    //STYLUS
+                    stylesheetDevRules('stylus', /\.styl$/, customConfig),
+                    // CSS
+                    stylesheetDevRules('css', /\.css$/, customConfig),
+                    //FONTS
+                    {
+                        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                        loader: "url-loader?mimetype=application/font-woff"
+                    },
+                    {
+                        test: /\.(eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                        loader: 'file-loader'
+                    },
+                    //IMAGES
+                    {
+                        test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+                        loader: 'url-loader'
+                    }
+                ],
+                plugins: [
+                    new webpack.HotModuleReplacementPlugin(),
+                    new webpack.NamedModulesPlugin(),
+                    new webpack.LoaderOptionsPlugin({
+                        debug: true
+                    })
+                ]
+            };
+
+            switch (true) {
+                case JSON.parse(process.env.isElectron): {
+                    //ELECTRON DEV ONLY MODE
+                    developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
+                        new WebpackShellPlugin({
+                            onBuildEnd: [`${baseDir}/node_modules/.bin/electron -r babel-register ${cwd}/src/electron.js`]
                         })
-                    ]
-                };
-
-                const CopyWebpackPlugin = require('copy-webpack-plugin');
-
-                const electronPackagerOptions = webpackConfigUtils.getElectronPackagerOptions();
-
-                if(JSON.parse(process.env.isElectron)) {
-                    productionConfigOptions.plugins = productionConfigOptions.plugins.concat([
-                        new CopyWebpackPlugin([
-                            { from: customConfig.srcDir + '/electron.js', to: customConfig.tempDir },
-                            { from: customConfig.srcDir + '/package.json', to: customConfig.tempDir },
-                            { from: electronPackagerOptions.icon, to: customConfig.tempDir }
-                        ])
                     ]);
+                    break;
                 }
-
-                return productionConfigOptions;
-            }
-            case 'development': {
-                const developmentConfigOptions = {
-                    rules: [
-                        // SASS
-                        funcs.stylesheetDevRules('sass', /\.scss$/, customConfig),
-                        // LESS
-                        funcs.stylesheetDevRules('less', /\.less$/, customConfig),
-                        //STYLUS
-                        funcs.stylesheetDevRules('stylus', /\.styl$/, customConfig),
-                        // CSS
-                        funcs.stylesheetDevRules('css', /\.css$/, customConfig),
-                        //FONTS
-                        {
-                            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                            loader: "url-loader?mimetype=application/font-woff"
-                        },
-                        {
-                            test: /\.(eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                            loader: 'file-loader'
-                        },
-                        //IMAGES
-                        {
-                            test: /\.(jpe?g|png|gif|tif|svg|bmp)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
-                            loader: 'url-loader'
-                        }
-                    ],
-                    plugins: [
-                        new _v.webpack.HotModuleReplacementPlugin(),
-                        new _v.webpack.NamedModulesPlugin(),
-                        new _v.webpack.LoaderOptionsPlugin({
-                            debug: true
-                        })
-                    ]
-                };
-
-                const WebpackShellPlugin = require('webpack-shell-plugin');
-
-                switch (true) {
-                    case JSON.parse(process.env.isElectron): {
-                        //ELECTRON DEV ONLY MODE
-                        developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
-                            new WebpackShellPlugin({
-                                onBuildEnd: [`${_v.baseDir}/node_modules/.bin/electron -r babel-register ${_v.cwd}/src/electron.js`]
-                            })
-                        ]);
-                        break;
-                    }
-                    case JSON.parse(process.env.isReact): {
-                        //WEB DEV ONLY MODE
-                        developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
-                            new _v.BrowserSyncPlugin(
-                                {
-                                    proxy: `http://localhost:${customConfig.SERVER_PORT}`
-                                },
-                                {
-                                    reload: customConfig.hotReloadingOptions.browserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)
-                                }
-                            )
-                        ]);
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
+                case JSON.parse(process.env.isReact): {
+                    //WEB DEV ONLY MODE
+                    developmentConfigOptions.plugins = developmentConfigOptions.plugins.concat([
+                        new BrowserSyncPlugin(
+                            {
+                                proxy: `http://localhost:${customConfig.SERVER_PORT}`
+                            },
+                            {
+                                reload: customConfig.hotReloadingOptions.browserSyncReloadOnChange //Allows hot module reloading to take care of this. (preserves state)
+                            }
+                        )
+                    ]);
+                    break;
                 }
+                default: {
+                    break;
+                }
+            }
 
-                return developmentConfigOptions;
-            }
-            default: {
-                return {
-                    loaders: [],
-                    plugins: []
-                };
-            }
+            return developmentConfigOptions;
         }
-    };
-
-    return webpackConfigUtils;
+        default: {
+            return {
+                loaders: [],
+                plugins: []
+            };
+        }
+    }
 };

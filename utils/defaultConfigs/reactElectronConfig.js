@@ -1,4 +1,4 @@
-const config = {
+export default {
     SERVER_PORT: 3000,
 
     entry: {
@@ -51,5 +51,3 @@ const config = {
 
     customBoilerplatePath: 'src/riko-custom-boilerplates'
 };
-
-module.exports = config;

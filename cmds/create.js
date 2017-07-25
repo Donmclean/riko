@@ -1,31 +1,30 @@
-const _v = require('../utils/variables')();
-const funcs = require('../utils/functions')();
-const actions = require('../actions/_index');
+import { baseDir } from '../utils/variables';
+import { isNil, includes } from 'lodash';
+import { readFilesInDirectorySync, isValidOption, sanitizeString, logOptionsError } from '../utils/functions';
+import create from '../actions/create';
 
-module.exports = (argv) => {
-    const { baseDir, _ } = _v;
-
+export default (argv) => {
     const defaultBoilerplatePath = `${baseDir}/bin/_create`;
-    const defaultOptions = funcs.readFilesInDirectorySync(defaultBoilerplatePath);
+    const defaultOptions = readFilesInDirectorySync(defaultBoilerplatePath);
 
-    const customConfig = require('../utils/coreRikoConfig');
+    const customConfig = require('../utils/coreRikoConfig'); //TODO: use dynamic import
     let customOptions;
 
     try {
-        customOptions = funcs.readFilesInDirectorySync(customConfig.customBoilerplatePath);
+        customOptions = readFilesInDirectorySync(customConfig.customBoilerplatePath);
     } catch (err) {
         customOptions = undefined;
     }
 
-    const totalOptions = !_.isNil(customOptions) ? defaultOptions.concat(customOptions) : defaultOptions;
+    const totalOptions = !isNil(customOptions) ? defaultOptions.concat(customOptions) : defaultOptions;
 
-    const validChoice = funcs.isValidOption(totalOptions, argv.fileType);
+    const validChoice = isValidOption(totalOptions, argv.fileType);
 
     if(validChoice) {
-        const fileName = funcs.sanitizeString(argv.fileName);
-        const finalBoilerplatePath = _.includes(customOptions, argv.fileType) ? customConfig.customBoilerplatePath : defaultBoilerplatePath;
-        actions.create(finalBoilerplatePath, argv._, argv.fileType, fileName);
+        const fileName = sanitizeString(argv.fileName);
+        const finalBoilerplatePath = includes(customOptions, argv.fileType) ? customConfig.customBoilerplatePath : defaultBoilerplatePath;
+        create(finalBoilerplatePath, argv._, argv.fileType, fileName);
     } else {
-        return funcs.logOptionsError(totalOptions, argv.fileType);
+        return logOptionsError(totalOptions, argv.fileType);
     }
 };

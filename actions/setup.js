@@ -1,15 +1,19 @@
-const
-    _v      = require('../utils/variables')(),
-    funcs   = require('../utils/functions')();
+import { genericLog, folderAlreadyPresent, sortObjByOwnKeys } from '../utils/functions';
+import { cwd, baseDir, packageJson } from '../utils/variables';
+import qfs from 'q-io/fs';
+import spawn from 'cross-spawn';
+import gulpLoadPlugins from 'gulp-load-plugins';
 
-module.exports = (actionType, projectType, projectName) => {
-    const { $, qfs, cwd, baseDir, packageJson, spawnSync } = _v;
-    const logSuccess = () => funcs.genericLog(`${$.util.colors.blue(projectName)} was setup ${$.util.colors.green('successfully')}`);
+const $ = gulpLoadPlugins();
+const spawnSync = spawn.sync;
+
+export default (actionType, projectType, projectName) => {
+    const logSuccess = () => genericLog(`${$.util.colors.blue(projectName)} was setup ${$.util.colors.green('successfully')}`);
 
     return qfs.list(cwd)
         .then(files => {
-            if(funcs.folderAlreadyPresent(files, projectName)) {
-                funcs.genericLog(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`);
+            if(folderAlreadyPresent(files, projectName)) {
+                genericLog(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`);
                 throw new Error(`${projectName} folder must not exist during setup.`);
             } else {
                 switch (projectType) {
@@ -25,19 +29,19 @@ module.exports = (actionType, projectType, projectName) => {
                                     packageJsonObj.devDependencies,
                                     {electron: packageJson.dependencies.electron}
                                 );
-                                packageJsonObj.devDependencies = funcs.sortObjByOwnKeys(packageJsonObj.devDependencies);
+                                packageJsonObj.devDependencies = sortObjByOwnKeys(packageJsonObj.devDependencies);
                                 return packageJsonObj;
                             })
                             .then((packageJsonObj) => qfs.write(`${cwd}/${projectName}/package.json`, JSON.stringify(packageJsonObj, null, "\t")))
                             .then(() => logSuccess())
-                            .catch((err) => funcs.genericLog(err, 'red'));
+                            .catch((err) => genericLog(err, 'red'));
                         break;
                     }
                     case 'node-server':
                     case 'react': {
                         qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`)
                             .then(() => logSuccess())
-                            .catch((err) => funcs.genericLog(err, 'red'));
+                            .catch((err) => genericLog(err, 'red'));
                         break;
                     }
                     case 'react-native': {
@@ -47,8 +51,8 @@ module.exports = (actionType, projectType, projectName) => {
                         //copy rikoconfig.js file
                         qfs.makeTree(`${cwd}/${projectName}/src`)
                             .then(() => qfs.copy(`${baseDir}/bin/_${actionType}/${projectType}/rikoconfig.js`, `${cwd}/${projectName}/src/rikoconfig.js`))
-                            .then(() => funcs.genericLog(`${$.util.colors.blue(`${projectName}`)} folder created ${$.util.colors.green('successfully')}`))
-                            .catch((err) => funcs.genericLog(err, 'red'));
+                            .then(() => genericLog(`${$.util.colors.blue(`${projectName}`)} folder created ${$.util.colors.green('successfully')}`))
+                            .catch((err) => genericLog(err, 'red'));
                         break;
                     }
                     default: {
@@ -57,5 +61,5 @@ module.exports = (actionType, projectType, projectName) => {
                 }
             }
         })
-        .catch((err) => funcs.genericLog(err, 'red'));
+        .catch((err) => genericLog(err, 'red'));
 };

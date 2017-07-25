@@ -24,7 +24,7 @@ function createWindow () {
   const options = {};
   switch (process.env.NODE_ENV) {
     case 'development': {
-      options.host = 'localhost:' + config.SERVER_PORT;
+      options.host = `localhost:${config.SERVER_PORT}`;
       options.protocol = 'http:';
       options.slashes = true;
       break;

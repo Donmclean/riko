@@ -1,4 +1,4 @@
-const config = {
+export default {
     entryFile: 'src/app.js',
 
     nodemonJson: 'nodemon.json',
@@ -7,5 +7,3 @@ const config = {
     //must be an absolute path.
     customBoilerplatePath: 'src/riko-custom-boilerplates'
 };
-
-module.exports = config;

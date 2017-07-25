@@ -1,17 +1,17 @@
-const _ = require('lodash');
-const funcs = require('../utils/functions')();
-const actions = require('../actions/_index');
-const { runCommands } = require('../constants/index');
+import { chain } from 'lodash';
+import { sanitizeString, isValidOption, logOptionsError } from '../utils/functions';
+import run from '../actions/run';
+import { runCommands } from '../constants/index';
 
-module.exports = (argv) => {
-    const options = _.chain(runCommands).values().flatten().value();
+export default (argv) => {
+    const options = chain(runCommands).values().flatten().value();
 
-    const validChoice = funcs.isValidOption(options, argv.runCommand);
+    const validChoice = isValidOption(options, argv.runCommand);
 
     if(validChoice) {
-        const runCommand = funcs.sanitizeString(argv.runCommand);
-        actions.run(runCommand);
+        const runCommand = sanitizeString(argv.runCommand);
+        run(runCommand);
     } else {
-        funcs.logOptionsError(options, argv.runCommand);
+        logOptionsError(options, argv.runCommand);
     }
 };

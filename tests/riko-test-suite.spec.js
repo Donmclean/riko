@@ -1,53 +1,41 @@
-"use strict";
-const
-    chai        = require('chai'),
-    assert      = chai.assert,
-    expect      = chai.expect,
+import chai from 'chai';
+import { baseDir, packageJson, cwd } from '../utils/variables';
+import { sanitizeString } from '../utils/functions';
 
-    _v          = require('../utils/variables')(),
-    funcs       = require('../utils/functions')(),
-    packageJson = require('../package.json');
+const assert = chai.assert;
+const expect = chai.expect;
 
 describe('Riko Test Suite', () => {
-    describe('_v = variables', () => {
-        it('should exist and be truthy', () => {
-            _v._.forEach(_v, (variable) => assert.isOk(variable, `${variable} needs to be defined`));
+    describe('variables', () => {
+        describe('baseDir', () => {
+            it('should exist and be truthy', () => {
+                assert.isOk(baseDir);
+                expect(baseDir).to.be.a('string');
+            });
+        });
+        describe('packageJson', () => {
+            it('should exist and be truthy', () => {
+                assert.isOk(packageJson);
+                expect(packageJson).to.be.an('object');
+            });
+        });
+        describe('cwd', () => {
+            it('should exist and be truthy', () => {
+                assert.isOk(cwd);
+                expect(cwd).to.be.a('string');
+            });
         });
     });
 
-    describe('package.json', () => {
-        it('should exist and be truthy', () => {
-            assert.isOk(packageJson);
-        });
-        it('mocha should exist and be truthy', () => {
-            assert.isOk(packageJson.dependencies.mocha);
-        });
-        it('chai should exist and be truthy', () => {
-            assert.isOk(packageJson.dependencies.chai);
-        });
-    });
-
-    describe('funcs', () => {
-        it('should exist, be truthy, be an object and be have values', () => {
-            assert.isOk(funcs);
-            assert.isObject(funcs);
-            assert.isNotTrue(_v._.isEmpty(funcs), 'should not be empty');
-        });
-
-        it('removeDir should exist and a be a function', () => {
-            assert.isFunction(funcs.removeDir);
-        });
-
-        it('removeDir executes successfully and return a promise', () => {
-            expect(funcs.removeDir('some random dir')).to.be.an('object');
-        });
-
-        it('hotExecuteTests should exist and be a function', () => {
-            assert.isFunction(funcs.hotExecuteTests);
-        });
-
-        it('hotExecuteFlowTests should exist and be a function', () => {
-            assert.isFunction(funcs.hotExecuteFlowTests);
+    describe('functions', () => {
+        describe('sanitizeString', () => {
+            it('should exist and be truthy', () => {
+                assert.isOk(sanitizeString);
+                expect(sanitizeString).to.be.a('function');
+            });
+            it('should return non escaped quotes', () => {
+                assert.equal(sanitizeString('Ddf/\"'), 'Ddf/"');
+            });
         });
     });
 });
