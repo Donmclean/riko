@@ -17,8 +17,9 @@
     "prepublish": "npm run snyk-protect",
     "publish-release": "npm publish && git push --follow-tags",
     "lint": "gulp lint",
-    "test-build": "npm run lint && istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report html --report lcov -- -R spec",
-    "test-coverage": "istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test-mocha": "mocha tests/riko-test-suite.spec.js --require babel-register --colors",
+    "test-build": "npm run lint && babel-node ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report html --report lcov -- -R spec",
+    "test-coverage": "babel-node ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test": "sh test-complete.sh"
   },
   "repository": {
@@ -44,11 +45,12 @@
     "autoprefixer": "^6.4.0",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.24.0",
-    "babel-eslint": "^7.0.0",
     "babel-jest": "^19.0.0",
     "babel-loader": "^6.4.1",
+    "babel-plugin-dynamic-import-node": "^1.0.2",
     "babel-plugin-istanbul": "^4.0.0",
     "babel-plugin-react-transform": "^2.0.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-runtime": "^6.12.0",
     "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.14.0",
@@ -67,7 +69,7 @@
     "css-loader": "^0.26.0",
     "electron": "^1.6.2",
     "electron-packager": "^8.2.0",
-    "eslint": "^3.3.0",
+    "eslint": "3.x",
     "eslint-plugin-react": "^7.0.1",
     "expose-loader": "^0.7.1",
     "express": "^4.14.0",
@@ -85,7 +87,6 @@
     "immutable": "^3.8.1",
     "inquirer": "^3.0.6",
     "ip": "^1.1.3",
-    "istanbul": "^0.4.5",
     "json-loader": "^0.5.4",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
@@ -114,6 +115,10 @@
     "webpack-notifier": "^1.4.1",
     "webpack-shell-plugin": "^0.5.0",
     "worker-loader": "^0.7.1"
+  },
+  "devDependencies": {
+    "istanbul": "1.1.0-alpha.1",
+    "babel-eslint": "7"
   },
   "snyk": true
 }

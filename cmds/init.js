@@ -1,15 +1,14 @@
-const
-    _v      = require('../utils/variables')(),
-    funcs   = require('../utils/functions')(),
-    actions = require('../actions/_index');
+import { baseDir } from '../utils/variables';
+import { isEmpty, camelCase } from 'lodash';
+import inquirer from 'inquirer';
+import { readFilesInDirectorySync, sanitizeString, requiresTemplate, hasWhiteSpace, genericLog } from '../utils/functions';
+import setup from '../actions/setup';
 
-module.exports = () => {
-    const { baseDir, _ } = _v;
-
+export default () => {
     const defaultSetupOptionsPath = `${baseDir}/bin/_setup`;
     const defaultTemplateTypesPath = `${baseDir}/bin/_setup/react/src/templates`;
-    const projectTypes = funcs.readFilesInDirectorySync(defaultSetupOptionsPath);
-    const templateTypes = funcs.readFilesInDirectorySync(defaultTemplateTypesPath);
+    const projectTypes = readFilesInDirectorySync(defaultSetupOptionsPath);
+    const templateTypes = readFilesInDirectorySync(defaultTemplateTypesPath);
 
     const defaultQuestions = [
         {
@@ -23,8 +22,8 @@ module.exports = () => {
             type: 'input',
             name: 'projectName',
             message: `What's the name of your project?`,
-            filter: (val) => funcs.sanitizeString(val),
-            validate: (value) => _.isEmpty(value) ? 'Please enter a valid project name' : true
+            filter: (val) => sanitizeString(val),
+            validate: (value) => isEmpty(value) ? 'Please enter a valid project name' : true
         },
         {
             type: 'list',
@@ -34,21 +33,21 @@ module.exports = () => {
             filter: (val) => val.toLowerCase(),
             when: (currentAnswers) => {
                 const { projectType } = currentAnswers;
-                return funcs.requiresTemplate(projectType);
+                return requiresTemplate(projectType);
             }
         }
     ];
 
-    _v.inquirer.prompt(defaultQuestions)
+    inquirer.prompt(defaultQuestions)
         .then((currentAnswers) => {
             let { projectType, projectName } = currentAnswers;
             //TODO: validate existence of these ^
 
-            projectName = funcs.sanitizeString(funcs.hasWhiteSpace(projectName) ? _v._.camelCase(projectName) : projectName);
+            projectName = sanitizeString(hasWhiteSpace(projectName) ? camelCase(projectName) : projectName);
 
-            actions.setup('setup', projectType, projectName);
+            setup('setup', projectType, projectName);
         })
         .catch((err) => {
-            console.error('err > : ', err);
+            genericLog('err > ' + err, 'red');
         });
 };

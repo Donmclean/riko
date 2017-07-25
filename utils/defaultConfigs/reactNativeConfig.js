@@ -1,4 +1,3 @@
-const config = {
-};
+export default {
 
-module.exports = config;
+};

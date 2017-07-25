@@ -19,7 +19,9 @@
     "process": false
   },
   "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "rules": {
+    "strict": 0,
     "no-console": 0
   }
 }

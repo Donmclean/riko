@@ -70,7 +70,7 @@ echoBlue "adding android emulator launcher..."
 
 AVD="$(~/Library/Android/sdk/tools/emulator -list-avds | head -1)"
 
-printf "#!/usr/bin/env bash\nset -e\n~/Library/Android/sdk/tools/emulator -avd ${AVD}" > $1/launch-android-Emulator.sh
+printf "#!/usr/bin/env bash\nset -e\n~/Library/Android/sdk/tools/emulator -avd ${AVD} &" > $1/launch-android-Emulator.sh
 
 echoGreen "android emulator launcher added!"
 
