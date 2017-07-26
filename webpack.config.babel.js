@@ -1,9 +1,8 @@
 import customConfig from './utils/coreRikoConfig';
 import { getDefaultConfigOptions } from './utils/webpackConfigUtils';
 import { baseDir } from './utils/variables';
-import { getStats, handleCustomAdditions } from './utils/functions';
+import { getStats, handleCustomAdditions, setCustomConfigOptions } from './utils/functions';
 import immutable from 'immutable';
-import webpack from 'webpack';
 import path from 'path';
 import os from 'os';
 
@@ -51,13 +50,10 @@ const config = new immutable.Map().withMutations((configMap) => {
     configMap.set('stats', getStats(process.env.NODE_ENV));
 
     // Set Global Config Options
-    const globalCustomOptionsMap = new immutable.Map().withMutations((globalCustomOptionsMap) => {
-        globalCustomOptionsMap.setIn(['module', 'rules'], immutable.fromJS([]));
-        globalCustomOptionsMap.set('plugins', immutable.fromJS([]));
-        customConfig.setWebpackConfigOptions('global', globalCustomOptionsMap, webpack, immutable);
-    });
+    const globalCustomOptionsMap = setCustomConfigOptions(customConfig, 'global');
 
     const globalDefaults = getDefaultConfigOptions('global', configMap);
+
     handleCustomAdditions(configMap, globalCustomOptionsMap, globalDefaults.rules, globalDefaults.plugins);
 
     switch (process.env.NODE_ENV) {
@@ -67,13 +63,10 @@ const config = new immutable.Map().withMutations((configMap) => {
             configMap.set('bail', true);
 
             // Set Production Config Options
-            const productionCustomOptionsMap = new immutable.Map().withMutations((productionCustomOptionsMap) => {
-                productionCustomOptionsMap.setIn(['module', 'rules'], immutable.fromJS([]));
-                productionCustomOptionsMap.set('plugins', immutable.fromJS([]));
-                customConfig.setWebpackConfigOptions('production', productionCustomOptionsMap, webpack, immutable);
-            });
+            const productionCustomOptionsMap = setCustomConfigOptions(customConfig, 'production');
 
             const productionDefaults = getDefaultConfigOptions('production', configMap);
+
             handleCustomAdditions(configMap, productionCustomOptionsMap, productionDefaults.rules, productionDefaults.plugins);
 
             break;
@@ -95,14 +88,12 @@ const config = new immutable.Map().withMutations((configMap) => {
             }));
 
             // Set Development Config Options
-            const developmentCustomOptionsMap = new immutable.Map().withMutations((developmentCustomOptionsMap) => {
-                developmentCustomOptionsMap.setIn(['module', 'rules'], immutable.fromJS([]));
-                developmentCustomOptionsMap.set('plugins', immutable.fromJS([]));
-                customConfig.setWebpackConfigOptions('development', developmentCustomOptionsMap, webpack, immutable);
-            });
+            const developmentCustomOptionsMap = setCustomConfigOptions(customConfig, 'development');
 
             const developmentDefaults = getDefaultConfigOptions('development', configMap);
+
             handleCustomAdditions(configMap, developmentCustomOptionsMap, developmentDefaults.rules, developmentDefaults.plugins);
+
             break;
         }
         default: {

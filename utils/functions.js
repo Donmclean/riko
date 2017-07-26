@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { includes, isEmpty, compact, forEach, find, eq, chain, reject, isNil, get } from 'lodash';
 import immutable from 'immutable';
+import webpack from 'webpack';
 import chokidar from 'chokidar';
 import Q from 'q';
 import qfs from 'q-io/fs';
@@ -363,4 +364,12 @@ export const hotExecuteFlowTests = (customConfig) => {
              under 'scripts'.`, 'red');
         throw new Error('Invalid npm script command. see config.hotReloadingOptions.hotExecuteFlowTypeCommand in rikoconfig.js file');
     }
+};
+
+export const setCustomConfigOptions = (customConfig, env) => {
+    return new immutable.Map().withMutations((customOptionsMap) => {
+        customOptionsMap.setIn(['module', 'rules'], immutable.fromJS([]));
+        customOptionsMap.set('plugins', immutable.fromJS([]));
+        customConfig.setWebpackConfigOptions(env, customOptionsMap, webpack, immutable);
+    });
 };
