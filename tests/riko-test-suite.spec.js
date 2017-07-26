@@ -1,29 +1,15 @@
 import chai from 'chai';
-import { baseDir, packageJson, cwd } from '../utils/variables';
-import { sanitizeString } from '../utils/functions';
+import { forEach } from 'lodash';
+import * as variables from '../utils/variables';
+import { sanitizeString, hasWhiteSpace } from '../utils/functions';
 
 const assert = chai.assert;
 const expect = chai.expect;
 
 describe('Riko Test Suite', () => {
     describe('variables', () => {
-        describe('baseDir', () => {
-            it('should exist and be truthy', () => {
-                assert.isOk(baseDir);
-                expect(baseDir).to.be.a('string');
-            });
-        });
-        describe('packageJson', () => {
-            it('should exist and be truthy', () => {
-                assert.isOk(packageJson);
-                expect(packageJson).to.be.an('object');
-            });
-        });
-        describe('cwd', () => {
-            it('should exist and be truthy', () => {
-                assert.isOk(cwd);
-                expect(cwd).to.be.a('string');
-            });
+        it('should all exist and be truthy', () => {
+            forEach(variables, (v) => assert.isOk(v));
         });
     });
 
@@ -35,6 +21,20 @@ describe('Riko Test Suite', () => {
             });
             it('should return non escaped quotes', () => {
                 assert.equal(sanitizeString('Ddf/\"'), 'Ddf/"');
+            });
+        });
+        describe('hasWhiteSpace', () => {
+            it('should exist and be truthy', () => {
+                assert.isOk(hasWhiteSpace);
+                expect(hasWhiteSpace).to.be.a('function');
+            });
+            it('should return true if string has white space', () => {
+                assert.equal(hasWhiteSpace('has white space'), true);
+                assert.equal(hasWhiteSpace('haswhitespace '), true);
+                assert.equal(hasWhiteSpace(' haswhitespace'), true);
+            });
+            it('should return false if string has does not have white space', () => {
+                assert.equal(hasWhiteSpace('haswhitespace'), false);
             });
         });
     });
