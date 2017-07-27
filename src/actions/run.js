@@ -67,7 +67,7 @@ export default (runCommand) => {
                 config.entry['index'].unshift('babel-polyfill');
 
                 //TODO: validate command below
-                return spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${baseDir}/webpack.config.babel.js`], {stdio: 'inherit'});
+                return spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${baseDir}/src/webpack.config.babel.js`], {stdio: 'inherit'});
             }
             case 'electron-prod': {
                 genericLog('Compiling electron app..');
@@ -76,7 +76,7 @@ export default (runCommand) => {
                     // const electronPackager = require('electron-packager'); //TODO: use dynamic import here
                     return import('electron-packager')
                         .then((electronPackager) => {
-                            const spawned = spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${baseDir}/webpack.config.babel.js`], {stdio: 'inherit'});
+                            const spawned = spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${baseDir}/src/webpack.config.babel.js`], {stdio: 'inherit'});
 
                             spawned.on('close', () => {
                                 //Compile The Electron Application

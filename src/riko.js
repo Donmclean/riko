@@ -1,7 +1,8 @@
 import program from 'commander';
-import { baseDir, packageJson } from './utils/variables';
+import path from 'path';
+import { packageJson } from './utils/variables';
 import { genericLog, logOptionsError, processBeforeExitHandler } from './utils/functions';
-const commandsDir = `${baseDir}/cmds`;
+const commandsDir = path.resolve(__dirname, './cmds');
 
 processBeforeExitHandler();
 

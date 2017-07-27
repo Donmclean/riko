@@ -1,9 +1,9 @@
 import path from 'path';
-import customConfig from '../utils/coreRikoConfig';
+import customConfig from './coreRikoConfig';
 
-import { stylesheetProdRules, stylesheetDevRules } from '../utils/functions';
+import { stylesheetProdRules, stylesheetDevRules } from './functions';
 import webpack from 'webpack';
-import { cwd, baseDir } from '../utils/variables';
+import { cwd, baseDir } from './variables';
 
 
 //Static Webpack Plugins

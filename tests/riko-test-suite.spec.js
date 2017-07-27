@@ -1,7 +1,7 @@
 import chai from 'chai';
 import { forEach } from 'lodash';
-import * as variables from '../utils/variables';
-import { sanitizeString, hasWhiteSpace } from '../utils/functions';
+import * as variables from '../src/utils/variables';
+import { sanitizeString, hasWhiteSpace } from '../src/utils/functions';
 
 const assert = chai.assert;
 const expect = chai.expect;

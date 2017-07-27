@@ -2,15 +2,17 @@
   "name": "riko",
   "version": "3.4.1",
   "description": "Webpack Build System for React JS Projects (web & electron)",
-  "main": "./index.js",
+  "main": "./dist/index.js",
   "preferGlobal": true,
   "bin": {
-    "riko": "./index.js"
+    "riko": "./dist/riko.js"
   },
   "engines": {
     "node": ">=6.0.0"
   },
   "scripts": {
+    "build": "babel src -d dist",
+    "postinstall": "npm run build",
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "version": "babel-node ./utils/publishScript.js && git add .",
     "snyk-protect": "snyk protect",

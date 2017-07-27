@@ -1,4 +1,4 @@
-import { packageJson } from '../utils/variables';
+import { packageJson } from './variables';
 import path from 'path';
 import fs from 'fs';
 

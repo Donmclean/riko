@@ -1,7 +1,7 @@
 //**********************************************************************
 //*******************************CORE***********************************
 //**********************************************************************
-import { getFileIfExists, getDefaultConfigFromRunCommand, genericLog } from '../utils/functions';
+import { getFileIfExists, getDefaultConfigFromRunCommand, genericLog } from './functions';
 import { forEach, isEmpty, includes } from 'lodash';
 import assert from 'assert';
 const config  = {};

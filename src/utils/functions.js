@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { packageJson } from '../utils/variables';
+import { packageJson } from './variables';
 import { includes, isEmpty, compact, forEach, find, eq, chain, reject, isNil, get, isEqual } from 'lodash';
 import immutable from 'immutable';
 import webpack from 'webpack';
@@ -9,7 +9,7 @@ import qfs from 'q-io/fs';
 import merge from 'webpack-merge';
 import path from 'path';
 import autoprefixer from 'autoprefixer';
-import { cwd, baseDir } from '../utils/variables';
+import { cwd, baseDir } from './variables';
 import spawn from 'cross-spawn';
 import GitHubApi from 'github';
 import gulpLoadPlugins from 'gulp-load-plugins';
@@ -55,13 +55,13 @@ export const sortObjByOwnKeys = (obj) => Object.keys(obj).sort().reduce((accObj,
     return accObj;
 }, {});
 
-export const getFileIfExists = (path) => {
+export const getFileIfExists = (modulePath) => {
     let file = null;
 
     try {
-        file = require(`${path}`);
+        file = require(`${modulePath}`);
     } catch (err) {
-        genericLog(`ERROR: requiring ${path.basename(path)} in ${path.dirname(path)} directory \n ${err}`, 'red');
+        genericLog(`ERROR: requiring ${path.basename(modulePath)} in ${path.dirname(modulePath)} directory \n ${err}`, 'red');
         throw new Error(err);
     }
 
