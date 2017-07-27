@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "babel src -d dist --copy-files --source-maps",
-    "postinstall": "npm run build",
+    "preinstall": "npm run build",
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "version": "babel-node ./src/utils/publishScript.js && git add .",
     "snyk-protect": "snyk protect",
