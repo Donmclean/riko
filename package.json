@@ -1,6 +1,6 @@
 {
   "name": "riko",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "description": "Webpack Build System for React JS Projects (web & electron)",
   "main": "index.js",
   "preferGlobal": true,
