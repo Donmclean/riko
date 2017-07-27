@@ -77,6 +77,7 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.10.0",
     "flow-bin": "^0.42.0",
+    "github": "^9.2.0",
     "gulp": "^3.9.1",
     "gulp-debug": "^3.0.0",
     "gulp-eslint": "^3.0.1",
@@ -117,8 +118,8 @@
     "worker-loader": "^0.7.1"
   },
   "devDependencies": {
-    "istanbul": "1.1.0-alpha.1",
-    "babel-eslint": "7"
+    "babel-eslint": "7",
+    "istanbul": "1.1.0-alpha.1"
   },
   "snyk": true
 }

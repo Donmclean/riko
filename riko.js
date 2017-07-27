@@ -1,7 +1,9 @@
 import program from 'commander';
 import { baseDir, packageJson } from './utils/variables';
-import { genericLog, logOptionsError } from './utils/functions';
+import { genericLog, logOptionsError, processBeforeExitHandler } from './utils/functions';
 const commandsDir = `${baseDir}/cmds`;
+
+processBeforeExitHandler();
 
 //VERSION, USAGE, ETC
 program
