@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
-    "version": "./node_modules/.bin/babel-node ./utils/publishScript.js && git add .",
+    "version": "babel-node ./utils/publishScript.js && git add .",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect",
     "publish-release": "npm publish && git push --follow-tags",
