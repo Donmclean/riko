@@ -9,7 +9,7 @@ Learn more about the Riko concept [**here**](docs/concept.md)
 
 # INSTALL
 
-- `yarn global add riko --prefix /usr/local` OR `npm install -g riko`
+- `npm install -g riko`
 
 ###### Note: make sure you export your npm bin to $PATH in bash profile 
 ```bash
