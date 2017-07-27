@@ -2,7 +2,7 @@ import { packageJson } from './variables';
 import path from 'path';
 import fs from 'fs';
 
-const readMePath    = path.resolve(__dirname, `../README.md`);
+const readMePath    = path.resolve(__dirname, `../../README.md`);
 const readMe        = fs.readFileSync(readMePath, 'utf8');
 
 const urlStringStart = 'https://img.shields.io/badge/npm-v';
