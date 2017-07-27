@@ -11,7 +11,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "build": "babel src -d dist --copy-files",
+    "build": "babel src -d dist --copy-files --source-maps",
     "postinstall": "npm run build",
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "version": "babel-node ./src/utils/publishScript.js && git add .",
