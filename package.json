@@ -5,19 +5,19 @@
   "main": "index.js",
   "preferGlobal": true,
   "bin": {
-    "riko": "./dist/riko.js"
+    "riko": "./riko.js"
   },
   "engines": {
     "node": ">=6.0.0"
   },
   "scripts": {
     "build": "babel src -d dist --copy-files --source-maps",
-    "install": "npm run build",
+    "postinstall": "npm run build",
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "version": "babel-node ./src/utils/publishScript.js && git add .",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect",
-    "publish-release": "npm publish && git push --follow-tags",
+    "postversion": "npm publish && git push --follow-tags",
     "lint": "gulp lint",
     "test-mocha": "mocha tests/riko-test-suite.spec.js --require babel-register --colors",
     "test-build": "npm run lint && babel-node ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report html --report lcov -- -R spec",
