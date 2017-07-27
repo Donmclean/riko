@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 require('babel-register')();
-require('./index.js');
+require('./src/riko.js');
