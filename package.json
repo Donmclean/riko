@@ -11,10 +11,10 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "build": "babel src -d dist",
+    "build": "babel src -d dist --copy-files",
     "postinstall": "npm run build",
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
-    "version": "babel-node ./utils/publishScript.js && git add .",
+    "version": "babel-node ./src/utils/publishScript.js && git add .",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect",
     "publish-release": "npm publish && git push --follow-tags",
