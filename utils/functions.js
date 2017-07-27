@@ -1,5 +1,6 @@
 import fs from 'fs';
-import { includes, isEmpty, compact, forEach, find, eq, chain, reject, isNil, get } from 'lodash';
+import { packageJson } from '../utils/variables';
+import { includes, isEmpty, compact, forEach, find, eq, chain, reject, isNil, get, isEqual } from 'lodash';
 import immutable from 'immutable';
 import webpack from 'webpack';
 import chokidar from 'chokidar';
@@ -10,10 +11,13 @@ import path from 'path';
 import autoprefixer from 'autoprefixer';
 import { cwd, baseDir } from '../utils/variables';
 import spawn from 'cross-spawn';
+import GitHubApi from 'github';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
 const spawnSync = spawn.sync;
 const $ = gulpLoadPlugins();
+
+const github = new GitHubApi({ followRedirects: false, timeout: 5000 });
 
 export const isValidOption = (options, targetOption) => includes(options, targetOption);
 
@@ -332,6 +336,32 @@ export const hotExecuteTests = (customConfig) => {
 export const processExitHandler = () => process.on('SIGINT', () => {
     process.stdout.write('\n');
     process.exit(0);
+});
+
+export const logUpdateAvailableMessage = (currentRikoVersion, latestRikoVersion) => {
+    console.log('\n');
+    genericLog(`Update available ${currentRikoVersion} => ${latestRikoVersion}`, 'cyan');
+    genericLog(`npm i -g riko`, 'cyan');
+    console.log('\n');
+};
+
+export const checkForNewVersionAndSetValuesGlobally = () => {
+    github.repos.getLatestRelease({ owner: 'Donmclean', repo: 'riko' }, (err, res) => {
+        if(!err) {
+            const latestRikoVersion = get(res, 'data.name', false);
+            const currentRikoVersion = `v${packageJson.version}`;
+
+            global.latestRikoVersion = latestRikoVersion;
+            global.currentRikoVersion = currentRikoVersion;
+        }
+    });
+};
+
+export const processBeforeExitHandler = () => process.on('beforeExit', (code) => {
+    if(!isEqual(global.latestRikoVersion, global.currentRikoVersion)) {
+        logUpdateAvailableMessage(global.latestRikoVersion, global.currentRikoVersion);
+    }
+    process.exit(code);
 });
 
 export const hotExecuteFlowTests = (customConfig) => {
