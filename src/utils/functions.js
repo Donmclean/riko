@@ -201,7 +201,9 @@ export const handleCustomAdditions = (configMap, envConfigMap, defaultRules, def
         configMap.updateIn(['module','noParse'], () => immutable.fromJS(envConfigMap.getIn(['module', 'noParse'])));
     }
 
-    const customConfigEntries = envConfigMap.filterNot((val, key) => (key === 'module' || key === 'plugins'));
+    const keysToExclude = ['module', 'plugins'];
+
+    const customConfigEntries = envConfigMap.filterNot((val, key) => includes(keysToExclude, key));
 
     configMap.mergeDeep(customConfigEntries);
 };
