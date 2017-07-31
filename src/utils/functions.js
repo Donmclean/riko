@@ -181,8 +181,6 @@ export const handleCustomAdditions = (configMap, envConfigMap, defaultRules, def
         {rules: immutable.fromJS(envConfigMap.getIn(['module', 'rules'])).toJS()}
     );
 
-    configMap.updateIn(['module','rules'], (rules) => immutable.fromJS(rules).concat(immutable.fromJS(mergedWithDefaultsRules.rules)));
-
     //extract unique default plugins by 'constructor.name'
     const uniqDefaultPlugins = reject(defaultPlugins, (defaultPlugin) => {
         return includes(
@@ -196,7 +194,16 @@ export const handleCustomAdditions = (configMap, envConfigMap, defaultRules, def
         {plugins: immutable.fromJS(envConfigMap.get('plugins')).toJS()}
     );
 
-    configMap.update('plugins', (plugins) => immutable.fromJS(plugins).concat(immutable.fromJS(mergedWithDefaultPlugins)).flatten(true));
+    configMap.updateIn(['module','rules'], (rules) => immutable.fromJS(rules).concat(immutable.fromJS(mergedWithDefaultsRules.rules)));
+    configMap.updateIn(['plugins'], (plugins) => immutable.fromJS(plugins).concat(immutable.fromJS(mergedWithDefaultPlugins)).flatten(true));
+
+    if(envConfigMap.getIn(['module', 'noParse'])) {
+        configMap.updateIn(['module','noParse'], (rules) => immutable.fromJS(envConfigMap.getIn(['module', 'noParse'])));
+    }
+
+    const customConfigEntries = envConfigMap.filterNot((val, key) => (key === 'module' || key === 'plugins'));
+
+    configMap.mergeDeep(customConfigEntries);
 };
 
 export const logElectronRunServerError = () => {
