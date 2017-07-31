@@ -198,7 +198,7 @@ export const handleCustomAdditions = (configMap, envConfigMap, defaultRules, def
     configMap.updateIn(['plugins'], (plugins) => immutable.fromJS(plugins).concat(immutable.fromJS(mergedWithDefaultPlugins)).flatten(true));
 
     if(envConfigMap.getIn(['module', 'noParse'])) {
-        configMap.updateIn(['module','noParse'], (rules) => immutable.fromJS(envConfigMap.getIn(['module', 'noParse'])));
+        configMap.updateIn(['module','noParse'], () => immutable.fromJS(envConfigMap.getIn(['module', 'noParse'])));
     }
 
     const customConfigEntries = envConfigMap.filterNot((val, key) => (key === 'module' || key === 'plugins'));
