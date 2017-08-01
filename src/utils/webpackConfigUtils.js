@@ -161,7 +161,7 @@ export const getDefaultConfigOptions = (env, configMap) => {
                         loader: "url-loader?mimetype=application/font-woff"
                     },
                     {
-                        test: /\.(eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                        test: /\.(eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                         loader: 'file-loader'
                     },
                     //IMAGES

@@ -9,6 +9,8 @@ import os from 'os';
 //CONFIGURATION
 const config = new immutable.Map().withMutations((configMap) => {
 
+    process.traceDeprecation = true;
+
     configMap.set('context', customConfig.baseDir);
 
     configMap.set('entry', customConfig.entry);
