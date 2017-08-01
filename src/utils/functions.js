@@ -72,6 +72,7 @@ export const stylesheetProdRules = (type, regex, customConfig, ExtractTextPlugin
     test: new RegExp(regex),
     use: ExtractTextPlugin.extract({
         fallback: "style-loader",
+        allChunks: true,
         use: compact([
             {
                 loader: 'css-loader',
@@ -92,9 +93,10 @@ export const stylesheetProdRules = (type, regex, customConfig, ExtractTextPlugin
             (type !== 'css') ? {
                 loader: `${type}-loader`,
                 options: {
-                    sourceMap: !!customConfig.devtool
+                    //TODO: update this asap when support is available => !!customConfig.devtool
+                    sourceMap: (type !== 'sass') ? !!customConfig.devtool : false
                 }
-            } : null
+            } : false
 
         ])
     })
@@ -115,7 +117,7 @@ export const stylesheetDevRules = (type, regex, customConfig) => ({
                 }
             }
         },
-        (type !== 'css') ? `${type}-loader${customConfig.devtool ? '?sourceMap' : ''}` : null
+        (type !== 'css') ? `${type}-loader${customConfig.devtool ? '?sourceMap' : ''}` : false
     ])
 });
 
