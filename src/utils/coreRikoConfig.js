@@ -59,7 +59,7 @@ forEach(defaultConfig, (value, key) => {
     assert.equal(typeof customConfig[key], typeof value, `config.${key}'s value must be of type '${typeof value}' in rikoconfig.js`);
 });
 
-genericLog('rikoconfig.js file is vaild!', 'green');
+genericLog('rikoconfig.js file is valid!', 'green');
 
 const newConfig = Object.assign(
     {},
