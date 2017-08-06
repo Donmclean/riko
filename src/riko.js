@@ -1,10 +1,10 @@
 import program from 'commander';
 import path from 'path';
 import { packageJson } from './utils/variables';
-import { genericLog, logOptionsError, processBeforeExitHandler } from './utils/functions';
+import { genericLog, logOptionsError, checkForNewPackageVersion } from './utils/functions';
 const commandsDir = path.resolve(__dirname, './cmds');
 
-processBeforeExitHandler();
+checkForNewPackageVersion();
 
 //VERSION, USAGE, ETC
 program

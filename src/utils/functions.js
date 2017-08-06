@@ -346,14 +346,7 @@ export const processExitHandler = () => process.on('SIGINT', () => {
     process.exit(0);
 });
 
-export const checkForNewPackageVersion = () => {
-    const notifier = updateNotifier({pkg: packageJson});
-    notifier.notify();
-};
-
-export const processBeforeExitHandler = () => process.on('beforeExit', (code) => {
-    process.exit(code);
-});
+export const checkForNewPackageVersion = () => updateNotifier({pkg: packageJson}).notify({defer: true});
 
 export const hotExecuteFlowTests = (customConfig) => {
 
