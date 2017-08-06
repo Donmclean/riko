@@ -352,7 +352,6 @@ export const checkForNewPackageVersion = () => {
 };
 
 export const processBeforeExitHandler = () => process.on('beforeExit', (code) => {
-    checkForNewPackageVersion();
     process.exit(code);
 });
 

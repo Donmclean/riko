@@ -1,5 +1,5 @@
 import { processExitHandler, assignEnvironmentVariablesBasedOnRunCommand, doRunCommandValidations, logElectronRunServerError,
-    removeDir, genericLog, getStats, onDevBuildActions } from '../utils/functions';
+    removeDir, genericLog, getStats, onDevBuildActions, checkForNewPackageVersion } from '../utils/functions';
 import { cwd, baseDir } from '../utils/variables';
 import { getElectronPackagerOptions } from '../utils/webpackConfigUtils';
 import qfs from 'q-io/fs';
@@ -13,6 +13,8 @@ const spawnSync = spawn.sync;
 export default (runCommand) => {
     //add exit handler
     processExitHandler();
+
+    checkForNewPackageVersion();
 
     //assign environment variables
     assignEnvironmentVariablesBasedOnRunCommand(runCommands, runCommand);
