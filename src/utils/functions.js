@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { packageJson } from './variables';
 import { includes, isEmpty, compact, forEach, find, eq, chain, reject, isNil, get, isEqual } from 'lodash';
 import immutable from 'immutable';
 import webpack from 'webpack';
@@ -8,16 +7,14 @@ import Q from 'q';
 import qfs from 'q-io/fs';
 import merge from 'webpack-merge';
 import path from 'path';
+import updateNotifier from 'update-notifier';
 import autoprefixer from 'autoprefixer';
-import { cwd, baseDir } from './variables';
+import { cwd, baseDir, packageJson } from './variables';
 import spawn from 'cross-spawn';
-import GitHubApi from 'github';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
 const spawnSync = spawn.sync;
 const $ = gulpLoadPlugins();
-
-const github = new GitHubApi({ followRedirects: false, timeout: 5000 });
 
 export const isValidOption = (options, targetOption) => includes(options, targetOption);
 
@@ -349,29 +346,13 @@ export const processExitHandler = () => process.on('SIGINT', () => {
     process.exit(0);
 });
 
-export const logUpdateAvailableMessage = (currentRikoVersion, latestRikoVersion) => {
-    console.log('\n');
-    genericLog(`Update available ${currentRikoVersion} => ${latestRikoVersion}`, 'cyan');
-    genericLog(`npm i -g riko`, 'cyan');
-    console.log('\n');
-};
-
-export const checkForNewVersionAndSetValuesGlobally = () => {
-    github.repos.getLatestRelease({ owner: 'Donmclean', repo: 'riko' }, (err, res) => {
-        if(!err) {
-            const latestRikoVersion = get(res, 'data.name', false);
-            const currentRikoVersion = `v${packageJson.version}`;
-
-            global.latestRikoVersion = latestRikoVersion;
-            global.currentRikoVersion = currentRikoVersion;
-        }
-    });
+export const checkForNewPackageVersion = () => {
+    const notifier = updateNotifier({pkg: packageJson});
+    notifier.notify();
 };
 
 export const processBeforeExitHandler = () => process.on('beforeExit', (code) => {
-    if(!isEqual(global.latestRikoVersion, global.currentRikoVersion)) {
-        logUpdateAvailableMessage(global.latestRikoVersion, global.currentRikoVersion);
-    }
+    checkForNewPackageVersion();
     process.exit(code);
 });
 
