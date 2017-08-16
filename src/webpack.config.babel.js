@@ -4,7 +4,6 @@ import { baseDir } from './utils/variables';
 import { getStats, handleCustomAdditions, setCustomConfigOptions } from './utils/functions';
 import immutable from 'immutable';
 import path from 'path';
-import os from 'os';
 
 //CONFIGURATION
 const config = new immutable.Map().withMutations((configMap) => {
@@ -21,17 +20,9 @@ const config = new immutable.Map().withMutations((configMap) => {
         publicPath: '/'
     }));
 
-    //Set Additional node_modules Resolver Paths
-    const yarnNodeModulePath = path.resolve(os.homedir() + '/.config/yarn/global/', 'node_modules');
-    const yarnNodeModulePathLinuxRoot = path.resolve('/usr/local/share/.config/yarn/global', 'node_modules');
-    const yarnNodeModulePathWindows = path.resolve('%LOCALAPPDATA%/Yarn/config/global', 'node_modules');
-
     const moduleResolverPaths = [
         path.resolve(customConfig.baseDir, "node_modules"),
-        path.resolve(baseDir, "node_modules"),
-        yarnNodeModulePath,
-        yarnNodeModulePathLinuxRoot,
-        yarnNodeModulePathWindows
+        path.resolve(baseDir, "node_modules")
     ];
 
     configMap.set('resolve', immutable.fromJS({
