@@ -92,3 +92,42 @@ patch:
         patched: '2017-07-28T06:24:17.362Z'
     - browser-sync > socket.io > engine.io > ws:
         patched: '2017-07-28T06:24:17.362Z'
+  'npm:debug:20170905':
+    - browser-sync > socket.io > socket.io-client > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - mocha > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > connect > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > connect > finalhandler > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > serve-index > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io > engine.io > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io > socket.io-adapter > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io-client > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > localtunnel > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io-client > engine.io-client > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io > socket.io-client > engine.io-client > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - electron > extract-zip > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - electron-packager > extract-zip > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io > socket.io-parser > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io-client > socket.io-parser > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io > socket.io-client > socket.io-parser > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > socket.io > socket.io-adapter > socket.io-parser > debug:
+        patched: '2017-09-29T06:24:24.062Z'
+    - browser-sync > serve-static > send > debug:
+        patched: '2017-09-29T06:24:24.062Z'
