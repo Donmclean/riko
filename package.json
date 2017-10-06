@@ -107,7 +107,7 @@
     "react-hot-loader": "3.0.0-beta.7",
     "sass-loader": "^6.0.6",
     "shelljs": "^0.7.8",
-    "snyk": "^1.37.0",
+    "snyk": "^1.41.1",
     "style-loader": "^0.18.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
