@@ -1,8 +1,12 @@
 export default {
     SERVER_PORT: 3000,
 
-    entry: {
-        index: [ './src/js/index.js' ]
+    setEntry: (newEntryObject, mainEntryList, immutable) => {
+        mainEntryList.push('./src/js/index.js');
+
+        newEntryObject.set('index', mainEntryList);
+
+        return newEntryObject;
     },
 
     output: {

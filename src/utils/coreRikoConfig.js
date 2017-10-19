@@ -43,7 +43,7 @@ genericLog('validating rikoconfig.js file..');
 
 const requiredFields = {
     SERVER_PORT: 'number',
-    entry: 'object',
+    setEntry: 'function',
     output: 'object'
 };
 

@@ -127,9 +127,16 @@ SERVER_PORT: 3000;
 
 ##### WEBPACK REQUIRED SETTINGS
 ```javascript
-entry: {
-    index: [ './src/js/index.js' ]
-}
+setEntry: (entryObject, mainEntryList, immutable) => {
+    //mainEntryList contains all hot-reloading paths already
+    //simply push your main entry on this list.
+
+    mainEntryList.push('./src/js/index.js');
+
+    entryObject.set('index', mainEntryList);
+
+    return entryObject;
+},
 
 output: {
     path: path.resolve(cwd, 'dist')

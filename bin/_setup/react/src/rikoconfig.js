@@ -7,8 +7,12 @@ const cwd = process.cwd();
 const config = {
     SERVER_PORT: 3000,
 
-    entry: {
-        index: [ './src/js/index.js' ]
+    setEntry: (entryObject, mainEntryList, immutable) => {
+        mainEntryList.push('./src/js/index.js');
+
+        entryObject.set('index', mainEntryList);
+
+        return entryObject;
     },
 
     output: {
