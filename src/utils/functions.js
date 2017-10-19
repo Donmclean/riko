@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { includes, isEmpty, compact, forEach, find, eq, chain, reject, isNil, get, isEqual } from 'lodash';
-import immutable from 'immutable';
+import immutable, { List, Map } from 'immutable';
 import webpack from 'webpack';
 import chokidar from 'chokidar';
 import Q from 'q';
@@ -347,6 +347,24 @@ export const processExitHandler = () => process.on('SIGINT', () => {
 });
 
 export const checkForNewPackageVersion = () => updateNotifier({pkg: packageJson}).notify({defer: true});
+
+export const setEntryHelper = (customConfig) => {
+    let mainEntryList = new List([]);
+
+    if(process.env.NODE_ENV === 'development') {
+        mainEntryList = new List([
+            'react-hot-loader/patch',
+            `webpack-dev-server/client?http://localhost:${customConfig.SERVER_PORT}`,
+            'webpack/hot/dev-server'
+        ]);
+    }
+
+    return new Map().withMutations((newEntryObject) => {
+        mainEntryList.withMutations((newMainEntryList) => {
+            customConfig.setEntry(newEntryObject, newMainEntryList, immutable);
+        });
+    }).toJS();
+};
 
 export const hotExecuteFlowTests = (customConfig) => {
 

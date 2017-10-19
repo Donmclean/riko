@@ -1,20 +1,20 @@
 import customConfig from './utils/coreRikoConfig';
 import { getDefaultConfigOptions } from './utils/webpackConfigUtils';
 import { baseDir } from './utils/variables';
-import { getStats, handleCustomAdditions, setCustomConfigOptions } from './utils/functions';
-import immutable from 'immutable';
+import { getStats, handleCustomAdditions, setCustomConfigOptions, setEntryHelper } from './utils/functions';
+import { Map, fromJS } from 'immutable';
 import path from 'path';
 
 //CONFIGURATION
-const config = new immutable.Map().withMutations((configMap) => {
+const config = new Map().withMutations((configMap) => {
 
     process.traceDeprecation = true;
 
     configMap.set('context', customConfig.baseDir);
 
-    configMap.set('entry', customConfig.entry);
+    configMap.set('entry', setEntryHelper(customConfig));
 
-    configMap.set('output', immutable.fromJS({
+    configMap.set('output', fromJS({
         filename: '[name].[hash].js',
         path: customConfig.output.path,
         publicPath: '/'
@@ -25,20 +25,20 @@ const config = new immutable.Map().withMutations((configMap) => {
         path.resolve(baseDir, "node_modules")
     ];
 
-    configMap.set('resolve', immutable.fromJS({
+    configMap.set('resolve', fromJS({
         extensions: ['.js', '.jsx', '.json'],
         modules: moduleResolverPaths
     }));
 
-    configMap.set('resolveLoader', immutable.fromJS({
+    configMap.set('resolveLoader', fromJS({
         modules: moduleResolverPaths
     }));
 
-    configMap.set('module', immutable.fromJS({
+    configMap.set('module', fromJS({
         rules: []
     }));
 
-    configMap.set('plugins', immutable.fromJS([]));
+    configMap.set('plugins', fromJS([]));
 
     configMap.set('stats', getStats(process.env.NODE_ENV));
 
@@ -69,7 +69,7 @@ const config = new immutable.Map().withMutations((configMap) => {
             configMap.set('devtool', customConfig.devtool || false);
             configMap.set('bail', false);
 
-            configMap.set('devServer', immutable.fromJS({
+            configMap.set('devServer', fromJS({
                 hot: true,
                 // enable HMR on the server
 
