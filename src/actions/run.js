@@ -2,7 +2,7 @@ import { processExitHandler, assignEnvironmentVariablesBasedOnRunCommand, doRunC
     removeDir, genericLog, getStats, onDevBuildActions, checkForNewPackageVersion, setEntryHelper } from '../utils/functions';
 import { cwd, baseDir } from '../utils/variables';
 import { getElectronPackagerOptions } from '../utils/webpackConfigUtils';
-import qfs from 'q-io/fs';
+import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
 import { find } from 'lodash';
@@ -36,11 +36,15 @@ export default async (runCommand) => {
 
     switch (runCommand) {
         case 'electron-server': {
-            qfs.list(customConfig.output.path).then((files) => {
+            let electronDistfiles;
+
+            try {
+                electronDistfiles = await fs.readdir(customConfig.output.path);
+
                 switch (os.platform()) {
                     case 'darwin': {
                         //handles open electron app on MAC
-                        const macFile = find(files, (file) => file.match(/\b(darwin)\b/i));
+                        const macFile = find(electronDistfiles, (file) => file.match(/\b(darwin)\b/i));
 
                         if(macFile) {
                             spawn('open', [`-a`, `${cwd}/${path.basename(customConfig.output.path)}/${macFile}/${customConfig.electronPackagerOptions.name}.app`], {stdio: 'inherit'});
@@ -50,15 +54,17 @@ export default async (runCommand) => {
 
                         break;
                     }
+                    //TODO: add support for more os platforms like: Windows, Linux.
                     default: {
                         break;
                     }
                 }
-            })
-                .catch((err) => {
-                    logElectronRunServerError();
-                    console.error('ERROR >', err);
-                });
+
+            } catch (err) {
+                logElectronRunServerError();
+                console.error(`ERROR > error reading customConfig.output.path (${customConfig.output.path})`, err);
+            }
+
             break;
         }
         case 'react-prod': {

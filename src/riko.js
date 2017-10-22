@@ -11,7 +11,7 @@ program
     .alias('riko')
     .usage('<cmd> [subcmds...]')
     .option('-v, --version', 'output the version number', () => {
-        genericLog(packageJson.version);
+        console.log(packageJson.version);
     });
 
 //INITIALIZE

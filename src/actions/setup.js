@@ -1,65 +1,98 @@
 import { genericLog, folderAlreadyPresent, sortObjByOwnKeys } from '../utils/functions';
 import { cwd, baseDir, packageJson } from '../utils/variables';
-import qfs from 'q-io/fs';
+import fs from 'fs-extra';
 import spawn from 'cross-spawn';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
 const $ = gulpLoadPlugins();
 const spawnSync = spawn.sync;
 
-export default (actionType, projectType, projectName) => {
+export default async (actionType, projectType, projectName) => {
     const logSuccess = () => genericLog(`${$.util.colors.blue(projectName)} was setup ${$.util.colors.green('successfully')}`);
 
-    return qfs.list(cwd)
-        .then(files => {
-            if(folderAlreadyPresent(files, projectName)) {
-                genericLog(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`);
-                throw new Error(`${projectName} folder must not exist during setup.`);
-            } else {
-                switch (projectType) {
-                    case 'electron': {
-                        qfs.copyTree(`${baseDir}/bin/_${actionType}/react`, `${cwd}/${projectName}`)
-                            .then(() => qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}/src`))
-                            .then(() => qfs.read(`${cwd}/${projectName}/package.json`))
-                            .then((customPackageJson) => {
-                                //adds electron as devDependencies to package.json
-                                const packageJsonObj = JSON.parse(customPackageJson);
-                                packageJsonObj.devDependencies = Object.assign(
-                                    {},
-                                    packageJsonObj.devDependencies,
-                                    {electron: packageJson.dependencies.electron}
-                                );
-                                packageJsonObj.devDependencies = sortObjByOwnKeys(packageJsonObj.devDependencies);
-                                return packageJsonObj;
-                            })
-                            .then((packageJsonObj) => qfs.write(`${cwd}/${projectName}/package.json`, JSON.stringify(packageJsonObj, null, "\t")))
-                            .then(() => logSuccess())
-                            .catch((err) => genericLog(err, 'red'));
-                        break;
-                    }
-                    case 'node-server':
-                    case 'react': {
-                        qfs.copyTree(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`)
-                            .then(() => logSuccess())
-                            .catch((err) => genericLog(err, 'red'));
-                        break;
-                    }
-                    case 'react-native': {
-                        //run react native shell script
-                        spawnSync('sh', [`${baseDir}/bin/_${actionType}/${projectType}/react-native-install.sh`, projectName], {stdio: 'inherit'});
+    let userCWDfiles;
 
-                        //copy rikoconfig.js file
-                        qfs.makeTree(`${cwd}/${projectName}/src`)
-                            .then(() => qfs.copy(`${baseDir}/bin/_${actionType}/${projectType}/rikoconfig.js`, `${cwd}/${projectName}/src/rikoconfig.js`))
-                            .then(() => genericLog(`${$.util.colors.blue(`${projectName}`)} folder created ${$.util.colors.green('successfully')}`))
-                            .catch((err) => genericLog(err, 'red'));
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
+    try {
+        userCWDfiles = await fs.readdir(cwd);
+    } catch (err) {
+        console.error(`ERROR > error reading cwd (${cwd})`, err);
+    }
+
+    if(folderAlreadyPresent(userCWDfiles, projectName)) {
+        genericLog(`${$.util.colors.blue(projectName)} folder must not exist during setup. ${$.util.colors.red('terminating...')}`);
+        throw new Error(`${projectName} folder must not exist during setup.`);
+    } else {
+        switch (projectType) {
+            case 'electron': {
+                try {
+                    await fs.copy(`${baseDir}/bin/_${actionType}/react`, `${cwd}/${projectName}`);
+                    await fs.copy(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}/src`);
+                } catch (err) {
+                    console.error(`ERROR > error copying files to new project (${projectName})`, err);
                 }
+
+                let customPackageJson;
+                try {
+                    customPackageJson = await fs.readJson(`${cwd}/${projectName}/package.json`);
+                } catch (err) {
+                    console.error('ERROR > error reading package.json', err);
+                }
+
+                //adds electron as devDependencies to package.json
+                customPackageJson.devDependencies = Object.assign(
+                    {},
+                    customPackageJson.devDependencies,
+                    {electron: packageJson.dependencies.electron}
+                );
+
+                customPackageJson.devDependencies = sortObjByOwnKeys(customPackageJson.devDependencies);
+
+                try {
+                    const jsonFormattingOptions = { spaces: "\t" };
+                    await fs.writeJson(`${cwd}/${projectName}/package.json`, customPackageJson, jsonFormattingOptions);
+                } catch (err) {
+                    console.error('ERROR > error writing to package.json', err);
+                }
+
+                logSuccess();
+
+                break;
             }
-        })
-        .catch((err) => genericLog(err, 'red'));
+            case 'node-server':
+            case 'react': {
+                try {
+                    await fs.copy(`${baseDir}/bin/_${actionType}/${projectType}`, `${cwd}/${projectName}`);
+                } catch (err) {
+                    console.error(`ERROR > error copying files to new project (${projectName})`, err);
+                }
+
+                logSuccess();
+                break;
+            }
+            case 'react-native': {
+                //run react native shell script
+                spawnSync('sh', [`${baseDir}/bin/_${actionType}/${projectType}/react-native-install.sh`, projectName], {stdio: 'inherit'});
+
+                try {
+                    await fs.ensureDir(`${cwd}/${projectName}/src`);
+                } catch (err) {
+                    console.error(`ERROR > error creating directory (${cwd}/${projectName}/src)`, err);
+                }
+
+                //copy bin rikoconfig.js file to user project src directory
+                try {
+                    await fs.copy(`${baseDir}/bin/_${actionType}/${projectType}/rikoconfig.js`, `${cwd}/${projectName}/src/rikoconfig.js`);
+                } catch (err) {
+                    console.error(`ERROR > error copying files to new project (${projectName})`, err);
+                }
+
+                genericLog(`${$.util.colors.blue(`${projectName}`)} folder created ${$.util.colors.green('successfully')}`);
+
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
 };
