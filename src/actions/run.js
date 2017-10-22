@@ -6,7 +6,7 @@ import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
 import { find } from 'lodash';
-import { runCommands } from '../constants/index';
+import { runCommands } from '../constants';
 import spawn from 'cross-spawn';
 const spawnSync = spawn.sync;
 
