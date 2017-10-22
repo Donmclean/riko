@@ -118,8 +118,8 @@
     "worker-loader": "^1.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "7",
-    "istanbul": "1.1.0-alpha.1"
+    "babel-eslint": "^8.0.1",
+    "istanbul": "^0.4.5"
   },
   "snyk": true
 }
