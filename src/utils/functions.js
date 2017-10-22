@@ -1,10 +1,8 @@
-import fs from 'fs';
+import fs from 'fs-extra';
 import { includes, isEmpty, compact, forEach, find, eq, chain, reject, isNil, get, isEqual } from 'lodash';
 import immutable, { List, Map } from 'immutable';
 import webpack from 'webpack';
 import chokidar from 'chokidar';
-import Q from 'q';
-import qfs from 'q-io/fs';
 import merge from 'webpack-merge';
 import path from 'path';
 import updateNotifier from 'update-notifier';
@@ -140,30 +138,8 @@ export const testRequiredTypes = (assert, config, mockConfig) => {
 export const requiresTemplate = (projectType) => eq(projectType, 'react') || eq(projectType, 'electron');
 
 export const removeDir = (dir) => {
-    const deferred = Q.defer();
-
-    qfs.isDirectory(dir).then((exists) => {
-        if(exists) {
-            genericLog(`Cleaning ${dir} directory: `);
-            qfs.removeTree(dir)
-                .then(() => {
-                    genericLog(`${dir} directory removed...`);
-                    deferred.resolve();
-                })
-                .catch((err) => {
-                    genericLog(`ERROR removing ${dir}\n ${err}`, 'red');
-                    deferred.reject(err);
-                });
-        } else {
-            genericLog(`${dir} directory does not exist...`, 'red');
-            deferred.resolve();
-        }
-    }).catch((err) => {
-        genericLog(`ERROR directory does not exist \n ${err}`, 'red');
-        deferred.reject(err);
-    });
-
-    return deferred.promise;
+    genericLog(`Cleaning ${dir} directory: `);
+    return fs.remove(dir);
 };
 
 export const pickPluginFromKey = (plugins, key) => chain(plugins).keys().includes(key).value();
@@ -215,16 +191,6 @@ export const logElectronRunServerError = () => {
 export const readFilesInDirectorySync = (path) => fs.readdirSync(path).filter((file) => file !== '.DS_Store');
 
 export const regexReplaceCustomBoilerplateString = (content, fileName) => content.replace(/<:rikofilename:>/g, path.basename(fileName.split('.')[0], path.extname(fileName)));
-
-export const readReplaceAndWriteFilesToNewDirAsync = (fileName, sourceFilePath, newFilePath) => {
-    return qfs.read(sourceFilePath)
-        .then((content) => {
-            const editedContent = regexReplaceCustomBoilerplateString(content, fileName);
-            const editedFilePath = regexReplaceCustomBoilerplateString(newFilePath, fileName);
-            genericLog(`Creating ${editedFilePath}`);
-            return qfs.write(editedFilePath, editedContent);
-        })
-};
 
 export const getDefaultConfigFromRunCommand = (runCommand) => {
     if(isNil(runCommand)) {
@@ -366,7 +332,7 @@ export const setEntryHelper = (customConfig) => {
     }).toJS();
 };
 
-export const hotExecuteFlowTests = (customConfig) => {
+export const hotExecuteFlowTests = async (customConfig) => {
 
     const customTestCommand = customConfig.hotReloadingOptions.hotExecuteFlowTypeCommand;
     const isValidCommand = isValidPackageJsonScript(customConfig.packageJson, customTestCommand);
@@ -375,22 +341,28 @@ export const hotExecuteFlowTests = (customConfig) => {
     if(isValidCommand || isDefaultFlowTypeHotExecCommand) {
         genericLog('Executing Flow...');
 
-        return qfs.list(cwd).then((files) => {
-            if(includes(files, '.flowconfig')) {
-                const env = Object.create( process.env );
-                env.NODE_ENV = 'test';
+        let files;
+        try {
+            files = await fs.readdir(cwd);
+        } catch (err) {
+            genericLog(`ERROR > reading files in ${cwd}`, 'red');
+            console.error(err);
+        }
 
-                if(isDefaultFlowTypeHotExecCommand) {
-                    return spawnSync(`${baseDir}/node_modules/.bin/flow`, ['check'], {stdio: 'inherit', env});
-                } else {
-                    return spawn('npm', ['run', customTestCommand], {stdio: 'inherit', env});
-                }
+        if(includes(files, '.flowconfig')) {
+            const env = Object.create( process.env );
+            env.NODE_ENV = 'test';
 
+            if(isDefaultFlowTypeHotExecCommand) {
+                return spawnSync(`${baseDir}/node_modules/.bin/flow`, ['check'], {stdio: 'inherit', env});
             } else {
-                genericLog('no .flowconfig found', 'red');
-                return false;
+                return spawn('npm', ['run', customTestCommand], {stdio: 'inherit', env});
             }
-        });
+
+        } else {
+            genericLog('no .flowconfig found', 'red');
+            return false;
+        }
     } else {
         genericLog(`Invalid command. Make sure the hot execute flowtype command you're trying to execute lives in your package.json
              under 'scripts'.`, 'red');
