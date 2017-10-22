@@ -78,6 +78,7 @@ export const stylesheetProdRules = (type, regex, customConfig, ExtractTextPlugin
             {
                 loader: 'postcss-loader',
                 options: {
+                    sourceMap: !!customConfig.devtool,
                     plugins: () => {
                         return [
                             autoprefixer(customConfig.autoprefixerOptions)
@@ -88,8 +89,7 @@ export const stylesheetProdRules = (type, regex, customConfig, ExtractTextPlugin
             (type !== 'css') ? {
                 loader: `${type}-loader`,
                 options: {
-                    //TODO: update this asap when support is available => !!customConfig.devtool
-                    sourceMap: (type !== 'sass') ? !!customConfig.devtool : false
+                    sourceMap: !!customConfig.devtool
                 }
             } : false
 
@@ -105,6 +105,7 @@ export const stylesheetDevRules = (type, regex, customConfig) => ({
         {
             loader: 'postcss-loader',
             options: {
+                sourceMap: !!customConfig.devtool,
                 plugins: () => {
                     return [
                         autoprefixer(customConfig.autoprefixerOptions)
@@ -112,7 +113,7 @@ export const stylesheetDevRules = (type, regex, customConfig) => ({
                 }
             }
         },
-        (type !== 'css') ? `${type}-loader${customConfig.devtool ? '?sourceMap' : ''}` : false
+        (type !== 'css') ? `${type}-loader${!!customConfig.devtool ? '?sourceMap' : ''}` : false
     ])
 });
 
