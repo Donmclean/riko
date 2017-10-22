@@ -8,7 +8,7 @@
     "riko": "./riko.js"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
     "build": "babel src -d dist --copy-files --source-maps",
@@ -45,21 +45,21 @@
   "author": "Don Mclean <donmcleanx@gmail.com> (http://donsmclean.com)",
   "license": "MIT",
   "dependencies": {
-    "autoprefixer": "^7.1.5",
-    "babel-cli": "^6.11.4",
-    "babel-core": "^6.24.0",
-    "babel-jest": "^19.0.0",
+    "autoprefixer": "^7.1.6",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-dynamic-import-node": "^1.0.2",
     "babel-plugin-istanbul": "^4.0.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-runtime": "^6.12.0",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-preset-react": "^6.11.1",
-    "babel-register": "^6.11.6",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
     "babel-runtime": "^6.11.6",
     "browser-sync": "^2.14.0",
-    "browser-sync-webpack-plugin": "^1.1.2",
+    "browser-sync-webpack-plugin": "^1.2.0",
     "chai": "^3.5.0",
     "chalk": "^2.2.0",
     "chokidar": "^1.6.1",
@@ -75,7 +75,7 @@
     "expose-loader": "^0.7.1",
     "express": "^4.14.0",
     "express-history-api-fallback": "^2.0.0",
-    "extract-text-webpack-plugin": "^2.1.0",
+    "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^0.11.2",
     "flow-bin": "^0.42.0",
     "fs-extra": "^4.0.2",
@@ -89,6 +89,7 @@
     "immutable": "^3.8.1",
     "inquirer": "^3.0.6",
     "ip": "^1.1.3",
+    "istanbul": "1.1.0-alpha.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "lodash": "^4.15.0",
@@ -110,16 +111,15 @@
     "stylus-loader": "^3.0.1",
     "update-notifier": "^2.2.0",
     "url-loader": "^0.6.0",
-    "webpack": "2.3.1",
-    "webpack-dev-server": "^2.6.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3",
     "webpack-merge": "^4.1.0",
     "webpack-notifier": "^1.4.1",
     "webpack-shell-plugin": "^0.5.0",
     "worker-loader": "^1.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "7",
-    "istanbul": "1.1.0-alpha.1"
+    "babel-eslint": "^8.0.1"
   },
   "snyk": true
 }
