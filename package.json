@@ -69,6 +69,7 @@
     "cross-spawn": "^5.1.0",
     "css-loader": "^0.28.4",
     "electron": "^1.7.9",
+    "electron-installer-dmg": "^0.2.1",
     "electron-packager": "^9.1.0",
     "eslint": "^4.9.0",
     "eslint-plugin-react": "^7.0.1",

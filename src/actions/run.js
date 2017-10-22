@@ -76,21 +76,50 @@ export default async (runCommand) => {
 
             if(JSON.parse(process.env.isElectron)) {
                 const electronPackager = await import('electron-packager');
+                const createDMG = await import('electron-installer-dmg');
 
                 const spawned = spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${path.resolve(__dirname, '../webpack.config.babel.js')}`], {stdio: 'inherit'});
 
                 spawned.on('close', () => {
                     //Compile The Electron Application
                     const electronPackagerOptions = getElectronPackagerOptions();
-                    electronPackager(electronPackagerOptions, (err) => {
+                    electronPackager(electronPackagerOptions, async (err) => {
                         if(err) {
-                            console.error('ERROR > in electron build', err);
+                            console.error('ERROR > electronPackager > in electron build', err);
                             throw err;
-                        }
+                        } else {
+                            //build is targeting mac platform
+                            const isTargetingMacPlatform = (electronPackagerOptions.platform === 'all' || electronPackagerOptions.platform === 'darwin');
 
-                        removeDir(customConfig.tempDir).then(() => {
-                            genericLog(`${electronPackagerOptions.name} built successfully!`);
-                        });
+                            if(isTargetingMacPlatform) {
+                                const electronDistfiles = await fs.readdir(customConfig.output.path);
+                                const macFile = find(electronDistfiles, (file) => file.match(/\b(darwin)\b/i));
+
+                                const dmgOptions = {
+                                    name: electronPackagerOptions.name,
+                                    appPath: `${cwd}/${path.basename(customConfig.output.path)}/${macFile}/${customConfig.electronPackagerOptions.name}.app`,
+                                    debug: true,
+                                    overwrite: true,
+                                    out: electronPackagerOptions.out,
+                                    icon: electronPackagerOptions.icon
+                                };
+
+                                createDMG(dmgOptions, (err) => {
+                                    if(err) {
+                                        console.error('ERROR > createDMG > in electron build', err);
+                                        throw err;
+                                    }
+                                    genericLog(`DMG for ${electronPackagerOptions.name} built successfully!`);
+                                    removeDir(customConfig.tempDir).then(() => {
+                                        genericLog(`${electronPackagerOptions.name} built successfully!`);
+                                    });
+                                });
+                            } else {
+                                removeDir(customConfig.tempDir).then(() => {
+                                    genericLog(`${electronPackagerOptions.name} built successfully!`);
+                                });
+                            }
+                        }
                     });
                 });
 
