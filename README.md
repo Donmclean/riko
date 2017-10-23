@@ -10,6 +10,9 @@ Learn more about the Riko concept [**here**](docs/concept.md)
 # INSTALL
 
 - `npm install -g riko`
+- `npm install -g riko --unsafe-perm=true --allow-root` (_if permission errors_)
+
+> **Note**: If you receive any additional permission errors, be sure to prepend `sudo` before the command
 
 ###### Note: make sure you export your npm bin to $PATH in bash profile 
 ```bash
