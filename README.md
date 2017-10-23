@@ -84,7 +84,7 @@ Supports the development of [**Node JS**](https://nodejs.org), [**React**](https
 
 ###### - Production Mode: `riko run react-prod` | `riko r electron-prod`
 
-- [**Tree Shaking**](https://webpack.js.org/guides/tree-shaking/): Since Riko uses [**Webpack 2**](https://webpack.js.org) to bundle [**React**](https://facebook.github.io/react/) & [**Electron**](http://electron.atom.io/) projects, it automatically removes unused code to achieve the smallest bundle sizes.
+- [**Tree Shaking**](https://webpack.js.org/guides/tree-shaking/): Since Riko uses [**Webpack**](https://webpack.js.org) to bundle [**React**](https://facebook.github.io/react/) & [**Electron**](http://electron.atom.io/) projects, it automatically removes unused code to achieve the smallest bundle sizes.
 - [**Electron Packager**](https://github.com/electron-userland/electron-packager): Bundles your electron app with your specified options via `rikoconfig.js`.
 
 # CAVEATS
