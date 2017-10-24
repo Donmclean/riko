@@ -21,7 +21,7 @@ const config = {
 
     //https://webpack.github.io/docs/configuration.html#devtool
     //set to false to disable default source mapping
-    devtool: 'source-map',
+    devtool: (process.env.NODE_ENV === 'production') ? 'source-map' : 'inline-source-map',
 
     setWebpackConfigOptions: (env, config, webpack, immutable) => {
         const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -67,7 +67,7 @@ const config = {
                     }),
                     new webpack.optimize.CommonsChunkPlugin({
                         name: 'index',
-                        filename: 'assets/js/[name].[hash].js'
+                        filename: 'assets/js/[name].[hash].min.js'
                     })
                 ]);
                 break;

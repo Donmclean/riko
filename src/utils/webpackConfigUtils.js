@@ -43,10 +43,7 @@ export const getDefaultConfigOptions = (env, configMap) => {
                     {
                         test: /\.jsx$|\.js$/,
                         exclude: /(node_modules|vendor|bower_components)/,
-                        loaders: process.env.NODE_ENV === 'development' ? [
-                            'react-hot-loader/webpack',
-                            'babel-loader'
-                        ] : ['babel-loader']
+                        loaders: 'babel-loader'
                     },
                     //TYPESCRIPT TODO: add this functionality
                     // {
@@ -119,8 +116,11 @@ export const getDefaultConfigOptions = (env, configMap) => {
                 ],
                 plugins: [
                     new ExtractTextPlugin({
-                        filename: 'assets/css/styles.min.[hash].css',
+                        filename: 'assets/css/styles.min.[contenthash].css',
                         allChunks: true
+                    }),
+                    new webpack.SourceMapDevToolPlugin({
+                        filename: '[file].map'
                     }),
                     new CleanWebpackPlugin([path.basename(configMap.getIn(['output', 'path']))], {root: customConfig.baseDir, verbose: true, dry: false}),
                     new webpack.LoaderOptionsPlugin({
