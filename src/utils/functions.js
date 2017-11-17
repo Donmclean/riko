@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import { includes, isEmpty, forEach, find, eq, isNil, get } from 'lodash';
+import { includes, isEmpty, forEach, eq, isNil, get } from 'lodash';
 import chai from 'chai';
 const assert = chai.assert;
 import path from 'path';

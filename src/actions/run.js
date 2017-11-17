@@ -57,7 +57,7 @@ export default async (runCommand) => {
 
             } catch (err) {
                 logElectronRunServerError();
-                console.error(`ERROR > error reading (${electronPackagerOptions.out})`, err);
+                console.error(`ERROR > error reading electronPackagerOptions out path`, err);
             }
 
             break;
