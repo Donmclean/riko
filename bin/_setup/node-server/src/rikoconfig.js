@@ -11,4 +11,4 @@ const config = {
     customBoilerplatePath: 'src/riko-custom-boilerplates'
 };
 
-module.exports = config;
+module.exports = () => config;

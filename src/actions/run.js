@@ -1,7 +1,7 @@
-import { processExitHandler, assignEnvironmentVariablesBasedOnRunCommand, doRunCommandValidations, logElectronRunServerError,
-    removeDir, genericLog, getStats, onDevBuildActions, checkForNewPackageVersion, setEntryHelper } from '../utils/functions';
+import { processExitHandler, assignEnvironmentVariablesBasedOnRunCommand, doRunCommandValidations, validateRikoConfig,
+    logElectronRunServerError, removeDir, genericLog, checkForNewPackageVersion, getElectronPackagerOptions,
+    applyWebpackEventHooks } from '../utils/functions';
 import { cwd, baseDir } from '../utils/variables';
-import { getElectronPackagerOptions } from '../utils/webpackConfigUtils';
 import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
@@ -19,35 +19,30 @@ export default async (runCommand) => {
     //assign environment variables
     assignEnvironmentVariablesBasedOnRunCommand(runCommands, runCommand);
 
-    const requiresWebpack = (JSON.parse(process.env.isReact) || JSON.parse(process.env.isElectron));
-
     doRunCommandValidations();
 
-    const modulesToImport = [ import('../utils/coreRikoConfig').then((m) => m.default) ];
+    const { rikoConfig, config} = await import('../utils/coreRikoConfig').then((m) => m.default);
 
-    if(requiresWebpack) {
-        modulesToImport.push(import('../webpack.config.babel').then((m) => m.default));
-    }
+    validateRikoConfig(rikoConfig, runCommand);
 
-    const [ customConfig, config = {} ] = await Promise.all(modulesToImport).catch((err) => console.error('err > ', err));
-
-    //TODO: validate customConfig Here
-    //TODO: extract these dependencies
-
+    //TODO: extract these cases in functional components
     switch (runCommand) {
         case 'electron-server': {
+            process.env.NODE_ENV = 'production';
+            const { webpackConfig } = rikoConfig.setWebpackConfig('electron');
             let electronDistfiles;
 
             try {
-                electronDistfiles = await fs.readdir(customConfig.output.path);
+                const electronPackagerOptions = getElectronPackagerOptions(rikoConfig.setElectronPackagerOptions(), webpackConfig, config);
+                electronDistfiles = await fs.readdir(electronPackagerOptions.out);
 
                 switch (os.platform()) {
                     case 'darwin': {
                         //handles open electron app on MAC
                         const macFile = find(electronDistfiles, (file) => file.match(/\b(darwin)\b/i));
 
-                        if(macFile) {
-                            spawn('open', [`-a`, `${cwd}/${path.basename(customConfig.output.path)}/${macFile}/${customConfig.electronPackagerOptions.name}.app`], {stdio: 'inherit'});
+                        if(macFile && electronPackagerOptions) {
+                            spawn('open', [`-a`, `${cwd}/${path.basename(electronPackagerOptions.out)}/${macFile}/${electronPackagerOptions.name}.app`], {stdio: 'inherit'});
                         } else {
                             logElectronRunServerError();
                         }
@@ -62,69 +57,90 @@ export default async (runCommand) => {
 
             } catch (err) {
                 logElectronRunServerError();
-                console.error(`ERROR > error reading customConfig.output.path (${customConfig.output.path})`, err);
+                console.error(`ERROR > error reading (${electronPackagerOptions.out})`, err);
             }
 
             break;
         }
         case 'react-prod': {
-            //TODO: validate command below
-            return spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${path.resolve(__dirname, '../webpack.config.babel.js')}`], {stdio: 'inherit'});
+            const { webpack, webpackConfig } = rikoConfig.setWebpackConfig('web');
+
+            const webpackEventHooks = rikoConfig.setWebpackEventHooks(process.env.NODE_ENV);
+
+            const compiler = applyWebpackEventHooks(webpackEventHooks, webpack(webpackConfig));
+
+            return compiler.run((err, stats) => {
+                if(err) {
+                    console.error('ERROR > webpack compilation > : ', err);
+                } else {
+                    process.stdout.write(stats.toString() + "\n");
+                }
+            });
         }
         case 'electron-prod': {
-            genericLog('Compiling electron app..');
+            const { webpack, webpackConfig } = rikoConfig.setWebpackConfig('electron');
+            const electronPackagerOptions = getElectronPackagerOptions(rikoConfig.setElectronPackagerOptions(), webpackConfig, config);
 
-            if(JSON.parse(process.env.isElectron)) {
+            if(JSON.parse(process.env.isElectron) && electronPackagerOptions) {
                 const electronPackager = await import('electron-packager');
                 const createDMG = await import('electron-installer-dmg');
 
-                const spawned = spawn(`${customConfig.baseDir}/node_modules/.bin/webpack`, [`--config`, `${path.resolve(__dirname, '../webpack.config.babel.js')}`], {stdio: 'inherit'});
+                genericLog('Compiling js build assets...');
 
-                spawned.on('close', () => {
-                    //Compile The Electron Application
-                    const electronPackagerOptions = getElectronPackagerOptions();
-                    electronPackager(electronPackagerOptions, async (err) => {
-                        if(err) {
-                            console.error('ERROR > electronPackager > in electron build', err);
-                            throw err;
-                        } else {
-                            //build is targeting mac platform
-                            const isTargetingMacPlatform = (electronPackagerOptions.platform === 'all' || electronPackagerOptions.platform === 'darwin');
+                return webpack(webpackConfig, (err, stats) => {
+                    if(err) {
+                        console.error('ERROR: ', err);
+                    } else {
+                        process.stdout.write(stats.toString() + "\n");
 
-                            if(isTargetingMacPlatform) {
-                                const electronDistfiles = await fs.readdir(customConfig.output.path);
-                                const macFile = find(electronDistfiles, (file) => file.match(/\b(darwin)\b/i));
+                        //Compile The Electron Application
+                        genericLog('Compiling electron app...');
+                        electronPackager(electronPackagerOptions, async (err) => {
+                            if(err) {
+                                console.error('ERROR > electronPackager > in electron build', err);
+                                throw err;
+                            } else {
+                                //build is targeting mac platform
+                                const isTargetingMacPlatform = (electronPackagerOptions.platform === 'all' || electronPackagerOptions.platform === 'darwin');
 
-                                const dmgOptions = {
-                                    name: electronPackagerOptions.name,
-                                    appPath: `${cwd}/${path.basename(customConfig.output.path)}/${macFile}/${customConfig.electronPackagerOptions.name}.app`,
-                                    debug: true,
-                                    overwrite: true,
-                                    out: electronPackagerOptions.out,
-                                    icon: electronPackagerOptions.icon
-                                };
+                                if(isTargetingMacPlatform) {
+                                    const electronDistfiles = await fs.readdir(electronPackagerOptions.out);
+                                    const macFile = find(electronDistfiles, (file) => file.match(/\b(darwin)\b/i));
 
-                                createDMG(dmgOptions, (err) => {
-                                    if(err) {
-                                        console.error('ERROR > createDMG > in electron build', err);
-                                        throw err;
-                                    }
-                                    genericLog(`DMG for ${electronPackagerOptions.name} built successfully!`);
-                                    removeDir(customConfig.tempDir).then(() => {
+                                    const dmgOptions = {
+                                        name: electronPackagerOptions.name,
+                                        appPath: `${cwd}/${path.basename(electronPackagerOptions.out)}/${macFile}/${electronPackagerOptions.name}.app`,
+                                        debug: true,
+                                        overwrite: true,
+                                        out: electronPackagerOptions.out,
+                                        icon: electronPackagerOptions.icon
+                                    };
+
+                                    createDMG(dmgOptions, (err) => {
+                                        if(err) {
+                                            console.error('ERROR > createDMG > in electron build', err);
+                                            throw err;
+                                        }
+                                        genericLog(`DMG for ${electronPackagerOptions.name} built successfully!`);
+                                        removeDir(config.tempDir).then(() => {
+                                            genericLog(`${electronPackagerOptions.name} built successfully!`);
+                                        });
+                                    });
+                                } else {
+                                    removeDir(config.tempDir).then(() => {
                                         genericLog(`${electronPackagerOptions.name} built successfully!`);
                                     });
-                                });
-                            } else {
-                                removeDir(customConfig.tempDir).then(() => {
-                                    genericLog(`${electronPackagerOptions.name} built successfully!`);
-                                });
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 });
-
-                return new Promise((resolve) => resolve(spawned));
+            } else if(!electronPackagerOptions) {
+                genericLog(`ERROR: no electronPackagerOptions object is undefined port number... `, 'red');
+            } else {
+                genericLog('ERROR: internal riko error occured... Please report issue', 'red');
             }
+
             break;
         }
         case 'react-native-ios': {
@@ -139,78 +155,82 @@ export default async (runCommand) => {
         }
         case 'electron-dev':
         case 'react-dev': {
-            const stats = getStats('development');
-            const webpack = require('webpack');
-            const webpackDevServer = require('webpack-dev-server');
-
             //*******************************************************************
             //HOT RELOADING WITH WEBPACK DEV SERVER
             //*******************************************************************
 
-            config.entry = setEntryHelper(customConfig);
+            const rikoConfigWebpackValues = rikoConfig.setWebpackConfig('web');
+            const { webpack, webpackConfig, webpackDevServer } = rikoConfigWebpackValues;
 
-            const { overlay } = customConfig.hotReloadingOptions;
+            const webpackEventHooks = rikoConfig.setWebpackEventHooks(process.env.NODE_ENV);
 
-            new webpackDevServer(webpack(config), {
-                contentBase: config.output.path,
-                publicPath: config.output.publicPath,
-                historyApiFallback: true,
-                hot: true,
-                overlay,
-                inline: true,
-                headers: { 'Access-Control-Allow-Origin': '*' },
-                stats
-            }).listen(customConfig.SERVER_PORT, 'localhost', (err) => {
-                if (err) { console.error(err); }
-                genericLog(`Listening at localhost: ${customConfig.SERVER_PORT}`);
-                onDevBuildActions(customConfig);
-            });
+            config.SERVER_PORT = webpackConfig.devServer.port ? webpackConfig.devServer.port : config.SERVER_PORT;
+
+            if(config.SERVER_PORT) {
+                //apply webpackEventHooks
+                const compiler = applyWebpackEventHooks(webpackEventHooks, webpack(webpackConfig));
+
+                new webpackDevServer(compiler, webpackConfig.devServer).listen(config.SERVER_PORT, 'localhost', (err) => {
+                    if (err) { console.error(err); }
+                    genericLog(`Launching webpack devServer on ${config.SERVER_PORT}...`);
+                });
+
+            } else {
+                genericLog('ERROR: missing port number... ', 'red');
+                genericLog(`i.e: riko r ${runCommand} <port>`, 'red');
+            }
 
             break;
         }
         case 'node-server-dev': {
-            spawn(`${baseDir}/node_modules/.bin/nodemon`, ['--config', `${customConfig.nodemonJson}`, `${customConfig.entryFile}`], {stdio: 'inherit'});
+            spawn(`${baseDir}/node_modules/.bin/nodemon`, ['--config', `${rikoConfig.nodemonJson}`, `${rikoConfig.entryFile}`], {stdio: 'inherit'});
             break;
         }
         case 'node-server-prod': {
-            spawn('node', [`${customConfig.entryFile}`], {stdio: 'inherit'});
+            spawn('node', [`${rikoConfig.entryFile}`], {stdio: 'inherit'});
             break;
         }
         case 'react-server':
         case 'react-prod-server': {
-            //TODO: use dynamic import
             const browserSync   = require('browser-sync');
             const morgan        = require('morgan');
             const fallback      = require('express-history-api-fallback');
             const express       = require('express');
-            const app           = require('express')();
+            const app           = express();
 
             app.use(morgan('dev'));
 
-            const root = config.output.path;
+            const { webpackConfig } = rikoConfig.setWebpackConfig('web');
+
+            const customRootToBeServed = process.argv[5];
+            const root = customRootToBeServed ? path.resolve(cwd, customRootToBeServed) : webpackConfig.output.path;
 
             app.use(express.static(root));
             app.use(fallback('index.html', { root }));
 
-            const portToServe = process.argv[4] || customConfig.SERVER_PORT;
+            if(config.SERVER_PORT) {
+                app.listen(config.SERVER_PORT);
 
-            app.listen(portToServe);
-
-            app.use((err, req, res, next) => {
-                genericLog(`ERROR --> : ${err.stack}`);
-                next(err);
-            });
-
-            const isProdServer = (runCommand === 'react-prod-server');
-
-            if(isProdServer) {
-                genericLog('Listening on port: ' + portToServe, 'yellow');
-            } else {
-                genericLog('Launching Browser Sync proxy of port: ' + portToServe, 'yellow');
-
-                browserSync.init({
-                    proxy: `localhost:${portToServe}`
+                app.use((err, req, res, next) => {
+                    genericLog(`ERROR --> : ${err.stack}`);
+                    next(err);
                 });
+
+                const isProdServer = (runCommand === 'react-prod-server');
+
+                if(isProdServer) {
+                    genericLog('Listening on port: ' + config.SERVER_PORT, 'yellow');
+                } else {
+                    genericLog('Launching Browser Sync proxy of port: ' + config.SERVER_PORT, 'yellow');
+
+                    browserSync.init({
+                        proxy: `localhost:${config.SERVER_PORT}`,
+                        port: config.SERVER_PORT
+                    });
+                }
+            } else {
+                genericLog('ERROR: missing port number... ', 'red');
+                genericLog(`i.e: riko r ${runCommand} <port>`, 'red');
             }
 
             break;

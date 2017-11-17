@@ -1,10 +1,5 @@
-//TODO: Babel This file in prod build
 const electron = require('electron');
-// import electron from 'electron';
-let config;
-if(process.env.NODE_ENV === 'development') {
-  config = require('./rikoconfig');
-}
+
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -24,9 +19,13 @@ function createWindow () {
   const options = {};
   switch (process.env.NODE_ENV) {
     case 'development': {
-      options.host = `localhost:${config.SERVER_PORT}`;
-      options.protocol = 'http:';
-      options.slashes = true;
+        const rikoconfig = require('./rikoconfig')();
+        const { webpackConfig } = rikoconfig.setWebpackConfig('electron');
+
+        const SERVER_PORT = webpackConfig.devServer.port || 3000;
+        options.host = `localhost:${SERVER_PORT}`;
+        options.protocol = 'http:';
+        options.slashes = true;
       break;
     }
     default: {

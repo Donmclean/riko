@@ -1,135 +1,54 @@
-//**********************************************************************
-//*******************************CUSTOM*********************************
-//**********************************************************************
-const path = require('path');
-const cwd = process.cwd();
+module.exports = () => {
+    return {
+        setWebpackConfig: () => {
+            //return an object with the following keys 'webpack', 'webpackDevServer', 'webpackConfig'
+            //i.e: { webpack: require('webpack'), webpackDevServer: require('webpack-dev-server'), webpackConfig: require('../webpack.config.babel')}
 
-const config = {
-    SERVER_PORT: 3000,
+            const webpack = require('webpack');
+            const webpackDevServer = require('webpack-dev-server');
+            const webpackConfig = require('../webpack.config.babel');
 
-    setEntry: (entryObject, mainEntryList, immutable) => {
-        mainEntryList.push('./src/js/index.js');
+            return { webpack, webpackDevServer, webpackConfig };
+        },
 
-        entryObject.set('index', mainEntryList);
+        setCustomBoilerplatePath: () => {
+            //return a string which is the relative path to your custom boilerplate directory
+            //return false to disable custom boilerplate creation
+            return 'src/riko-custom-boilerplates';
+        },
 
-        return entryObject;
-    },
+        setWebpackEventHooks: (NODE_ENV) => {
+            //return an object with the keys as the event names and the values as the event callback functions
+            //see here for more details: https://webpack.js.org/api/compiler/#event-hooks
 
-    output: {
-        path: path.resolve(cwd, 'dist')
-    },
+            //i.e:
+            // return {
+            //     'before-compile': (compilation, callback) => {
+            //         // Do something async on the before-compile event...
+            //         callback();
+            //     }
+            // };
 
-    //https://webpack.github.io/docs/configuration.html#devtool
-    //set to false to disable default source mapping
-    devtool: (process.env.NODE_ENV === 'production') ? 'source-map' : 'inline-source-map',
+            return {};
+        },
 
-    setWebpackConfigOptions: (env, config, webpack, immutable) => {
-        const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-        switch (env) {
-            case 'global': {
-                config.set('plugins', [
-                    new HtmlWebpackPlugin({
-                        title: 'Riko',
-
-                        template: 'src/templates/index.pug',
-                        favicon: 'src/media/images/riko-favicon.png',
-                        inject: 'body',
-                        hash: true,
-                        cache: true, //default
-                        showErrors: true, //default
-
-                        scripts: [
-                            // example
-                            // {
-                            //     src: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
-                            //     async: false,
-                            //     defer: false
-                            // }
-                        ],
-                        stylesheets: [
-                            // 'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'
-                        ]
-                    }),
-                    new webpack.DefinePlugin({
-                        'process.env': {
-                            NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-                        }
-                    })
-                ]);
-                break;
-            }
-            case 'production': {
-                config.set('plugins', [
-                    new webpack.optimize.UglifyJsPlugin({
-                        mangle: true,
-                        sourceMap: true
-                    }),
-                    new webpack.optimize.CommonsChunkPlugin({
-                        name: 'index',
-                        filename: 'assets/js/[name].[hash].min.js'
-                    })
-                ]);
-                break;
-            }
-            case 'development': {
-                break;
-            }
-            default: {
-                break;
+        setElectronPackagerOptions: () => {
+            //return an object containing electron packager options
+            //for Electron Applications Only
+            //See API for all options here: https://github.com/electron-userland/electron-packager/blob/master/docs/api.md
+            return {
+                name: 'Riko',
+        
+                //applications icon  //OS X: .icns  //Windows: .ico
+                //get free conversions herehttps://iconverticons.com/online/
+                icon: 'src/riko-logo.icns',
+        
+                //target platform(s) to build for
+                platform: 'all',
+        
+                //Enable or disable asar archiving
+                asar: true
             }
         }
-    },
-
-    //**********************************************************************
-    //*******************************ELECTRON*******************************
-    //**********************************************************************
-    //for Electron Applications Only
-    //See API for all options here: https://github.com/electron-userland/electron-packager/blob/master/docs/api.md
-    electronPackagerOptions: {
-        name: 'Riko',
-
-        //applications icon  //OS X: .icns  //Windows: .ico
-        //get free conversions herehttps://iconverticons.com/online/
-        icon: 'src/riko-logo.icns',
-
-        //target platform(s) to build for
-        platform: 'all',
-
-        //Enable or disable asar archiving
-        asar: true
-    },
-    //**********************************************************************
-
-    hotReloadingOptions: {
-        overlay: true,
-
-        //Override hot module replacement and simply have the page refresh on file change
-        browserSyncReloadOnChange: false,
-
-        //Provide an npm package.json script command here to have tests execute on every webpack rebuild.
-        //i.e: 'test' would execute as 'npm run test' or 'hot-test' as 'npm run hot-test'
-        hotExecuteTestCommand: 'test',
-
-        hotExecuteFlowTypeCommand: 'default'
-    },
-
-    //prefix everything: browsers: ['> 0%']
-    autoprefixerOptions: {
-        browsers: ['> 0%']
-    },
-
-    //Specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
-    //Path must be relative to package.json.
-    customBoilerplatePath: 'src/riko-custom-boilerplates'
+    }
 };
-
-//**********************************************************************
-//****************************EXTERNALS*********************************
-//**********************************************************************
-
-// To add vendor dependencies and expose them to global/window object simply use the expose-loader
-// eg: require("expose-loader?_!lodash");
-// see: https://github.com/webpack/expose-loader
-
-module.exports = config;
