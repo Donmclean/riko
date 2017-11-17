@@ -66,20 +66,17 @@ Supports the development of [**Node JS**](https://nodejs.org), [**React**](https
 - Supports compilation of [**pug**](https://pugjs.org) template files to html.
 - Supports preprocessing of [**sass**](http://sass-lang.com/), [**less**](http://lesscss.org/) and [**stylus**](http://stylus-lang.com/) stylesheets.
 - Supports generation of [**Source mapping**](https://www.npmjs.com/package/source-map) for stylesheets and js sources.
-- Supports [**Flow**](https://flowtype.org/) Static Type Checking out of the box.
 - Supports [**Yarn**](https://yarnpkg.com/). The new fast, reliable and secure dependency management tool.
 - Javascript (_js_,_jsx_) linting via [**eslint**](http://eslint.org/).
 - Stylesheet (_sass_, _less_, _css_) linting via [**stylelint**](https://github.com/stylelint/stylelint).
 - [**Autoprefixing**](https://github.com/postcss/autoprefixer) for stylesheets.
 - [**Browsersync**](https://www.browsersync.io/) functionality by default.
 - [**Jest**](https://facebook.github.io/jest/), [**Mocha**](https://mochajs.org/), [**Chai**](http://chaijs.com/) unit testing.
-- [**Selenium Testing**](http://www.seleniumhq.org/) via [**Nightwatch JS**](http://nightwatchjs.org/) & [**Browserstack**](https://www.browserstack.com/)
 
 ###### - Development Mode: eg: `riko run react-dev` | `riko r electron-dev`
 
 - [**Hot Module Replacement**](https://webpack.github.io/docs/hot-module-replacement.html) for stylesheets (_sass,css,less_) and js (_js,jsx_) sources.
 - [**Error proofing**](https://github.com/webpack/webpack-dev-server/issues/522) (on error a helpful overlay pops up displaying the error).
-- [**Remote Debugging**](http://vorlonjs.com/): Debug your application on almost any device.
 - [**Electron Mode**](http://electron.atom.io/) has the exact same features as **React** setup with [**electron**](http://electron.atom.io/) native OS powers.
 
 ###### - Production Mode: `riko run react-prod` | `riko r electron-prod`
