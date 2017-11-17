@@ -118,146 +118,79 @@ Supports the development of [**Node JS**](https://nodejs.org), [**React**](https
 
 # RIKO CONFIG
 
-- This is where all your build related settings will live. The build system has been created so you rarely have to manage labor intensive build configurations.
-- All you would need to do is customize your `rikoconfig.js` file.
+- This is where all your build related settings will live. The build system has been created so you rarely have to manage labor intensive build configurations. All you would need to do is customize your `rikoconfig.js` file.
+
+- The `rikoconfig.js` on all platform targets is a function that returns a platform specific config object.
 
 ### REACT & ELECTRON CONFIG OPTIONS
 
-Port your wish to serve your files on.
-```javascript
-SERVER_PORT: 3000;
-```
-
 ##### WEBPACK REQUIRED SETTINGS
+###### Use this function to install your link your webpack details to riko.
+
 ```javascript
-setEntry: (entryObject, mainEntryList, immutable) => {
-    //mainEntryList contains all hot-reloading paths already
-    //simply push your main entry on this list.
+setWebpackConfig: () => {
+    //return an object with the following keys 'webpack', 'webpackDevServer', 'webpackConfig'
+    //i.e: { webpack: require('webpack'), webpackDevServer: require('webpack-dev-server'), webpackConfig: require('../webpack.config.babel')}
 
-    mainEntryList.push('./src/js/index.js');
+    const webpack = require('webpack');
+    const webpackDevServer = require('webpack-dev-server');
+    const webpackConfig = require('../webpack.config.babel') || require('../webpack.config');
 
-    entryObject.set('index', mainEntryList);
-
-    return entryObject;
-},
-
-output: {
-    path: path.resolve(cwd, 'dist')
+    return { webpack, webpackDevServer, webpackConfig };
 }
-
-devtool: 'source-map' //set to false to disable default source mapping
 ```
 
-##### WEBPACK OPTIONAL CUSTOM SETTINGS
-We can further customize the webpack config with the below function. see docs [**here**](https://webpack.js.org/configuration/).
-_setWebpackConfigOptions(env, config, webpack, immutable)_
-- **Arguments**
-    - **env** (String): environment in which to set config options in.
-    - **config** (Instance of Immutable JS Map [withMutations](https://facebook.github.io/immutable-js/docs/#/Map/withMutations)): contains current state of the webpack config in a mutable Map which allows you to easily set and customize the webpack config. see example below.
-    - **webpack** (Webpack instance): useful for including this like `webpack.optimize.UglifyJsPlugin` or logging current configuration, etc.
-    - **immutable** (Immutable JS instance): useful for applying additional logic when handling the `config` argument. 
-- **Returns** <**undefined**>
+###### Specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command. Path must be relative to package.json.
+
 ```javascript
-setWebpackConfigOptions: (env, config, webpack, immutable) => {
-    const SomeRandomWebpackPlugin = require('some-random-webpack-plugin');
-    
-    //set optional webpack configurations based on environment
-    switch (env) {
-        case 'global': {
-            //This plugin will be available in both development & production builds
-            config.set('plugins', [
-                new webpack.DefinePlugin({
-                    'process.env': {
-                        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-                    }
-                })
-            ]);
-            
-            //you are able to edit any vaild webpack config option
-            configMap.set('devtool', 'source-map');
-            break;
-        }
-        case 'production': {
-            //These plugins will be available only in production builds
-            config.set('plugins', [
-                new webpack.optimize.UglifyJsPlugin({
-                    mangle: true,
-                    sourceMap: true
-                }),
-                new webpack.optimize.CommonsChunkPlugin({
-                    name: 'index',
-                    filename: 'assets/js/[name].[hash].js'
-                })
-            ]);
-            break;
-        }
-        case 'development': {
-            //This plugin will be available only in development builds
-            config.set('plugins', [
-               new SomeRandomWebpackPlugin({/*some options*/})
-            ]);
-            break;
-        }
-        default: {
-            break;
-        }
-    }
+setCustomBoilerplatePath: () => {
+    //return a string which is the relative path to your custom boilerplate directory
+    //return false to disable custom boilerplate creation
+    return 'src/riko-custom-boilerplates';
 }
+```
+
+###### Use this function to inject all of your webpack hook events.
+
+```javascript
+setWebpackEventHooks: (NODE_ENV) => {
+    //return an object with the keys as the event names and the values as the event callback functions
+    //see here for more details: https://webpack.js.org/api/compiler/#event-hooks
+
+    //i.e:
+    // return {
+    //     'before-compile': (compilation, callback) => {
+    //         // Do something async on the before-compile event...
+    //         callback();
+    //     }
+    // };
+
+    return {};
+},
 ```
 
 ##### ELECTRON OPTIONS
 For Electron Applications Only. Attach any option to the electronPackagingOptions object. 
 See [here](https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options).
 ```javascript
-electronPackagerOptions: {
-    name: 'Riko',
+setElectronPackagerOptions: () => {
+    //return an object containing electron packager options
+    //for Electron Applications Only
+    //See API for all options here: https://github.com/electron-userland/electron-packager/blob/master/docs/api.md
+    return {
+        name: 'Riko',
 
-    //applications icon  //OS X: .icns  //Windows: .ico
-    //get free conversions herehttps://iconverticons.com/online/
-    icon: 'src/riko-logo.icns',
+        //applications icon  //OS X: .icns  //Windows: .ico
+        //get free conversions herehttps://iconverticons.com/online/
+        icon: 'src/riko-logo.icns',
 
-    //target platform(s) to build for
-    platform: 'all',
+        //target platform(s) to build for
+        platform: 'all',
 
-    //Enable or disable asar archiving
-    asar: true
+        //Enable or disable asar archiving
+        asar: true
+    }
 }
-```
-
-Set autoprefixing options. See [here](https://github.com/postcss/autoprefixer#webpack).
-```javascript
-autoprefixerOptions: { 
-    //prefix everything
-    browsers: ['> 0%'] 
-};
-```
-
-HMR Options. Valid in `development` mode only.
-```javascript
-hotReloadingOptions: {
-    //on HMR error a helpful overlay pops up displaying the error message
-    //see here: https://webpack.js.org/configuration/dev-server/#devserver-overlay
-    overlay: true,
-    
-    //Override hot module replacement and simply have the page refresh on file change
-    browserSyncReloadOnChange: false,
-
-    //Provide an npm package.json script command here to have tests execute on every webpack rebuild.
-    //i.e: 'test' would execute as 'npm run test' or 'hot-test' as 'npm run hot-test'
-    //To Disable: change to a falsy value
-    hotExecuteTestCommand: 'test',
-
-    //Provide an npm package.json script command here to have flow checks execute on every webpack rebuild.
-    //i.e: 'flow' would execute as 'npm run flow' or 'flow-test' as 'npm run flow-test'
-    //To Disable: change to a falsy value
-    hotExecuteFlowTypeCommand: 'default'
-};
-```
-
-Specific custom boilerplate path for generating path boilerplate files via the `riko <create>` command.
-Path must be relative to package.json.
-```javascript
-customBoilerplatePath: 'src/riko-custom-boilerplates'
 ```
 
 ### NODE SERVER CONFIG OPTIONS
