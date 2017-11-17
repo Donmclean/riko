@@ -1,17 +1,12 @@
 import fs from 'fs-extra';
-import { includes, isEmpty, compact, forEach, find, eq, chain, reject, isNil, get, isEqual } from 'lodash';
-import immutable, { List, Map } from 'immutable';
-import webpack from 'webpack';
-import chokidar from 'chokidar';
-import merge from 'webpack-merge';
+import { includes, isEmpty, forEach, eq, isNil, get } from 'lodash';
+import chai from 'chai';
+const assert = chai.assert;
 import path from 'path';
 import updateNotifier from 'update-notifier';
-import autoprefixer from 'autoprefixer';
-import { cwd, baseDir, packageJson } from './variables';
-import spawn from 'cross-spawn';
+import { cwd, packageJson } from './variables';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
-const spawnSync = spawn.sync;
 const $ = gulpLoadPlugins();
 
 export const isValidOption = (options, targetOption) => includes(options, targetOption);
@@ -25,21 +20,6 @@ export const genericLog = (str, color) => {
 };
 
 export const folderAlreadyPresent = (files, folderName) => includes(files, folderName);
-
-export const sanitizePath = (base, path) => {
-    let resolvedPath;
-
-    try {
-        resolvedPath = path.resolve(base, path);
-    } catch (err) {
-        genericLog(`${base}/${path} cannot be resolved`, 'red');
-        throw new Error(`cannot find ${path} to resolve`);
-    }
-
-    return resolvedPath;
-};
-
-export const removeLeadingAndTrailingSlashesFromString = (str) => typeof str === 'string' ? str.replace(/^\/|\/$/g, '') : '';
 
 export const sanitizeString = (str) => str.toString().replace(/[ ]*,[ ]*|[ ]+/g, ' ');
 
@@ -63,77 +43,36 @@ export const getFileIfExists = (modulePath) => {
     return get(file, 'default', file);
 };
 
-export const stylesheetProdRules = (type, regex, customConfig, ExtractTextPlugin) => ({
-    test: new RegExp(regex),
-    use: ExtractTextPlugin.extract({
-        fallback: "style-loader",
-        allChunks: true,
-        use: compact([
-            {
-                loader: 'css-loader',
-                options: {
-                    sourceMap: !!customConfig.devtool
-                }
-            },
-            {
-                loader: 'postcss-loader',
-                options: {
-                    sourceMap: !!customConfig.devtool,
-                    plugins: () => {
-                        return [
-                            autoprefixer(customConfig.autoprefixerOptions)
-                        ];
-                    }
-                }
-            },
-            (type !== 'css') ? {
-                loader: `${type}-loader`,
-                options: {
-                    sourceMap: !!customConfig.devtool
-                }
-            } : false
+export const validateRikoConfig = (rikoConfig, runCommand) => {
+    let valid = false;
 
-        ])
-    })
-});
+    switch (runCommand) {
+        case 'electron-dev':
+        case 'electron-prod':
+        case 'react-dev':
+        case 'react-prod': {
+            assert.isTrue(!isEmpty(rikoConfig), `rikoConfig cannot be empty`);
 
-export const stylesheetDevRules = (type, regex, customConfig) => ({
-    test: new RegExp(regex),
-    loaders: compact([
-        'style-loader',
-        `css-loader${customConfig.devtool ? '?sourceMap' : ''}`,
-        {
-            loader: 'postcss-loader',
-            options: {
-                sourceMap: !!customConfig.devtool,
-                plugins: () => {
-                    return [
-                        autoprefixer(customConfig.autoprefixerOptions)
-                    ];
-                }
-            }
-        },
-        (type !== 'css') ? `${type}-loader${!!customConfig.devtool ? '?sourceMap' : ''}` : false
-    ])
-});
+            const rikoConfigRequiredKeys = ['setWebpackConfig', 'setCustomBoilerplatePath', 'setWebpackEventHooks', 'setElectronPackagerOptions'];
 
-export const getStats = (NODE_ENV) => ({
-    colors: true, hash: true, version: true, timings: true, assets: NODE_ENV === 'production',
-    chunks: false, modules: false, reasons: false, children: false, source: false,
-    errors: true, errorDetails: true, warnings: true, publicPath: false
-});
+            forEach(rikoConfigRequiredKeys, key => {
+                assert.isTrue(includes(Object.keys(rikoConfig), key), `${key} must be present in rikoConfig`);
 
-export const testRequiredFields = (assert, requiredConfigKeys, configKeys, configName) => {
-    forEach(requiredConfigKeys, key => {
-        assert.isTrue(includes(configKeys, key), `${key} needs to be present in ${configName}`);
-    });
-};
+                const type = 'function';
+                assert.typeOf(rikoConfig[key], type, `${key} must be of type ${type}`);
+            });
 
-export const testRequiredTypes = (assert, config, mockConfig) => {
-    forEach(config, (value, key) => {
-        let type = find(mockConfig, (mock_value, mock_key) => key === mock_key);
-        assert.typeOf(value, type, `${key} needs to be of type ${type}`);
-    });
+            valid = true;
+            break;
+        }
+        default: {
+            valid = true;
+            break;
+        }
+    }
+    genericLog('rikoconfig.js file is valid!', 'green');
+
+    return valid;
 };
 
 export const requiresTemplate = (projectType) => eq(projectType, 'react') || eq(projectType, 'electron');
@@ -141,47 +80,6 @@ export const requiresTemplate = (projectType) => eq(projectType, 'react') || eq(
 export const removeDir = (dir) => {
     genericLog(`Cleaning ${dir} directory: `);
     return fs.remove(dir);
-};
-
-export const pickPluginFromKey = (plugins, key) => chain(plugins).keys().includes(key).value();
-
-export const handleCustomAdditions = (configMap, envConfigMap, defaultRules, defaultPlugins) => {
-    //extract unique default loaders by 'test' key
-    const uniqDefaultRules = chain(defaultRules)
-        .reject((defaultRule) => includes(immutable.fromJS(envConfigMap.getIn(['module', 'rules'])
-            .map((rule) => rule.test.toString())).toJS(), defaultRule.test.toString()))
-        .value();
-
-    const mergedWithDefaultsRules = merge(
-        {rules: immutable.fromJS(uniqDefaultRules).toJS()},
-        {rules: immutable.fromJS(envConfigMap.getIn(['module', 'rules'])).toJS()}
-    );
-
-    //extract unique default plugins by 'constructor.name'
-    const uniqDefaultPlugins = reject(defaultPlugins, (defaultPlugin) => {
-        return includes(
-            envConfigMap.get('plugins').map(plugin => plugin.constructor.name),
-            defaultPlugin.constructor.name
-        );
-    });
-
-    const mergedWithDefaultPlugins  = merge(
-        {plugins: immutable.fromJS(uniqDefaultPlugins).toJS()},
-        {plugins: immutable.fromJS(envConfigMap.get('plugins')).toJS()}
-    );
-
-    configMap.updateIn(['module','rules'], (rules) => immutable.fromJS(rules).concat(immutable.fromJS(mergedWithDefaultsRules.rules)));
-    configMap.updateIn(['plugins'], (plugins) => immutable.fromJS(plugins).concat(immutable.fromJS(mergedWithDefaultPlugins)).flatten(true));
-
-    if(envConfigMap.getIn(['module', 'noParse'])) {
-        configMap.updateIn(['module','noParse'], () => immutable.fromJS(envConfigMap.getIn(['module', 'noParse'])));
-    }
-
-    const keysToExclude = ['module', 'plugins'];
-
-    const customConfigEntries = envConfigMap.filterNot((val, key) => includes(keysToExclude, key));
-
-    configMap.mergeDeep(customConfigEntries);
 };
 
 export const logElectronRunServerError = () => {
@@ -192,28 +90,6 @@ export const logElectronRunServerError = () => {
 export const readFilesInDirectorySync = (path) => fs.readdirSync(path).filter((file) => file !== '.DS_Store');
 
 export const regexReplaceCustomBoilerplateString = (content, fileName) => content.replace(/<:rikofilename:>/g, path.basename(fileName.split('.')[0], path.extname(fileName)));
-
-export const getDefaultConfigFromRunCommand = (runCommand) => {
-    if(isNil(runCommand)) {
-        throw new Error (`runCommand is ${runCommand}`);
-    }
-
-    switch (true) {
-        case JSON.parse(process.env.isReactNative): {
-            return getFileIfExists('./defaultConfigs/reactNativeConfig');
-        }
-        case JSON.parse(process.env.isReact):
-        case JSON.parse(process.env.isElectron): {
-            return getFileIfExists('./defaultConfigs/reactElectronConfig');
-        }
-        case JSON.parse(process.env.isNodeServer): {
-            return getFileIfExists('./defaultConfigs/nodeServerConfig');
-        }
-        default: {
-            throw new Error (`can't get default from runCommand: ${runCommand}`);
-        }
-    }
-};
 
 export const assignEnvironmentVariablesBasedOnRunCommand = (runCommands, runCommand) => {
     //Sets run command for later access
@@ -257,57 +133,6 @@ export const doRunCommandValidations = () => {
     }
 };
 
-export const handleTestExecution = (customConfig, hasHotExecTestCommand, hasHotExecFlowTypeCommand) => {
-    let spawn;
-
-    if(hasHotExecTestCommand) {
-        spawn = hotExecuteTests(customConfig);
-    } else if(hasHotExecFlowTypeCommand) {
-        hotExecuteFlowTests(customConfig);
-    }
-
-    if(spawn && hasHotExecFlowTypeCommand) {
-        spawn.on('close', () => hotExecuteFlowTests(customConfig));
-    }
-};
-
-export const onDevBuildActions = (customConfig) => {
-    genericLog('Updating Source File Watcher executing initial tests...');
-
-    const watcher = chokidar.watch(customConfig.srcFiles, {ignored: /[\/\\]\./});
-    const hasHotExecTestCommand = !isEmpty(customConfig.hotReloadingOptions.hotExecuteTestCommand);
-    const hasHotExecFlowTypeCommand = !isEmpty(customConfig.hotReloadingOptions.hotExecuteFlowTypeCommand);
-
-    watcher.on('change', () => {
-        handleTestExecution(customConfig, hasHotExecTestCommand, hasHotExecFlowTypeCommand);
-    });
-
-    handleTestExecution(customConfig, hasHotExecTestCommand, hasHotExecFlowTypeCommand);
-};
-
-export const isValidPackageJsonScript = (packageJson, customTestCommand) => chain(packageJson.scripts)
-    .keys()
-    .includes(customTestCommand)
-    .value();
-
-export const hotExecuteTests = (customConfig) => {
-    const hotReloadingOptions = customConfig.hotReloadingOptions || {};
-    const customTestCommand = hotReloadingOptions.hotExecuteTestCommand;
-    const isValidCommand = isValidPackageJsonScript(customConfig.packageJson, customTestCommand);
-
-    if(isValidCommand) {
-        const env = Object.create( process.env );
-        env.NODE_ENV = 'test';
-
-        genericLog('Executing Tests...');
-        return spawn('npm', ['run', customTestCommand], {stdio: 'inherit', env});
-    } else {
-        genericLog(`Invalid command. Make sure the hot execute test command you're trying to execute lives in your package.json
-             under 'scripts'.`, 'red');
-        throw new Error('Invalid npm script command. see config.hotReloadingOptions.hotExecuteTestCommand in rikoconfig.js file');
-    }
-};
-
 export const processExitHandler = () => process.on('SIGINT', () => {
     process.stdout.write('\n');
     process.exit(0);
@@ -315,66 +140,32 @@ export const processExitHandler = () => process.on('SIGINT', () => {
 
 export const checkForNewPackageVersion = () => updateNotifier({pkg: packageJson}).notify({defer: true});
 
-export const setEntryHelper = (customConfig) => {
-    let mainEntryList = new List([]);
+export const getElectronPackagerOptions = (electronPackagerOptions, webpackConfig, config) => Object.assign(
+    {},
 
-    if(process.env.NODE_ENV === 'development') {
-        mainEntryList = new List([
-            'react-hot-loader/patch',
-            `webpack-dev-server/client?http://localhost:${customConfig.SERVER_PORT}`,
-            'webpack/hot/dev-server'
-        ]);
+    //Default
+    {
+        platform: 'all',
+        icon: path.resolve(__dirname, '../build-assets/riko-logo.icns')
+    },
+
+    //Custom
+    electronPackagerOptions,
+
+    //Required
+    {
+        dir: config.tempDir,
+        overwrite: true,
+        out: config.destDir //webpackConfig.output.path
     }
+);
 
-    return new Map().withMutations((newEntryObject) => {
-        mainEntryList.withMutations((newMainEntryList) => {
-            customConfig.setEntry(newEntryObject, newMainEntryList, immutable);
+export const applyWebpackEventHooks = (webpackEventHooks, compiler) => {
+    if(!isEmpty(webpackEventHooks)) {
+        forEach(webpackEventHooks, (webpackEventHookCallback, webpackEventHookName) => {
+            compiler.plugin(webpackEventHookName, webpackEventHookCallback);
         });
-    }).toJS();
-};
-
-export const hotExecuteFlowTests = async (customConfig) => {
-
-    const customTestCommand = customConfig.hotReloadingOptions.hotExecuteFlowTypeCommand;
-    const isValidCommand = isValidPackageJsonScript(customConfig.packageJson, customTestCommand);
-    const isDefaultFlowTypeHotExecCommand = (customTestCommand === 'default');
-
-    if(isValidCommand || isDefaultFlowTypeHotExecCommand) {
-        genericLog('Executing Flow...');
-
-        let files;
-        try {
-            files = await fs.readdir(cwd);
-        } catch (err) {
-            genericLog(`ERROR > reading files in ${cwd}`, 'red');
-            console.error(err);
-        }
-
-        if(includes(files, '.flowconfig')) {
-            const env = Object.create( process.env );
-            env.NODE_ENV = 'test';
-
-            if(isDefaultFlowTypeHotExecCommand) {
-                return spawnSync(`${baseDir}/node_modules/.bin/flow`, ['check'], {stdio: 'inherit', env});
-            } else {
-                return spawn('npm', ['run', customTestCommand], {stdio: 'inherit', env});
-            }
-
-        } else {
-            genericLog('no .flowconfig found', 'red');
-            return false;
-        }
-    } else {
-        genericLog(`Invalid command. Make sure the hot execute flowtype command you're trying to execute lives in your package.json
-             under 'scripts'.`, 'red');
-        throw new Error('Invalid npm script command. see config.hotReloadingOptions.hotExecuteFlowTypeCommand in rikoconfig.js file');
     }
-};
 
-export const setCustomConfigOptions = (customConfig, env) => {
-    return new immutable.Map().withMutations((customOptionsMap) => {
-        customOptionsMap.setIn(['module', 'rules'], immutable.fromJS([]));
-        customOptionsMap.set('plugins', immutable.fromJS([]));
-        customConfig.setWebpackConfigOptions(env, customOptionsMap, webpack, immutable);
-    });
+    return compiler;
 };

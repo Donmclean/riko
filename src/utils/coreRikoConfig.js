@@ -1,9 +1,4 @@
-//**********************************************************************
-//*******************************CORE***********************************
-//**********************************************************************
-import { getFileIfExists, getDefaultConfigFromRunCommand, genericLog } from './functions';
-import { forEach, isEmpty, includes } from 'lodash';
-import assert from 'assert';
+import { getFileIfExists } from './functions';
 const config  = {};
 
 //Root Directory
@@ -15,6 +10,11 @@ config.srcDir       = `${config.baseDir}/src`; //IMPORTANT! DO NOT OVERRIDE!
 //Temporary Directory
 config.tempDir      = `${config.baseDir}/temp`;
 
+config.destDir      = `${config.baseDir}/dist`;
+
+//Server Port
+config.SERVER_PORT  = process.argv[4];
+
 //Custom project Package.json
 config.packageJson  = getFileIfExists(`${config.baseDir}/package.json`);
 
@@ -25,46 +25,7 @@ config.srcFiles     = [
     '!'+config.srcDir+'/__tests__utils/**/*.js'
 ];
 
-//Relative Output Paths
-config.audioOutputPath = 'assets/audio';
-config.miscFileOutputPath = 'assets/files'; //pdf, docs, etc
-config.fontOutputPath = 'assets/fonts';
-config.imageOutputPath = 'assets/images';
-config.videoOutputPath = 'assets/videos';
+const getRikoConfig = getFileIfExists(`${config.srcDir}/rikoconfig`);
+const rikoConfig = getRikoConfig();
 
-const customConfig  = getFileIfExists(`${config.srcDir}/rikoconfig`);
-const defaultConfig = process.env.runCommand ? getDefaultConfigFromRunCommand(process.env.runCommand) : {};
-
-//**********************************************************************
-//******************************ASSERTIONS******************************
-//**********************************************************************
-
-genericLog('validating rikoconfig.js file..');
-
-const requiredFields = {
-    SERVER_PORT: 'number',
-    setEntry: 'function',
-    output: 'object'
-};
-
-//Validate Config Fields
-forEach(defaultConfig, (value, key) => {
-    //make sure default keys are present in rikoconfig
-    assert.ok(key in customConfig, `config.${key} must be present in rikoconfig.js`);
-
-    //handle require fields
-    includes(requiredFields , key) ? assert.ok(!isEmpty(customConfig[key]), `config.${key} must not be empty rikoconfig.js`) : null;
-
-    //make sure default keys are of valid type in rikoconfig
-    assert.equal(typeof customConfig[key], typeof value, `config.${key}'s value must be of type '${typeof value}' in rikoconfig.js`);
-});
-
-genericLog('rikoconfig.js file is valid!', 'green');
-
-const newConfig = Object.assign(
-    {},
-    customConfig,
-    config
-);
-
-export default newConfig;
+export default { rikoConfig, config };
