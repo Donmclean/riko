@@ -7,7 +7,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin');
 
-const autoprefixer = require('autoprefixer');
+const { stylesheetProdRules, stylesheetDevRules, getDefaultStats } = require('./webpack-utils');
 
 const baseDir = process.cwd();
 const srcDir = `${baseDir}/src`;
@@ -116,48 +116,15 @@ switch (process.env.NODE_ENV) {
         config.devtool = 'sourcemap';
         config.bail = true;
 
-        const stylesheetProdRules = (type, regex) => ({
-            test: new RegExp(regex),
-            use: ExtractTextPlugin.extract({
-                fallback: "style-loader",
-                allChunks: true,
-                use: [
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true,
-                            plugins: () => {
-                                return [
-                                    autoprefixer({ browsers: ['> 0%'] })
-                                ];
-                            }
-                        }
-                    },
-                    (type !== 'css') ? {
-                        loader: `${type}-loader`,
-                        options: {
-                            sourceMap: true
-                        }
-                    } : false
-                ].filter(Boolean)
-            })
-        });
-
         config.module.rules = config.module.rules.concat([
             //SASS
-            stylesheetProdRules('sass', /\.scss$/),
+            stylesheetProdRules(config, 'sass', /\.scss$/),
             //LESS
-            stylesheetProdRules('less', /\.less$/),
+            stylesheetProdRules(config, 'less', /\.less$/),
             //STYLUS
-            stylesheetProdRules('stylus', /\.styl$/),
+            stylesheetProdRules(config, 'stylus', /\.styl$/),
             //CSS
-            stylesheetProdRules('css', /\.css$/),
+            stylesheetProdRules(config, 'css', /\.css$/),
             //FONTS
             {
                 test: /\.(woff|woff2|eot|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -207,6 +174,7 @@ switch (process.env.NODE_ENV) {
             historyApiFallback: true,
             overlay: true,
             inline: true,
+            stats: getDefaultStats(process.env.NODE_ENV),
             headers: { 'Access-Control-Allow-Origin': '*' }
         };
 
@@ -216,35 +184,15 @@ switch (process.env.NODE_ENV) {
             'webpack/hot/dev-server'
         ], config.entry.index);
 
-        const stylesheetDevRules = (type, regex) => ({
-            test: new RegExp(regex),
-            loaders: [
-                'style-loader',
-                `css-loader${config.devtool ? '?sourceMap' : ''}`,
-                {
-                    loader: 'postcss-loader',
-                    options: {
-                        sourceMap: !!config.devtool,
-                        plugins: () => {
-                            return [
-                                autoprefixer({ browsers: ['> 0%'] })
-                            ];
-                        }
-                    }
-                },
-                (type !== 'css') ? `${type}-loader${!!config.devtool ? '?sourceMap' : ''}` : false
-            ].filter(Boolean)
-        });
-
         config.module.rules = config.module.rules.concat([
             // SASS
-            stylesheetDevRules('sass', /\.scss$/),
+            stylesheetDevRules(config, 'sass', /\.scss$/),
             // LESS
-            stylesheetDevRules('less', /\.less$/),
+            stylesheetDevRules(config, 'less', /\.less$/),
             //STYLUS
-            stylesheetDevRules('stylus', /\.styl$/),
+            stylesheetDevRules(config, 'stylus', /\.styl$/),
             // CSS
-            stylesheetDevRules('css', /\.css$/),
+            stylesheetDevRules(config, 'css', /\.css$/),
             //FONTS
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

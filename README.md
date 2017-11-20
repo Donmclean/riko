@@ -126,8 +126,15 @@ Supports the development of [**Node JS**](https://nodejs.org), [**React**](https
 
 ```javascript
 setWebpackConfig: () => {
-    //return an object with the following keys 'webpack', 'webpackDevServer', 'webpackConfig'
-    //i.e: { webpack: require('webpack'), webpackDevServer: require('webpack-dev-server'), webpackConfig: require('../webpack.config.babel')}
+    //return an object with the following keys: 'webpack', 'webpackDevServer', 'webpackConfig'
+    // and an optional 'statsOptions' see more here: https://github.com/webpack/docs/wiki/node.js-api#statstostringoptions
+    //i.e:
+    // {
+    //     webpack: require('webpack'),
+    //     webpackDevServer: require('webpack-dev-server'),
+    //     webpackConfig: require('../webpack.config.babel'),
+    //     statsOptions: {}
+    // }
 
     const webpack = require('webpack');
     const webpackDevServer = require('webpack-dev-server');
