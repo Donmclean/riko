@@ -1,6 +1,6 @@
 import { processExitHandler, assignEnvironmentVariablesBasedOnRunCommand, doRunCommandValidations, validateRikoConfig,
     logElectronRunServerError, removeDir, genericLog, checkForNewPackageVersion, getElectronPackagerOptions,
-    applyWebpackEventHooks } from '../utils/functions';
+    applyWebpackEventHooks, getDefaultStats } from '../utils/functions';
 import { cwd, baseDir } from '../utils/variables';
 import fs from 'fs-extra';
 import os from 'os';
@@ -63,7 +63,7 @@ export default async (runCommand) => {
             break;
         }
         case 'react-prod': {
-            const { webpack, webpackConfig } = rikoConfig.setWebpackConfig('web');
+            const { webpack, webpackConfig, statsOptions = {} } = rikoConfig.setWebpackConfig('web');
 
             const webpackEventHooks = rikoConfig.setWebpackEventHooks(process.env.NODE_ENV);
 
@@ -73,7 +73,7 @@ export default async (runCommand) => {
                 if(err) {
                     console.error('ERROR > webpack compilation > : ', err);
                 } else {
-                    process.stdout.write(stats.toString() + "\n");
+                    process.stdout.write(stats.toString(Object.assign({}, getDefaultStats(process.env.NODE_ENV), statsOptions)) + "\n");
                 }
             });
         }
