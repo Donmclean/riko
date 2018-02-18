@@ -1,6 +1,111 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.8.0
-ignore: {}
+version: v1.10.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'npm:fresh:20170908':
+    - browser-sync > serve-static > send > fresh:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+  'npm:hoek:20180212':
+    - browser-sync > localtunnel > request > hawk > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - babel-cli > chokidar > fsevents > node-pre-gyp > request > hawk > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - browser-sync > chokidar > fsevents > node-pre-gyp > request > hawk > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - nodemon > chokidar > fsevents > node-pre-gyp > request > hawk > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - browser-sync > localtunnel > request > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - babel-cli > chokidar > fsevents > node-pre-gyp > request > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - browser-sync > chokidar > fsevents > node-pre-gyp > request > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - nodemon > chokidar > fsevents > node-pre-gyp > request > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - browser-sync > localtunnel > request > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - babel-cli > chokidar > fsevents > node-pre-gyp > request > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - browser-sync > chokidar > fsevents > node-pre-gyp > request > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.435Z'
+    - nodemon > chokidar > fsevents > node-pre-gyp > request > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - babel-cli > chokidar > fsevents > node-pre-gyp > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - browser-sync > chokidar > fsevents > node-pre-gyp > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - nodemon > chokidar > fsevents > node-pre-gyp > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - babel-cli > chokidar > fsevents > node-pre-gyp > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - browser-sync > chokidar > fsevents > node-pre-gyp > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - nodemon > chokidar > fsevents > node-pre-gyp > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - browser-sync > localtunnel > request > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - babel-cli > chokidar > fsevents > node-pre-gyp > request > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - browser-sync > chokidar > fsevents > node-pre-gyp > request > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.436Z'
+    - nodemon > chokidar > fsevents > node-pre-gyp > request > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+    - babel-cli > chokidar > fsevents > node-pre-gyp > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+    - browser-sync > chokidar > fsevents > node-pre-gyp > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+    - nodemon > chokidar > fsevents > node-pre-gyp > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+    - babel-cli > chokidar > fsevents > node-pre-gyp > hawk > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+    - browser-sync > chokidar > fsevents > node-pre-gyp > hawk > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+    - nodemon > chokidar > fsevents > node-pre-gyp > hawk > hoek:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+  'npm:is-my-json-valid:20180214':
+    - electron-installer-dmg > appdmg > is-my-json-valid:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+  'npm:lodash:20180130':
+    - browser-sync > easy-extender > lodash:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+    - gulp > vinyl-fs > glob-watcher > gaze > globule > lodash:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
+  'npm:mime:20170907':
+    - browser-sync > serve-static > send > mime:
+        reason: None given
+        expires: '2018-03-20T11:58:58.437Z'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:ms:20170412':
