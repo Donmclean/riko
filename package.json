@@ -81,7 +81,7 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.14.11",
     "regex-replace": "^2.1.0",
-    "snyk": "^1.69.7",
+    "snyk": "^1.88.1",
     "transform-runtime": "^0.0.0",
     "update-notifier": "^2.2.0"
   },
