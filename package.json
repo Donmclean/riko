@@ -83,7 +83,7 @@
     "regex-replace": "^2.1.0",
     "snyk": "^1.69.7",
     "transform-runtime": "^0.0.0",
-    "update-notifier": "^2.2.0"
+    "update-notifier": "^4.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
