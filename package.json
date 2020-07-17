@@ -70,7 +70,7 @@
     "fs-extra": "^4.0.2",
     "gulp": "^3.9.1",
     "gulp-debug": "^3.0.0",
-    "gulp-eslint": "^4.0.0",
+    "gulp-eslint": "^5.0.0",
     "gulp-load-plugins": "^1.2.4",
     "gulp-util": "^3.0.7",
     "inquirer": "^3.0.6",
