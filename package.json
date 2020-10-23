@@ -68,7 +68,7 @@
     "express": "^4.16.0",
     "express-history-api-fallback": "^2.0.0",
     "fs-extra": "^4.0.2",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-debug": "^3.0.0",
     "gulp-eslint": "^4.0.0",
     "gulp-load-plugins": "^1.2.4",
@@ -80,7 +80,7 @@
     "mocha-lcov-reporter": "^1.2.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.14.11",
-    "regex-replace": "^2.1.0",
+    "regex-replace": "^2.3.1",
     "snyk": "^1.69.7",
     "transform-runtime": "^0.0.0",
     "update-notifier": "^2.2.0"
