@@ -30,7 +30,7 @@
     "jest": "^21.2.1",
     "jest-cli": "^21.2.1",
     "less-loader": "^4.0.5",
-    "node-sass": "^4.6.1",
+    "node-sass": "^7.0.0",
     "postcss-loader": "^2.0.8",
     "pug": "^2.0.0-rc.4",
     "pug-loader": "^2.3.0",
