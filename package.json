@@ -15,7 +15,7 @@
     "postinstall": "npm run build",
     "start": "NODE_ENV=production npm run prod && npm run prod-server",
     "version": "babel-node ./src/utils/publishScript.js && git add .",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepublish": "npm run snyk-protect",
     "postversion": "npm publish && git push --follow-tags",
     "lint": "gulp lint",
@@ -23,7 +23,7 @@
     "test-build": "npm run lint && babel-node ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report html --report lcov -- -R spec",
     "test-coverage": "babel-node ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/riko-test-suite.spec.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test": "sh test-complete.sh",
-    "prepare": "npm run snyk-protect"
+    "prepare": "yarn run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -81,9 +81,9 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.14.11",
     "regex-replace": "^2.1.0",
-    "snyk": "^1.69.7",
     "transform-runtime": "^0.0.0",
-    "update-notifier": "^2.2.0"
+    "update-notifier": "^2.2.0",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
