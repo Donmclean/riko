@@ -62,7 +62,7 @@
     "commander": "^2.9.0",
     "cross-spawn": "^5.1.0",
     "electron": "^1.8.4",
-    "electron-installer-dmg": "^0.2.1",
+    "electron-installer-dmg": "^5.0.0",
     "electron-packager": "^9.1.0",
     "eslint": "^4.18.2",
     "express": "^4.16.0",
