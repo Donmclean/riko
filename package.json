@@ -60,7 +60,7 @@
     "chai": "^4.1.2",
     "chalk": "^2.2.0",
     "commander": "^2.9.0",
-    "cross-spawn": "^5.1.0",
+    "cross-spawn": "^7.0.5",
     "electron": "^1.8.4",
     "electron-installer-dmg": "^0.2.1",
     "electron-packager": "^9.1.0",
@@ -83,7 +83,7 @@
     "regex-replace": "^2.1.0",
     "snyk": "^1.69.7",
     "transform-runtime": "^0.0.0",
-    "update-notifier": "^2.2.0"
+    "update-notifier": "^4.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
